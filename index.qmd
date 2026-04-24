@@ -1,0 +1,44 @@
+# Preface {.unnumbered}
+
+*R and the AutoDesk Platform* documents the [AutoDeskR](https://github.com/paulgovan/AutoDeskR) R package, which provides an R interface to the [AutoDesk Platform Services (APS)](https://aps.autodesk.com) APIs. APS is a cloud platform that exposes 3D model processing, file storage, and interactive viewing capabilities through a REST API. This book shows how to access those capabilities directly from R, enabling data scientists and engineers to incorporate CAD and BIM workflows into their existing R-based analyses, reports, and Shiny applications.
+
+## What You Will Learn
+
+The book is organized into chapters covering each major API:
+
+-   **Authentication** — OAuth token setup using `getToken()` and managing API credentials securely
+-   **Data Management** — Bucket creation, file upload, and object management in AutoDesk's Object Storage Service (OSS)
+-   **Model Derivative** — Translating design files into OBJ, STL, and SVF formats for downstream analysis
+-   **Design Automation** — Automated cloud-based DWG-to-PDF conversion without a local AutoCAD installation
+-   **Viewer** — Embedding the AutoDesk WebGL viewer in R Markdown documents and Shiny applications
+-   **Troubleshooting** — Solutions to common issues encountered when working with the APS APIs
+
+## Prerequisites
+
+To follow along you will need:
+
+-   **R** (version 4.0 or later) and, optionally, RStudio
+-   An active **AutoDesk account** with an APS application registered at [aps.autodesk.com](https://aps.autodesk.com) — see the [Getting Started](getting-started.qmd) chapter for a step-by-step walkthrough
+-   An internet connection (all API calls are made to AutoDesk's cloud)
+
+No prior experience with CAD or BIM software is assumed. Familiarity with basic R programming and the tidyverse is helpful but not required.
+
+## Installation
+
+Install the stable release from CRAN:
+
+``` r
+install.packages("AutoDeskR")
+```
+
+Or install the development version from GitHub:
+
+``` r
+devtools::install_github("paulgovan/AutoDeskR")
+```
+
+## How to Use This Book
+
+If you are new to APS, start with [Getting Started](getting-started.qmd) for account setup and a first working example, then read the chapters in order. If you are already familiar with APS and just need the R API, jump directly to the chapter that covers your use case. The [Troubleshooting](troubleshooting.qmd) chapter is a useful reference whenever you encounter unexpected errors.
+
+Source code for all examples is embedded in each chapter and can be copied directly into an R session.

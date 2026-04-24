@@ -1,0 +1,943 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "R and the AutoDesk Platform",
+    "section": "",
+    "text": "Preface\nR and the AutoDesk Platform documents the AutoDeskR R package, which provides an R interface to the AutoDesk Platform Services (APS) APIs. APS is a cloud platform that exposes 3D model processing, file storage, and interactive viewing capabilities through a REST API. This book shows how to access those capabilities directly from R, enabling data scientists and engineers to incorporate CAD and BIM workflows into their existing R-based analyses, reports, and Shiny applications.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "authentication.html",
+    "href": "authentication.html",
+    "title": "1  Authentication",
+    "section": "",
+    "text": "2 Authentication\nAutoDesk uses OAuth-based authentication for access to their services. To get started, visit the Create an App tutorial at https://aps.autodesk.com/en/docs/oauth/v2/tutorials/create-app/ for instructions on creating an app and getting a Client ID and Secret.",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Authentication</span>"
+    ]
+  },
+  {
+    "objectID": "authentication.html#store-credentials-safely",
+    "href": "authentication.html#store-credentials-safely",
+    "title": "1  Authentication",
+    "section": "2.1 Store Credentials Safely",
+    "text": "2.1 Store Credentials Safely\nStore your Client ID, Secret, and access tokens in ~/.Renviron and access them with Sys.getenv() to keep credentials out of your code and version control.\nCreate or edit ~/.Renviron with the following entries:\nclient_id = \"YOUR_CLIENT_ID\"\nclient_secret = \"YOUR_CLIENT_SECRET\"\ntoken = \"YOUR_ACCESS_TOKEN\"\nurn = \"YOUR_URN\"\nReload the file without restarting R:\n\nreadRenviron(\"~/.Renviron\")\n\nFor more on this pattern see Wrapping APIs in the httr2 documentation.",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Authentication</span>"
+    ]
+  },
+  {
+    "objectID": "authentication.html#get-an-access-token",
+    "href": "authentication.html#get-an-access-token",
+    "title": "1  Authentication",
+    "section": "2.2 Get an Access Token",
+    "text": "2.2 Get an Access Token\nUse getToken() to obtain a 2-legged OAuth token. The scope parameter controls which APIs the token can access — request only the scopes your task requires.\n\nresp    &lt;- getToken(id = Sys.getenv(\"client_id\"), secret = Sys.getenv(\"client_secret\"))\nmyToken &lt;- resp$content$access_token\nmyToken\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ.\n#&gt;       eyJjbGllbnRfaWQiOiJBQkNERUYxMjM0NTYiLCJleHAiOjE3NDU0MDA0MDAsInNjb3BlIjpb\n#&gt;       ImRhdGE6cmVhZCJdfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"\n\nThe full response object also contains the token type and expiry:\n\nstr(resp$content)\n#&gt; List of 3\n#&gt;  $ access_token: chr \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR...\"\n#&gt;  $ token_type  : chr \"Bearer\"\n#&gt;  $ expires_in  : int 3600\n\nTokens expire after 3600 seconds (1 hour). Re-call getToken() to refresh.\n\n\n\n\n\n\nWarning\n\n\n\nTokens expire after 1 hour. If you receive a 401 Unauthorized error mid-session, your token has expired. Re-call getToken() and replace myToken. A 401 response looks like:\n\nresp$status_code\n#&gt; [1] 401\nresp$content$errorCode\n#&gt; [1] \"AUTH-001\"\nresp$content$developerMessage\n#&gt; [1] \"The provided access token has expired.\"\n\n\n\n\n2.2.1 Available Scopes\n\n\n\nScope\nDescription\n\n\n\n\ndata:read\nRead files and derivatives\n\n\ndata:write\nUpload and modify files\n\n\ndata:create\nCreate new files\n\n\ndata:search\nSearch within files\n\n\nbucket:create\nCreate storage buckets\n\n\nbucket:read\nView bucket details\n\n\nbucket:update\nModify bucket settings\n\n\nbucket:delete\nDelete buckets\n\n\ncode:all\nAccess Design Automation APIs\n\n\naccount:read\nRead account information\n\n\naccount:write\nModify account settings\n\n\nuser-profile:read\nRead user profile data\n\n\n\nPass multiple scopes as a space-separated string:\n\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"bucket:create bucket:read data:write\"\n)\nmyToken &lt;- resp$content$access_token\nmyToken\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ.\n#&gt;       eyJjbGllbnRfaWQiOiJBQkNERUYxMjM0NTYiLCJleHAiOjE3NDU0MDA0MDAsInNjb3BlIjpb\n#&gt;       ImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6cmVhZCIsImRhdGE6d3JpdGUiXX0.Tq3vK2mP9r\"",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Authentication</span>"
+    ]
+  },
+  {
+    "objectID": "data-management.html",
+    "href": "data-management.html",
+    "title": "2  Data Management",
+    "section": "",
+    "text": "3 Data Management\nThe Data Management API provides a way to store and access design files across the AutoDesk Platform Services (APS).",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Management</span>"
+    ]
+  },
+  {
+    "objectID": "data-management.html#create-a-bucket",
+    "href": "data-management.html#create-a-bucket",
+    "title": "2  Data Management",
+    "section": "3.1 Create a Bucket",
+    "text": "3.1 Create a Bucket\nBuckets are named containers for your files. First get a token with the appropriate scopes, then call makeBucket().\n\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"bucket:create bucket:read data:write\"\n)\nmyToken &lt;- resp$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"\n\nUse makeBucket() to create a bucket. The policy parameter controls how long objects are retained:\n\n\n\nPolicy\nRetention\n\n\n\n\n\"transient\"\n24 hours (default)\n\n\n\"temporary\"\n30 days\n\n\n\"persistent\"\nUntil explicitly deleted\n\n\n\n\n\n\n\n\n\nWarning\n\n\n\nBucket names are globally unique across every APS application. A name like \"test\" or \"mybucket\" is almost certainly taken. Use a prefix that ties the name to your app or organisation, e.g. \"mycompany-myapp-prod\". Attempting to create a duplicate returns a 409 Conflict:\n\nresp$status_code\n#&gt; [1] 409\nresp$content$reason\n#&gt; [1] \"Bucket already exists\"\n\n\n\n\nresp &lt;- makeBucket(token = myToken, bucket = \"mybucket\", policy = \"persistent\")\nresp$content\n#&gt; $bucketKey\n#&gt; [1] \"mybucket\"\n#&gt;\n#&gt; $bucketOwner\n#&gt; [1] \"3MVG99OxTyEMCQ3gNp2PjtXbmT8T_MnfCTtpQkuiJNxGtXuoKP7\"\n#&gt;\n#&gt; $createdDate\n#&gt; [1] 1745356800000\n#&gt;\n#&gt; $permissions\n#&gt; $permissions[[1]]$authId\n#&gt; [1] \"3MVG99OxTyEMCQ3gNp2PjtXbmT8T_MnfCTtpQkuiJNxGtXuoKP7\"\n#&gt;\n#&gt; $permissions[[1]]$access\n#&gt; [1] \"full\"\n#&gt;\n#&gt; $policyKey\n#&gt; [1] \"persistent\"\n\nTo check the status of a bucket:\n\nresp &lt;- checkBucket(token = myToken, bucket = \"mybucket\")\nresp$content\n#&gt; $bucketKey\n#&gt; [1] \"mybucket\"\n#&gt;\n#&gt; $bucketOwner\n#&gt; [1] \"3MVG99OxTyEMCQ3gNp2PjtXbmT8T_MnfCTtpQkuiJNxGtXuoKP7\"\n#&gt;\n#&gt; $createdDate\n#&gt; [1] 1745356800000\n#&gt;\n#&gt; $policyKey\n#&gt; [1] \"persistent\"",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Management</span>"
+    ]
+  },
+  {
+    "objectID": "data-management.html#upload-a-file",
+    "href": "data-management.html#upload-a-file",
+    "title": "2  Data Management",
+    "section": "3.2 Upload a File",
+    "text": "3.2 Upload a File\nUse uploadFile() for files up to 100 MB. It returns an object containing the bucketKey, objectId (the URN), objectKey (filename), size, contentType, and location. Note the URN and store it in .Renviron for future use.\n\nresp &lt;- uploadFile(\n  file   = system.file(\"samples/aerial.dwg\", package = \"AutoDeskR\"),\n  token  = myToken,\n  bucket = \"mybucket\"\n)\nmyUrn &lt;- resp$content$objectId\nresp$content\n#&gt; $bucketKey\n#&gt; [1] \"mybucket\"\n#&gt;\n#&gt; $objectId\n#&gt; [1] \"urn:adsk.objects:os.object:mybucket/aerial.dwg\"\n#&gt;\n#&gt; $objectKey\n#&gt; [1] \"aerial.dwg\"\n#&gt;\n#&gt; $sha1\n#&gt; [1] \"7f3d9b2e1a6c4f8e0d5b3a9c7e2f1d4b8a6c0e3\"\n#&gt;\n#&gt; $size\n#&gt; [1] 3145728\n#&gt;\n#&gt; $contentType\n#&gt; [1] \"application/octet-stream\"\n#&gt;\n#&gt; $location\n#&gt; [1] \"https://developer.api.autodesk.com/oss/v2/buckets/mybucket/objects/aerial.dwg\"\n\n\n3.2.1 Upload Large Files (&gt;100 MB)\nFor files over 100 MB, use uploadFileSigned(), which transfers the file via signed S3 URLs to avoid timeout limits.\n\nresp &lt;- uploadFileSigned(\n  file   = \"path/to/large_model.rvt\",\n  token  = myToken,\n  bucket = \"mybucket\"\n)\nmyUrn &lt;- resp$content$objectId\nresp$content\n#&gt; $bucketKey\n#&gt; [1] \"mybucket\"\n#&gt;\n#&gt; $objectId\n#&gt; [1] \"urn:adsk.objects:os.object:mybucket/large_model.rvt\"\n#&gt;\n#&gt; $objectKey\n#&gt; [1] \"large_model.rvt\"\n#&gt;\n#&gt; $size\n#&gt; [1] 524288000\n#&gt;\n#&gt; $contentType\n#&gt; [1] \"application/octet-stream\"\n#&gt;\n#&gt; $location\n#&gt; [1] \"https://developer.api.autodesk.com/oss/v2/buckets/mybucket/objects/large_model.rvt\"",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Management</span>"
+    ]
+  },
+  {
+    "objectID": "data-management.html#list-buckets-and-objects",
+    "href": "data-management.html#list-buckets-and-objects",
+    "title": "2  Data Management",
+    "section": "3.3 List Buckets and Objects",
+    "text": "3.3 List Buckets and Objects\nList all buckets associated with your app. Use limit to control page size and startAt to paginate through results:\n\nresp &lt;- listBuckets(token = myToken, limit = 10)\nresp$content$items\n#&gt;                          bucketKey                                    createdDate  policyKey\n#&gt; 1                       mybucket                                  1745356800000 persistent\n#&gt; 2                  archive-2025                                  1740000000000  temporary\n#&gt; 3              visualization-dev                                  1738000000000  transient\n\n# Paginate to the next page\nresp &lt;- listBuckets(token = myToken, limit = 10, startAt = \"visualization-dev\")\nresp$content$items\n#&gt;              bucketKey      createdDate policyKey\n#&gt; 1        test-sandbox    1735000000000 transient\n\nUse region to filter buckets by geography (\"US\" or \"EMEA\"):\n\nresp &lt;- listBuckets(token = myToken, region = \"EMEA\")\nresp$content$items\n#&gt;       bucketKey      createdDate  policyKey\n#&gt; 1  emea-models    1742000000000 persistent\n#&gt; 2  emea-backup    1740000000000  temporary\n\nList objects stored in a specific bucket:\n\nresp &lt;- listObjects(token = myToken, bucket = \"mybucket\", limit = 10)\nresp$content$items\n#&gt;          objectKey                                              objectId   size\n#&gt; 1       aerial.dwg  urn:adsk.objects:os.object:mybucket/aerial.dwg      3145728\n#&gt; 2  office_plan.rvt  urn:adsk.objects:os.object:mybucket/office_plan.rvt 52428800\n#&gt; 3      bridge.ifc   urn:adsk.objects:os.object:mybucket/bridge.ifc      8388608",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Management</span>"
+    ]
+  },
+  {
+    "objectID": "data-management.html#delete-objects-and-buckets",
+    "href": "data-management.html#delete-objects-and-buckets",
+    "title": "2  Data Management",
+    "section": "3.4 Delete Objects and Buckets",
+    "text": "3.4 Delete Objects and Buckets\nDelete a specific object from a bucket:\n\nresp &lt;- deleteObject(token = myToken, bucket = \"mybucket\", object = \"aerial.dwg\")\nresp$status_code\n#&gt; [1] 200\n\nDelete an entire bucket (the bucket must be empty first):\n\nresp &lt;- deleteBucket(token = myToken, bucket = \"mybucket\")\nresp$status_code\n#&gt; [1] 200\n\n\n\n\n\n\n\nWarning\n\n\n\nA bucket must be empty before it can be deleted. Delete all objects with deleteObject() first. Attempting to delete a non-empty bucket returns a 409 Conflict:\n\nresp$status_code\n#&gt; [1] 409\nresp$content$reason\n#&gt; [1] \"Bucket not empty\"",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Management</span>"
+    ]
+  },
+  {
+    "objectID": "model-derivative.html",
+    "href": "model-derivative.html",
+    "title": "3  Model Derivative",
+    "section": "",
+    "text": "4 Model Derivative\nThe Model Derivative API enables users to translate their designs into different formats and extract model data.",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Model Derivative</span>"
+    ]
+  },
+  {
+    "objectID": "model-derivative.html#translate-a-file-into-obj-format",
+    "href": "model-derivative.html#translate-a-file-into-obj-format",
+    "title": "3  Model Derivative",
+    "section": "4.1 Translate a File into OBJ Format",
+    "text": "4.1 Translate a File into OBJ Format\nFirst get an access token with the data:read and data:write scopes. Note that only certain file types can be translated into OBJ format.\n\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"data:read data:write\"\n)\nmyToken &lt;- resp$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"\n\nThe platform requires the file’s URN to be Base-64 encoded:\n\nmyEncodedUrn &lt;- jsonlite::base64_enc(myUrn)\nmyEncodedUrn\n#&gt; [1] \"dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw==\"\n\nTranslate the file into OBJ format:\n\nresp &lt;- translateObj(urn = myEncodedUrn, token = myToken)\nresp$content\n#&gt; $result\n#&gt; [1] \"created\"\n#&gt;\n#&gt; $urn\n#&gt; [1] \"dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw==\"\n#&gt;\n#&gt; $acceptedJobs\n#&gt; $acceptedJobs$output\n#&gt; $acceptedJobs$output$formats[[1]]$type\n#&gt; [1] \"obj\"\n\n\n\n\n\n\n\nWarning\n\n\n\nOBJ translation supports a limited set of source formats. Supported types include IAM, IPT, IPN, DWG, F3D, and FBX. Submitting an unsupported format (e.g. a raw PDF or image) returns a 415 Unsupported Media Type:\n\nresp$status_code\n#&gt; [1] 415\nresp$content$diagnostic\n#&gt; [1] \"File type not supported for OBJ translation.\"\n\nSee the APS supported formats list for the full matrix.\n\n\nCheck the status of the translation:\n\nresp &lt;- checkFile(urn = myEncodedUrn, token = myToken)\nresp$content\n#&gt; $type\n#&gt; [1] \"design\"\n#&gt;\n#&gt; $hasThumbnail\n#&gt; [1] \"true\"\n#&gt;\n#&gt; $status\n#&gt; [1] \"success\"\n#&gt;\n#&gt; $progress\n#&gt; [1] \"complete\"\n#&gt;\n#&gt; $region\n#&gt; [1] \"US\"\n#&gt;\n#&gt; $urn\n#&gt; [1] \"dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw==\"\n\n\n\n\n\n\n\nNote\n\n\n\nstatus progresses through \"pending\" → \"inprogress\" → \"success\". Poll checkFile() until status is \"success\" before attempting to download. Use the aps_retry() helper from the Authentication chapter to handle rate limiting automatically.\n\n\nWhen translation is complete, retrieve the output URN of the translated file (different from the source URN). The response may include URNs for multiple output types (obj, svf, png) — find the one ending in .obj:\n\nresp &lt;- getOutputUrn(urn = myUrn, token = Sys.getenv(\"token\"))\nmyOutputUrn &lt;- resp$content$derivatives[[1]]$children[[1]]$urn\nmyOutputUrn\n#&gt; [1] \"urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQv\n#&gt;       YWVyaWFsLmR3Zw==/output/geometry/bc3339b2-73cd-4fba-9cb3-15363703a354.obj\"\n\nDownload the OBJ file locally using the destfile parameter:\n\nmyEncodedOutputUrn &lt;- jsonlite::base64_enc(myOutputUrn)\nresp &lt;- downloadFile(\n  urn        = myEncodedUrn,\n  output_urn = myEncodedOutputUrn,\n  token      = myToken,\n  destfile   = \"aerial.obj\"\n)\nresp$status_code\n#&gt; [1] 200",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Model Derivative</span>"
+    ]
+  },
+  {
+    "objectID": "model-derivative.html#translate-a-file-into-stl-format",
+    "href": "model-derivative.html#translate-a-file-into-stl-format",
+    "title": "3  Model Derivative",
+    "section": "4.2 Translate a File into STL Format",
+    "text": "4.2 Translate a File into STL Format\nUse translateStl(), which follows the same pattern as translateObj():\n\nresp &lt;- translateStl(urn = myEncodedUrn, token = myToken)\nresp$content\n#&gt; $result\n#&gt; [1] \"created\"\n#&gt;\n#&gt; $urn\n#&gt; [1] \"dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw==\"\n#&gt;\n#&gt; $acceptedJobs\n#&gt; $acceptedJobs$output$formats[[1]]$type\n#&gt; [1] \"stl\"\n\nCheck the status:\n\nresp &lt;- checkFile(urn = myEncodedUrn, token = myToken)\nresp$content\n#&gt; $status\n#&gt; [1] \"success\"\n#&gt;\n#&gt; $progress\n#&gt; [1] \"complete\"\n#&gt;\n#&gt; $derivatives[[1]]$outputType\n#&gt; [1] \"stl\"\n#&gt;\n#&gt; $derivatives[[1]]$status\n#&gt; [1] \"success\"",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Model Derivative</span>"
+    ]
+  },
+  {
+    "objectID": "model-derivative.html#extract-data-from-a-file",
+    "href": "model-derivative.html#extract-data-from-a-file",
+    "title": "3  Model Derivative",
+    "section": "4.3 Extract Data from a File",
+    "text": "4.3 Extract Data from a File\nAfter uploading a file and encoding its URN, translate it into SVF format to unlock metadata and geometry extraction:\n\nresp &lt;- translateSvf(urn = myEncodedUrn, token = myToken)\nresp$content\n#&gt; $result\n#&gt; [1] \"created\"\n#&gt;\n#&gt; $urn\n#&gt; [1] \"dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw==\"\n#&gt;\n#&gt; $acceptedJobs$output$formats[[1]]$type\n#&gt; [1] \"svf\"\n\nresp &lt;- checkFile(urn = myEncodedUrn, token = myToken)\nresp$content$status\n#&gt; [1] \"success\"\n\nRetrieve file metadata using getMetadata(), which returns the type, name, and guid of each viewable. Note the guid and store it in .Renviron for reuse:\n\nresp   &lt;- getMetadata(urn = myEncodedUrn, token = myToken)\nmyGuid &lt;- resp$content$data$metadata[[1]]$guid\nresp$content$data\n#&gt; $type\n#&gt; [1] \"metadata\"\n#&gt;\n#&gt; $metadata\n#&gt; $metadata[[1]]$name\n#&gt; [1] \"aerial\"\n#&gt;\n#&gt; $metadata[[1]]$role\n#&gt; [1] \"3d\"\n#&gt;\n#&gt; $metadata[[1]]$guid\n#&gt; [1] \"a7b3c9d2-4e1f-4a8b-b6c2-9d3e7f5a1b4c\"\n#&gt;\n#&gt; $metadata[[1]]$isMasterView\n#&gt; [1] TRUE\n\nRetrieve the full object tree of the model:\n\nresp &lt;- getObjectTree(guid = myGuid, urn = myEncodedUrn, token = myToken)\nresp$content$data$objects[[1]]\n#&gt; $objectid\n#&gt; [1] 1\n#&gt;\n#&gt; $name\n#&gt; [1] \"aerial.dwg\"\n#&gt;\n#&gt; $objects\n#&gt; $objects[[1]]$objectid\n#&gt; [1] 2\n#&gt; $objects[[1]]$name\n#&gt; [1] \"Layer: A-SITE\"\n#&gt;\n#&gt; $objects[[2]]$objectid\n#&gt; [1] 3\n#&gt; $objects[[2]]$name\n#&gt; [1] \"Layer: A-BLDG\"\n#&gt;\n#&gt; $objects[[3]]$objectid\n#&gt; [1] 4\n#&gt; $objects[[3]]$name\n#&gt; [1] \"Layer: A-ROAD\"\n\nExtract all geometry properties and material data from the model:\n\nresp &lt;- getData(guid = myGuid, urn = myEncodedUrn, token = myToken)\nresp$content$data$collection[[1]]\n#&gt; $objectid\n#&gt; [1] 2\n#&gt;\n#&gt; $name\n#&gt; [1] \"Layer: A-SITE\"\n#&gt;\n#&gt; $properties\n#&gt; $properties$`Layer and Material`$Layer\n#&gt; [1] \"A-SITE\"\n#&gt;\n#&gt; $properties$`Layer and Material`$Material\n#&gt; [1] \"ByLayer\"\n#&gt;\n#&gt; $properties$Geometry$`Bounding Box Min X`\n#&gt; [1] -142.83\n#&gt;\n#&gt; $properties$Geometry$`Bounding Box Min Y`\n#&gt; [1]  -98.47\n#&gt;\n#&gt; $properties$Geometry$`Bounding Box Max X`\n#&gt; [1]  318.62\n#&gt;\n#&gt; $properties$Geometry$`Bounding Box Max Y`\n#&gt; [1]  241.19",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Model Derivative</span>"
+    ]
+  },
+  {
+    "objectID": "design-automation.html",
+    "href": "design-automation.html",
+    "title": "4  Design Automation",
+    "section": "",
+    "text": "5 Design Automation\nThe Design Automation API provides the ability to perform automated tasks on design files in the cloud.",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Design Automation</span>"
+    ]
+  },
+  {
+    "objectID": "design-automation.html#convert-a-dwg-file-to-a-pdf-file",
+    "href": "design-automation.html#convert-a-dwg-file-to-a-pdf-file",
+    "title": "4  Design Automation",
+    "section": "5.1 Convert a DWG File to a PDF File",
+    "text": "5.1 Convert a DWG File to a PDF File\nUse makePdf() to convert a DWG file to a PDF file. The token must be generated with the code:all scope.\n\n\n\n\n\n\nWarning\n\n\n\nBoth source and destination must be publicly accessible URLs. Private Google Drive links, localhost paths, or signed S3 URLs with expired signatures will cause the job to fail with a 400 Bad Request. Use a public file host or a pre-signed URL with sufficient expiry time.\n\n\n\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"code:all\"\n)\nmyToken &lt;- resp$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"\n\n\nmySource      &lt;- \"http://download.autodesk.com/us/samplefiles/acad/visualization_-_aerial.dwg\"\nmyDestination &lt;- \"https://drive.google.com/folderview?id=0BygncDVHf60mTDZVNDltLThLNmM&usp=sharing\"\n\nresp &lt;- makePdf(source = mySource, destination = myDestination, token = myToken)\nmyWorkItemId &lt;- resp$content$id\nresp$content\n#&gt; $id\n#&gt; [1] \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"\n#&gt;\n#&gt; $status\n#&gt; [1] \"pending\"\n#&gt;\n#&gt; $stats\n#&gt; $stats$timeQueued\n#&gt; [1] \"2026-04-23T10:15:30.412Z\"\n\nCheck the status of the conversion using the WorkItem id returned by makePdf():\n\nresp &lt;- checkPdf(id = myWorkItemId, token = myToken)\nresp$content\n#&gt; $id\n#&gt; [1] \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"\n#&gt;\n#&gt; $status\n#&gt; [1] \"success\"\n#&gt;\n#&gt; $stats\n#&gt; $stats$timeQueued\n#&gt; [1] \"2026-04-23T10:15:30.412Z\"\n#&gt;\n#&gt; $stats$timeDownloadStarted\n#&gt; [1] \"2026-04-23T10:15:31.804Z\"\n#&gt;\n#&gt; $stats$timeInstructionsStarted\n#&gt; [1] \"2026-04-23T10:15:34.217Z\"\n#&gt;\n#&gt; $stats$timeFinished\n#&gt; [1] \"2026-04-23T10:15:48.993Z\"\n\nThe response includes a status field (pending, inprogress, or success) and stats with timing information. Poll checkPdf() until status is \"success\". Use the aps_retry() helper from the Authentication chapter to add automatic backoff:\n\nrepeat {\n  resp &lt;- checkPdf(id = myWorkItemId, token = myToken)\n  cat(\"Status:\", resp$content$status, \"\\n\")\n  if (resp$content$status == \"success\") break\n  Sys.sleep(5)\n}\n#&gt; Status: pending\n#&gt; Status: inprogress\n#&gt; Status: success\n\nA typical conversion of a simple DWG takes 15–30 seconds. Complex drawings with many layers or external references may take longer. The PDF will be written to the destination URL once the job completes.",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Design Automation</span>"
+    ]
+  },
+  {
+    "objectID": "viewer.html",
+    "href": "viewer.html",
+    "title": "5  Viewer",
+    "section": "",
+    "text": "6 Viewer\nAutoDesk provides a WebGL-based viewer for rendering 2D and 3D models. Before using the viewer, translate the file into SVF format and extract its encoded URN — see the Model Derivative chapter for those steps.",
+    "crumbs": [
+      "API Reference",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Viewer</span>"
+    ]
+  },
+  {
+    "objectID": "viewer.html#launch-the-viewer",
+    "href": "viewer.html#launch-the-viewer",
+    "title": "5  Viewer",
+    "section": "6.1 Launch the Viewer",
+    "text": "6.1 Launch the Viewer\nPass the encoded URN and token to viewer3D() to open the viewer as a Shiny app. The viewerType parameter controls the viewer UI:\n\n\n\nviewerType\nDescription\n\n\n\n\n\"header\"\nFull viewer with toolbar and side panels (default)\n\n\n\"headless\"\nViewer canvas only — no toolbar or panels\n\n\n\"vr\"\nWebVR mode optimized for mobile devices\n\n\n\n\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"data:read\"\n)\nmyToken      &lt;- resp$content$access_token\nmyEncodedUrn &lt;- jsonlite::base64_enc(Sys.getenv(\"urn\"))\n\n# Full viewer (default)\nviewer3D(urn = myEncodedUrn, token = myToken)\n\n# Headless — embed in a dashboard without chrome\nviewer3D(urn = myEncodedUrn, token = myToken, viewerType = \"headless\")\n\n# VR mode for mobile\nviewer3D(urn = myEncodedUrn, token = myToken, viewerType = \"vr\")",
+    "crumbs": [
+      "API Reference",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Viewer</span>"
+    ]
+  },
+  {
+    "objectID": "viewer.html#embed-in-a-shiny-app",
+    "href": "viewer.html#embed-in-a-shiny-app",
+    "title": "5  Viewer",
+    "section": "6.2 Embed in a Shiny App",
+    "text": "6.2 Embed in a Shiny App\nUse viewerUI() to embed the viewer inside any Shiny application via the Shiny Modules framework. The id parameter namespaces the module so multiple viewers can coexist on the same page.\n\nui &lt;- function(request) {\n  shiny::fluidPage(\n    viewerUI(\"viewer1\", urn = myEncodedUrn, token = myToken)\n  )\n}\n\nserver &lt;- function(input, output, session) {}\n\nshiny::shinyApp(ui, server)\n\nTo show a headless viewer inside a tabsetPanel:\n\nui &lt;- function(request) {\n  shiny::fluidPage(\n    shiny::tabsetPanel(\n      shiny::tabPanel(\"Model\", viewerUI(\"viewer1\", myEncodedUrn, myToken, viewerType = \"headless\")),\n      shiny::tabPanel(\"Data\",  shiny::verbatimTextOutput(\"meta\"))\n    )\n  )\n}\n\nserver &lt;- function(input, output, session) {}\n\nshiny::shinyApp(ui, server)",
+    "crumbs": [
+      "API Reference",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Viewer</span>"
+    ]
+  },
+  {
+    "objectID": "troubleshooting.html",
+    "href": "troubleshooting.html",
+    "title": "13  Troubleshooting",
+    "section": "",
+    "text": "14 Troubleshooting",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "troubleshooting.html#common-issues",
+    "href": "troubleshooting.html#common-issues",
+    "title": "13  Troubleshooting",
+    "section": "14.1 Common Issues",
+    "text": "14.1 Common Issues\nHere is a running list of common issues that users have run into:\nProblem: Some of the functions seem to work, others don’t.\nSolution: Make sure to sign up for the correct APIs and services through AutoDesk Platform Services (APS) at https://aps.autodesk.com.\nProblem: I can’t create bucket “mybucket”.\nSolution: Try a unique bucket name.\nProblem: I was able to create a bucket and upload a file, but I can’t translate the file.\nSolution: Each task requires different tokens with different scopes. Make sure to create a token with the data:read data:write scopes in order to translate a file.",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#what-you-will-learn",
+    "href": "index.html#what-you-will-learn",
+    "title": "R and the AutoDesk Platform",
+    "section": "What You Will Learn",
+    "text": "What You Will Learn\nThe book is organized into chapters covering each major API:\n\nAuthentication — OAuth token setup using getToken() and managing API credentials securely\nData Management — Bucket creation, file upload, and object management in AutoDesk’s Object Storage Service (OSS)\nModel Derivative — Translating design files into OBJ, STL, and SVF formats for downstream analysis\nDesign Automation — Automated cloud-based DWG-to-PDF conversion without a local AutoCAD installation\nViewer — Embedding the AutoDesk WebGL viewer in R Markdown documents and Shiny applications\nTroubleshooting — Solutions to common issues encountered when working with the APS APIs",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "R and the AutoDesk Platform",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nTo follow along you will need:\n\nR (version 4.0 or later) and, optionally, RStudio\nAn active AutoDesk account with an APS application registered at aps.autodesk.com — see the Getting Started chapter for a step-by-step walkthrough\nAn internet connection (all API calls are made to AutoDesk’s cloud)\n\nNo prior experience with CAD or BIM software is assumed. Familiarity with basic R programming and the tidyverse is helpful but not required.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "R and the AutoDesk Platform",
+    "section": "Installation",
+    "text": "Installation\nInstall the stable release from CRAN:\ninstall.packages(\"AutoDeskR\")\nOr install the development version from GitHub:\ndevtools::install_github(\"paulgovan/AutoDeskR\")",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use-this-book",
+    "href": "index.html#how-to-use-this-book",
+    "title": "R and the AutoDesk Platform",
+    "section": "How to Use This Book",
+    "text": "How to Use This Book\nIf you are new to APS, start with Getting Started for account setup and a first working example, then read the chapters in order. If you are already familiar with APS and just need the R API, jump directly to the chapter that covers your use case. The Troubleshooting chapter is a useful reference whenever you encounter unexpected errors.\nSource code for all examples is embedded in each chapter and can be copied directly into an R session.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "motivation.html",
+    "href": "motivation.html",
+    "title": "Motivation",
+    "section": "",
+    "text": "The Problem\nAutoDesk Platform Services (APS) is one of the most capable cloud platforms for working with CAD and BIM data. It can translate design files between dozens of formats, extract rich geometry and metadata from models, automate DWG processing at scale, and render 3D models interactively in a browser — all without requiring a local AutoCAD or Revit installation.\nThe challenge is that APS speaks REST. Every operation — uploading a file, kicking off a translation job, querying model metadata — requires constructing authenticated HTTP requests, handling base64-encoded URNs, polling asynchronous job queues, and parsing nested JSON responses. For engineers and architects who live in R, this friction is enough to make APS feel out of reach.",
+    "crumbs": [
+      "Front Matter",
+      "Motivation"
+    ]
+  },
+  {
+    "objectID": "motivation.html#the-opportunity",
+    "href": "motivation.html#the-opportunity",
+    "title": "Motivation",
+    "section": "The Opportunity",
+    "text": "The Opportunity\nR has become the lingua franca for quantitative work in architecture, engineering, and construction (AEC) analytics. Structural engineers use it to process sensor data. Sustainability consultants use it to model energy performance. BIM managers use it to audit model quality across large portfolios. Shiny brings these analyses to non-technical stakeholders through interactive web applications.\nWhat has been missing is a direct connection between R’s data science ecosystem and the 3D model data locked inside CAD files. A DWG file is not just a drawing — it contains geometry, layer structure, material properties, and embedded attributes that are genuinely useful for analysis. An SVF model rendered in a browser can be linked to live data in a Shiny dashboard. A PDF exported from a DWG can be generated automatically as part of a reporting pipeline.",
+    "crumbs": [
+      "Front Matter",
+      "Motivation"
+    ]
+  },
+  {
+    "objectID": "motivation.html#the-solution",
+    "href": "motivation.html#the-solution",
+    "title": "Motivation",
+    "section": "The Solution",
+    "text": "The Solution\nAutoDeskR wraps the APS REST API in idiomatic R functions, handling authentication, encoding, and job polling so that you don’t have to. A workflow that would otherwise require dozens of raw httr calls and careful reading of API documentation is reduced to a few lines:\nlibrary(AutoDeskR)\n\ntoken  &lt;- getToken(id, secret, scope = \"data:read data:write bucket:create\")\nbucket &lt;- makeBucket(token, \"my-project-bucket\")\nupload &lt;- uploadFile(token, \"model.dwg\", bucket$bucketKey)\njob    &lt;- translateFile(token, upload$objectId, \"svf\")\nThe goal is not to abstract APS away entirely — understanding the underlying API makes you more effective. Rather, AutoDeskR removes the boilerplate so you can spend your time on the analysis, not the plumbing.",
+    "crumbs": [
+      "Front Matter",
+      "Motivation"
+    ]
+  },
+  {
+    "objectID": "motivation.html#who-this-book-is-for",
+    "href": "motivation.html#who-this-book-is-for",
+    "title": "Motivation",
+    "section": "Who This Book Is For",
+    "text": "Who This Book Is For\nThis book is for R users who work with or alongside CAD and BIM data and want to automate, analyse, or visualise it without leaving the R environment. No prior experience with APS or AutoDesk products is assumed. If you can install an R package and run a script, you have everything you need to get started.",
+    "crumbs": [
+      "Front Matter",
+      "Motivation"
+    ]
+  },
+  {
+    "objectID": "getting-started.html",
+    "href": "getting-started.html",
+    "title": "Getting Started",
+    "section": "",
+    "text": "System Requirements\nThis chapter walks through everything you need to make your first successful API call with AutoDeskR: creating an AutoDesk account, registering an application, securing your credentials, and running a minimal end-to-end example.",
+    "crumbs": [
+      "Front Matter",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#system-requirements",
+    "href": "getting-started.html#system-requirements",
+    "title": "Getting Started",
+    "section": "",
+    "text": "R 4.0 or later\nRStudio (optional but recommended)\nAn internet connection\nA free AutoDesk account (created below)",
+    "crumbs": [
+      "Front Matter",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#step-1-create-an-autodesk-account",
+    "href": "getting-started.html#step-1-create-an-autodesk-account",
+    "title": "Getting Started",
+    "section": "Step 1: Create an AutoDesk Account",
+    "text": "Step 1: Create an AutoDesk Account\nIf you do not already have an AutoDesk account, register for free at autodesk.com. A standard account gives you access to the APS free tier, which is sufficient for development and moderate usage.",
+    "crumbs": [
+      "Front Matter",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#step-2-register-an-aps-application",
+    "href": "getting-started.html#step-2-register-an-aps-application",
+    "title": "Getting Started",
+    "section": "Step 2: Register an APS Application",
+    "text": "Step 2: Register an APS Application\nAPS uses OAuth 2.0. Every API call must be authenticated with a Client ID and Client Secret that belong to a registered application.\n\nGo to the APS Developer Portal and sign in.\nClick My Apps → Create Application.\nGive your app a name (e.g., AutoDeskR-dev) and select the APIs you plan to use. For the examples in this book, enable Data Management, Model Derivative, and Design Automation.\nClick Create. Your Client ID and Client Secret will be displayed on the app’s detail page.\n\nKeep these credentials private. Never commit them to version control.",
+    "crumbs": [
+      "Front Matter",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#step-3-store-credentials-securely",
+    "href": "getting-started.html#step-3-store-credentials-securely",
+    "title": "Getting Started",
+    "section": "Step 3: Store Credentials Securely",
+    "text": "Step 3: Store Credentials Securely\nThe safest way to use credentials in R is through environment variables stored in ~/.Renviron. Open or create that file:\nusethis::edit_r_environ()\nAdd the following lines, replacing the placeholder values:\nAPS_CLIENT_ID=your_client_id_here\nAPS_CLIENT_SECRET=your_client_secret_here\nSave the file and restart R. You can then retrieve the values in any script without hard-coding them:\nid     &lt;- Sys.getenv(\"APS_CLIENT_ID\")\nsecret &lt;- Sys.getenv(\"APS_CLIENT_SECRET\")\nSee the Authentication chapter for a full explanation of OAuth scopes and token management.",
+    "crumbs": [
+      "Front Matter",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#step-4-install-autodeskr",
+    "href": "getting-started.html#step-4-install-autodeskr",
+    "title": "Getting Started",
+    "section": "Step 4: Install AutoDeskR",
+    "text": "Step 4: Install AutoDeskR\nInstall the stable release from CRAN:\ninstall.packages(\"AutoDeskR\")\nOr install the development version from GitHub:\ndevtools::install_github(\"paulgovan/AutoDeskR\")",
+    "crumbs": [
+      "Front Matter",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#step-5-your-first-workflow",
+    "href": "getting-started.html#step-5-your-first-workflow",
+    "title": "Getting Started",
+    "section": "Step 5: Your First Workflow",
+    "text": "Step 5: Your First Workflow\nThe diagram below shows the typical flow through the AutoDeskR APIs:\n\n\n\n\n\nflowchart LR\n  A([Create APS App]) --&gt; B[getToken]\n  B --&gt; C[makeBucket]\n  C --&gt; D[uploadFile]\n  D --&gt; E{Use case}\n  E --&gt; F[translateObj / translateSvf]\n  E --&gt; G[makePdf]\n  E --&gt; H[createPhotoscene]\n  F --&gt; I[viewer3D]\n\n\n\n\n\n\nThe following code demonstrates a complete round-trip: authenticate, create a storage bucket, upload a file, and verify the upload.\nlibrary(AutoDeskR)\n\n# Read credentials from environment\nid     &lt;- Sys.getenv(\"APS_CLIENT_ID\")\nsecret &lt;- Sys.getenv(\"APS_CLIENT_SECRET\")\n\n# 1. Get an access token with the scopes needed for data management\ntoken &lt;- getToken(id, secret, scope = \"data:read data:write bucket:create bucket:read\")\ntoken$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"\ntoken$content$expires_in\n#&gt; [1] 3600\n\n# 2. Create a persistent storage bucket (bucket names must be globally unique)\nbucket &lt;- makeBucket(token, bucketKey = \"my-first-autodeskr-bucket\", policyKey = \"persistent\")\nbucket$content$bucketKey\n#&gt; [1] \"my-first-autodeskr-bucket\"\nbucket$content$policyKey\n#&gt; [1] \"persistent\"\n\n# 3. Upload a local file (≤100 MB)\nresult &lt;- uploadFile(token,\n                     localPath = \"path/to/your/file.dwg\",\n                     bucketKey = bucket$bucketKey)\nresult$content$objectKey\n#&gt; [1] \"file.dwg\"\nresult$content$size\n#&gt; [1] 3145728\n\n# 4. List objects in the bucket to confirm the upload succeeded\nobjects &lt;- listObjects(token, bucketKey = bucket$bucketKey)\nprint(objects$content$items)\n#&gt;   objectKey                                                         objectId    size\n#&gt; 1  file.dwg  urn:adsk.objects:os.object:my-first-autodeskr-bucket/file.dwg  3145728\nIf the upload succeeds, listObjects() will return a data frame containing your file’s objectKey, objectId (a URN), and size. The objectId is used in subsequent chapters when translating the file or loading it in the viewer.",
+    "crumbs": [
+      "Front Matter",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#whats-next",
+    "href": "getting-started.html#whats-next",
+    "title": "Getting Started",
+    "section": "What’s Next",
+    "text": "What’s Next\nWith your credentials configured and a file uploaded, you are ready to explore the full API:\n\n\n\nChapter\nWhat it covers\n\n\n\n\nAuthentication\nToken scopes, token refresh, rate-limit handling\n\n\nData Management\nBuckets, large-file uploads, pagination\n\n\nModel Derivative\nTranslating files to OBJ, STL, SVF; extracting metadata\n\n\nDesign Automation\nDWG-to-PDF conversion pipelines\n\n\nReality Capture\nPhoto-to-3D mesh from drone or phone images\n\n\nViewer\nEmbedding the 3D viewer in Shiny and R Markdown\n\n\nTroubleshooting\nCommon errors and how to fix them",
+    "crumbs": [
+      "Front Matter",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "acknowledgements.html",
+    "href": "acknowledgements.html",
+    "title": "Acknowledgements",
+    "section": "",
+    "text": "R and the AutoDesk Platform would not exist without the work of many individuals and organisations who generously share their time, code, and knowledge.\nAutoDesk designed and maintains the AutoDesk Platform Services (APS) APIs and provides extensive developer documentation, sample code, and a free tier that makes experimentation accessible to individuals and small teams. The quality of their API design made it possible to wrap APS in a concise R interface.\nThe R community — CRAN maintainers, package authors, and the broader community of practitioners who publish tutorials, answer questions, and review code — provides the foundation on which AutoDeskR is built. In particular, the httr and jsonlite packages handle the HTTP and JSON plumbing that underlies every API call in this package.\nPosit (formerly RStudio) develops and maintains Quarto, the publishing system used to produce this book, as well as the devtools, usethis, and roxygen2 packages that are central to R package development.\nContributors to AutoDeskR who have filed issues, suggested improvements, and submitted pull requests on GitHub have shaped the package into what it is today. Their feedback has been invaluable.\nFinally, thank you to everyone who has read earlier drafts of this material and offered corrections and suggestions.",
+    "crumbs": [
+      "Front Matter",
+      "Acknowledgements"
+    ]
+  },
+  {
+    "objectID": "license.html",
+    "href": "license.html",
+    "title": "License",
+    "section": "",
+    "text": "Book Content\nThe text, code examples, and figures in R and the AutoDesk Platform are licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).\nYou are free to:\nUnder the following terms:\nFull license text: https://creativecommons.org/licenses/by/4.0/",
+    "crumbs": [
+      "Front Matter",
+      "License"
+    ]
+  },
+  {
+    "objectID": "license.html#book-content",
+    "href": "license.html#book-content",
+    "title": "License",
+    "section": "",
+    "text": "Share — copy and redistribute the material in any medium or format\nAdapt — remix, transform, and build upon the material for any purpose, even commercially\n\n\n\nAttribution — You must give appropriate credit to the original author (Paul Govan), provide a link to the license, and indicate if changes were made.",
+    "crumbs": [
+      "Front Matter",
+      "License"
+    ]
+  },
+  {
+    "objectID": "license.html#autodeskr-package",
+    "href": "license.html#autodeskr-package",
+    "title": "License",
+    "section": "AutoDeskR Package",
+    "text": "AutoDeskR Package\nThe AutoDeskR R package is distributed under the MIT License.\nMIT License\n\nCopyright (c) Paul Govan\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "crumbs": [
+      "Front Matter",
+      "License"
+    ]
+  },
+  {
+    "objectID": "license.html#autodesk-platform-services",
+    "href": "license.html#autodesk-platform-services",
+    "title": "License",
+    "section": "AutoDesk Platform Services",
+    "text": "AutoDesk Platform Services\nUse of the AutoDesk Platform Services (APS) APIs is subject to AutoDesk’s own Terms of Service and Developer Terms. This book is an independent work and is not affiliated with or endorsed by AutoDesk, Inc.",
+    "crumbs": [
+      "Front Matter",
+      "License"
+    ]
+  },
+  {
+    "objectID": "authentication.html#rate-limits",
+    "href": "authentication.html#rate-limits",
+    "title": "1  Authentication",
+    "section": "2.3 Rate Limits",
+    "text": "2.3 Rate Limits\nAPS enforces per-application rate limits that vary by endpoint (typically 60–300 requests per minute). When a limit is exceeded the API returns HTTP 429:\n\nresp$status_code\n#&gt; [1] 429\nresp$content$errorCode\n#&gt; [1] \"TOO-MANY-REQUESTS\"\nresp$content$developerMessage\n#&gt; [1] \"Rate limit exceeded. Retry after 60 seconds.\"\n\nUse the retry helper below around any call that may be polled frequently (e.g. checkFile(), checkPdf()):\n\naps_retry &lt;- function(fn, max_tries = 3, wait = 10) {\n  for (i in seq_len(max_tries)) {\n    resp &lt;- fn()\n    if (!identical(resp$status_code, 429L)) return(resp)\n    message(\"Rate limited — waiting \", wait, \"s (attempt \", i, \"/\", max_tries, \")\")\n    Sys.sleep(wait)\n  }\n  stop(\"Max retries exceeded after \", max_tries, \" attempts.\")\n}\n\n# Example: poll translation status with automatic backoff\nresp &lt;- aps_retry(function() checkFile(urn = myEncodedUrn, token = myToken))",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Authentication</span>"
+    ]
+  },
+  {
+    "objectID": "reality-capture.html",
+    "href": "reality-capture.html",
+    "title": "5  Reality Capture",
+    "section": "",
+    "text": "6 Reality Capture\nThe Reality Capture API (also called Photo-to-3D) converts a set of overlapping photographs into a 3D mesh or point cloud. You upload images — from a phone, DSLR, or drone — and AutoDesk’s cloud photogrammetry engine stitches them into a georeferenced 3D model you can download or feed into the viewer.\nCommon use cases include:",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Reality Capture</span>"
+    ]
+  },
+  {
+    "objectID": "reality-capture.html#before-you-start",
+    "href": "reality-capture.html#before-you-start",
+    "title": "5  Reality Capture",
+    "section": "6.1 Before You Start",
+    "text": "6.1 Before You Start\n\n\n\n\n\n\nTip\n\n\n\nImage guidelines for best results:\n\nMinimum 20 images per scene; 50–200 is typical for a small structure\n60–80 % overlap between adjacent images — every part of the subject should appear in at least 3 photos\nConsistent, diffuse lighting; avoid harsh shadows or direct sun reflections\nKeep the camera moving around the object, not zooming in from a fixed point\nGPS/EXIF tags are optional but improve georeferencing accuracy",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Reality Capture</span>"
+    ]
+  },
+  {
+    "objectID": "reality-capture.html#step-1-authenticate",
+    "href": "reality-capture.html#step-1-authenticate",
+    "title": "5  Reality Capture",
+    "section": "6.2 Step 1: Authenticate",
+    "text": "6.2 Step 1: Authenticate\nReality Capture requires the data:read and data:write scopes:\n\nlibrary(AutoDeskR)\n\nresp    &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"data:read data:write\"\n)\nmyToken &lt;- resp$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Reality Capture</span>"
+    ]
+  },
+  {
+    "objectID": "reality-capture.html#step-2-create-a-photoscene",
+    "href": "reality-capture.html#step-2-create-a-photoscene",
+    "title": "5  Reality Capture",
+    "section": "6.3 Step 2: Create a Photoscene",
+    "text": "6.3 Step 2: Create a Photoscene\nA photoscene is the container for your images and the resulting 3D output. The format parameter determines what file type is produced:\n\n\n\nFormat\nOutput\n\n\n\n\n\"rcm\"\nAutoDesk ReCap project (default)\n\n\n\"rcs\"\nReCap point cloud scan\n\n\n\"obj\"\nWavefront OBJ mesh\n\n\n\"ortho\"\nOrthophoto + DSM GeoTIFF\n\n\n\"report\"\nPDF quality report\n\n\n\n\nps             &lt;- createPhotoscene(name = \"site-survey-2026\", format = \"obj\", token = myToken)\nmyPhotosceneId &lt;- ps$content$photoscene$photosceneid\nps$content\n#&gt; $photoscene\n#&gt; $photoscene$photosceneid\n#&gt; [1] \"K2RDAPFIN0OPKGU9B65Q2TJD\"\n#&gt;\n#&gt; $photoscene$scenename\n#&gt; [1] \"site-survey-2026\"\n#&gt;\n#&gt; $photoscene$scenelink\n#&gt; [1] \"https://developer.api.autodesk.com/photo-to-3d/v1/photoscene/K2RDAPFIN0OPKGU9B65Q2TJD\"",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Reality Capture</span>"
+    ]
+  },
+  {
+    "objectID": "reality-capture.html#step-3-upload-images",
+    "href": "reality-capture.html#step-3-upload-images",
+    "title": "5  Reality Capture",
+    "section": "6.4 Step 3: Upload Images",
+    "text": "6.4 Step 3: Upload Images\nPass a character vector of local file paths. AutoDeskR transfers them in a single multipart POST. JPEG and PNG are supported.\n\nimage_files &lt;- c(\n  \"photos/site_001.jpg\",\n  \"photos/site_002.jpg\",\n  \"photos/site_003.jpg\"\n  # ... up to 1000 images per scene\n)\n\nimgs &lt;- uploadImages(\n  photoscene_id = myPhotosceneId,\n  files         = image_files,\n  token         = myToken\n)\nimgs$content\n#&gt; $Files\n#&gt; $Files$file\n#&gt; $Files$file[[1]]\n#&gt; $Files$file[[1]]$filename\n#&gt; [1] \"site_001.jpg\"\n#&gt;\n#&gt; $Files$file[[1]]$fileid\n#&gt; [1] \"A1B2C3D4E5F6G7H8\"\n#&gt;\n#&gt; $Files$file[[1]]$filesize\n#&gt; [1] 4718592\n#&gt;\n#&gt; $Files$file[[2]]$filename\n#&gt; [1] \"site_002.jpg\"\n#&gt;\n#&gt; $Files$file[[2]]$fileid\n#&gt; [1] \"B2C3D4E5F6G7H8I9\"\n#&gt;\n#&gt; $Files$file[[2]]$filesize\n#&gt; [1] 5242880\n\n\n\n\n\n\n\nWarning\n\n\n\nFree-tier limits: The APS free tier allows a maximum of 1 000 images per photoscene and 10 photoscenes per month. Exceeding these limits returns a 403 Forbidden response. Upgrade to a paid plan for higher quotas.",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Reality Capture</span>"
+    ]
+  },
+  {
+    "objectID": "reality-capture.html#step-4-start-processing",
+    "href": "reality-capture.html#step-4-start-processing",
+    "title": "5  Reality Capture",
+    "section": "6.5 Step 4: Start Processing",
+    "text": "6.5 Step 4: Start Processing\nOnce all images are uploaded, trigger the reconstruction:\n\nproc &lt;- processPhotoscene(photoscene_id = myPhotosceneId, token = myToken)\nproc$content\n#&gt; $photoscene\n#&gt; $photoscene$photosceneid\n#&gt; [1] \"K2RDAPFIN0OPKGU9B65Q2TJD\"\n#&gt;\n#&gt; $photoscene$progress\n#&gt; [1] \"0\"\n#&gt;\n#&gt; $photoscene$progressmsg\n#&gt; [1] \"Queued\"",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Reality Capture</span>"
+    ]
+  },
+  {
+    "objectID": "reality-capture.html#step-5-poll-for-completion",
+    "href": "reality-capture.html#step-5-poll-for-completion",
+    "title": "5  Reality Capture",
+    "section": "6.6 Step 5: Poll for Completion",
+    "text": "6.6 Step 5: Poll for Completion\n\n6.6.1 Option A — Manual polling\n\nstatus &lt;- checkPhotoscene(photoscene_id = myPhotosceneId, token = myToken)\nstatus$content$photoscene\n#&gt; $photosceneid\n#&gt; [1] \"K2RDAPFIN0OPKGU9B65Q2TJD\"\n#&gt;\n#&gt; $progress\n#&gt; [1] \"75\"\n#&gt;\n#&gt; $progressmsg\n#&gt; [1] \"Processing geometry\"\n\nprogress is a string from \"0\" to \"100\". When it reaches \"100\" the model is ready.\n\n\n6.6.2 Option B — Block until done (recommended)\nwaitForPhotoscene() polls every interval seconds and returns when progress == \"100\":\n\ndone &lt;- waitForPhotoscene(\n  photoscene_id = myPhotosceneId,\n  token         = myToken,\n  interval      = 60,     # poll every 60 s\n  timeout       = 3600,   # give up after 1 hour\n  verbose       = TRUE\n)\n#&gt; Reality Capture progress: 0 - Queued\n#&gt; Reality Capture progress: 10 - Uploading files\n#&gt; Reality Capture progress: 35 - Calibrating cameras\n#&gt; Reality Capture progress: 60 - Building point cloud\n#&gt; Reality Capture progress: 85 - Generating mesh\n#&gt; Reality Capture progress: 100 - Done\ndone$content$photoscene$progress\n#&gt; [1] \"100\"\n\n\n\n\n\n\n\nWarning\n\n\n\nProcessing time depends on image count and scene complexity. A 50-image scene typically takes 5–15 minutes; 500 images may take over an hour. Set timeout to at least twice your expected processing time to avoid premature errors.",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Reality Capture</span>"
+    ]
+  },
+  {
+    "objectID": "reality-capture.html#step-6-download-the-output-mesh",
+    "href": "reality-capture.html#step-6-download-the-output-mesh",
+    "title": "5  Reality Capture",
+    "section": "6.7 Step 6: Download the Output Mesh",
+    "text": "6.7 Step 6: Download the Output Mesh\nOnce progress == \"100\", retrieve the download link from the completed photoscene response:\n\n# The output URL is embedded in the final checkPhotoscene response\noutput_url &lt;- done$content$photoscene$scenelink\n#&gt; [1] \"https://developer.api.autodesk.com/photo-to-3d/v1/photoscene/K2RDAPFIN0OPKGU9B65Q2TJD/properties\"\n\n# Download the OBJ mesh\ndownload.file(\n  url      = paste0(output_url, \"/output.obj\"),\n  destfile = \"site-survey-2026.obj\",\n  headers  = c(Authorization = paste(\"Bearer\", myToken))\n)\n\nThe downloaded OBJ file can be imported into R with the rgl or Rvcg packages for 3D visualisation and analysis, or translated further via the Model Derivative API.",
+    "crumbs": [
+      "Core APIs",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Reality Capture</span>"
+    ]
+  },
+  {
+    "objectID": "data-management-acc.html",
+    "href": "data-management-acc.html",
+    "title": "7  ACC Data Management",
+    "section": "",
+    "text": "8 ACC Data Management\nThe Data Management (BIM 360 / ACC) API exposes a hierarchical project file structure used by AutoDesk Construction Cloud (ACC) and BIM 360. Unlike the Object Storage Service (OSS) covered in the Data Management chapter — which uses flat buckets — the ACC hierarchy organises files into Hubs → Projects → Folders → Items → Versions.\nThis structure enables per-project permissions, version history, and folder-level organisation across large teams.",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>ACC Data Management</span>"
+    ]
+  },
+  {
+    "objectID": "data-management-acc.html#why-it-matters",
+    "href": "data-management-acc.html#why-it-matters",
+    "title": "7  ACC Data Management",
+    "section": "8.1 Why It Matters",
+    "text": "8.1 Why It Matters\nThe OSS bucket API is ideal for programmatic file processing pipelines where you manage storage yourself. The ACC hierarchy is required when you need to:\n\nNavigate files that live inside a BIM 360 or ACC project\nAccess a specific version of a model checked in by a team member\nRespect folder-level access controls configured by a project admin",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>ACC Data Management</span>"
+    ]
+  },
+  {
+    "objectID": "data-management-acc.html#planned-functions",
+    "href": "data-management-acc.html#planned-functions",
+    "title": "7  ACC Data Management",
+    "section": "8.2 Planned Functions",
+    "text": "8.2 Planned Functions\n\n\n\n\n\n\n\nFunction\nDescription\n\n\n\n\nlistHubs(token)\nList all hubs (accounts) accessible to the token\n\n\ngetHub(token, hub_id)\nRetrieve details for a single hub\n\n\nlistProjects(token, hub_id)\nList all projects in a hub\n\n\ngetProject(token, hub_id, project_id)\nRetrieve project details\n\n\nlistFolders(token, project_id, folder_id)\nList subfolders of a folder\n\n\nlistFolderContents(token, project_id, folder_id)\nList items (files) in a folder\n\n\nlistItems(token, project_id)\nList all items in a project\n\n\ngetItem(token, project_id, item_id)\nRetrieve item details\n\n\ngetItemVersions(token, project_id, item_id)\nList all versions of an item",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>ACC Data Management</span>"
+    ]
+  },
+  {
+    "objectID": "data-management-acc.html#planned-workflow",
+    "href": "data-management-acc.html#planned-workflow",
+    "title": "7  ACC Data Management",
+    "section": "8.3 Planned Workflow",
+    "text": "8.3 Planned Workflow\n\n# (Functions not yet implemented — illustrative only)\ntoken    &lt;- getToken(id, secret, scope = \"data:read\")\n\nhubs     &lt;- listHubs(token)\nhub_id   &lt;- hubs$content$data[[1]]$id\n\nprojects &lt;- listProjects(token, hub_id = hub_id)\nproj_id  &lt;- projects$content$data[[1]]$id\n\nfolders  &lt;- listFolderContents(token, project_id = proj_id, folder_id = \"root\")\nitem_id  &lt;- folders$content$data[[1]]$id\n\nversions &lt;- getItemVersions(token, project_id = proj_id, item_id = item_id)\nurn      &lt;- versions$content$data[[1]]$relationships$derivatives$data$id\n\nOnce you have the URN from getItemVersions(), it can be passed directly to the Model Derivative functions for translation and metadata extraction.",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>ACC Data Management</span>"
+    ]
+  },
+  {
+    "objectID": "construction-issues.html",
+    "href": "construction-issues.html",
+    "title": "8  Construction Issues",
+    "section": "",
+    "text": "9 Construction Issues\nThe Construction Issues API provides programmatic access to the issue tracking system in AutoDesk Construction Cloud (ACC). Issues are used by field teams to log defects, RFIs, observations, and punch-list items against a project.\nFrom R, this API enables you to pull all open issues into a data frame, build quality dashboards, track resolution rates over time, or trigger alerts when critical issues are created.",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Construction Issues</span>"
+    ]
+  },
+  {
+    "objectID": "construction-issues.html#why-it-matters",
+    "href": "construction-issues.html#why-it-matters",
+    "title": "8  Construction Issues",
+    "section": "9.1 Why It Matters",
+    "text": "9.1 Why It Matters\nConstruction projects generate hundreds to thousands of issues. R’s data manipulation and visualisation tools — dplyr, ggplot2, Shiny — are well suited to analysing this data, but only if it can be accessed programmatically. The Construction Issues API provides that access.\nExample analyses: - Distribution of open vs. closed issues by trade - Average time-to-resolution by issue type - Issue heat map by location (floor / zone) - Automated weekly issue summary emailed via blastula",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Construction Issues</span>"
+    ]
+  },
+  {
+    "objectID": "construction-issues.html#planned-functions",
+    "href": "construction-issues.html#planned-functions",
+    "title": "8  Construction Issues",
+    "section": "9.2 Planned Functions",
+    "text": "9.2 Planned Functions\n\n\n\n\n\n\n\nFunction\nDescription\n\n\n\n\nlistIssues(token, project_id, ...)\nList all issues in a project (paginated)\n\n\ngetIssue(token, project_id, issue_id)\nRetrieve a single issue with full details\n\n\ncreateIssue(token, project_id, ...)\nCreate a new issue\n\n\nupdateIssue(token, project_id, issue_id, ...)\nUpdate an issue’s status, assignee, or due date\n\n\nlistIssueTypes(token, project_id)\nList available issue types and subtypes\n\n\nlistIssueCustomAttributes(token, project_id)\nList custom attribute definitions",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Construction Issues</span>"
+    ]
+  },
+  {
+    "objectID": "construction-issues.html#planned-workflow",
+    "href": "construction-issues.html#planned-workflow",
+    "title": "8  Construction Issues",
+    "section": "9.3 Planned Workflow",
+    "text": "9.3 Planned Workflow\n\n# (Functions not yet implemented — illustrative only)\nlibrary(AutoDeskR)\nlibrary(dplyr)\nlibrary(ggplot2)\n\ntoken      &lt;- getToken(id, secret, scope = \"data:read\")\nproject_id &lt;- \"b.abc12345-0000-0000-0000-000000000000\"\n\n# Pull all issues\nissues_raw &lt;- listIssues(token, project_id = project_id, limit = 200)\nissues_df  &lt;- issues_raw$content$results\n\n# Summarise by status\nissues_df |&gt;\n  count(status) |&gt;\n  ggplot(aes(x = reorder(status, n), y = n)) +\n  geom_col(fill = \"#6aaa2a\") +\n  coord_flip() +\n  labs(title = \"Issues by Status\", x = NULL, y = \"Count\") +\n  theme_minimal()",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Construction Issues</span>"
+    ]
+  },
+  {
+    "objectID": "construction-issues.html#issue-object-structure",
+    "href": "construction-issues.html#issue-object-structure",
+    "title": "8  Construction Issues",
+    "section": "9.4 Issue Object Structure",
+    "text": "9.4 Issue Object Structure\nEach issue returned by the API has the following key fields:\n\n\n\n\n\n\n\nField\nDescription\n\n\n\n\nid\nUnique issue identifier\n\n\ntitle\nShort description\n\n\nstatus\nopen, in_review, closed\n\n\nissueType\nType (e.g. \"Defect\", \"RFI\")\n\n\nassignedTo\nAssignee user ID\n\n\ndueDate\nISO 8601 date string\n\n\ncreatedAt\nCreation timestamp\n\n\nupdatedAt\nLast update timestamp\n\n\nlocationDescription\nFree-text location (e.g. \"Level 3, Grid C4\")",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Construction Issues</span>"
+    ]
+  },
+  {
+    "objectID": "account-admin.html",
+    "href": "account-admin.html",
+    "title": "9  Account Admin",
+    "section": "",
+    "text": "10 Account Admin\nThe Account Admin API allows administrators to manage ACC accounts, projects, users, and companies programmatically. This is the API behind the “Account Admin” module in the ACC web interface.\nFor organisations that provision dozens of projects and hundreds of users, R scripting can replace tedious manual administration: bulk-create projects from a spreadsheet, synchronise user lists from an HR system, or audit permissions across an entire portfolio.",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Account Admin</span>"
+    ]
+  },
+  {
+    "objectID": "account-admin.html#why-it-matters",
+    "href": "account-admin.html#why-it-matters",
+    "title": "9  Account Admin",
+    "section": "10.1 Why It Matters",
+    "text": "10.1 Why It Matters\n\n\n\n\n\n\n\n\nTask\nWithout API\nWith API\n\n\n\n\nCreate 20 projects\n20 × manual form fills\nOne R script reading from a data frame\n\n\nAdd 50 users to a project\n50 × manual invitations\nlapply() over a user list\n\n\nAudit who has admin rights\nManual review per project\nlistUsers() + dplyr filter",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Account Admin</span>"
+    ]
+  },
+  {
+    "objectID": "account-admin.html#planned-functions",
+    "href": "account-admin.html#planned-functions",
+    "title": "9  Account Admin",
+    "section": "10.2 Planned Functions",
+    "text": "10.2 Planned Functions\n\n\n\n\n\n\n\nFunction\nDescription\n\n\n\n\nlistAccounts(token)\nList all BIM 360 / ACC accounts accessible to the token\n\n\ncreateProject(token, account_id, ...)\nCreate a new project in an account\n\n\ngetProject(token, account_id, project_id)\nRetrieve project details\n\n\nupdateProject(token, account_id, project_id, ...)\nUpdate project metadata\n\n\nlistUsers(token, account_id, project_id)\nList users in a project\n\n\naddUser(token, account_id, project_id, ...)\nAdd a user with a specified role\n\n\nremoveUser(token, account_id, project_id, user_id)\nRemove a user from a project\n\n\nlistCompanies(token, account_id)\nList companies / subcontractors in the account\n\n\naddCompany(token, account_id, ...)\nCreate a new company record",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Account Admin</span>"
+    ]
+  },
+  {
+    "objectID": "account-admin.html#planned-workflow",
+    "href": "account-admin.html#planned-workflow",
+    "title": "9  Account Admin",
+    "section": "10.3 Planned Workflow",
+    "text": "10.3 Planned Workflow\n\n# (Functions not yet implemented — illustrative only)\n\n# Bulk-create projects from a data frame\nlibrary(AutoDeskR)\n\ntoken      &lt;- getToken(id, secret, scope = \"account:read account:write\")\naccount_id &lt;- \"abc12345-0000-0000-0000-000000000000\"\n\n# Read project list from a CSV\nprojects_to_create &lt;- read.csv(\"new_projects.csv\")\n# Columns: name, type, start_date, end_date, timezone\n\nfor (i in seq_len(nrow(projects_to_create))) {\n  row &lt;- projects_to_create[i, ]\n  createProject(\n    token      = token,\n    account_id = account_id,\n    name       = row$name,\n    type       = row$type,\n    start_date = row$start_date,\n    end_date   = row$end_date\n  )\n  Sys.sleep(0.5)   # respect rate limits\n}\n\n# Audit: find all users with admin role across all projects\nall_projects &lt;- listProjects(token, account_id = account_id)$content$data\nadmins &lt;- lapply(all_projects, function(p) {\n  users &lt;- listUsers(token, account_id = account_id, project_id = p$id)$content$results\n  subset(users, role == \"admin\")\n})\nadmins_df &lt;- do.call(rbind, admins)",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Account Admin</span>"
+    ]
+  },
+  {
+    "objectID": "account-admin.html#required-scopes",
+    "href": "account-admin.html#required-scopes",
+    "title": "9  Account Admin",
+    "section": "10.4 Required Scopes",
+    "text": "10.4 Required Scopes\nAccount Admin functions require the account:read and/or account:write scopes depending on whether you are reading or modifying data. These scopes must be enabled for your APS application in the developer portal.",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Account Admin</span>"
+    ]
+  },
+  {
+    "objectID": "webhooks.html",
+    "href": "webhooks.html",
+    "title": "10  Webhooks",
+    "section": "",
+    "text": "11 Webhooks\nThe Webhooks API lets APS push HTTP notifications to a URL you control whenever a specified event occurs — for example, when a file translation completes, a new model version is published, or a construction issue changes status.\nUsing webhooks eliminates the need to poll checkFile() or checkPdf() in a loop. Instead, APS calls your server the moment the event fires.",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Webhooks</span>"
+    ]
+  },
+  {
+    "objectID": "webhooks.html#why-it-matters",
+    "href": "webhooks.html#why-it-matters",
+    "title": "10  Webhooks",
+    "section": "11.1 Why It Matters",
+    "text": "11.1 Why It Matters\nPolling works fine for interactive sessions, but in production pipelines it wastes API quota and adds latency. A webhook-driven pipeline looks like:\nUpload file → POST /webhooks (register callback)\n            ↓ (APS fires event when translation done)\n     Your server receives POST → trigger downstream R job\nThis is especially useful for automated reporting pipelines where a new DWG published to ACC should automatically trigger translation, metadata extraction, and a Shiny dashboard refresh.",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Webhooks</span>"
+    ]
+  },
+  {
+    "objectID": "webhooks.html#supported-event-types",
+    "href": "webhooks.html#supported-event-types",
+    "title": "10  Webhooks",
+    "section": "11.2 Supported Event Types",
+    "text": "11.2 Supported Event Types\n\n\n\n\n\n\n\nSystem\nEvent\n\n\n\n\ndata\ndm.version.added — new file version created\n\n\ndata\ndm.version.modified — file version updated\n\n\nderivative\nextraction.finished — Model Derivative job complete\n\n\nderivative\nextraction.failed — Model Derivative job failed\n\n\nautodesk.construction.issues\nissue.created — new issue created\n\n\nautodesk.construction.issues\nissue.updated — issue status changed",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Webhooks</span>"
+    ]
+  },
+  {
+    "objectID": "webhooks.html#planned-functions",
+    "href": "webhooks.html#planned-functions",
+    "title": "10  Webhooks",
+    "section": "11.3 Planned Functions",
+    "text": "11.3 Planned Functions\n\n\n\n\n\n\n\nFunction\nDescription\n\n\n\n\ncreateWebhook(token, system, event, callback_url, ...)\nRegister a new webhook subscription\n\n\nlistWebhooks(token, system, event)\nList active subscriptions\n\n\ngetWebhook(token, hook_id)\nRetrieve a single subscription\n\n\nupdateWebhook(token, hook_id, ...)\nUpdate a webhook (e.g. change callback URL)\n\n\ndeleteWebhook(token, hook_id)\nRemove a subscription",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Webhooks</span>"
+    ]
+  },
+  {
+    "objectID": "webhooks.html#planned-workflow",
+    "href": "webhooks.html#planned-workflow",
+    "title": "10  Webhooks",
+    "section": "11.4 Planned Workflow",
+    "text": "11.4 Planned Workflow\n\n# (Functions not yet implemented — illustrative only)\ntoken &lt;- getToken(id, secret, scope = \"data:read data:write\")\n\n# Register: call my-server.example.com when any derivative extraction finishes\nhook &lt;- createWebhook(\n  token        = token,\n  system       = \"derivative\",\n  event        = \"extraction.finished\",\n  callback_url = \"https://my-server.example.com/aps-hook\",\n  scope        = list(workflow = \"my-pipeline\")\n)\nhook_id &lt;- hook$content$hookId\n\n# Later — list active hooks\nhooks &lt;- listWebhooks(token, system = \"derivative\")\n\n# Clean up\ndeleteWebhook(token, hook_id = hook_id)\n\nYour callback server receives a POST with a JSON payload containing the event type, URN of the affected file, and a timestamp. Parse it and trigger downstream processing accordingly.",
+    "crumbs": [
+      "Project & Account APIs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Webhooks</span>"
+    ]
+  },
+  {
+    "objectID": "case-study.html",
+    "href": "case-study.html",
+    "title": "11  Case Study: DWG to Shiny Dashboard",
+    "section": "",
+    "text": "12 Case Study: From DWG to Shiny Dashboard\nThis chapter ties every API together in a single narrative. Starting from a raw DWG file on disk, we will authenticate, upload, translate, extract metadata, visualise layer data with ggplot2, and embed the live 3D model in a Shiny dashboard — all from R.\nThe DWG file used throughout is aerial.dwg, the sample file bundled with AutoDeskR:\ndwg_path &lt;- system.file(\"samples/aerial.dwg\", package = \"AutoDeskR\")",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Case Study: DWG to Shiny Dashboard</span>"
+    ]
+  },
+  {
+    "objectID": "case-study.html#step-1-authenticate-with-combined-scopes",
+    "href": "case-study.html#step-1-authenticate-with-combined-scopes",
+    "title": "11  Case Study: DWG to Shiny Dashboard",
+    "section": "12.1 Step 1: Authenticate with Combined Scopes",
+    "text": "12.1 Step 1: Authenticate with Combined Scopes\nEvery API used in this case study requires a different scope. Request them all upfront in a single token:\n\nlibrary(AutoDeskR)\nlibrary(ggplot2)\nlibrary(shiny)\n\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"data:read data:write bucket:create bucket:read code:all\"\n)\nmyToken &lt;- resp$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Case Study: DWG to Shiny Dashboard</span>"
+    ]
+  },
+  {
+    "objectID": "case-study.html#step-2-create-a-bucket-and-upload-the-dwg",
+    "href": "case-study.html#step-2-create-a-bucket-and-upload-the-dwg",
+    "title": "11  Case Study: DWG to Shiny Dashboard",
+    "section": "12.2 Step 2: Create a Bucket and Upload the DWG",
+    "text": "12.2 Step 2: Create a Bucket and Upload the DWG\n\n# Create a persistent bucket\nbucket &lt;- makeBucket(token = myToken, bucket = \"case-study-bucket\", policy = \"persistent\")\nbucket$content$bucketKey\n#&gt; [1] \"case-study-bucket\"\n\n# Upload the DWG\nupload &lt;- uploadFile(\n  file   = dwg_path,\n  token  = myToken,\n  bucket = \"case-study-bucket\"\n)\nmyUrn &lt;- upload$content$objectId\nupload$content$objectKey\n#&gt; [1] \"aerial.dwg\"\nupload$content$size\n#&gt; [1] 3145728",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Case Study: DWG to Shiny Dashboard</span>"
+    ]
+  },
+  {
+    "objectID": "case-study.html#step-3-translate-to-svf",
+    "href": "case-study.html#step-3-translate-to-svf",
+    "title": "11  Case Study: DWG to Shiny Dashboard",
+    "section": "12.3 Step 3: Translate to SVF",
+    "text": "12.3 Step 3: Translate to SVF\nSVF is the format required by the Viewer and for metadata extraction. Encode the URN, submit the job, and wait for it to finish:\n\nmyEncodedUrn &lt;- jsonlite::base64_enc(myUrn)\n\n# Submit translation\ntranslateSvf(urn = myEncodedUrn, token = myToken)$content$result\n#&gt; [1] \"created\"\n\n# Poll until done\nrepeat {\n  status &lt;- checkFile(urn = myEncodedUrn, token = myToken)\n  cat(\"Status:\", status$content$status, \"\\n\")\n  if (status$content$status == \"success\") break\n  Sys.sleep(10)\n}\n#&gt; Status: pending\n#&gt; Status: inprogress\n#&gt; Status: inprogress\n#&gt; Status: success",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Case Study: DWG to Shiny Dashboard</span>"
+    ]
+  },
+  {
+    "objectID": "case-study.html#step-4-extract-layer-metadata",
+    "href": "case-study.html#step-4-extract-layer-metadata",
+    "title": "11  Case Study: DWG to Shiny Dashboard",
+    "section": "12.4 Step 4: Extract Layer Metadata",
+    "text": "12.4 Step 4: Extract Layer Metadata\nRetrieve the GUID, then pull the full object property set to get per-layer geometry data:\n\n# Get the viewable GUID\nmeta   &lt;- getMetadata(urn = myEncodedUrn, token = myToken)\nmyGuid &lt;- meta$content$data$metadata[[1]]$guid\nmyGuid\n#&gt; [1] \"a7b3c9d2-4e1f-4a8b-b6c2-9d3e7f5a1b4c\"\n\n# Retrieve all object properties\nprops &lt;- getData(guid = myGuid, urn = myEncodedUrn, token = myToken)\n\n# Extract layer name and bounding-box area for each object\nlayer_data &lt;- lapply(props$content$data$collection, function(obj) {\n  layer &lt;- obj$properties[[\"Layer and Material\"]][[\"Layer\"]]\n  xmin  &lt;- obj$properties$Geometry[[\"Bounding Box Min X\"]]\n  xmax  &lt;- obj$properties$Geometry[[\"Bounding Box Max X\"]]\n  ymin  &lt;- obj$properties$Geometry[[\"Bounding Box Min Y\"]]\n  ymax  &lt;- obj$properties$Geometry[[\"Bounding Box Max Y\"]]\n  if (!is.null(layer) && !is.null(xmin)) {\n    data.frame(\n      layer = layer,\n      area  = (xmax - xmin) * (ymax - ymin)\n    )\n  }\n})\n\nlayers_df &lt;- do.call(rbind, Filter(Negate(is.null), layer_data))\nhead(layers_df)\n#&gt;     layer        area\n#&gt; 1  A-SITE  196842.73\n#&gt; 2  A-BLDG   42301.18\n#&gt; 3  A-ROAD   28473.09\n#&gt; 4  A-PARK   15621.44\n#&gt; 5  A-UTIL    8904.72\n#&gt; 6  A-ANNO    3215.01",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Case Study: DWG to Shiny Dashboard</span>"
+    ]
+  },
+  {
+    "objectID": "case-study.html#step-5-visualise-with-ggplot2",
+    "href": "case-study.html#step-5-visualise-with-ggplot2",
+    "title": "11  Case Study: DWG to Shiny Dashboard",
+    "section": "12.5 Step 5: Visualise with ggplot2",
+    "text": "12.5 Step 5: Visualise with ggplot2\n\n# Aggregate area by layer\nlayer_totals &lt;- aggregate(area ~ layer, data = layers_df, FUN = sum)\nlayer_totals &lt;- layer_totals[order(-layer_totals$area), ]\n\nggplot(layer_totals, aes(x = reorder(layer, area), y = area / 1000)) +\n  geom_col(fill = \"#6aaa2a\") +\n  coord_flip() +\n  labs(\n    title    = \"Bounding-Box Area by DWG Layer\",\n    subtitle = \"aerial.dwg — AutoDeskR sample file\",\n    x        = \"Layer\",\n    y        = expression(\"Area (×10\"^3 * \" drawing units²)\")\n  ) +\n  theme_minimal(base_size = 13)\n\n\n\n\nBar chart showing bounding-box area by DWG layer, with A-SITE dominating at ~197k units²",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Case Study: DWG to Shiny Dashboard</span>"
+    ]
+  },
+  {
+    "objectID": "case-study.html#step-6-build-the-shiny-dashboard",
+    "href": "case-study.html#step-6-build-the-shiny-dashboard",
+    "title": "11  Case Study: DWG to Shiny Dashboard",
+    "section": "12.6 Step 6: Build the Shiny Dashboard",
+    "text": "12.6 Step 6: Build the Shiny Dashboard\nCombine the ggplot2 chart and the embedded 3D viewer in a two-tab Shiny app:\n\nui &lt;- shiny::fluidPage(\n  shiny::titlePanel(\"Aerial Site — AutoDeskR Case Study\"),\n  shiny::tabsetPanel(\n    shiny::tabPanel(\n      \"3D Model\",\n      viewerUI(\"model\", urn = myEncodedUrn, token = myToken)\n    ),\n    shiny::tabPanel(\n      \"Layer Analysis\",\n      shiny::plotOutput(\"layer_chart\", height = \"500px\")\n    )\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$layer_chart &lt;- shiny::renderPlot({\n    ggplot(layer_totals, aes(x = reorder(layer, area), y = area / 1000)) +\n      geom_col(fill = \"#6aaa2a\") +\n      coord_flip() +\n      labs(\n        title = \"Bounding-Box Area by DWG Layer\",\n        x = \"Layer\",\n        y = expression(\"Area (×10\"^3 * \" units²)\")\n      ) +\n      theme_minimal(base_size = 13)\n  })\n}\n\nshiny::shinyApp(ui, server)\n\nThe finished dashboard shows the AutoDesk WebGL viewer on the left tab and the ggplot2 analysis on the right, both driven by data extracted live from the same DWG file through the APS APIs.",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Case Study: DWG to Shiny Dashboard</span>"
+    ]
+  },
+  {
+    "objectID": "case-study.html#summary",
+    "href": "case-study.html#summary",
+    "title": "11  Case Study: DWG to Shiny Dashboard",
+    "section": "12.7 Summary",
+    "text": "12.7 Summary\n\n\n\n\n\n\n\n\nStep\nFunction(s)\nAPI\n\n\n\n\nAuthenticate\ngetToken()\nAuthentication\n\n\nCreate bucket + upload\nmakeBucket(), uploadFile()\nData Management\n\n\nTranslate to SVF\ntranslateSvf(), checkFile()\nModel Derivative\n\n\nExtract properties\ngetMetadata(), getData()\nModel Derivative\n\n\nVisualise\nggplot2\n—\n\n\nEmbed viewer\nviewerUI()\nViewer\n\n\n\nThe full source for this case study is available at github.com/paulgovan/AutoDeskR in the inst/examples/ directory.",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Case Study: DWG to Shiny Dashboard</span>"
+    ]
+  },
+  {
+    "objectID": "reference.html",
+    "href": "reference.html",
+    "title": "12  Function Reference",
+    "section": "",
+    "text": "13 Function Reference\nQuick-lookup table for every exported AutoDeskR function. Click the Chapter link to jump to full documentation and worked examples.",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Function Reference</span>"
+    ]
+  },
+  {
+    "objectID": "reference.html#authentication",
+    "href": "reference.html#authentication",
+    "title": "12  Function Reference",
+    "section": "13.1 Authentication",
+    "text": "13.1 Authentication\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\ngetToken(id, secret, scope)\n—\nid, secret, scope (space-separated string)\n$content$access_token, $content$expires_in",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Function Reference</span>"
+    ]
+  },
+  {
+    "objectID": "reference.html#data-management",
+    "href": "reference.html#data-management",
+    "title": "12  Function Reference",
+    "section": "13.2 Data Management",
+    "text": "13.2 Data Management\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\nmakeBucket(token, bucket, policy)\nbucket:create\nbucket (globally unique key), policy (\"transient\" / \"temporary\" / \"persistent\")\n$content$bucketKey, $content$policyKey\n\n\ncheckBucket(token, bucket)\nbucket:read\nbucket\n$content$bucketKey, $content$policyKey\n\n\ndeleteBucket(token, bucket)\nbucket:delete\nbucket (must be empty)\n$status_code 200\n\n\nuploadFile(file, token, bucket)\ndata:write\nfile (local path, ≤ 100 MB), bucket\n$content$objectId (URN), $content$size\n\n\nuploadFileSigned(file, token, bucket)\ndata:write\nfile (local path, &gt; 100 MB), bucket\n$content$objectId (URN)\n\n\nlistBuckets(token, limit, startAt, region)\nbucket:read\nlimit (default 10), startAt (pagination key), region (\"US\" / \"EMEA\")\n$content$items data frame\n\n\nlistObjects(token, bucket, limit)\ndata:read\nbucket, limit\n$content$items data frame\n\n\ndeleteObject(token, bucket, object)\ndata:write\nbucket, object (filename)\n$status_code 200\n\n\ndownloadFile(urn, output_urn, token, destfile)\ndata:read\nurn (encoded source), output_urn (encoded output), destfile\n$status_code 200",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Function Reference</span>"
+    ]
+  },
+  {
+    "objectID": "reference.html#model-derivative",
+    "href": "reference.html#model-derivative",
+    "title": "12  Function Reference",
+    "section": "13.3 Model Derivative",
+    "text": "13.3 Model Derivative\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\ntranslateObj(urn, token)\ndata:read data:write\nurn (Base-64 encoded)\n$content$result (\"created\"), $content$urn\n\n\ntranslateStl(urn, token)\ndata:read data:write\nurn (Base-64 encoded)\n$content$result, $content$urn\n\n\ntranslateSvf(urn, token)\ndata:read data:write\nurn (Base-64 encoded)\n$content$result, $content$urn\n\n\ncheckFile(urn, token)\ndata:read\nurn (Base-64 encoded)\n$content$status (\"pending\" / \"inprogress\" / \"success\"), $content$progress\n\n\ngetOutputUrn(urn, token)\ndata:read\nurn (raw, not encoded)\n$content$derivatives[[1]]$children[[1]]$urn\n\n\ngetMetadata(urn, token)\ndata:read\nurn (Base-64 encoded)\n$content$data$metadata[[1]]$guid, $content$data$metadata[[1]]$name\n\n\ngetObjectTree(guid, urn, token)\ndata:read\nguid, urn (Base-64 encoded)\n$content$data$objects (nested list)\n\n\ngetData(guid, urn, token)\ndata:read\nguid, urn (Base-64 encoded)\n$content$data$collection (list of objects with properties)",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Function Reference</span>"
+    ]
+  },
+  {
+    "objectID": "reference.html#design-automation",
+    "href": "reference.html#design-automation",
+    "title": "12  Function Reference",
+    "section": "13.4 Design Automation",
+    "text": "13.4 Design Automation\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\nmakePdf(source, destination, token)\ncode:all\nsource (public URL to DWG), destination (public URL for output)\n$content$id (WorkItem ID), $content$status\n\n\ncheckPdf(id, token)\ncode:all\nid (WorkItem ID from makePdf())\n$content$status (\"pending\" / \"inprogress\" / \"success\"), $content$stats",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Function Reference</span>"
+    ]
+  },
+  {
+    "objectID": "reference.html#reality-capture",
+    "href": "reference.html#reality-capture",
+    "title": "12  Function Reference",
+    "section": "13.5 Reality Capture",
+    "text": "13.5 Reality Capture\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\ncreatePhotoscene(name, format, token)\ndata:read data:write\nname (scene label), format (\"rcm\" / \"rcs\" / \"obj\" / \"ortho\" / \"report\")\n$content$photoscene$photosceneid\n\n\nuploadImages(photoscene_id, files, token)\ndata:read data:write\nphotoscene_id, files (character vector of local JPEG/PNG paths)\n$content$Files$file (list of uploaded file records)\n\n\nprocessPhotoscene(photoscene_id, token)\ndata:read data:write\nphotoscene_id\n$content$photoscene$progress (\"0\" on submission)\n\n\ncheckPhotoscene(photoscene_id, token)\ndata:read data:write\nphotoscene_id\n$content$photoscene$progress (string \"0\"–\"100\"), $content$photoscene$progressmsg\n\n\nwaitForPhotoscene(photoscene_id, token, interval, timeout, verbose)\ndata:read data:write\ninterval (seconds between polls, default 30), timeout (max wait in seconds, default 1800)\nFinal checkPhotoscene response when progress == \"100\"",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Function Reference</span>"
+    ]
+  },
+  {
+    "objectID": "reference.html#viewer",
+    "href": "reference.html#viewer",
+    "title": "12  Function Reference",
+    "section": "13.6 Viewer",
+    "text": "13.6 Viewer\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\nviewer3D(urn, token, viewerType)\ndata:read\nurn (Base-64 encoded), viewerType (\"header\" / \"headless\" / \"vr\")\nOpens viewer in browser / Shiny\n\n\nviewerUI(id, urn, token, viewerType)\ndata:read\nid (Shiny module ID), urn, token, viewerType\nShiny UI element for use in fluidPage()",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Function Reference</span>"
+    ]
+  },
+  {
+    "objectID": "reference.html#scope-quick-reference",
+    "href": "reference.html#scope-quick-reference",
+    "title": "12  Function Reference",
+    "section": "13.7 Scope Quick Reference",
+    "text": "13.7 Scope Quick Reference\n\n\n\n\n\n\n\nScope\nUsed by\n\n\n\n\ndata:read\nModel Derivative, Viewer, Reality Capture (read)\n\n\ndata:write\nData Management (upload/delete), Model Derivative (translate), Reality Capture\n\n\nbucket:create\nData Management (makeBucket)\n\n\nbucket:read\nData Management (checkBucket, listBuckets)\n\n\nbucket:delete\nData Management (deleteBucket)\n\n\ncode:all\nDesign Automation",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Function Reference</span>"
+    ]
+  },
+  {
+    "objectID": "reference.html#common-patterns",
+    "href": "reference.html#common-patterns",
+    "title": "12  Function Reference",
+    "section": "13.8 Common Patterns",
+    "text": "13.8 Common Patterns\n\n13.8.1 Base-64 encode a URN\nThe Model Derivative and Viewer APIs require the URN to be Base-64 encoded. Use jsonlite::base64_enc():\n\nmyEncodedUrn &lt;- jsonlite::base64_enc(myUrn)\n\n\n\n13.8.2 Poll until a job finishes\nAll async jobs (translateObj, translateSvf, makePdf, processPhotoscene) follow the same pattern:\n\nrepeat {\n  status &lt;- checkFile(urn = myEncodedUrn, token = myToken)\n  if (status$content$status == \"success\") break\n  Sys.sleep(10)\n}\n\nUse waitForPhotoscene() as a ready-made equivalent for Reality Capture jobs.",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Function Reference</span>"
+    ]
+  }
+]

@@ -1,0 +1,32 @@
+# Motivation {.unnumbered}
+
+## The Problem
+
+AutoDesk Platform Services (APS) is one of the most capable cloud platforms for working with CAD and BIM data. It can translate design files between dozens of formats, extract rich geometry and metadata from models, automate DWG processing at scale, and render 3D models interactively in a browser — all without requiring a local AutoCAD or Revit installation.
+
+The challenge is that APS speaks REST. Every operation — uploading a file, kicking off a translation job, querying model metadata — requires constructing authenticated HTTP requests, handling base64-encoded URNs, polling asynchronous job queues, and parsing nested JSON responses. For engineers and architects who live in R, this friction is enough to make APS feel out of reach.
+
+## The Opportunity
+
+R has become the lingua franca for quantitative work in architecture, engineering, and construction (AEC) analytics. Structural engineers use it to process sensor data. Sustainability consultants use it to model energy performance. BIM managers use it to audit model quality across large portfolios. Shiny brings these analyses to non-technical stakeholders through interactive web applications.
+
+What has been missing is a direct connection between R's data science ecosystem and the 3D model data locked inside CAD files. A DWG file is not just a drawing — it contains geometry, layer structure, material properties, and embedded attributes that are genuinely useful for analysis. An SVF model rendered in a browser can be linked to live data in a Shiny dashboard. A PDF exported from a DWG can be generated automatically as part of a reporting pipeline.
+
+## The Solution
+
+AutoDeskR wraps the APS REST API in idiomatic R functions, handling authentication, encoding, and job polling so that you don't have to. A workflow that would otherwise require dozens of raw `httr` calls and careful reading of API documentation is reduced to a few lines:
+
+``` r
+library(AutoDeskR)
+
+token  <- getToken(id, secret, scope = "data:read data:write bucket:create")
+bucket <- makeBucket(token, "my-project-bucket")
+upload <- uploadFile(token, "model.dwg", bucket$bucketKey)
+job    <- translateFile(token, upload$objectId, "svf")
+```
+
+The goal is not to abstract APS away entirely — understanding the underlying API makes you more effective. Rather, AutoDeskR removes the boilerplate so you can spend your time on the analysis, not the plumbing.
+
+## Who This Book Is For
+
+This book is for R users who work with or alongside CAD and BIM data and want to automate, analyse, or visualise it without leaving the R environment. No prior experience with APS or AutoDesk products is assumed. If you can install an R package and run a script, you have everything you need to get started.

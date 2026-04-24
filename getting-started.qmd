@@ -1,0 +1,134 @@
+# Getting Started {.unnumbered}
+
+This chapter walks through everything you need to make your first successful API call with AutoDeskR: creating an AutoDesk account, registering an application, securing your credentials, and running a minimal end-to-end example.
+
+## System Requirements
+
+-   **R** 4.0 or later
+-   **RStudio** (optional but recommended)
+-   An internet connection
+-   A free AutoDesk account (created below)
+
+## Step 1: Create an AutoDesk Account
+
+If you do not already have an AutoDesk account, register for free at [autodesk.com](https://www.autodesk.com). A standard account gives you access to the APS free tier, which is sufficient for development and moderate usage.
+
+## Step 2: Register an APS Application
+
+APS uses OAuth 2.0. Every API call must be authenticated with a **Client ID** and **Client Secret** that belong to a registered application.
+
+1.  Go to the [APS Developer Portal](https://aps.autodesk.com) and sign in.
+2.  Click **My Apps → Create Application**.
+3.  Give your app a name (e.g., `AutoDeskR-dev`) and select the APIs you plan to use. For the examples in this book, enable **Data Management**, **Model Derivative**, and **Design Automation**.
+4.  Click **Create**. Your **Client ID** and **Client Secret** will be displayed on the app's detail page.
+
+Keep these credentials private. Never commit them to version control.
+
+## Step 3: Store Credentials Securely
+
+The safest way to use credentials in R is through environment variables stored in `~/.Renviron`. Open or create that file:
+
+``` r
+usethis::edit_r_environ()
+```
+
+Add the following lines, replacing the placeholder values:
+
+```
+APS_CLIENT_ID=your_client_id_here
+APS_CLIENT_SECRET=your_client_secret_here
+```
+
+Save the file and restart R. You can then retrieve the values in any script without hard-coding them:
+
+``` r
+id     <- Sys.getenv("APS_CLIENT_ID")
+secret <- Sys.getenv("APS_CLIENT_SECRET")
+```
+
+See the [Authentication](authentication.qmd) chapter for a full explanation of OAuth scopes and token management.
+
+## Step 4: Install AutoDeskR
+
+Install the stable release from CRAN:
+
+``` r
+install.packages("AutoDeskR")
+```
+
+Or install the development version from GitHub:
+
+``` r
+devtools::install_github("paulgovan/AutoDeskR")
+```
+
+## Step 5: Your First Workflow
+
+The diagram below shows the typical flow through the AutoDeskR APIs:
+
+```{mermaid}
+flowchart LR
+  A([Create APS App]) --> B[getToken]
+  B --> C[makeBucket]
+  C --> D[uploadFile]
+  D --> E{Use case}
+  E --> F[translateObj / translateSvf]
+  E --> G[makePdf]
+  E --> H[createPhotoscene]
+  F --> I[viewer3D]
+```
+
+The following code demonstrates a complete round-trip: authenticate, create a storage bucket, upload a file, and verify the upload.
+
+``` r
+library(AutoDeskR)
+
+# Read credentials from environment
+id     <- Sys.getenv("APS_CLIENT_ID")
+secret <- Sys.getenv("APS_CLIENT_SECRET")
+
+# 1. Get an access token with the scopes needed for data management
+token <- getToken(id, secret, scope = "data:read data:write bucket:create bucket:read")
+token$content$access_token
+#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
+token$content$expires_in
+#> [1] 3600
+
+# 2. Create a persistent storage bucket (bucket names must be globally unique)
+bucket <- makeBucket(token, bucketKey = "my-first-autodeskr-bucket", policyKey = "persistent")
+bucket$content$bucketKey
+#> [1] "my-first-autodeskr-bucket"
+bucket$content$policyKey
+#> [1] "persistent"
+
+# 3. Upload a local file (≤100 MB)
+result <- uploadFile(token,
+                     localPath = "path/to/your/file.dwg",
+                     bucketKey = bucket$bucketKey)
+result$content$objectKey
+#> [1] "file.dwg"
+result$content$size
+#> [1] 3145728
+
+# 4. List objects in the bucket to confirm the upload succeeded
+objects <- listObjects(token, bucketKey = bucket$bucketKey)
+print(objects$content$items)
+#>   objectKey                                                         objectId    size
+#> 1  file.dwg  urn:adsk.objects:os.object:my-first-autodeskr-bucket/file.dwg  3145728
+```
+
+If the upload succeeds, `listObjects()` will return a data frame containing your file's `objectKey`, `objectId` (a URN), and size. The `objectId` is used in subsequent chapters when translating the file or loading it in the viewer.
+
+## What's Next
+
+With your credentials configured and a file uploaded, you are ready to explore the full API:
+
+| Chapter | What it covers |
+|---|---|
+| [Authentication](authentication.qmd) | Token scopes, token refresh, rate-limit handling |
+| [Data Management](data-management.qmd) | Buckets, large-file uploads, pagination |
+| [Model Derivative](model-derivative.qmd) | Translating files to OBJ, STL, SVF; extracting metadata |
+| [Design Automation](design-automation.qmd) | DWG-to-PDF conversion pipelines |
+| [Reality Capture](reality-capture.qmd) | Photo-to-3D mesh from drone or phone images |
+| [Viewer](viewer.qmd) | Embedding the 3D viewer in Shiny and R Markdown |
+| [Troubleshooting](troubleshooting.qmd) | Common errors and how to fix them |

@@ -1,0 +1,263 @@
+---
+title: "Model Derivative"
+---
+
+# Model Derivative
+
+The Model Derivative API enables users to translate their designs into different formats and extract model data.
+
+## Translate a File into OBJ Format
+
+First get an access token with the `data:read` and `data:write` scopes. Note that only certain file types can be translated into OBJ format.
+
+```{r}
+#| eval: false
+resp <- getToken(
+  id     = Sys.getenv("client_id"),
+  secret = Sys.getenv("client_secret"),
+  scope  = "data:read data:write"
+)
+myToken <- resp$content$access_token
+#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
+```
+
+The platform requires the file's URN to be Base-64 encoded:
+
+```{r}
+#| eval: false
+myEncodedUrn <- jsonlite::base64_enc(myUrn)
+myEncodedUrn
+#> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
+```
+
+Translate the file into OBJ format:
+
+```{r}
+#| eval: false
+resp <- translateObj(urn = myEncodedUrn, token = myToken)
+resp$content
+#> $result
+#> [1] "created"
+#>
+#> $urn
+#> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
+#>
+#> $acceptedJobs
+#> $acceptedJobs$output
+#> $acceptedJobs$output$formats[[1]]$type
+#> [1] "obj"
+```
+
+::: callout-warning
+**OBJ translation supports a limited set of source formats.** Supported types include IAM, IPT, IPN, DWG, F3D, and FBX. Submitting an unsupported format (e.g. a raw PDF or image) returns a `415 Unsupported Media Type`:
+
+```{r}
+#| eval: false
+resp$status_code
+#> [1] 415
+resp$content$diagnostic
+#> [1] "File type not supported for OBJ translation."
+```
+
+See the [APS supported formats list](https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/supported-translations/) for the full matrix.
+:::
+
+Check the status of the translation:
+
+```{r}
+#| eval: false
+resp <- checkFile(urn = myEncodedUrn, token = myToken)
+resp$content
+#> $type
+#> [1] "design"
+#>
+#> $hasThumbnail
+#> [1] "true"
+#>
+#> $status
+#> [1] "success"
+#>
+#> $progress
+#> [1] "complete"
+#>
+#> $region
+#> [1] "US"
+#>
+#> $urn
+#> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
+```
+
+::: callout-note
+`status` progresses through `"pending"` → `"inprogress"` → `"success"`. Poll `checkFile()` until `status` is `"success"` before attempting to download. Use the `aps_retry()` helper from the [Authentication](authentication.qmd#rate-limits) chapter to handle rate limiting automatically.
+:::
+
+When translation is complete, retrieve the output URN of the translated file (different from the source URN). The response may include URNs for multiple output types (obj, svf, png) — find the one ending in `.obj`:
+
+```{r}
+#| eval: false
+resp <- getOutputUrn(urn = myUrn, token = Sys.getenv("token"))
+myOutputUrn <- resp$content$derivatives[[1]]$children[[1]]$urn
+myOutputUrn
+#> [1] "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQv
+#>       YWVyaWFsLmR3Zw==/output/geometry/bc3339b2-73cd-4fba-9cb3-15363703a354.obj"
+```
+
+Download the OBJ file locally using the `destfile` parameter:
+
+```{r}
+#| eval: false
+myEncodedOutputUrn <- jsonlite::base64_enc(myOutputUrn)
+resp <- downloadFile(
+  urn        = myEncodedUrn,
+  output_urn = myEncodedOutputUrn,
+  token      = myToken,
+  destfile   = "aerial.obj"
+)
+resp$status_code
+#> [1] 200
+```
+
+## Translate a File into STL Format
+
+Use `translateStl()`, which follows the same pattern as `translateObj()`:
+
+```{r}
+#| eval: false
+resp <- translateStl(urn = myEncodedUrn, token = myToken)
+resp$content
+#> $result
+#> [1] "created"
+#>
+#> $urn
+#> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
+#>
+#> $acceptedJobs
+#> $acceptedJobs$output$formats[[1]]$type
+#> [1] "stl"
+```
+
+Check the status:
+
+```{r}
+#| eval: false
+resp <- checkFile(urn = myEncodedUrn, token = myToken)
+resp$content
+#> $status
+#> [1] "success"
+#>
+#> $progress
+#> [1] "complete"
+#>
+#> $derivatives[[1]]$outputType
+#> [1] "stl"
+#>
+#> $derivatives[[1]]$status
+#> [1] "success"
+```
+
+## Extract Data from a File
+
+After uploading a file and encoding its URN, translate it into SVF format to unlock metadata and geometry extraction:
+
+```{r}
+#| eval: false
+resp <- translateSvf(urn = myEncodedUrn, token = myToken)
+resp$content
+#> $result
+#> [1] "created"
+#>
+#> $urn
+#> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
+#>
+#> $acceptedJobs$output$formats[[1]]$type
+#> [1] "svf"
+
+resp <- checkFile(urn = myEncodedUrn, token = myToken)
+resp$content$status
+#> [1] "success"
+```
+
+Retrieve file metadata using `getMetadata()`, which returns the `type`, `name`, and `guid` of each viewable. Note the `guid` and store it in `.Renviron` for reuse:
+
+```{r}
+#| eval: false
+resp   <- getMetadata(urn = myEncodedUrn, token = myToken)
+myGuid <- resp$content$data$metadata[[1]]$guid
+resp$content$data
+#> $type
+#> [1] "metadata"
+#>
+#> $metadata
+#> $metadata[[1]]$name
+#> [1] "aerial"
+#>
+#> $metadata[[1]]$role
+#> [1] "3d"
+#>
+#> $metadata[[1]]$guid
+#> [1] "a7b3c9d2-4e1f-4a8b-b6c2-9d3e7f5a1b4c"
+#>
+#> $metadata[[1]]$isMasterView
+#> [1] TRUE
+```
+
+Retrieve the full object tree of the model:
+
+```{r}
+#| eval: false
+resp <- getObjectTree(guid = myGuid, urn = myEncodedUrn, token = myToken)
+resp$content$data$objects[[1]]
+#> $objectid
+#> [1] 1
+#>
+#> $name
+#> [1] "aerial.dwg"
+#>
+#> $objects
+#> $objects[[1]]$objectid
+#> [1] 2
+#> $objects[[1]]$name
+#> [1] "Layer: A-SITE"
+#>
+#> $objects[[2]]$objectid
+#> [1] 3
+#> $objects[[2]]$name
+#> [1] "Layer: A-BLDG"
+#>
+#> $objects[[3]]$objectid
+#> [1] 4
+#> $objects[[3]]$name
+#> [1] "Layer: A-ROAD"
+```
+
+Extract all geometry properties and material data from the model:
+
+```{r}
+#| eval: false
+resp <- getData(guid = myGuid, urn = myEncodedUrn, token = myToken)
+resp$content$data$collection[[1]]
+#> $objectid
+#> [1] 2
+#>
+#> $name
+#> [1] "Layer: A-SITE"
+#>
+#> $properties
+#> $properties$`Layer and Material`$Layer
+#> [1] "A-SITE"
+#>
+#> $properties$`Layer and Material`$Material
+#> [1] "ByLayer"
+#>
+#> $properties$Geometry$`Bounding Box Min X`
+#> [1] -142.83
+#>
+#> $properties$Geometry$`Bounding Box Min Y`
+#> [1]  -98.47
+#>
+#> $properties$Geometry$`Bounding Box Max X`
+#> [1]  318.62
+#>
+#> $properties$Geometry$`Bounding Box Max Y`
+#> [1]  241.19
+```

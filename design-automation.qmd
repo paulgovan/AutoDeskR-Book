@@ -1,0 +1,88 @@
+---
+title: "Design Automation"
+---
+
+# Design Automation
+
+The Design Automation API provides the ability to perform automated tasks on design files in the cloud.
+
+## Convert a DWG File to a PDF File
+
+Use `makePdf()` to convert a DWG file to a PDF file. The token must be generated with the `code:all` scope.
+
+::: callout-warning
+**Both `source` and `destination` must be publicly accessible URLs.** Private Google Drive links, localhost paths, or signed S3 URLs with expired signatures will cause the job to fail with a `400 Bad Request`. Use a public file host or a pre-signed URL with sufficient expiry time.
+:::
+
+```{r}
+#| eval: false
+resp <- getToken(
+  id     = Sys.getenv("client_id"),
+  secret = Sys.getenv("client_secret"),
+  scope  = "code:all"
+)
+myToken <- resp$content$access_token
+#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
+```
+
+```{r}
+#| eval: false
+mySource      <- "http://download.autodesk.com/us/samplefiles/acad/visualization_-_aerial.dwg"
+myDestination <- "https://drive.google.com/folderview?id=0BygncDVHf60mTDZVNDltLThLNmM&usp=sharing"
+
+resp <- makePdf(source = mySource, destination = myDestination, token = myToken)
+myWorkItemId <- resp$content$id
+resp$content
+#> $id
+#> [1] "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+#>
+#> $status
+#> [1] "pending"
+#>
+#> $stats
+#> $stats$timeQueued
+#> [1] "2026-04-23T10:15:30.412Z"
+```
+
+Check the status of the conversion using the WorkItem `id` returned by `makePdf()`:
+
+```{r}
+#| eval: false
+resp <- checkPdf(id = myWorkItemId, token = myToken)
+resp$content
+#> $id
+#> [1] "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+#>
+#> $status
+#> [1] "success"
+#>
+#> $stats
+#> $stats$timeQueued
+#> [1] "2026-04-23T10:15:30.412Z"
+#>
+#> $stats$timeDownloadStarted
+#> [1] "2026-04-23T10:15:31.804Z"
+#>
+#> $stats$timeInstructionsStarted
+#> [1] "2026-04-23T10:15:34.217Z"
+#>
+#> $stats$timeFinished
+#> [1] "2026-04-23T10:15:48.993Z"
+```
+
+The response includes a `status` field (`pending`, `inprogress`, or `success`) and `stats` with timing information. Poll `checkPdf()` until `status` is `"success"`. Use the `aps_retry()` helper from the [Authentication](authentication.qmd#rate-limits) chapter to add automatic backoff:
+
+```{r}
+#| eval: false
+repeat {
+  resp <- checkPdf(id = myWorkItemId, token = myToken)
+  cat("Status:", resp$content$status, "\n")
+  if (resp$content$status == "success") break
+  Sys.sleep(5)
+}
+#> Status: pending
+#> Status: inprogress
+#> Status: success
+```
+
+A typical conversion of a simple DWG takes **15–30 seconds**. Complex drawings with many layers or external references may take longer. The PDF will be written to the `destination` URL once the job completes.

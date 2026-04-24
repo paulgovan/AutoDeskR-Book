@@ -1,0 +1,135 @@
+---
+title: "Authentication"
+---
+
+# Authentication
+
+AutoDesk uses OAuth-based authentication for access to their services. To get started, visit the **Create an App** tutorial at [https://aps.autodesk.com/en/docs/oauth/v2/tutorials/create-app/](https://aps.autodesk.com/en/docs/oauth/v2/tutorials/create-app/) for instructions on creating an app and getting a Client ID and Secret.
+
+## Store Credentials Safely
+
+Store your Client ID, Secret, and access tokens in `~/.Renviron` and access them with `Sys.getenv()` to keep credentials out of your code and version control.
+
+Create or edit `~/.Renviron` with the following entries:
+
+```
+client_id = "YOUR_CLIENT_ID"
+client_secret = "YOUR_CLIENT_SECRET"
+token = "YOUR_ACCESS_TOKEN"
+urn = "YOUR_URN"
+```
+
+Reload the file without restarting R:
+
+```{r}
+#| eval: false
+readRenviron("~/.Renviron")
+```
+
+For more on this pattern see [Wrapping APIs](https://httr2.r-lib.org/articles/wrapping-apis.html) in the httr2 documentation.
+
+## Get an Access Token
+
+Use `getToken()` to obtain a 2-legged OAuth token. The `scope` parameter controls which APIs the token can access — request only the scopes your task requires.
+
+```{r}
+#| eval: false
+resp    <- getToken(id = Sys.getenv("client_id"), secret = Sys.getenv("client_secret"))
+myToken <- resp$content$access_token
+myToken
+#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ.
+#>       eyJjbGllbnRfaWQiOiJBQkNERUYxMjM0NTYiLCJleHAiOjE3NDU0MDA0MDAsInNjb3BlIjpb
+#>       ImRhdGE6cmVhZCJdfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+```
+
+The full response object also contains the token type and expiry:
+
+```{r}
+#| eval: false
+str(resp$content)
+#> List of 3
+#>  $ access_token: chr "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR..."
+#>  $ token_type  : chr "Bearer"
+#>  $ expires_in  : int 3600
+```
+
+Tokens expire after **3600 seconds** (1 hour). Re-call `getToken()` to refresh.
+
+::: callout-warning
+**Tokens expire after 1 hour.** If you receive a `401 Unauthorized` error mid-session, your token has expired. Re-call `getToken()` and replace `myToken`. A 401 response looks like:
+
+```{r}
+#| eval: false
+resp$status_code
+#> [1] 401
+resp$content$errorCode
+#> [1] "AUTH-001"
+resp$content$developerMessage
+#> [1] "The provided access token has expired."
+```
+:::
+
+### Available Scopes
+
+| Scope | Description |
+|---|---|
+| `data:read` | Read files and derivatives |
+| `data:write` | Upload and modify files |
+| `data:create` | Create new files |
+| `data:search` | Search within files |
+| `bucket:create` | Create storage buckets |
+| `bucket:read` | View bucket details |
+| `bucket:update` | Modify bucket settings |
+| `bucket:delete` | Delete buckets |
+| `code:all` | Access Design Automation APIs |
+| `account:read` | Read account information |
+| `account:write` | Modify account settings |
+| `user-profile:read` | Read user profile data |
+
+Pass multiple scopes as a space-separated string:
+
+```{r}
+#| eval: false
+resp <- getToken(
+  id     = Sys.getenv("client_id"),
+  secret = Sys.getenv("client_secret"),
+  scope  = "bucket:create bucket:read data:write"
+)
+myToken <- resp$content$access_token
+myToken
+#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ.
+#>       eyJjbGllbnRfaWQiOiJBQkNERUYxMjM0NTYiLCJleHAiOjE3NDU0MDA0MDAsInNjb3BlIjpb
+#>       ImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6cmVhZCIsImRhdGE6d3JpdGUiXX0.Tq3vK2mP9r"
+```
+
+## Rate Limits
+
+APS enforces per-application rate limits that vary by endpoint (typically 60–300 requests per minute). When a limit is exceeded the API returns **HTTP 429**:
+
+```{r}
+#| eval: false
+resp$status_code
+#> [1] 429
+resp$content$errorCode
+#> [1] "TOO-MANY-REQUESTS"
+resp$content$developerMessage
+#> [1] "Rate limit exceeded. Retry after 60 seconds."
+```
+
+Use the retry helper below around any call that may be polled frequently (e.g. `checkFile()`, `checkPdf()`):
+
+```{r}
+#| eval: false
+aps_retry <- function(fn, max_tries = 3, wait = 10) {
+  for (i in seq_len(max_tries)) {
+    resp <- fn()
+    if (!identical(resp$status_code, 429L)) return(resp)
+    message("Rate limited — waiting ", wait, "s (attempt ", i, "/", max_tries, ")")
+    Sys.sleep(wait)
+  }
+  stop("Max retries exceeded after ", max_tries, " attempts.")
+}
+
+# Example: poll translation status with automatic backoff
+resp <- aps_retry(function() checkFile(urn = myEncodedUrn, token = myToken))
+```

@@ -1,0 +1,13 @@
+# Acknowledgements {.unnumbered}
+
+*R and the AutoDesk Platform* would not exist without the work of many individuals and organisations who generously share their time, code, and knowledge.
+
+**AutoDesk** designed and maintains the AutoDesk Platform Services (APS) APIs and provides extensive developer documentation, sample code, and a free tier that makes experimentation accessible to individuals and small teams. The quality of their API design made it possible to wrap APS in a concise R interface.
+
+**The R community** — CRAN maintainers, package authors, and the broader community of practitioners who publish tutorials, answer questions, and review code — provides the foundation on which AutoDeskR is built. In particular, the [httr](https://httr.r-lib.org) and [jsonlite](https://jeroen.r-universe.dev/jsonlite) packages handle the HTTP and JSON plumbing that underlies every API call in this package.
+
+**Posit** (formerly RStudio) develops and maintains Quarto, the publishing system used to produce this book, as well as the devtools, usethis, and roxygen2 packages that are central to R package development.
+
+**Contributors to AutoDeskR** who have filed issues, suggested improvements, and submitted pull requests on [GitHub](https://github.com/paulgovan/AutoDeskR) have shaped the package into what it is today. Their feedback has been invaluable.
+
+Finally, thank you to everyone who has read earlier drafts of this material and offered corrections and suggestions.

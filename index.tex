@@ -1,0 +1,3050 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  11pt,
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={R and the AutoDesk Platform},
+  pdfauthor={Paul Govan},
+  colorlinks=true,
+  linkcolor={367ABF},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={367ABF},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{R and the AutoDesk Platform}
+\author{Paul Govan}
+\date{2026-04-22}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+
+\bookmarksetup{startatroot}
+
+\chapter*{Preface}\label{preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+\markboth{Preface}{Preface}
+
+\emph{R and the AutoDesk Platform} documents the
+\href{https://github.com/paulgovan/AutoDeskR}{AutoDeskR} R package,
+which provides an R interface to the
+\href{https://aps.autodesk.com}{AutoDesk Platform Services (APS)} APIs.
+APS is a cloud platform that exposes 3D model processing, file storage,
+and interactive viewing capabilities through a REST API. This book shows
+how to access those capabilities directly from R, enabling data
+scientists and engineers to incorporate CAD and BIM workflows into their
+existing R-based analyses, reports, and Shiny applications.
+
+\section*{What You Will Learn}\label{what-you-will-learn}
+\addcontentsline{toc}{section}{What You Will Learn}
+
+\markright{What You Will Learn}
+
+The book is organized into chapters covering each major API:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Authentication} --- OAuth token setup using
+  \texttt{getToken()} and managing API credentials securely
+\item
+  \textbf{Data Management} --- Bucket creation, file upload, and object
+  management in AutoDesk's Object Storage Service (OSS)
+\item
+  \textbf{Model Derivative} --- Translating design files into OBJ, STL,
+  and SVF formats for downstream analysis
+\item
+  \textbf{Design Automation} --- Automated cloud-based DWG-to-PDF
+  conversion without a local AutoCAD installation
+\item
+  \textbf{Viewer} --- Embedding the AutoDesk WebGL viewer in R Markdown
+  documents and Shiny applications
+\item
+  \textbf{Troubleshooting} --- Solutions to common issues encountered
+  when working with the APS APIs
+\end{itemize}
+
+\section*{Prerequisites}\label{prerequisites}
+\addcontentsline{toc}{section}{Prerequisites}
+
+\markright{Prerequisites}
+
+To follow along you will need:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{R} (version 4.0 or later) and, optionally, RStudio
+\item
+  An active \textbf{AutoDesk account} with an APS application registered
+  at \href{https://aps.autodesk.com}{aps.autodesk.com} --- see the
+  \href{getting-started.qmd}{Getting Started} chapter for a step-by-step
+  walkthrough
+\item
+  An internet connection (all API calls are made to AutoDesk's cloud)
+\end{itemize}
+
+No prior experience with CAD or BIM software is assumed. Familiarity
+with basic R programming and the tidyverse is helpful but not required.
+
+\section*{Installation}\label{installation}
+\addcontentsline{toc}{section}{Installation}
+
+\markright{Installation}
+
+Install the stable release from CRAN:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"AutoDeskR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Or install the development version from GitHub:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"paulgovan/AutoDeskR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section*{How to Use This Book}\label{how-to-use-this-book}
+\addcontentsline{toc}{section}{How to Use This Book}
+
+\markright{How to Use This Book}
+
+If you are new to APS, start with \href{getting-started.qmd}{Getting
+Started} for account setup and a first working example, then read the
+chapters in order. If you are already familiar with APS and just need
+the R API, jump directly to the chapter that covers your use case. The
+\href{troubleshooting.qmd}{Troubleshooting} chapter is a useful
+reference whenever you encounter unexpected errors.
+
+Source code for all examples is embedded in each chapter and can be
+copied directly into an R session.
+
+\part{Front Matter}
+
+\chapter*{Motivation}\label{motivation}
+\addcontentsline{toc}{chapter}{Motivation}
+
+\markboth{Motivation}{Motivation}
+
+\section*{The Problem}\label{the-problem}
+\addcontentsline{toc}{section}{The Problem}
+
+\markright{The Problem}
+
+AutoDesk Platform Services (APS) is one of the most capable cloud
+platforms for working with CAD and BIM data. It can translate design
+files between dozens of formats, extract rich geometry and metadata from
+models, automate DWG processing at scale, and render 3D models
+interactively in a browser --- all without requiring a local AutoCAD or
+Revit installation.
+
+The challenge is that APS speaks REST. Every operation --- uploading a
+file, kicking off a translation job, querying model metadata ---
+requires constructing authenticated HTTP requests, handling
+base64-encoded URNs, polling asynchronous job queues, and parsing nested
+JSON responses. For engineers and architects who live in R, this
+friction is enough to make APS feel out of reach.
+
+\section*{The Opportunity}\label{the-opportunity}
+\addcontentsline{toc}{section}{The Opportunity}
+
+\markright{The Opportunity}
+
+R has become the lingua franca for quantitative work in architecture,
+engineering, and construction (AEC) analytics. Structural engineers use
+it to process sensor data. Sustainability consultants use it to model
+energy performance. BIM managers use it to audit model quality across
+large portfolios. Shiny brings these analyses to non-technical
+stakeholders through interactive web applications.
+
+What has been missing is a direct connection between R's data science
+ecosystem and the 3D model data locked inside CAD files. A DWG file is
+not just a drawing --- it contains geometry, layer structure, material
+properties, and embedded attributes that are genuinely useful for
+analysis. An SVF model rendered in a browser can be linked to live data
+in a Shiny dashboard. A PDF exported from a DWG can be generated
+automatically as part of a reporting pipeline.
+
+\section*{The Solution}\label{the-solution}
+\addcontentsline{toc}{section}{The Solution}
+
+\markright{The Solution}
+
+AutoDeskR wraps the APS REST API in idiomatic R functions, handling
+authentication, encoding, and job polling so that you don't have to. A
+workflow that would otherwise require dozens of raw \texttt{httr} calls
+and careful reading of API documentation is reduced to a few lines:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(AutoDeskR)}
+
+\NormalTok{token  }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(id, secret, }\AttributeTok{scope =} \StringTok{"data:read data:write bucket:create"}\NormalTok{)}
+\NormalTok{bucket }\OtherTok{\textless{}{-}} \FunctionTok{makeBucket}\NormalTok{(token, }\StringTok{"my{-}project{-}bucket"}\NormalTok{)}
+\NormalTok{upload }\OtherTok{\textless{}{-}} \FunctionTok{uploadFile}\NormalTok{(token, }\StringTok{"model.dwg"}\NormalTok{, bucket}\SpecialCharTok{$}\NormalTok{bucketKey)}
+\NormalTok{job    }\OtherTok{\textless{}{-}} \FunctionTok{translateFile}\NormalTok{(token, upload}\SpecialCharTok{$}\NormalTok{objectId, }\StringTok{"svf"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The goal is not to abstract APS away entirely --- understanding the
+underlying API makes you more effective. Rather, AutoDeskR removes the
+boilerplate so you can spend your time on the analysis, not the
+plumbing.
+
+\section*{Who This Book Is For}\label{who-this-book-is-for}
+\addcontentsline{toc}{section}{Who This Book Is For}
+
+\markright{Who This Book Is For}
+
+This book is for R users who work with or alongside CAD and BIM data and
+want to automate, analyse, or visualise it without leaving the R
+environment. No prior experience with APS or AutoDesk products is
+assumed. If you can install an R package and run a script, you have
+everything you need to get started.
+
+\chapter*{Getting Started}\label{getting-started}
+\addcontentsline{toc}{chapter}{Getting Started}
+
+\markboth{Getting Started}{Getting Started}
+
+This chapter walks through everything you need to make your first
+successful API call with AutoDeskR: creating an AutoDesk account,
+registering an application, securing your credentials, and running a
+minimal end-to-end example.
+
+\section*{System Requirements}\label{system-requirements}
+\addcontentsline{toc}{section}{System Requirements}
+
+\markright{System Requirements}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{R} 4.0 or later
+\item
+  \textbf{RStudio} (optional but recommended)
+\item
+  An internet connection
+\item
+  A free AutoDesk account (created below)
+\end{itemize}
+
+\section*{Step 1: Create an AutoDesk
+Account}\label{step-1-create-an-autodesk-account}
+\addcontentsline{toc}{section}{Step 1: Create an AutoDesk Account}
+
+\markright{Step 1: Create an AutoDesk Account}
+
+If you do not already have an AutoDesk account, register for free at
+\href{https://www.autodesk.com}{autodesk.com}. A standard account gives
+you access to the APS free tier, which is sufficient for development and
+moderate usage.
+
+\section*{Step 2: Register an APS
+Application}\label{step-2-register-an-aps-application}
+\addcontentsline{toc}{section}{Step 2: Register an APS Application}
+
+\markright{Step 2: Register an APS Application}
+
+APS uses OAuth 2.0. Every API call must be authenticated with a
+\textbf{Client ID} and \textbf{Client Secret} that belong to a
+registered application.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Go to the \href{https://aps.autodesk.com}{APS Developer Portal} and
+  sign in.
+\item
+  Click \textbf{My Apps → Create Application}.
+\item
+  Give your app a name (e.g., \texttt{AutoDeskR-dev}) and select the
+  APIs you plan to use. For the examples in this book, enable
+  \textbf{Data Management}, \textbf{Model Derivative}, and
+  \textbf{Design Automation}.
+\item
+  Click \textbf{Create}. Your \textbf{Client ID} and \textbf{Client
+  Secret} will be displayed on the app's detail page.
+\end{enumerate}
+
+Keep these credentials private. Never commit them to version control.
+
+\section*{Step 3: Store Credentials
+Securely}\label{step-3-store-credentials-securely}
+\addcontentsline{toc}{section}{Step 3: Store Credentials Securely}
+
+\markright{Step 3: Store Credentials Securely}
+
+The safest way to use credentials in R is through environment variables
+stored in \texttt{\textasciitilde{}/.Renviron}. Open or create that
+file:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{edit\_r\_environ}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Add the following lines, replacing the placeholder values:
+
+\begin{verbatim}
+APS_CLIENT_ID=your_client_id_here
+APS_CLIENT_SECRET=your_client_secret_here
+\end{verbatim}
+
+Save the file and restart R. You can then retrieve the values in any
+script without hard-coding them:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{id     }\OtherTok{\textless{}{-}} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"APS\_CLIENT\_ID"}\NormalTok{)}
+\NormalTok{secret }\OtherTok{\textless{}{-}} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"APS\_CLIENT\_SECRET"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+See the \href{authentication.qmd}{Authentication} chapter for a full
+explanation of OAuth scopes and token management.
+
+\section*{Step 4: Install AutoDeskR}\label{step-4-install-autodeskr}
+\addcontentsline{toc}{section}{Step 4: Install AutoDeskR}
+
+\markright{Step 4: Install AutoDeskR}
+
+Install the stable release from CRAN:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"AutoDeskR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Or install the development version from GitHub:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"paulgovan/AutoDeskR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section*{Step 5: Your First Workflow}\label{step-5-your-first-workflow}
+\addcontentsline{toc}{section}{Step 5: Your First Workflow}
+
+\markright{Step 5: Your First Workflow}
+
+The diagram below shows the typical flow through the AutoDeskR APIs:
+
+\includegraphics[width=14.09in,height=2.9in]{getting-started_files/figure-latex/mermaid-figure-1.png}
+
+The following code demonstrates a complete round-trip: authenticate,
+create a storage bucket, upload a file, and verify the upload.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(AutoDeskR)}
+
+\CommentTok{\# Read credentials from environment}
+\NormalTok{id     }\OtherTok{\textless{}{-}} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"APS\_CLIENT\_ID"}\NormalTok{)}
+\NormalTok{secret }\OtherTok{\textless{}{-}} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"APS\_CLIENT\_SECRET"}\NormalTok{)}
+
+\CommentTok{\# 1. Get an access token with the scopes needed for data management}
+\NormalTok{token }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(id, secret, }\AttributeTok{scope =} \StringTok{"data:read data:write bucket:create bucket:read"}\NormalTok{)}
+\NormalTok{token}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{access\_token}
+\CommentTok{\#\textgreater{} [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."}
+\NormalTok{token}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{expires\_in}
+\CommentTok{\#\textgreater{} [1] 3600}
+
+\CommentTok{\# 2. Create a persistent storage bucket (bucket names must be globally unique)}
+\NormalTok{bucket }\OtherTok{\textless{}{-}} \FunctionTok{makeBucket}\NormalTok{(token, }\AttributeTok{bucketKey =} \StringTok{"my{-}first{-}autodeskr{-}bucket"}\NormalTok{, }\AttributeTok{policyKey =} \StringTok{"persistent"}\NormalTok{)}
+\NormalTok{bucket}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{bucketKey}
+\CommentTok{\#\textgreater{} [1] "my{-}first{-}autodeskr{-}bucket"}
+\NormalTok{bucket}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{policyKey}
+\CommentTok{\#\textgreater{} [1] "persistent"}
+
+\CommentTok{\# 3. Upload a local file (≤100 MB)}
+\NormalTok{result }\OtherTok{\textless{}{-}} \FunctionTok{uploadFile}\NormalTok{(token,}
+                     \AttributeTok{localPath =} \StringTok{"path/to/your/file.dwg"}\NormalTok{,}
+                     \AttributeTok{bucketKey =}\NormalTok{ bucket}\SpecialCharTok{$}\NormalTok{bucketKey)}
+\NormalTok{result}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{objectKey}
+\CommentTok{\#\textgreater{} [1] "file.dwg"}
+\NormalTok{result}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{size}
+\CommentTok{\#\textgreater{} [1] 3145728}
+
+\CommentTok{\# 4. List objects in the bucket to confirm the upload succeeded}
+\NormalTok{objects }\OtherTok{\textless{}{-}} \FunctionTok{listObjects}\NormalTok{(token, }\AttributeTok{bucketKey =}\NormalTok{ bucket}\SpecialCharTok{$}\NormalTok{bucketKey)}
+\FunctionTok{print}\NormalTok{(objects}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{items)}
+\CommentTok{\#\textgreater{}   objectKey                                                         objectId    size}
+\CommentTok{\#\textgreater{} 1  file.dwg  urn:adsk.objects:os.object:my{-}first{-}autodeskr{-}bucket/file.dwg  3145728}
+\end{Highlighting}
+\end{Shaded}
+
+If the upload succeeds, \texttt{listObjects()} will return a data frame
+containing your file's \texttt{objectKey}, \texttt{objectId} (a URN),
+and size. The \texttt{objectId} is used in subsequent chapters when
+translating the file or loading it in the viewer.
+
+\section*{What's Next}\label{whats-next}
+\addcontentsline{toc}{section}{What's Next}
+
+\markright{What's Next}
+
+With your credentials configured and a file uploaded, you are ready to
+explore the full API:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Chapter
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+What it covers
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\href{authentication.qmd}{Authentication} & Token scopes, token refresh,
+rate-limit handling \\
+\href{data-management.qmd}{Data Management} & Buckets, large-file
+uploads, pagination \\
+\href{model-derivative.qmd}{Model Derivative} & Translating files to
+OBJ, STL, SVF; extracting metadata \\
+\href{design-automation.qmd}{Design Automation} & DWG-to-PDF conversion
+pipelines \\
+\href{reality-capture.qmd}{Reality Capture} & Photo-to-3D mesh from
+drone or phone images \\
+\href{viewer.qmd}{Viewer} & Embedding the 3D viewer in Shiny and R
+Markdown \\
+\href{troubleshooting.qmd}{Troubleshooting} & Common errors and how to
+fix them \\
+\end{longtable}
+
+\chapter*{Acknowledgements}\label{acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+\markboth{Acknowledgements}{Acknowledgements}
+
+\emph{R and the AutoDesk Platform} would not exist without the work of
+many individuals and organisations who generously share their time,
+code, and knowledge.
+
+\textbf{AutoDesk} designed and maintains the AutoDesk Platform Services
+(APS) APIs and provides extensive developer documentation, sample code,
+and a free tier that makes experimentation accessible to individuals and
+small teams. The quality of their API design made it possible to wrap
+APS in a concise R interface.
+
+\textbf{The R community} --- CRAN maintainers, package authors, and the
+broader community of practitioners who publish tutorials, answer
+questions, and review code --- provides the foundation on which
+AutoDeskR is built. In particular, the
+\href{https://httr.r-lib.org}{httr} and
+\href{https://jeroen.r-universe.dev/jsonlite}{jsonlite} packages handle
+the HTTP and JSON plumbing that underlies every API call in this
+package.
+
+\textbf{Posit} (formerly RStudio) develops and maintains Quarto, the
+publishing system used to produce this book, as well as the devtools,
+usethis, and roxygen2 packages that are central to R package
+development.
+
+\textbf{Contributors to AutoDeskR} who have filed issues, suggested
+improvements, and submitted pull requests on
+\href{https://github.com/paulgovan/AutoDeskR}{GitHub} have shaped the
+package into what it is today. Their feedback has been invaluable.
+
+Finally, thank you to everyone who has read earlier drafts of this
+material and offered corrections and suggestions.
+
+\chapter*{License}\label{license}
+\addcontentsline{toc}{chapter}{License}
+
+\markboth{License}{License}
+
+\section*{Book Content}\label{book-content}
+\addcontentsline{toc}{section}{Book Content}
+
+\markright{Book Content}
+
+The text, code examples, and figures in \emph{R and the AutoDesk
+Platform} are licensed under the \textbf{Creative Commons Attribution
+4.0 International License (CC BY 4.0)}.
+
+You are free to:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Share} --- copy and redistribute the material in any medium or
+  format
+\item
+  \textbf{Adapt} --- remix, transform, and build upon the material for
+  any purpose, even commercially
+\end{itemize}
+
+Under the following terms:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Attribution} --- You must give appropriate credit to the
+  original author (Paul Govan), provide a link to the license, and
+  indicate if changes were made.
+\end{itemize}
+
+Full license text: \url{https://creativecommons.org/licenses/by/4.0/}
+
+\section*{AutoDeskR Package}\label{autodeskr-package}
+\addcontentsline{toc}{section}{AutoDeskR Package}
+
+\markright{AutoDeskR Package}
+
+The \href{https://github.com/paulgovan/AutoDeskR}{AutoDeskR} R package
+is distributed under the \textbf{MIT License}.
+
+\begin{verbatim}
+MIT License
+
+Copyright (c) Paul Govan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+\end{verbatim}
+
+\section*{AutoDesk Platform Services}\label{autodesk-platform-services}
+\addcontentsline{toc}{section}{AutoDesk Platform Services}
+
+\markright{AutoDesk Platform Services}
+
+Use of the AutoDesk Platform Services (APS) APIs is subject to
+AutoDesk's own
+\href{https://www.autodesk.com/company/terms-of-use/en/general-terms}{Terms
+of Service} and
+\href{https://www.autodesk.com/developer-network/platform-services/terms-service}{Developer
+Terms}. This book is an independent work and is not affiliated with or
+endorsed by AutoDesk, Inc.
+
+\part{Core APIs}
+
+\chapter{Authentication}\label{authentication}
+
+\chapter{Authentication}\label{authentication-1}
+
+AutoDesk uses OAuth-based authentication for access to their services.
+To get started, visit the \textbf{Create an App} tutorial at
+\url{https://aps.autodesk.com/en/docs/oauth/v2/tutorials/create-app/}
+for instructions on creating an app and getting a Client ID and Secret.
+
+\section{Store Credentials Safely}\label{store-credentials-safely}
+
+Store your Client ID, Secret, and access tokens in
+\texttt{\textasciitilde{}/.Renviron} and access them with
+\texttt{Sys.getenv()} to keep credentials out of your code and version
+control.
+
+Create or edit \texttt{\textasciitilde{}/.Renviron} with the following
+entries:
+
+\begin{verbatim}
+client_id = "YOUR_CLIENT_ID"
+client_secret = "YOUR_CLIENT_SECRET"
+token = "YOUR_ACCESS_TOKEN"
+urn = "YOUR_URN"
+\end{verbatim}
+
+Reload the file without restarting R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{readRenviron}\NormalTok{(}\StringTok{"\textasciitilde{}/.Renviron"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+For more on this pattern see
+\href{https://httr2.r-lib.org/articles/wrapping-apis.html}{Wrapping
+APIs} in the httr2 documentation.
+
+\section{Get an Access Token}\label{get-an-access-token}
+
+Use \texttt{getToken()} to obtain a 2-legged OAuth token. The
+\texttt{scope} parameter controls which APIs the token can access ---
+request only the scopes your task requires.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp    }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(}\AttributeTok{id =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_id"}\NormalTok{), }\AttributeTok{secret =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_secret"}\NormalTok{))}
+\NormalTok{myToken }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{access\_token}
+\NormalTok{myToken}
+\CommentTok{\#\textgreater{} [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ.}
+\CommentTok{\#\textgreater{}       eyJjbGllbnRfaWQiOiJBQkNERUYxMjM0NTYiLCJleHAiOjE3NDU0MDA0MDAsInNjb3BlIjpb}
+\CommentTok{\#\textgreater{}       ImRhdGE6cmVhZCJdfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV\_adQssw5c"}
+\end{Highlighting}
+\end{Shaded}
+
+The full response object also contains the token type and expiry:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(resp}\SpecialCharTok{$}\NormalTok{content)}
+\CommentTok{\#\textgreater{} List of 3}
+\CommentTok{\#\textgreater{}  $ access\_token: chr "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR..."}
+\CommentTok{\#\textgreater{}  $ token\_type  : chr "Bearer"}
+\CommentTok{\#\textgreater{}  $ expires\_in  : int 3600}
+\end{Highlighting}
+\end{Shaded}
+
+Tokens expire after \textbf{3600 seconds} (1 hour). Re-call
+\texttt{getToken()} to refresh.
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}]
+
+\textbf{Tokens expire after 1 hour.} If you receive a
+\texttt{401\ Unauthorized} error mid-session, your token has expired.
+Re-call \texttt{getToken()} and replace \texttt{myToken}. A 401 response
+looks like:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{status\_code}
+\CommentTok{\#\textgreater{} [1] 401}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{errorCode}
+\CommentTok{\#\textgreater{} [1] "AUTH{-}001"}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{developerMessage}
+\CommentTok{\#\textgreater{} [1] "The provided access token has expired."}
+\end{Highlighting}
+\end{Shaded}
+
+\end{tcolorbox}
+
+\subsection{Available Scopes}\label{available-scopes}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Scope & Description \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{data:read} & Read files and derivatives \\
+\texttt{data:write} & Upload and modify files \\
+\texttt{data:create} & Create new files \\
+\texttt{data:search} & Search within files \\
+\texttt{bucket:create} & Create storage buckets \\
+\texttt{bucket:read} & View bucket details \\
+\texttt{bucket:update} & Modify bucket settings \\
+\texttt{bucket:delete} & Delete buckets \\
+\texttt{code:all} & Access Design Automation APIs \\
+\texttt{account:read} & Read account information \\
+\texttt{account:write} & Modify account settings \\
+\texttt{user-profile:read} & Read user profile data \\
+\end{longtable}
+
+Pass multiple scopes as a space-separated string:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(}
+  \AttributeTok{id     =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_id"}\NormalTok{),}
+  \AttributeTok{secret =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_secret"}\NormalTok{),}
+  \AttributeTok{scope  =} \StringTok{"bucket:create bucket:read data:write"}
+\NormalTok{)}
+\NormalTok{myToken }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{access\_token}
+\NormalTok{myToken}
+\CommentTok{\#\textgreater{} [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ.}
+\CommentTok{\#\textgreater{}       eyJjbGllbnRfaWQiOiJBQkNERUYxMjM0NTYiLCJleHAiOjE3NDU0MDA0MDAsInNjb3BlIjpb}
+\CommentTok{\#\textgreater{}       ImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6cmVhZCIsImRhdGE6d3JpdGUiXX0.Tq3vK2mP9r"}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Rate Limits}\label{rate-limits}
+
+APS enforces per-application rate limits that vary by endpoint
+(typically 60--300 requests per minute). When a limit is exceeded the
+API returns \textbf{HTTP 429}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{status\_code}
+\CommentTok{\#\textgreater{} [1] 429}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{errorCode}
+\CommentTok{\#\textgreater{} [1] "TOO{-}MANY{-}REQUESTS"}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{developerMessage}
+\CommentTok{\#\textgreater{} [1] "Rate limit exceeded. Retry after 60 seconds."}
+\end{Highlighting}
+\end{Shaded}
+
+Use the retry helper below around any call that may be polled frequently
+(e.g.~\texttt{checkFile()}, \texttt{checkPdf()}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aps\_retry }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(fn, }\AttributeTok{max\_tries =} \DecValTok{3}\NormalTok{, }\AttributeTok{wait =} \DecValTok{10}\NormalTok{) \{}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{seq\_len}\NormalTok{(max\_tries)) \{}
+\NormalTok{    resp }\OtherTok{\textless{}{-}} \FunctionTok{fn}\NormalTok{()}
+    \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{identical}\NormalTok{(resp}\SpecialCharTok{$}\NormalTok{status\_code, }\DecValTok{429}\NormalTok{L)) }\FunctionTok{return}\NormalTok{(resp)}
+    \FunctionTok{message}\NormalTok{(}\StringTok{"Rate limited — waiting "}\NormalTok{, wait, }\StringTok{"s (attempt "}\NormalTok{, i, }\StringTok{"/"}\NormalTok{, max\_tries, }\StringTok{")"}\NormalTok{)}
+    \FunctionTok{Sys.sleep}\NormalTok{(wait)}
+\NormalTok{  \}}
+  \FunctionTok{stop}\NormalTok{(}\StringTok{"Max retries exceeded after "}\NormalTok{, max\_tries, }\StringTok{" attempts."}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{\# Example: poll translation status with automatic backoff}
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{aps\_retry}\NormalTok{(}\ControlFlowTok{function}\NormalTok{() }\FunctionTok{checkFile}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken))}
+\end{Highlighting}
+\end{Shaded}
+
+\chapter{Data Management}\label{data-management}
+
+\chapter{Data Management}\label{data-management-1}
+
+The Data Management API provides a way to store and access design files
+across the AutoDesk Platform Services (APS).
+
+\section{Create a Bucket}\label{create-a-bucket}
+
+Buckets are named containers for your files. First get a token with the
+appropriate scopes, then call \texttt{makeBucket()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(}
+  \AttributeTok{id     =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_id"}\NormalTok{),}
+  \AttributeTok{secret =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_secret"}\NormalTok{),}
+  \AttributeTok{scope  =} \StringTok{"bucket:create bucket:read data:write"}
+\NormalTok{)}
+\NormalTok{myToken }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{access\_token}
+\CommentTok{\#\textgreater{} [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."}
+\end{Highlighting}
+\end{Shaded}
+
+Use \texttt{makeBucket()} to create a bucket. The \texttt{policy}
+parameter controls how long objects are retained:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Policy & Retention \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{"transient"} & 24 hours (default) \\
+\texttt{"temporary"} & 30 days \\
+\texttt{"persistent"} & Until explicitly deleted \\
+\end{longtable}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}]
+
+\textbf{Bucket names are globally unique} across every APS application.
+A name like \texttt{"test"} or \texttt{"mybucket"} is almost certainly
+taken. Use a prefix that ties the name to your app or organisation,
+e.g.~\texttt{"mycompany-myapp-prod"}. Attempting to create a duplicate
+returns a \texttt{409\ Conflict}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{status\_code}
+\CommentTok{\#\textgreater{} [1] 409}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{reason}
+\CommentTok{\#\textgreater{} [1] "Bucket already exists"}
+\end{Highlighting}
+\end{Shaded}
+
+\end{tcolorbox}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{makeBucket}\NormalTok{(}\AttributeTok{token =}\NormalTok{ myToken, }\AttributeTok{bucket =} \StringTok{"mybucket"}\NormalTok{, }\AttributeTok{policy =} \StringTok{"persistent"}\NormalTok{)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $bucketKey}
+\CommentTok{\#\textgreater{} [1] "mybucket"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $bucketOwner}
+\CommentTok{\#\textgreater{} [1] "3MVG99OxTyEMCQ3gNp2PjtXbmT8T\_MnfCTtpQkuiJNxGtXuoKP7"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $createdDate}
+\CommentTok{\#\textgreater{} [1] 1745356800000}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $permissions}
+\CommentTok{\#\textgreater{} $permissions[[1]]$authId}
+\CommentTok{\#\textgreater{} [1] "3MVG99OxTyEMCQ3gNp2PjtXbmT8T\_MnfCTtpQkuiJNxGtXuoKP7"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $permissions[[1]]$access}
+\CommentTok{\#\textgreater{} [1] "full"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $policyKey}
+\CommentTok{\#\textgreater{} [1] "persistent"}
+\end{Highlighting}
+\end{Shaded}
+
+To check the status of a bucket:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{checkBucket}\NormalTok{(}\AttributeTok{token =}\NormalTok{ myToken, }\AttributeTok{bucket =} \StringTok{"mybucket"}\NormalTok{)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $bucketKey}
+\CommentTok{\#\textgreater{} [1] "mybucket"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $bucketOwner}
+\CommentTok{\#\textgreater{} [1] "3MVG99OxTyEMCQ3gNp2PjtXbmT8T\_MnfCTtpQkuiJNxGtXuoKP7"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $createdDate}
+\CommentTok{\#\textgreater{} [1] 1745356800000}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $policyKey}
+\CommentTok{\#\textgreater{} [1] "persistent"}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Upload a File}\label{upload-a-file}
+
+Use \texttt{uploadFile()} for files up to 100 MB. It returns an object
+containing the \texttt{bucketKey}, \texttt{objectId} (the URN),
+\texttt{objectKey} (filename), \texttt{size}, \texttt{contentType}, and
+\texttt{location}. Note the URN and store it in \texttt{.Renviron} for
+future use.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{uploadFile}\NormalTok{(}
+  \AttributeTok{file   =} \FunctionTok{system.file}\NormalTok{(}\StringTok{"samples/aerial.dwg"}\NormalTok{, }\AttributeTok{package =} \StringTok{"AutoDeskR"}\NormalTok{),}
+  \AttributeTok{token  =}\NormalTok{ myToken,}
+  \AttributeTok{bucket =} \StringTok{"mybucket"}
+\NormalTok{)}
+\NormalTok{myUrn }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{objectId}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $bucketKey}
+\CommentTok{\#\textgreater{} [1] "mybucket"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $objectId}
+\CommentTok{\#\textgreater{} [1] "urn:adsk.objects:os.object:mybucket/aerial.dwg"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $objectKey}
+\CommentTok{\#\textgreater{} [1] "aerial.dwg"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $sha1}
+\CommentTok{\#\textgreater{} [1] "7f3d9b2e1a6c4f8e0d5b3a9c7e2f1d4b8a6c0e3"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $size}
+\CommentTok{\#\textgreater{} [1] 3145728}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $contentType}
+\CommentTok{\#\textgreater{} [1] "application/octet{-}stream"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $location}
+\CommentTok{\#\textgreater{} [1] "https://developer.api.autodesk.com/oss/v2/buckets/mybucket/objects/aerial.dwg"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Upload Large Files (\textgreater100
+MB)}\label{upload-large-files-100-mb}
+
+For files over 100 MB, use \texttt{uploadFileSigned()}, which transfers
+the file via signed S3 URLs to avoid timeout limits.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{uploadFileSigned}\NormalTok{(}
+  \AttributeTok{file   =} \StringTok{"path/to/large\_model.rvt"}\NormalTok{,}
+  \AttributeTok{token  =}\NormalTok{ myToken,}
+  \AttributeTok{bucket =} \StringTok{"mybucket"}
+\NormalTok{)}
+\NormalTok{myUrn }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{objectId}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $bucketKey}
+\CommentTok{\#\textgreater{} [1] "mybucket"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $objectId}
+\CommentTok{\#\textgreater{} [1] "urn:adsk.objects:os.object:mybucket/large\_model.rvt"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $objectKey}
+\CommentTok{\#\textgreater{} [1] "large\_model.rvt"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $size}
+\CommentTok{\#\textgreater{} [1] 524288000}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $contentType}
+\CommentTok{\#\textgreater{} [1] "application/octet{-}stream"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $location}
+\CommentTok{\#\textgreater{} [1] "https://developer.api.autodesk.com/oss/v2/buckets/mybucket/objects/large\_model.rvt"}
+\end{Highlighting}
+\end{Shaded}
+
+\section{List Buckets and Objects}\label{list-buckets-and-objects}
+
+List all buckets associated with your app. Use \texttt{limit} to control
+page size and \texttt{startAt} to paginate through results:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{listBuckets}\NormalTok{(}\AttributeTok{token =}\NormalTok{ myToken, }\AttributeTok{limit =} \DecValTok{10}\NormalTok{)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{items}
+\CommentTok{\#\textgreater{}                          bucketKey                                    createdDate  policyKey}
+\CommentTok{\#\textgreater{} 1                       mybucket                                  1745356800000 persistent}
+\CommentTok{\#\textgreater{} 2                  archive{-}2025                                  1740000000000  temporary}
+\CommentTok{\#\textgreater{} 3              visualization{-}dev                                  1738000000000  transient}
+
+\CommentTok{\# Paginate to the next page}
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{listBuckets}\NormalTok{(}\AttributeTok{token =}\NormalTok{ myToken, }\AttributeTok{limit =} \DecValTok{10}\NormalTok{, }\AttributeTok{startAt =} \StringTok{"visualization{-}dev"}\NormalTok{)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{items}
+\CommentTok{\#\textgreater{}              bucketKey      createdDate policyKey}
+\CommentTok{\#\textgreater{} 1        test{-}sandbox    1735000000000 transient}
+\end{Highlighting}
+\end{Shaded}
+
+Use \texttt{region} to filter buckets by geography (\texttt{"US"} or
+\texttt{"EMEA"}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{listBuckets}\NormalTok{(}\AttributeTok{token =}\NormalTok{ myToken, }\AttributeTok{region =} \StringTok{"EMEA"}\NormalTok{)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{items}
+\CommentTok{\#\textgreater{}       bucketKey      createdDate  policyKey}
+\CommentTok{\#\textgreater{} 1  emea{-}models    1742000000000 persistent}
+\CommentTok{\#\textgreater{} 2  emea{-}backup    1740000000000  temporary}
+\end{Highlighting}
+\end{Shaded}
+
+List objects stored in a specific bucket:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{listObjects}\NormalTok{(}\AttributeTok{token =}\NormalTok{ myToken, }\AttributeTok{bucket =} \StringTok{"mybucket"}\NormalTok{, }\AttributeTok{limit =} \DecValTok{10}\NormalTok{)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{items}
+\CommentTok{\#\textgreater{}          objectKey                                              objectId   size}
+\CommentTok{\#\textgreater{} 1       aerial.dwg  urn:adsk.objects:os.object:mybucket/aerial.dwg      3145728}
+\CommentTok{\#\textgreater{} 2  office\_plan.rvt  urn:adsk.objects:os.object:mybucket/office\_plan.rvt 52428800}
+\CommentTok{\#\textgreater{} 3      bridge.ifc   urn:adsk.objects:os.object:mybucket/bridge.ifc      8388608}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Delete Objects and Buckets}\label{delete-objects-and-buckets}
+
+Delete a specific object from a bucket:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{deleteObject}\NormalTok{(}\AttributeTok{token =}\NormalTok{ myToken, }\AttributeTok{bucket =} \StringTok{"mybucket"}\NormalTok{, }\AttributeTok{object =} \StringTok{"aerial.dwg"}\NormalTok{)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{status\_code}
+\CommentTok{\#\textgreater{} [1] 200}
+\end{Highlighting}
+\end{Shaded}
+
+Delete an entire bucket (the bucket must be empty first):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{deleteBucket}\NormalTok{(}\AttributeTok{token =}\NormalTok{ myToken, }\AttributeTok{bucket =} \StringTok{"mybucket"}\NormalTok{)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{status\_code}
+\CommentTok{\#\textgreater{} [1] 200}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}]
+
+\textbf{A bucket must be empty before it can be deleted.} Delete all
+objects with \texttt{deleteObject()} first. Attempting to delete a
+non-empty bucket returns a \texttt{409\ Conflict}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{status\_code}
+\CommentTok{\#\textgreater{} [1] 409}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{reason}
+\CommentTok{\#\textgreater{} [1] "Bucket not empty"}
+\end{Highlighting}
+\end{Shaded}
+
+\end{tcolorbox}
+
+\chapter{Model Derivative}\label{model-derivative}
+
+\chapter{Model Derivative}\label{model-derivative-1}
+
+The Model Derivative API enables users to translate their designs into
+different formats and extract model data.
+
+\section{Translate a File into OBJ
+Format}\label{translate-a-file-into-obj-format}
+
+First get an access token with the \texttt{data:read} and
+\texttt{data:write} scopes. Note that only certain file types can be
+translated into OBJ format.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(}
+  \AttributeTok{id     =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_id"}\NormalTok{),}
+  \AttributeTok{secret =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_secret"}\NormalTok{),}
+  \AttributeTok{scope  =} \StringTok{"data:read data:write"}
+\NormalTok{)}
+\NormalTok{myToken }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{access\_token}
+\CommentTok{\#\textgreater{} [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."}
+\end{Highlighting}
+\end{Shaded}
+
+The platform requires the file's URN to be Base-64 encoded:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myEncodedUrn }\OtherTok{\textless{}{-}}\NormalTok{ jsonlite}\SpecialCharTok{::}\FunctionTok{base64\_enc}\NormalTok{(myUrn)}
+\NormalTok{myEncodedUrn}
+\CommentTok{\#\textgreater{} [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="}
+\end{Highlighting}
+\end{Shaded}
+
+Translate the file into OBJ format:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{translateObj}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $result}
+\CommentTok{\#\textgreater{} [1] "created"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $urn}
+\CommentTok{\#\textgreater{} [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $acceptedJobs}
+\CommentTok{\#\textgreater{} $acceptedJobs$output}
+\CommentTok{\#\textgreater{} $acceptedJobs$output$formats[[1]]$type}
+\CommentTok{\#\textgreater{} [1] "obj"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}]
+
+\textbf{OBJ translation supports a limited set of source formats.}
+Supported types include IAM, IPT, IPN, DWG, F3D, and FBX. Submitting an
+unsupported format (e.g.~a raw PDF or image) returns a
+\texttt{415\ Unsupported\ Media\ Type}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{status\_code}
+\CommentTok{\#\textgreater{} [1] 415}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{diagnostic}
+\CommentTok{\#\textgreater{} [1] "File type not supported for OBJ translation."}
+\end{Highlighting}
+\end{Shaded}
+
+See the
+\href{https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/supported-translations/}{APS
+supported formats list} for the full matrix.
+
+\end{tcolorbox}
+
+Check the status of the translation:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{checkFile}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $type}
+\CommentTok{\#\textgreater{} [1] "design"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $hasThumbnail}
+\CommentTok{\#\textgreater{} [1] "true"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $status}
+\CommentTok{\#\textgreater{} [1] "success"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $progress}
+\CommentTok{\#\textgreater{} [1] "complete"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $region}
+\CommentTok{\#\textgreater{} [1] "US"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $urn}
+\CommentTok{\#\textgreater{} [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}]
+
+\texttt{status} progresses through \texttt{"pending"} →
+\texttt{"inprogress"} → \texttt{"success"}. Poll \texttt{checkFile()}
+until \texttt{status} is \texttt{"success"} before attempting to
+download. Use the \texttt{aps\_retry()} helper from the
+\hyperref[rate-limits]{Authentication} chapter to handle rate limiting
+automatically.
+
+\end{tcolorbox}
+
+When translation is complete, retrieve the output URN of the translated
+file (different from the source URN). The response may include URNs for
+multiple output types (obj, svf, png) --- find the one ending in
+\texttt{.obj}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{getOutputUrn}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myUrn, }\AttributeTok{token =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"token"}\NormalTok{))}
+\NormalTok{myOutputUrn }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{derivatives[[}\DecValTok{1}\NormalTok{]]}\SpecialCharTok{$}\NormalTok{children[[}\DecValTok{1}\NormalTok{]]}\SpecialCharTok{$}\NormalTok{urn}
+\NormalTok{myOutputUrn}
+\CommentTok{\#\textgreater{} [1] "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQv}
+\CommentTok{\#\textgreater{}       YWVyaWFsLmR3Zw==/output/geometry/bc3339b2{-}73cd{-}4fba{-}9cb3{-}15363703a354.obj"}
+\end{Highlighting}
+\end{Shaded}
+
+Download the OBJ file locally using the \texttt{destfile} parameter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myEncodedOutputUrn }\OtherTok{\textless{}{-}}\NormalTok{ jsonlite}\SpecialCharTok{::}\FunctionTok{base64\_enc}\NormalTok{(myOutputUrn)}
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{downloadFile}\NormalTok{(}
+  \AttributeTok{urn        =}\NormalTok{ myEncodedUrn,}
+  \AttributeTok{output\_urn =}\NormalTok{ myEncodedOutputUrn,}
+  \AttributeTok{token      =}\NormalTok{ myToken,}
+  \AttributeTok{destfile   =} \StringTok{"aerial.obj"}
+\NormalTok{)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{status\_code}
+\CommentTok{\#\textgreater{} [1] 200}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Translate a File into STL
+Format}\label{translate-a-file-into-stl-format}
+
+Use \texttt{translateStl()}, which follows the same pattern as
+\texttt{translateObj()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{translateStl}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $result}
+\CommentTok{\#\textgreater{} [1] "created"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $urn}
+\CommentTok{\#\textgreater{} [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $acceptedJobs}
+\CommentTok{\#\textgreater{} $acceptedJobs$output$formats[[1]]$type}
+\CommentTok{\#\textgreater{} [1] "stl"}
+\end{Highlighting}
+\end{Shaded}
+
+Check the status:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{checkFile}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $status}
+\CommentTok{\#\textgreater{} [1] "success"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $progress}
+\CommentTok{\#\textgreater{} [1] "complete"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $derivatives[[1]]$outputType}
+\CommentTok{\#\textgreater{} [1] "stl"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $derivatives[[1]]$status}
+\CommentTok{\#\textgreater{} [1] "success"}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Extract Data from a File}\label{extract-data-from-a-file}
+
+After uploading a file and encoding its URN, translate it into SVF
+format to unlock metadata and geometry extraction:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{translateSvf}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $result}
+\CommentTok{\#\textgreater{} [1] "created"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $urn}
+\CommentTok{\#\textgreater{} [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $acceptedJobs$output$formats[[1]]$type}
+\CommentTok{\#\textgreater{} [1] "svf"}
+
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{checkFile}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{status}
+\CommentTok{\#\textgreater{} [1] "success"}
+\end{Highlighting}
+\end{Shaded}
+
+Retrieve file metadata using \texttt{getMetadata()}, which returns the
+\texttt{type}, \texttt{name}, and \texttt{guid} of each viewable. Note
+the \texttt{guid} and store it in \texttt{.Renviron} for reuse:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp   }\OtherTok{\textless{}{-}} \FunctionTok{getMetadata}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{myGuid }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{data}\SpecialCharTok{$}\NormalTok{metadata[[}\DecValTok{1}\NormalTok{]]}\SpecialCharTok{$}\NormalTok{guid}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{data}
+\CommentTok{\#\textgreater{} $type}
+\CommentTok{\#\textgreater{} [1] "metadata"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $metadata}
+\CommentTok{\#\textgreater{} $metadata[[1]]$name}
+\CommentTok{\#\textgreater{} [1] "aerial"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $metadata[[1]]$role}
+\CommentTok{\#\textgreater{} [1] "3d"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $metadata[[1]]$guid}
+\CommentTok{\#\textgreater{} [1] "a7b3c9d2{-}4e1f{-}4a8b{-}b6c2{-}9d3e7f5a1b4c"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $metadata[[1]]$isMasterView}
+\CommentTok{\#\textgreater{} [1] TRUE}
+\end{Highlighting}
+\end{Shaded}
+
+Retrieve the full object tree of the model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{getObjectTree}\NormalTok{(}\AttributeTok{guid =}\NormalTok{ myGuid, }\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{data}\SpecialCharTok{$}\NormalTok{objects[[}\DecValTok{1}\NormalTok{]]}
+\CommentTok{\#\textgreater{} $objectid}
+\CommentTok{\#\textgreater{} [1] 1}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $name}
+\CommentTok{\#\textgreater{} [1] "aerial.dwg"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $objects}
+\CommentTok{\#\textgreater{} $objects[[1]]$objectid}
+\CommentTok{\#\textgreater{} [1] 2}
+\CommentTok{\#\textgreater{} $objects[[1]]$name}
+\CommentTok{\#\textgreater{} [1] "Layer: A{-}SITE"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $objects[[2]]$objectid}
+\CommentTok{\#\textgreater{} [1] 3}
+\CommentTok{\#\textgreater{} $objects[[2]]$name}
+\CommentTok{\#\textgreater{} [1] "Layer: A{-}BLDG"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $objects[[3]]$objectid}
+\CommentTok{\#\textgreater{} [1] 4}
+\CommentTok{\#\textgreater{} $objects[[3]]$name}
+\CommentTok{\#\textgreater{} [1] "Layer: A{-}ROAD"}
+\end{Highlighting}
+\end{Shaded}
+
+Extract all geometry properties and material data from the model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{getData}\NormalTok{(}\AttributeTok{guid =}\NormalTok{ myGuid, }\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{data}\SpecialCharTok{$}\NormalTok{collection[[}\DecValTok{1}\NormalTok{]]}
+\CommentTok{\#\textgreater{} $objectid}
+\CommentTok{\#\textgreater{} [1] 2}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $name}
+\CommentTok{\#\textgreater{} [1] "Layer: A{-}SITE"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $properties}
+\CommentTok{\#\textgreater{} $properties$\textasciigrave{}Layer and Material\textasciigrave{}$Layer}
+\CommentTok{\#\textgreater{} [1] "A{-}SITE"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $properties$\textasciigrave{}Layer and Material\textasciigrave{}$Material}
+\CommentTok{\#\textgreater{} [1] "ByLayer"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $properties$Geometry$\textasciigrave{}Bounding Box Min X\textasciigrave{}}
+\CommentTok{\#\textgreater{} [1] {-}142.83}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $properties$Geometry$\textasciigrave{}Bounding Box Min Y\textasciigrave{}}
+\CommentTok{\#\textgreater{} [1]  {-}98.47}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $properties$Geometry$\textasciigrave{}Bounding Box Max X\textasciigrave{}}
+\CommentTok{\#\textgreater{} [1]  318.62}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $properties$Geometry$\textasciigrave{}Bounding Box Max Y\textasciigrave{}}
+\CommentTok{\#\textgreater{} [1]  241.19}
+\end{Highlighting}
+\end{Shaded}
+
+\chapter{Design Automation}\label{design-automation}
+
+\chapter{Design Automation}\label{design-automation-1}
+
+The Design Automation API provides the ability to perform automated
+tasks on design files in the cloud.
+
+\section{Convert a DWG File to a PDF
+File}\label{convert-a-dwg-file-to-a-pdf-file}
+
+Use \texttt{makePdf()} to convert a DWG file to a PDF file. The token
+must be generated with the \texttt{code:all} scope.
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}]
+
+\textbf{Both \texttt{source} and \texttt{destination} must be publicly
+accessible URLs.} Private Google Drive links, localhost paths, or signed
+S3 URLs with expired signatures will cause the job to fail with a
+\texttt{400\ Bad\ Request}. Use a public file host or a pre-signed URL
+with sufficient expiry time.
+
+\end{tcolorbox}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(}
+  \AttributeTok{id     =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_id"}\NormalTok{),}
+  \AttributeTok{secret =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_secret"}\NormalTok{),}
+  \AttributeTok{scope  =} \StringTok{"code:all"}
+\NormalTok{)}
+\NormalTok{myToken }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{access\_token}
+\CommentTok{\#\textgreater{} [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mySource      }\OtherTok{\textless{}{-}} \StringTok{"http://download.autodesk.com/us/samplefiles/acad/visualization\_{-}\_aerial.dwg"}
+\NormalTok{myDestination }\OtherTok{\textless{}{-}} \StringTok{"https://drive.google.com/folderview?id=0BygncDVHf60mTDZVNDltLThLNmM\&usp=sharing"}
+
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{makePdf}\NormalTok{(}\AttributeTok{source =}\NormalTok{ mySource, }\AttributeTok{destination =}\NormalTok{ myDestination, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{myWorkItemId }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{id}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $id}
+\CommentTok{\#\textgreater{} [1] "f47ac10b{-}58cc{-}4372{-}a567{-}0e02b2c3d479"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $status}
+\CommentTok{\#\textgreater{} [1] "pending"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $stats}
+\CommentTok{\#\textgreater{} $stats$timeQueued}
+\CommentTok{\#\textgreater{} [1] "2026{-}04{-}23T10:15:30.412Z"}
+\end{Highlighting}
+\end{Shaded}
+
+Check the status of the conversion using the WorkItem \texttt{id}
+returned by \texttt{makePdf()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{checkPdf}\NormalTok{(}\AttributeTok{id =}\NormalTok{ myWorkItemId, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{resp}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $id}
+\CommentTok{\#\textgreater{} [1] "f47ac10b{-}58cc{-}4372{-}a567{-}0e02b2c3d479"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $status}
+\CommentTok{\#\textgreater{} [1] "success"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $stats}
+\CommentTok{\#\textgreater{} $stats$timeQueued}
+\CommentTok{\#\textgreater{} [1] "2026{-}04{-}23T10:15:30.412Z"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $stats$timeDownloadStarted}
+\CommentTok{\#\textgreater{} [1] "2026{-}04{-}23T10:15:31.804Z"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $stats$timeInstructionsStarted}
+\CommentTok{\#\textgreater{} [1] "2026{-}04{-}23T10:15:34.217Z"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $stats$timeFinished}
+\CommentTok{\#\textgreater{} [1] "2026{-}04{-}23T10:15:48.993Z"}
+\end{Highlighting}
+\end{Shaded}
+
+The response includes a \texttt{status} field (\texttt{pending},
+\texttt{inprogress}, or \texttt{success}) and \texttt{stats} with timing
+information. Poll \texttt{checkPdf()} until \texttt{status} is
+\texttt{"success"}. Use the \texttt{aps\_retry()} helper from the
+\hyperref[rate-limits]{Authentication} chapter to add automatic backoff:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{repeat}\NormalTok{ \{}
+\NormalTok{  resp }\OtherTok{\textless{}{-}} \FunctionTok{checkPdf}\NormalTok{(}\AttributeTok{id =}\NormalTok{ myWorkItemId, }\AttributeTok{token =}\NormalTok{ myToken)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Status:"}\NormalTok{, resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{status, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{status }\SpecialCharTok{==} \StringTok{"success"}\NormalTok{) }\ControlFlowTok{break}
+  \FunctionTok{Sys.sleep}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\NormalTok{\}}
+\CommentTok{\#\textgreater{} Status: pending}
+\CommentTok{\#\textgreater{} Status: inprogress}
+\CommentTok{\#\textgreater{} Status: success}
+\end{Highlighting}
+\end{Shaded}
+
+A typical conversion of a simple DWG takes \textbf{15--30 seconds}.
+Complex drawings with many layers or external references may take
+longer. The PDF will be written to the \texttt{destination} URL once the
+job completes.
+
+\chapter{Reality Capture}\label{reality-capture}
+
+\chapter{Reality Capture}\label{reality-capture-1}
+
+The Reality Capture API (also called Photo-to-3D) converts a set of
+overlapping photographs into a 3D mesh or point cloud. You upload images
+--- from a phone, DSLR, or drone --- and AutoDesk's cloud photogrammetry
+engine stitches them into a georeferenced 3D model you can download or
+feed into the viewer.
+
+Common use cases include:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{As-built documentation} --- capture a construction site weekly
+  with a drone and generate a mesh for each visit
+\item
+  \textbf{Heritage and inspection} --- record a structure or asset in 3D
+  from photos taken by field staff
+\item
+  \textbf{Site topography} --- convert aerial photography into a terrain
+  mesh for use in civil design
+\item
+  \textbf{Integration with other APIs} --- translate the output mesh
+  into OBJ or STL via the \hyperref[model-derivative]{Model Derivative}
+  API for further analysis in R
+\end{itemize}
+
+\section{Before You Start}\label{before-you-start}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-tip-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}]
+
+\textbf{Image guidelines for best results:}
+
+\begin{itemize}
+\tightlist
+\item
+  Minimum \textbf{20 images} per scene; 50--200 is typical for a small
+  structure
+\item
+  \textbf{60--80 \% overlap} between adjacent images --- every part of
+  the subject should appear in at least 3 photos
+\item
+  Consistent, diffuse lighting; avoid harsh shadows or direct sun
+  reflections
+\item
+  Keep the camera moving around the object, not zooming in from a fixed
+  point
+\item
+  GPS/EXIF tags are optional but improve georeferencing accuracy
+\end{itemize}
+
+\end{tcolorbox}
+
+\section{Step 1: Authenticate}\label{step-1-authenticate}
+
+Reality Capture requires the \texttt{data:read} and \texttt{data:write}
+scopes:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(AutoDeskR)}
+
+\NormalTok{resp    }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(}
+  \AttributeTok{id     =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_id"}\NormalTok{),}
+  \AttributeTok{secret =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_secret"}\NormalTok{),}
+  \AttributeTok{scope  =} \StringTok{"data:read data:write"}
+\NormalTok{)}
+\NormalTok{myToken }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{access\_token}
+\CommentTok{\#\textgreater{} [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Step 2: Create a Photoscene}\label{step-2-create-a-photoscene}
+
+A \textbf{photoscene} is the container for your images and the resulting
+3D output. The \texttt{format} parameter determines what file type is
+produced:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Format & Output \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{"rcm"} & AutoDesk ReCap project (default) \\
+\texttt{"rcs"} & ReCap point cloud scan \\
+\texttt{"obj"} & Wavefront OBJ mesh \\
+\texttt{"ortho"} & Orthophoto + DSM GeoTIFF \\
+\texttt{"report"} & PDF quality report \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ps             }\OtherTok{\textless{}{-}} \FunctionTok{createPhotoscene}\NormalTok{(}\AttributeTok{name =} \StringTok{"site{-}survey{-}2026"}\NormalTok{, }\AttributeTok{format =} \StringTok{"obj"}\NormalTok{, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{myPhotosceneId }\OtherTok{\textless{}{-}}\NormalTok{ ps}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{photoscene}\SpecialCharTok{$}\NormalTok{photosceneid}
+\NormalTok{ps}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $photoscene}
+\CommentTok{\#\textgreater{} $photoscene$photosceneid}
+\CommentTok{\#\textgreater{} [1] "K2RDAPFIN0OPKGU9B65Q2TJD"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $photoscene$scenename}
+\CommentTok{\#\textgreater{} [1] "site{-}survey{-}2026"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $photoscene$scenelink}
+\CommentTok{\#\textgreater{} [1] "https://developer.api.autodesk.com/photo{-}to{-}3d/v1/photoscene/K2RDAPFIN0OPKGU9B65Q2TJD"}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Step 3: Upload Images}\label{step-3-upload-images}
+
+Pass a character vector of local file paths. AutoDeskR transfers them in
+a single multipart POST. JPEG and PNG are supported.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{image\_files }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"photos/site\_001.jpg"}\NormalTok{,}
+  \StringTok{"photos/site\_002.jpg"}\NormalTok{,}
+  \StringTok{"photos/site\_003.jpg"}
+  \CommentTok{\# ... up to 1000 images per scene}
+\NormalTok{)}
+
+\NormalTok{imgs }\OtherTok{\textless{}{-}} \FunctionTok{uploadImages}\NormalTok{(}
+  \AttributeTok{photoscene\_id =}\NormalTok{ myPhotosceneId,}
+  \AttributeTok{files         =}\NormalTok{ image\_files,}
+  \AttributeTok{token         =}\NormalTok{ myToken}
+\NormalTok{)}
+\NormalTok{imgs}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $Files}
+\CommentTok{\#\textgreater{} $Files$file}
+\CommentTok{\#\textgreater{} $Files$file[[1]]}
+\CommentTok{\#\textgreater{} $Files$file[[1]]$filename}
+\CommentTok{\#\textgreater{} [1] "site\_001.jpg"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $Files$file[[1]]$fileid}
+\CommentTok{\#\textgreater{} [1] "A1B2C3D4E5F6G7H8"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $Files$file[[1]]$filesize}
+\CommentTok{\#\textgreater{} [1] 4718592}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $Files$file[[2]]$filename}
+\CommentTok{\#\textgreater{} [1] "site\_002.jpg"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $Files$file[[2]]$fileid}
+\CommentTok{\#\textgreater{} [1] "B2C3D4E5F6G7H8I9"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $Files$file[[2]]$filesize}
+\CommentTok{\#\textgreater{} [1] 5242880}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}]
+
+\textbf{Free-tier limits:} The APS free tier allows a maximum of
+\textbf{1 000 images per photoscene} and \textbf{10 photoscenes per
+month}. Exceeding these limits returns a \texttt{403\ Forbidden}
+response. Upgrade to a paid plan for higher quotas.
+
+\end{tcolorbox}
+
+\section{Step 4: Start Processing}\label{step-4-start-processing}
+
+Once all images are uploaded, trigger the reconstruction:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{proc }\OtherTok{\textless{}{-}} \FunctionTok{processPhotoscene}\NormalTok{(}\AttributeTok{photoscene\_id =}\NormalTok{ myPhotosceneId, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{proc}\SpecialCharTok{$}\NormalTok{content}
+\CommentTok{\#\textgreater{} $photoscene}
+\CommentTok{\#\textgreater{} $photoscene$photosceneid}
+\CommentTok{\#\textgreater{} [1] "K2RDAPFIN0OPKGU9B65Q2TJD"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $photoscene$progress}
+\CommentTok{\#\textgreater{} [1] "0"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $photoscene$progressmsg}
+\CommentTok{\#\textgreater{} [1] "Queued"}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Step 5: Poll for Completion}\label{step-5-poll-for-completion}
+
+\subsection{Option A --- Manual polling}\label{option-a-manual-polling}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{status }\OtherTok{\textless{}{-}} \FunctionTok{checkPhotoscene}\NormalTok{(}\AttributeTok{photoscene\_id =}\NormalTok{ myPhotosceneId, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{status}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{photoscene}
+\CommentTok{\#\textgreater{} $photosceneid}
+\CommentTok{\#\textgreater{} [1] "K2RDAPFIN0OPKGU9B65Q2TJD"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $progress}
+\CommentTok{\#\textgreater{} [1] "75"}
+\CommentTok{\#\textgreater{}}
+\CommentTok{\#\textgreater{} $progressmsg}
+\CommentTok{\#\textgreater{} [1] "Processing geometry"}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{progress} is a string from \texttt{"0"} to \texttt{"100"}. When
+it reaches \texttt{"100"} the model is ready.
+
+\subsection{Option B --- Block until done
+(recommended)}\label{option-b-block-until-done-recommended}
+
+\texttt{waitForPhotoscene()} polls every \texttt{interval} seconds and
+returns when \texttt{progress\ ==\ "100"}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{done }\OtherTok{\textless{}{-}} \FunctionTok{waitForPhotoscene}\NormalTok{(}
+  \AttributeTok{photoscene\_id =}\NormalTok{ myPhotosceneId,}
+  \AttributeTok{token         =}\NormalTok{ myToken,}
+  \AttributeTok{interval      =} \DecValTok{60}\NormalTok{,     }\CommentTok{\# poll every 60 s}
+  \AttributeTok{timeout       =} \DecValTok{3600}\NormalTok{,   }\CommentTok{\# give up after 1 hour}
+  \AttributeTok{verbose       =} \ConstantTok{TRUE}
+\NormalTok{)}
+\CommentTok{\#\textgreater{} Reality Capture progress: 0 {-} Queued}
+\CommentTok{\#\textgreater{} Reality Capture progress: 10 {-} Uploading files}
+\CommentTok{\#\textgreater{} Reality Capture progress: 35 {-} Calibrating cameras}
+\CommentTok{\#\textgreater{} Reality Capture progress: 60 {-} Building point cloud}
+\CommentTok{\#\textgreater{} Reality Capture progress: 85 {-} Generating mesh}
+\CommentTok{\#\textgreater{} Reality Capture progress: 100 {-} Done}
+\NormalTok{done}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{photoscene}\SpecialCharTok{$}\NormalTok{progress}
+\CommentTok{\#\textgreater{} [1] "100"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}]
+
+\textbf{Processing time} depends on image count and scene complexity. A
+50-image scene typically takes \textbf{5--15 minutes}; 500 images may
+take over an hour. Set \texttt{timeout} to at least twice your expected
+processing time to avoid premature errors.
+
+\end{tcolorbox}
+
+\section{Step 6: Download the Output
+Mesh}\label{step-6-download-the-output-mesh}
+
+Once \texttt{progress\ ==\ "100"}, retrieve the download link from the
+completed photoscene response:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The output URL is embedded in the final checkPhotoscene response}
+\NormalTok{output\_url }\OtherTok{\textless{}{-}}\NormalTok{ done}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{photoscene}\SpecialCharTok{$}\NormalTok{scenelink}
+\CommentTok{\#\textgreater{} [1] "https://developer.api.autodesk.com/photo{-}to{-}3d/v1/photoscene/K2RDAPFIN0OPKGU9B65Q2TJD/properties"}
+
+\CommentTok{\# Download the OBJ mesh}
+\FunctionTok{download.file}\NormalTok{(}
+  \AttributeTok{url      =} \FunctionTok{paste0}\NormalTok{(output\_url, }\StringTok{"/output.obj"}\NormalTok{),}
+  \AttributeTok{destfile =} \StringTok{"site{-}survey{-}2026.obj"}\NormalTok{,}
+  \AttributeTok{headers  =} \FunctionTok{c}\NormalTok{(}\AttributeTok{Authorization =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Bearer"}\NormalTok{, myToken))}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The downloaded OBJ file can be imported into R with the \texttt{rgl} or
+\texttt{Rvcg} packages for 3D visualisation and analysis, or translated
+further via the \hyperref[model-derivative]{Model Derivative} API.
+
+\chapter{Viewer}\label{viewer}
+
+\chapter{Viewer}\label{viewer-1}
+
+AutoDesk provides a WebGL-based viewer for rendering 2D and 3D models.
+Before using the viewer, translate the file into SVF format and extract
+its encoded URN --- see the \textbf{Model Derivative} chapter for those
+steps.
+
+\section{Launch the Viewer}\label{launch-the-viewer}
+
+Pass the encoded URN and token to \texttt{viewer3D()} to open the viewer
+as a Shiny app. The \texttt{viewerType} parameter controls the viewer
+UI:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+\texttt{viewerType} & Description \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{"header"} & Full viewer with toolbar and side panels
+(default) \\
+\texttt{"headless"} & Viewer canvas only --- no toolbar or panels \\
+\texttt{"vr"} & WebVR mode optimized for mobile devices \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(}
+  \AttributeTok{id     =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_id"}\NormalTok{),}
+  \AttributeTok{secret =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_secret"}\NormalTok{),}
+  \AttributeTok{scope  =} \StringTok{"data:read"}
+\NormalTok{)}
+\NormalTok{myToken      }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{access\_token}
+\NormalTok{myEncodedUrn }\OtherTok{\textless{}{-}}\NormalTok{ jsonlite}\SpecialCharTok{::}\FunctionTok{base64\_enc}\NormalTok{(}\FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"urn"}\NormalTok{))}
+
+\CommentTok{\# Full viewer (default)}
+\FunctionTok{viewer3D}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+
+\CommentTok{\# Headless — embed in a dashboard without chrome}
+\FunctionTok{viewer3D}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken, }\AttributeTok{viewerType =} \StringTok{"headless"}\NormalTok{)}
+
+\CommentTok{\# VR mode for mobile}
+\FunctionTok{viewer3D}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken, }\AttributeTok{viewerType =} \StringTok{"vr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Embed in a Shiny App}\label{embed-in-a-shiny-app}
+
+Use \texttt{viewerUI()} to embed the viewer inside any Shiny application
+via the Shiny Modules framework. The \texttt{id} parameter namespaces
+the module so multiple viewers can coexist on the same page.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ui }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(request) \{}
+\NormalTok{  shiny}\SpecialCharTok{::}\FunctionTok{fluidPage}\NormalTok{(}
+    \FunctionTok{viewerUI}\NormalTok{(}\StringTok{"viewer1"}\NormalTok{, }\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\NormalTok{server }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input, output, session) \{\}}
+
+\NormalTok{shiny}\SpecialCharTok{::}\FunctionTok{shinyApp}\NormalTok{(ui, server)}
+\end{Highlighting}
+\end{Shaded}
+
+To show a headless viewer inside a \texttt{tabsetPanel}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ui }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(request) \{}
+\NormalTok{  shiny}\SpecialCharTok{::}\FunctionTok{fluidPage}\NormalTok{(}
+\NormalTok{    shiny}\SpecialCharTok{::}\FunctionTok{tabsetPanel}\NormalTok{(}
+\NormalTok{      shiny}\SpecialCharTok{::}\FunctionTok{tabPanel}\NormalTok{(}\StringTok{"Model"}\NormalTok{, }\FunctionTok{viewerUI}\NormalTok{(}\StringTok{"viewer1"}\NormalTok{, myEncodedUrn, myToken, }\AttributeTok{viewerType =} \StringTok{"headless"}\NormalTok{)),}
+\NormalTok{      shiny}\SpecialCharTok{::}\FunctionTok{tabPanel}\NormalTok{(}\StringTok{"Data"}\NormalTok{,  shiny}\SpecialCharTok{::}\FunctionTok{verbatimTextOutput}\NormalTok{(}\StringTok{"meta"}\NormalTok{))}
+\NormalTok{    )}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\NormalTok{server }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input, output, session) \{\}}
+
+\NormalTok{shiny}\SpecialCharTok{::}\FunctionTok{shinyApp}\NormalTok{(ui, server)}
+\end{Highlighting}
+\end{Shaded}
+
+\part{Project \& Account APIs}
+
+\chapter{ACC Data Management}\label{acc-data-management}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}]
+
+\textbf{Coming in a future release.} This chapter documents a planned
+addition to the AutoDeskR package. The API described here exists in APS
+but R wrapper functions are not yet available. Track progress at
+\href{https://github.com/paulgovan/AutoDeskR}{github.com/paulgovan/AutoDeskR}.
+
+\end{tcolorbox}
+
+\chapter{ACC Data Management}\label{acc-data-management-1}
+
+The \href{https://aps.autodesk.com/en/docs/data/v2/overview/}{Data
+Management (BIM 360 / ACC)} API exposes a hierarchical project file
+structure used by AutoDesk Construction Cloud (ACC) and BIM 360. Unlike
+the Object Storage Service (OSS) covered in the
+\hyperref[data-management]{Data Management} chapter --- which uses flat
+buckets --- the ACC hierarchy organises files into \textbf{Hubs →
+Projects → Folders → Items → Versions}.
+
+\begin{verbatim}
+Hub (BIM 360 account or personal hub)
+ └── Project
+      └── Folder
+           └── Item (a file)
+                └── Version (a specific revision)
+\end{verbatim}
+
+This structure enables per-project permissions, version history, and
+folder-level organisation across large teams.
+
+\section{Why It Matters}\label{why-it-matters}
+
+The OSS bucket API is ideal for programmatic file processing pipelines
+where you manage storage yourself. The ACC hierarchy is required when
+you need to:
+
+\begin{itemize}
+\tightlist
+\item
+  Navigate files that live inside a BIM 360 or ACC project
+\item
+  Access a specific version of a model checked in by a team member
+\item
+  Respect folder-level access controls configured by a project admin
+\end{itemize}
+
+\section{Planned Functions}\label{planned-functions}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Function
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{listHubs(token)} & List all hubs (accounts) accessible to the
+token \\
+\texttt{getHub(token,\ hub\_id)} & Retrieve details for a single hub \\
+\texttt{listProjects(token,\ hub\_id)} & List all projects in a hub \\
+\texttt{getProject(token,\ hub\_id,\ project\_id)} & Retrieve project
+details \\
+\texttt{listFolders(token,\ project\_id,\ folder\_id)} & List subfolders
+of a folder \\
+\texttt{listFolderContents(token,\ project\_id,\ folder\_id)} & List
+items (files) in a folder \\
+\texttt{listItems(token,\ project\_id)} & List all items in a project \\
+\texttt{getItem(token,\ project\_id,\ item\_id)} & Retrieve item
+details \\
+\texttt{getItemVersions(token,\ project\_id,\ item\_id)} & List all
+versions of an item \\
+\end{longtable}
+
+\section{Planned Workflow}\label{planned-workflow}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# (Functions not yet implemented — illustrative only)}
+\NormalTok{token    }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(id, secret, }\AttributeTok{scope =} \StringTok{"data:read"}\NormalTok{)}
+
+\NormalTok{hubs     }\OtherTok{\textless{}{-}} \FunctionTok{listHubs}\NormalTok{(token)}
+\NormalTok{hub\_id   }\OtherTok{\textless{}{-}}\NormalTok{ hubs}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]]}\SpecialCharTok{$}\NormalTok{id}
+
+\NormalTok{projects }\OtherTok{\textless{}{-}} \FunctionTok{listProjects}\NormalTok{(token, }\AttributeTok{hub\_id =}\NormalTok{ hub\_id)}
+\NormalTok{proj\_id  }\OtherTok{\textless{}{-}}\NormalTok{ projects}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]]}\SpecialCharTok{$}\NormalTok{id}
+
+\NormalTok{folders  }\OtherTok{\textless{}{-}} \FunctionTok{listFolderContents}\NormalTok{(token, }\AttributeTok{project\_id =}\NormalTok{ proj\_id, }\AttributeTok{folder\_id =} \StringTok{"root"}\NormalTok{)}
+\NormalTok{item\_id  }\OtherTok{\textless{}{-}}\NormalTok{ folders}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]]}\SpecialCharTok{$}\NormalTok{id}
+
+\NormalTok{versions }\OtherTok{\textless{}{-}} \FunctionTok{getItemVersions}\NormalTok{(token, }\AttributeTok{project\_id =}\NormalTok{ proj\_id, }\AttributeTok{item\_id =}\NormalTok{ item\_id)}
+\NormalTok{urn      }\OtherTok{\textless{}{-}}\NormalTok{ versions}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]]}\SpecialCharTok{$}\NormalTok{relationships}\SpecialCharTok{$}\NormalTok{derivatives}\SpecialCharTok{$}\NormalTok{data}\SpecialCharTok{$}\NormalTok{id}
+\end{Highlighting}
+\end{Shaded}
+
+Once you have the URN from \texttt{getItemVersions()}, it can be passed
+directly to the \hyperref[model-derivative]{Model Derivative} functions
+for translation and metadata extraction.
+
+\chapter{Construction Issues}\label{construction-issues}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}]
+
+\textbf{Coming in a future release.} This chapter documents a planned
+addition to the AutoDeskR package. The API described here exists in APS
+but R wrapper functions are not yet available. Track progress at
+\href{https://github.com/paulgovan/AutoDeskR}{github.com/paulgovan/AutoDeskR}.
+
+\end{tcolorbox}
+
+\chapter{Construction Issues}\label{construction-issues-1}
+
+The
+\href{https://aps.autodesk.com/en/docs/acc/v1/overview/field-guide/issues/}{Construction
+Issues API} provides programmatic access to the issue tracking system in
+AutoDesk Construction Cloud (ACC). Issues are used by field teams to log
+defects, RFIs, observations, and punch-list items against a project.
+
+From R, this API enables you to pull all open issues into a data frame,
+build quality dashboards, track resolution rates over time, or trigger
+alerts when critical issues are created.
+
+\section{Why It Matters}\label{why-it-matters-1}
+
+Construction projects generate hundreds to thousands of issues. R's data
+manipulation and visualisation tools --- dplyr, ggplot2, Shiny --- are
+well suited to analysing this data, but only if it can be accessed
+programmatically. The Construction Issues API provides that access.
+
+Example analyses: - Distribution of open vs.~closed issues by trade -
+Average time-to-resolution by issue type - Issue heat map by location
+(floor / zone) - Automated weekly issue summary emailed via
+\texttt{blastula}
+
+\section{Planned Functions}\label{planned-functions-1}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Function
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{listIssues(token,\ project\_id,\ ...)} & List all issues in a
+project (paginated) \\
+\texttt{getIssue(token,\ project\_id,\ issue\_id)} & Retrieve a single
+issue with full details \\
+\texttt{createIssue(token,\ project\_id,\ ...)} & Create a new issue \\
+\texttt{updateIssue(token,\ project\_id,\ issue\_id,\ ...)} & Update an
+issue's status, assignee, or due date \\
+\texttt{listIssueTypes(token,\ project\_id)} & List available issue
+types and subtypes \\
+\texttt{listIssueCustomAttributes(token,\ project\_id)} & List custom
+attribute definitions \\
+\end{longtable}
+
+\section{Planned Workflow}\label{planned-workflow-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# (Functions not yet implemented — illustrative only)}
+\FunctionTok{library}\NormalTok{(AutoDeskR)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{token      }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(id, secret, }\AttributeTok{scope =} \StringTok{"data:read"}\NormalTok{)}
+\NormalTok{project\_id }\OtherTok{\textless{}{-}} \StringTok{"b.abc12345{-}0000{-}0000{-}0000{-}000000000000"}
+
+\CommentTok{\# Pull all issues}
+\NormalTok{issues\_raw }\OtherTok{\textless{}{-}} \FunctionTok{listIssues}\NormalTok{(token, }\AttributeTok{project\_id =}\NormalTok{ project\_id, }\AttributeTok{limit =} \DecValTok{200}\NormalTok{)}
+\NormalTok{issues\_df  }\OtherTok{\textless{}{-}}\NormalTok{ issues\_raw}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{results}
+
+\CommentTok{\# Summarise by status}
+\NormalTok{issues\_df }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{count}\NormalTok{(status) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(status, n), }\AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#6aaa2a"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Issues by Status"}\NormalTok{, }\AttributeTok{x =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{y =} \StringTok{"Count"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Issue Object Structure}\label{issue-object-structure}
+
+Each issue returned by the API has the following key fields:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Field
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{id} & Unique issue identifier \\
+\texttt{title} & Short description \\
+\texttt{status} & \texttt{open}, \texttt{in\_review}, \texttt{closed} \\
+\texttt{issueType} & Type (e.g.~\texttt{"Defect"}, \texttt{"RFI"}) \\
+\texttt{assignedTo} & Assignee user ID \\
+\texttt{dueDate} & ISO 8601 date string \\
+\texttt{createdAt} & Creation timestamp \\
+\texttt{updatedAt} & Last update timestamp \\
+\texttt{locationDescription} & Free-text location
+(e.g.~\texttt{"Level\ 3,\ Grid\ C4"}) \\
+\end{longtable}
+
+\chapter{Account Admin}\label{account-admin}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}]
+
+\textbf{Coming in a future release.} This chapter documents a planned
+addition to the AutoDeskR package. The API described here exists in APS
+but R wrapper functions are not yet available. Track progress at
+\href{https://github.com/paulgovan/AutoDeskR}{github.com/paulgovan/AutoDeskR}.
+
+\end{tcolorbox}
+
+\chapter{Account Admin}\label{account-admin-1}
+
+The
+\href{https://aps.autodesk.com/en/docs/acc/v1/overview/field-guide/account-admin/}{Account
+Admin API} allows administrators to manage ACC accounts, projects,
+users, and companies programmatically. This is the API behind the
+``Account Admin'' module in the ACC web interface.
+
+For organisations that provision dozens of projects and hundreds of
+users, R scripting can replace tedious manual administration:
+bulk-create projects from a spreadsheet, synchronise user lists from an
+HR system, or audit permissions across an entire portfolio.
+
+\section{Why It Matters}\label{why-it-matters-2}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Task
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Without API
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+With API
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Create 20 projects & 20 × manual form fills & One R script reading from
+a data frame \\
+Add 50 users to a project & 50 × manual invitations & \texttt{lapply()}
+over a user list \\
+Audit who has admin rights & Manual review per project &
+\texttt{listUsers()} + dplyr filter \\
+\end{longtable}
+
+\section{Planned Functions}\label{planned-functions-2}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Function
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{listAccounts(token)} & List all BIM 360 / ACC accounts
+accessible to the token \\
+\texttt{createProject(token,\ account\_id,\ ...)} & Create a new project
+in an account \\
+\texttt{getProject(token,\ account\_id,\ project\_id)} & Retrieve
+project details \\
+\texttt{updateProject(token,\ account\_id,\ project\_id,\ ...)} & Update
+project metadata \\
+\texttt{listUsers(token,\ account\_id,\ project\_id)} & List users in a
+project \\
+\texttt{addUser(token,\ account\_id,\ project\_id,\ ...)} & Add a user
+with a specified role \\
+\texttt{removeUser(token,\ account\_id,\ project\_id,\ user\_id)} &
+Remove a user from a project \\
+\texttt{listCompanies(token,\ account\_id)} & List companies /
+subcontractors in the account \\
+\texttt{addCompany(token,\ account\_id,\ ...)} & Create a new company
+record \\
+\end{longtable}
+
+\section{Planned Workflow}\label{planned-workflow-2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# (Functions not yet implemented — illustrative only)}
+
+\CommentTok{\# Bulk{-}create projects from a data frame}
+\FunctionTok{library}\NormalTok{(AutoDeskR)}
+
+\NormalTok{token      }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(id, secret, }\AttributeTok{scope =} \StringTok{"account:read account:write"}\NormalTok{)}
+\NormalTok{account\_id }\OtherTok{\textless{}{-}} \StringTok{"abc12345{-}0000{-}0000{-}0000{-}000000000000"}
+
+\CommentTok{\# Read project list from a CSV}
+\NormalTok{projects\_to\_create }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"new\_projects.csv"}\NormalTok{)}
+\CommentTok{\# Columns: name, type, start\_date, end\_date, timezone}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{seq\_len}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(projects\_to\_create))) \{}
+\NormalTok{  row }\OtherTok{\textless{}{-}}\NormalTok{ projects\_to\_create[i, ]}
+  \FunctionTok{createProject}\NormalTok{(}
+    \AttributeTok{token      =}\NormalTok{ token,}
+    \AttributeTok{account\_id =}\NormalTok{ account\_id,}
+    \AttributeTok{name       =}\NormalTok{ row}\SpecialCharTok{$}\NormalTok{name,}
+    \AttributeTok{type       =}\NormalTok{ row}\SpecialCharTok{$}\NormalTok{type,}
+    \AttributeTok{start\_date =}\NormalTok{ row}\SpecialCharTok{$}\NormalTok{start\_date,}
+    \AttributeTok{end\_date   =}\NormalTok{ row}\SpecialCharTok{$}\NormalTok{end\_date}
+\NormalTok{  )}
+  \FunctionTok{Sys.sleep}\NormalTok{(}\FloatTok{0.5}\NormalTok{)   }\CommentTok{\# respect rate limits}
+\NormalTok{\}}
+
+\CommentTok{\# Audit: find all users with admin role across all projects}
+\NormalTok{all\_projects }\OtherTok{\textless{}{-}} \FunctionTok{listProjects}\NormalTok{(token, }\AttributeTok{account\_id =}\NormalTok{ account\_id)}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{data}
+\NormalTok{admins }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(all\_projects, }\ControlFlowTok{function}\NormalTok{(p) \{}
+\NormalTok{  users }\OtherTok{\textless{}{-}} \FunctionTok{listUsers}\NormalTok{(token, }\AttributeTok{account\_id =}\NormalTok{ account\_id, }\AttributeTok{project\_id =}\NormalTok{ p}\SpecialCharTok{$}\NormalTok{id)}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{results}
+  \FunctionTok{subset}\NormalTok{(users, role }\SpecialCharTok{==} \StringTok{"admin"}\NormalTok{)}
+\NormalTok{\})}
+\NormalTok{admins\_df }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(rbind, admins)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Required Scopes}\label{required-scopes}
+
+Account Admin functions require the \texttt{account:read} and/or
+\texttt{account:write} scopes depending on whether you are reading or
+modifying data. These scopes must be enabled for your APS application in
+the developer portal.
+
+\chapter{Webhooks}\label{webhooks}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, bottomrule=.15mm, opacityback=0, opacitybacktitle=0.6, bottomtitle=1mm, breakable, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, arc=.35mm, coltitle=black, leftrule=.75mm, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}]
+
+\textbf{Coming in a future release.} This chapter documents a planned
+addition to the AutoDeskR package. The API described here exists in APS
+but R wrapper functions are not yet available. Track progress at
+\href{https://github.com/paulgovan/AutoDeskR}{github.com/paulgovan/AutoDeskR}.
+
+\end{tcolorbox}
+
+\chapter{Webhooks}\label{webhooks-1}
+
+The
+\href{https://aps.autodesk.com/en/docs/webhooks/v1/overview/}{Webhooks
+API} lets APS push HTTP notifications to a URL you control whenever a
+specified event occurs --- for example, when a file translation
+completes, a new model version is published, or a construction issue
+changes status.
+
+Using webhooks eliminates the need to poll \texttt{checkFile()} or
+\texttt{checkPdf()} in a loop. Instead, APS calls your server the moment
+the event fires.
+
+\section{Why It Matters}\label{why-it-matters-3}
+
+Polling works fine for interactive sessions, but in production pipelines
+it wastes API quota and adds latency. A webhook-driven pipeline looks
+like:
+
+\begin{verbatim}
+Upload file → POST /webhooks (register callback)
+            ↓ (APS fires event when translation done)
+     Your server receives POST → trigger downstream R job
+\end{verbatim}
+
+This is especially useful for automated reporting pipelines where a new
+DWG published to ACC should automatically trigger translation, metadata
+extraction, and a Shiny dashboard refresh.
+
+\section{Supported Event Types}\label{supported-event-types}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+System
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Event
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{data} & \texttt{dm.version.added} --- new file version
+created \\
+\texttt{data} & \texttt{dm.version.modified} --- file version updated \\
+\texttt{derivative} & \texttt{extraction.finished} --- Model Derivative
+job complete \\
+\texttt{derivative} & \texttt{extraction.failed} --- Model Derivative
+job failed \\
+\texttt{autodesk.construction.issues} & \texttt{issue.created} --- new
+issue created \\
+\texttt{autodesk.construction.issues} & \texttt{issue.updated} --- issue
+status changed \\
+\end{longtable}
+
+\section{Planned Functions}\label{planned-functions-3}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Function
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{createWebhook(token,\ system,\ event,\ callback\_url,\ ...)} &
+Register a new webhook subscription \\
+\texttt{listWebhooks(token,\ system,\ event)} & List active
+subscriptions \\
+\texttt{getWebhook(token,\ hook\_id)} & Retrieve a single
+subscription \\
+\texttt{updateWebhook(token,\ hook\_id,\ ...)} & Update a webhook
+(e.g.~change callback URL) \\
+\texttt{deleteWebhook(token,\ hook\_id)} & Remove a subscription \\
+\end{longtable}
+
+\section{Planned Workflow}\label{planned-workflow-3}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# (Functions not yet implemented — illustrative only)}
+\NormalTok{token }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(id, secret, }\AttributeTok{scope =} \StringTok{"data:read data:write"}\NormalTok{)}
+
+\CommentTok{\# Register: call my{-}server.example.com when any derivative extraction finishes}
+\NormalTok{hook }\OtherTok{\textless{}{-}} \FunctionTok{createWebhook}\NormalTok{(}
+  \AttributeTok{token        =}\NormalTok{ token,}
+  \AttributeTok{system       =} \StringTok{"derivative"}\NormalTok{,}
+  \AttributeTok{event        =} \StringTok{"extraction.finished"}\NormalTok{,}
+  \AttributeTok{callback\_url =} \StringTok{"https://my{-}server.example.com/aps{-}hook"}\NormalTok{,}
+  \AttributeTok{scope        =} \FunctionTok{list}\NormalTok{(}\AttributeTok{workflow =} \StringTok{"my{-}pipeline"}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{hook\_id }\OtherTok{\textless{}{-}}\NormalTok{ hook}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{hookId}
+
+\CommentTok{\# Later — list active hooks}
+\NormalTok{hooks }\OtherTok{\textless{}{-}} \FunctionTok{listWebhooks}\NormalTok{(token, }\AttributeTok{system =} \StringTok{"derivative"}\NormalTok{)}
+
+\CommentTok{\# Clean up}
+\FunctionTok{deleteWebhook}\NormalTok{(token, }\AttributeTok{hook\_id =}\NormalTok{ hook\_id)}
+\end{Highlighting}
+\end{Shaded}
+
+Your callback server receives a POST with a JSON payload containing the
+event type, URN of the affected file, and a timestamp. Parse it and
+trigger downstream processing accordingly.
+
+\part{Reference}
+
+\chapter{Case Study: DWG to Shiny
+Dashboard}\label{case-study-dwg-to-shiny-dashboard}
+
+\chapter{Case Study: From DWG to Shiny
+Dashboard}\label{case-study-from-dwg-to-shiny-dashboard}
+
+This chapter ties every API together in a single narrative. Starting
+from a raw DWG file on disk, we will authenticate, upload, translate,
+extract metadata, visualise layer data with ggplot2, and embed the live
+3D model in a Shiny dashboard --- all from R.
+
+The DWG file used throughout is \texttt{aerial.dwg}, the sample file
+bundled with AutoDeskR:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dwg\_path }\OtherTok{\textless{}{-}} \FunctionTok{system.file}\NormalTok{(}\StringTok{"samples/aerial.dwg"}\NormalTok{, }\AttributeTok{package =} \StringTok{"AutoDeskR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Step 1: Authenticate with Combined
+Scopes}\label{step-1-authenticate-with-combined-scopes}
+
+Every API used in this case study requires a different scope. Request
+them all upfront in a single token:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(AutoDeskR)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(shiny)}
+
+\NormalTok{resp }\OtherTok{\textless{}{-}} \FunctionTok{getToken}\NormalTok{(}
+  \AttributeTok{id     =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_id"}\NormalTok{),}
+  \AttributeTok{secret =} \FunctionTok{Sys.getenv}\NormalTok{(}\StringTok{"client\_secret"}\NormalTok{),}
+  \AttributeTok{scope  =} \StringTok{"data:read data:write bucket:create bucket:read code:all"}
+\NormalTok{)}
+\NormalTok{myToken }\OtherTok{\textless{}{-}}\NormalTok{ resp}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{access\_token}
+\CommentTok{\#\textgreater{} [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Step 2: Create a Bucket and Upload the
+DWG}\label{step-2-create-a-bucket-and-upload-the-dwg}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a persistent bucket}
+\NormalTok{bucket }\OtherTok{\textless{}{-}} \FunctionTok{makeBucket}\NormalTok{(}\AttributeTok{token =}\NormalTok{ myToken, }\AttributeTok{bucket =} \StringTok{"case{-}study{-}bucket"}\NormalTok{, }\AttributeTok{policy =} \StringTok{"persistent"}\NormalTok{)}
+\NormalTok{bucket}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{bucketKey}
+\CommentTok{\#\textgreater{} [1] "case{-}study{-}bucket"}
+
+\CommentTok{\# Upload the DWG}
+\NormalTok{upload }\OtherTok{\textless{}{-}} \FunctionTok{uploadFile}\NormalTok{(}
+  \AttributeTok{file   =}\NormalTok{ dwg\_path,}
+  \AttributeTok{token  =}\NormalTok{ myToken,}
+  \AttributeTok{bucket =} \StringTok{"case{-}study{-}bucket"}
+\NormalTok{)}
+\NormalTok{myUrn }\OtherTok{\textless{}{-}}\NormalTok{ upload}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{objectId}
+\NormalTok{upload}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{objectKey}
+\CommentTok{\#\textgreater{} [1] "aerial.dwg"}
+\NormalTok{upload}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{size}
+\CommentTok{\#\textgreater{} [1] 3145728}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Step 3: Translate to SVF}\label{step-3-translate-to-svf}
+
+SVF is the format required by the Viewer and for metadata extraction.
+Encode the URN, submit the job, and wait for it to finish:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myEncodedUrn }\OtherTok{\textless{}{-}}\NormalTok{ jsonlite}\SpecialCharTok{::}\FunctionTok{base64\_enc}\NormalTok{(myUrn)}
+
+\CommentTok{\# Submit translation}
+\FunctionTok{translateSvf}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{result}
+\CommentTok{\#\textgreater{} [1] "created"}
+
+\CommentTok{\# Poll until done}
+\ControlFlowTok{repeat}\NormalTok{ \{}
+\NormalTok{  status }\OtherTok{\textless{}{-}} \FunctionTok{checkFile}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Status:"}\NormalTok{, status}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{status, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (status}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{status }\SpecialCharTok{==} \StringTok{"success"}\NormalTok{) }\ControlFlowTok{break}
+  \FunctionTok{Sys.sleep}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\NormalTok{\}}
+\CommentTok{\#\textgreater{} Status: pending}
+\CommentTok{\#\textgreater{} Status: inprogress}
+\CommentTok{\#\textgreater{} Status: inprogress}
+\CommentTok{\#\textgreater{} Status: success}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Step 4: Extract Layer
+Metadata}\label{step-4-extract-layer-metadata}
+
+Retrieve the GUID, then pull the full object property set to get
+per-layer geometry data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get the viewable GUID}
+\NormalTok{meta   }\OtherTok{\textless{}{-}} \FunctionTok{getMetadata}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{myGuid }\OtherTok{\textless{}{-}}\NormalTok{ meta}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{data}\SpecialCharTok{$}\NormalTok{metadata[[}\DecValTok{1}\NormalTok{]]}\SpecialCharTok{$}\NormalTok{guid}
+\NormalTok{myGuid}
+\CommentTok{\#\textgreater{} [1] "a7b3c9d2{-}4e1f{-}4a8b{-}b6c2{-}9d3e7f5a1b4c"}
+
+\CommentTok{\# Retrieve all object properties}
+\NormalTok{props }\OtherTok{\textless{}{-}} \FunctionTok{getData}\NormalTok{(}\AttributeTok{guid =}\NormalTok{ myGuid, }\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+
+\CommentTok{\# Extract layer name and bounding{-}box area for each object}
+\NormalTok{layer\_data }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(props}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{data}\SpecialCharTok{$}\NormalTok{collection, }\ControlFlowTok{function}\NormalTok{(obj) \{}
+\NormalTok{  layer }\OtherTok{\textless{}{-}}\NormalTok{ obj}\SpecialCharTok{$}\NormalTok{properties[[}\StringTok{"Layer and Material"}\NormalTok{]][[}\StringTok{"Layer"}\NormalTok{]]}
+\NormalTok{  xmin  }\OtherTok{\textless{}{-}}\NormalTok{ obj}\SpecialCharTok{$}\NormalTok{properties}\SpecialCharTok{$}\NormalTok{Geometry[[}\StringTok{"Bounding Box Min X"}\NormalTok{]]}
+\NormalTok{  xmax  }\OtherTok{\textless{}{-}}\NormalTok{ obj}\SpecialCharTok{$}\NormalTok{properties}\SpecialCharTok{$}\NormalTok{Geometry[[}\StringTok{"Bounding Box Max X"}\NormalTok{]]}
+\NormalTok{  ymin  }\OtherTok{\textless{}{-}}\NormalTok{ obj}\SpecialCharTok{$}\NormalTok{properties}\SpecialCharTok{$}\NormalTok{Geometry[[}\StringTok{"Bounding Box Min Y"}\NormalTok{]]}
+\NormalTok{  ymax  }\OtherTok{\textless{}{-}}\NormalTok{ obj}\SpecialCharTok{$}\NormalTok{properties}\SpecialCharTok{$}\NormalTok{Geometry[[}\StringTok{"Bounding Box Max Y"}\NormalTok{]]}
+  \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(layer) }\SpecialCharTok{\&\&} \SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(xmin)) \{}
+    \FunctionTok{data.frame}\NormalTok{(}
+      \AttributeTok{layer =}\NormalTok{ layer,}
+      \AttributeTok{area  =}\NormalTok{ (xmax }\SpecialCharTok{{-}}\NormalTok{ xmin) }\SpecialCharTok{*}\NormalTok{ (ymax }\SpecialCharTok{{-}}\NormalTok{ ymin)}
+\NormalTok{    )}
+\NormalTok{  \}}
+\NormalTok{\})}
+
+\NormalTok{layers\_df }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(rbind, }\FunctionTok{Filter}\NormalTok{(}\FunctionTok{Negate}\NormalTok{(is.null), layer\_data))}
+\FunctionTok{head}\NormalTok{(layers\_df)}
+\CommentTok{\#\textgreater{}     layer        area}
+\CommentTok{\#\textgreater{} 1  A{-}SITE  196842.73}
+\CommentTok{\#\textgreater{} 2  A{-}BLDG   42301.18}
+\CommentTok{\#\textgreater{} 3  A{-}ROAD   28473.09}
+\CommentTok{\#\textgreater{} 4  A{-}PARK   15621.44}
+\CommentTok{\#\textgreater{} 5  A{-}UTIL    8904.72}
+\CommentTok{\#\textgreater{} 6  A{-}ANNO    3215.01}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Step 5: Visualise with
+ggplot2}\label{step-5-visualise-with-ggplot2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Aggregate area by layer}
+\NormalTok{layer\_totals }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(area }\SpecialCharTok{\textasciitilde{}}\NormalTok{ layer, }\AttributeTok{data =}\NormalTok{ layers\_df, }\AttributeTok{FUN =}\NormalTok{ sum)}
+\NormalTok{layer\_totals }\OtherTok{\textless{}{-}}\NormalTok{ layer\_totals[}\FunctionTok{order}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{layer\_totals}\SpecialCharTok{$}\NormalTok{area), ]}
+
+\FunctionTok{ggplot}\NormalTok{(layer\_totals, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(layer, area), }\AttributeTok{y =}\NormalTok{ area }\SpecialCharTok{/} \DecValTok{1000}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#6aaa2a"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title    =} \StringTok{"Bounding{-}Box Area by DWG Layer"}\NormalTok{,}
+    \AttributeTok{subtitle =} \StringTok{"aerial.dwg — AutoDeskR sample file"}\NormalTok{,}
+    \AttributeTok{x        =} \StringTok{"Layer"}\NormalTok{,}
+    \AttributeTok{y        =} \FunctionTok{expression}\NormalTok{(}\StringTok{"Area (×10"}\SpecialCharTok{\^{}}\DecValTok{3} \SpecialCharTok{*} \StringTok{" drawing units²)"}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{13}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/layers_plot.png}}
+
+}
+
+\caption{Bar chart showing bounding-box area by DWG layer, with A-SITE
+dominating at \textasciitilde197k units²}
+
+\end{figure}%
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Step 6: Build the Shiny
+Dashboard}\label{step-6-build-the-shiny-dashboard}
+
+Combine the ggplot2 chart and the embedded 3D viewer in a two-tab Shiny
+app:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ui }\OtherTok{\textless{}{-}}\NormalTok{ shiny}\SpecialCharTok{::}\FunctionTok{fluidPage}\NormalTok{(}
+\NormalTok{  shiny}\SpecialCharTok{::}\FunctionTok{titlePanel}\NormalTok{(}\StringTok{"Aerial Site — AutoDeskR Case Study"}\NormalTok{),}
+\NormalTok{  shiny}\SpecialCharTok{::}\FunctionTok{tabsetPanel}\NormalTok{(}
+\NormalTok{    shiny}\SpecialCharTok{::}\FunctionTok{tabPanel}\NormalTok{(}
+      \StringTok{"3D Model"}\NormalTok{,}
+      \FunctionTok{viewerUI}\NormalTok{(}\StringTok{"model"}\NormalTok{, }\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+\NormalTok{    ),}
+\NormalTok{    shiny}\SpecialCharTok{::}\FunctionTok{tabPanel}\NormalTok{(}
+      \StringTok{"Layer Analysis"}\NormalTok{,}
+\NormalTok{      shiny}\SpecialCharTok{::}\FunctionTok{plotOutput}\NormalTok{(}\StringTok{"layer\_chart"}\NormalTok{, }\AttributeTok{height =} \StringTok{"500px"}\NormalTok{)}
+\NormalTok{    )}
+\NormalTok{  )}
+\NormalTok{)}
+
+\NormalTok{server }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input, output, session) \{}
+\NormalTok{  output}\SpecialCharTok{$}\NormalTok{layer\_chart }\OtherTok{\textless{}{-}}\NormalTok{ shiny}\SpecialCharTok{::}\FunctionTok{renderPlot}\NormalTok{(\{}
+    \FunctionTok{ggplot}\NormalTok{(layer\_totals, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(layer, area), }\AttributeTok{y =}\NormalTok{ area }\SpecialCharTok{/} \DecValTok{1000}\NormalTok{)) }\SpecialCharTok{+}
+      \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#6aaa2a"}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+      \FunctionTok{labs}\NormalTok{(}
+        \AttributeTok{title =} \StringTok{"Bounding{-}Box Area by DWG Layer"}\NormalTok{,}
+        \AttributeTok{x =} \StringTok{"Layer"}\NormalTok{,}
+        \AttributeTok{y =} \FunctionTok{expression}\NormalTok{(}\StringTok{"Area (×10"}\SpecialCharTok{\^{}}\DecValTok{3} \SpecialCharTok{*} \StringTok{" units²)"}\NormalTok{)}
+\NormalTok{      ) }\SpecialCharTok{+}
+      \FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{13}\NormalTok{)}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\NormalTok{shiny}\SpecialCharTok{::}\FunctionTok{shinyApp}\NormalTok{(ui, server)}
+\end{Highlighting}
+\end{Shaded}
+
+The finished dashboard shows the AutoDesk WebGL viewer on the left tab
+and the ggplot2 analysis on the right, both driven by data extracted
+live from the same DWG file through the APS APIs.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Summary}\label{summary}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Function(s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+API
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Authenticate & \texttt{getToken()} & Authentication \\
+Create bucket + upload & \texttt{makeBucket()}, \texttt{uploadFile()} &
+Data Management \\
+Translate to SVF & \texttt{translateSvf()}, \texttt{checkFile()} & Model
+Derivative \\
+Extract properties & \texttt{getMetadata()}, \texttt{getData()} & Model
+Derivative \\
+Visualise & \texttt{ggplot2} & --- \\
+Embed viewer & \texttt{viewerUI()} & Viewer \\
+\end{longtable}
+
+The full source for this case study is available at
+\href{https://github.com/paulgovan/AutoDeskR}{github.com/paulgovan/AutoDeskR}
+in the \texttt{inst/examples/} directory.
+
+\chapter{Function Reference}\label{function-reference}
+
+\chapter{Function Reference}\label{function-reference-1}
+
+Quick-lookup table for every exported AutoDeskR function. Click the
+\textbf{Chapter} link to jump to full documentation and worked examples.
+
+\section{Authentication}\label{authentication-2}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Function
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Required Scopes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Key Parameters
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Returns
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{getToken(id,\ secret,\ scope)} & --- & \texttt{id},
+\texttt{secret}, \texttt{scope} (space-separated string) &
+\texttt{\$content\$access\_token}, \texttt{\$content\$expires\_in} \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Data Management}\label{data-management-2}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Function
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Required Scopes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Key Parameters
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Returns
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{makeBucket(token,\ bucket,\ policy)} & \texttt{bucket:create} &
+\texttt{bucket} (globally unique key), \texttt{policy}
+(\texttt{"transient"} / \texttt{"temporary"} / \texttt{"persistent"}) &
+\texttt{\$content\$bucketKey}, \texttt{\$content\$policyKey} \\
+\texttt{checkBucket(token,\ bucket)} & \texttt{bucket:read} &
+\texttt{bucket} & \texttt{\$content\$bucketKey},
+\texttt{\$content\$policyKey} \\
+\texttt{deleteBucket(token,\ bucket)} & \texttt{bucket:delete} &
+\texttt{bucket} (must be empty) & \texttt{\$status\_code} 200 \\
+\texttt{uploadFile(file,\ token,\ bucket)} & \texttt{data:write} &
+\texttt{file} (local path, ≤ 100 MB), \texttt{bucket} &
+\texttt{\$content\$objectId} (URN), \texttt{\$content\$size} \\
+\texttt{uploadFileSigned(file,\ token,\ bucket)} & \texttt{data:write} &
+\texttt{file} (local path, \textgreater{} 100 MB), \texttt{bucket} &
+\texttt{\$content\$objectId} (URN) \\
+\texttt{listBuckets(token,\ limit,\ startAt,\ region)} &
+\texttt{bucket:read} & \texttt{limit} (default 10), \texttt{startAt}
+(pagination key), \texttt{region} (\texttt{"US"} / \texttt{"EMEA"}) &
+\texttt{\$content\$items} data frame \\
+\texttt{listObjects(token,\ bucket,\ limit)} & \texttt{data:read} &
+\texttt{bucket}, \texttt{limit} & \texttt{\$content\$items} data
+frame \\
+\texttt{deleteObject(token,\ bucket,\ object)} & \texttt{data:write} &
+\texttt{bucket}, \texttt{object} (filename) & \texttt{\$status\_code}
+200 \\
+\texttt{downloadFile(urn,\ output\_urn,\ token,\ destfile)} &
+\texttt{data:read} & \texttt{urn} (encoded source), \texttt{output\_urn}
+(encoded output), \texttt{destfile} & \texttt{\$status\_code} 200 \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Model Derivative}\label{model-derivative-2}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Function
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Required Scopes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Key Parameters
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Returns
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{translateObj(urn,\ token)} & \texttt{data:read\ data:write} &
+\texttt{urn} (Base-64 encoded) & \texttt{\$content\$result}
+(\texttt{"created"}), \texttt{\$content\$urn} \\
+\texttt{translateStl(urn,\ token)} & \texttt{data:read\ data:write} &
+\texttt{urn} (Base-64 encoded) & \texttt{\$content\$result},
+\texttt{\$content\$urn} \\
+\texttt{translateSvf(urn,\ token)} & \texttt{data:read\ data:write} &
+\texttt{urn} (Base-64 encoded) & \texttt{\$content\$result},
+\texttt{\$content\$urn} \\
+\texttt{checkFile(urn,\ token)} & \texttt{data:read} & \texttt{urn}
+(Base-64 encoded) & \texttt{\$content\$status} (\texttt{"pending"} /
+\texttt{"inprogress"} / \texttt{"success"}),
+\texttt{\$content\$progress} \\
+\texttt{getOutputUrn(urn,\ token)} & \texttt{data:read} & \texttt{urn}
+(raw, not encoded) &
+\texttt{\$content\$derivatives{[}{[}1{]}{]}\$children{[}{[}1{]}{]}\$urn} \\
+\texttt{getMetadata(urn,\ token)} & \texttt{data:read} & \texttt{urn}
+(Base-64 encoded) &
+\texttt{\$content\$data\$metadata{[}{[}1{]}{]}\$guid},
+\texttt{\$content\$data\$metadata{[}{[}1{]}{]}\$name} \\
+\texttt{getObjectTree(guid,\ urn,\ token)} & \texttt{data:read} &
+\texttt{guid}, \texttt{urn} (Base-64 encoded) &
+\texttt{\$content\$data\$objects} (nested list) \\
+\texttt{getData(guid,\ urn,\ token)} & \texttt{data:read} &
+\texttt{guid}, \texttt{urn} (Base-64 encoded) &
+\texttt{\$content\$data\$collection} (list of objects with
+properties) \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Design Automation}\label{design-automation-2}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Function
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Required Scopes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Key Parameters
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Returns
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{makePdf(source,\ destination,\ token)} & \texttt{code:all} &
+\texttt{source} (public URL to DWG), \texttt{destination} (public URL
+for output) & \texttt{\$content\$id} (WorkItem ID),
+\texttt{\$content\$status} \\
+\texttt{checkPdf(id,\ token)} & \texttt{code:all} & \texttt{id}
+(WorkItem ID from \texttt{makePdf()}) & \texttt{\$content\$status}
+(\texttt{"pending"} / \texttt{"inprogress"} / \texttt{"success"}),
+\texttt{\$content\$stats} \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Reality Capture}\label{reality-capture-2}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Function
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Required Scopes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Key Parameters
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Returns
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{createPhotoscene(name,\ format,\ token)} &
+\texttt{data:read\ data:write} & \texttt{name} (scene label),
+\texttt{format} (\texttt{"rcm"} / \texttt{"rcs"} / \texttt{"obj"} /
+\texttt{"ortho"} / \texttt{"report"}) &
+\texttt{\$content\$photoscene\$photosceneid} \\
+\texttt{uploadImages(photoscene\_id,\ files,\ token)} &
+\texttt{data:read\ data:write} & \texttt{photoscene\_id}, \texttt{files}
+(character vector of local JPEG/PNG paths) &
+\texttt{\$content\$Files\$file} (list of uploaded file records) \\
+\texttt{processPhotoscene(photoscene\_id,\ token)} &
+\texttt{data:read\ data:write} & \texttt{photoscene\_id} &
+\texttt{\$content\$photoscene\$progress} (\texttt{"0"} on submission) \\
+\texttt{checkPhotoscene(photoscene\_id,\ token)} &
+\texttt{data:read\ data:write} & \texttt{photoscene\_id} &
+\texttt{\$content\$photoscene\$progress} (string
+\texttt{"0"}--\texttt{"100"}),
+\texttt{\$content\$photoscene\$progressmsg} \\
+\texttt{waitForPhotoscene(photoscene\_id,\ token,\ interval,\ timeout,\ verbose)}
+& \texttt{data:read\ data:write} & \texttt{interval} (seconds between
+polls, default 30), \texttt{timeout} (max wait in seconds, default 1800)
+& Final \texttt{checkPhotoscene} response when
+\texttt{progress\ ==\ "100"} \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Viewer}\label{viewer-2}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Function
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Required Scopes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Key Parameters
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Returns
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{viewer3D(urn,\ token,\ viewerType)} & \texttt{data:read} &
+\texttt{urn} (Base-64 encoded), \texttt{viewerType} (\texttt{"header"} /
+\texttt{"headless"} / \texttt{"vr"}) & Opens viewer in browser /
+Shiny \\
+\texttt{viewerUI(id,\ urn,\ token,\ viewerType)} & \texttt{data:read} &
+\texttt{id} (Shiny module ID), \texttt{urn}, \texttt{token},
+\texttt{viewerType} & Shiny UI element for use in
+\texttt{fluidPage()} \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Scope Quick Reference}\label{scope-quick-reference}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Scope
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Used by
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{data:read} & Model Derivative, Viewer, Reality Capture (read) \\
+\texttt{data:write} & Data Management (upload/delete), Model Derivative
+(translate), Reality Capture \\
+\texttt{bucket:create} & Data Management (\texttt{makeBucket}) \\
+\texttt{bucket:read} & Data Management (\texttt{checkBucket},
+\texttt{listBuckets}) \\
+\texttt{bucket:delete} & Data Management (\texttt{deleteBucket}) \\
+\texttt{code:all} & Design Automation \\
+\end{longtable}
+
+\section{Common Patterns}\label{common-patterns}
+
+\subsection{Base-64 encode a URN}\label{base-64-encode-a-urn}
+
+The Model Derivative and Viewer APIs require the URN to be Base-64
+encoded. Use \texttt{jsonlite::base64\_enc()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myEncodedUrn }\OtherTok{\textless{}{-}}\NormalTok{ jsonlite}\SpecialCharTok{::}\FunctionTok{base64\_enc}\NormalTok{(myUrn)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Poll until a job finishes}\label{poll-until-a-job-finishes}
+
+All async jobs (\texttt{translateObj}, \texttt{translateSvf},
+\texttt{makePdf}, \texttt{processPhotoscene}) follow the same pattern:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{repeat}\NormalTok{ \{}
+\NormalTok{  status }\OtherTok{\textless{}{-}} \FunctionTok{checkFile}\NormalTok{(}\AttributeTok{urn =}\NormalTok{ myEncodedUrn, }\AttributeTok{token =}\NormalTok{ myToken)}
+  \ControlFlowTok{if}\NormalTok{ (status}\SpecialCharTok{$}\NormalTok{content}\SpecialCharTok{$}\NormalTok{status }\SpecialCharTok{==} \StringTok{"success"}\NormalTok{) }\ControlFlowTok{break}
+  \FunctionTok{Sys.sleep}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Use \texttt{waitForPhotoscene()} as a ready-made equivalent for Reality
+Capture jobs.
+
+\chapter{Troubleshooting}\label{troubleshooting}
+
+\chapter{Troubleshooting}\label{troubleshooting-1}
+
+\section{Common Issues}\label{common-issues}
+
+Here is a running list of common issues that users have run into:
+
+\textbf{Problem:} Some of the functions seem to work, others don't.
+
+\textbf{Solution:} Make sure to sign up for the correct APIs and
+services through AutoDesk Platform Services (APS) at
+\url{https://aps.autodesk.com}.
+
+\textbf{Problem:} I can't create bucket ``mybucket''.
+
+\textbf{Solution:} Try a unique bucket name.
+
+\textbf{Problem:} I was able to create a bucket and upload a file, but I
+can't translate the file.
+
+\textbf{Solution:} Each task requires different tokens with different
+scopes. Make sure to create a token with the
+\texttt{data:read\ data:write} scopes in order to translate a file.
+
+\bookmarksetup{startatroot}
+
+\chapter*{References}\label{references}
+\addcontentsline{toc}{chapter}{References}
+
+\markboth{References}{References}
+
+\phantomsection\label{refs}
+
+
+
+
+\end{document}

@@ -1,0 +1,113 @@
+---
+title: "Function Reference"
+---
+
+# Function Reference
+
+Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** link to jump to full documentation and worked examples.
+
+## Authentication
+
+| Function | Required Scopes | Key Parameters | Returns |
+|---|---|---|---|
+| `getToken(id, secret, scope)` | — | `id`, `secret`, `scope` (space-separated string) | `$content$access_token`, `$content$expires_in` |
+
+---
+
+## Data Management
+
+| Function | Required Scopes | Key Parameters | Returns |
+|---|---|---|---|
+| `makeBucket(token, bucket, policy)` | `bucket:create` | `bucket` (globally unique key), `policy` (`"transient"` / `"temporary"` / `"persistent"`) | `$content$bucketKey`, `$content$policyKey` |
+| `checkBucket(token, bucket)` | `bucket:read` | `bucket` | `$content$bucketKey`, `$content$policyKey` |
+| `deleteBucket(token, bucket)` | `bucket:delete` | `bucket` (must be empty) | `$status_code` 200 |
+| `uploadFile(file, token, bucket)` | `data:write` | `file` (local path, ≤ 100 MB), `bucket` | `$content$objectId` (URN), `$content$size` |
+| `uploadFileSigned(file, token, bucket)` | `data:write` | `file` (local path, > 100 MB), `bucket` | `$content$objectId` (URN) |
+| `listBuckets(token, limit, startAt, region)` | `bucket:read` | `limit` (default 10), `startAt` (pagination key), `region` (`"US"` / `"EMEA"`) | `$content$items` data frame |
+| `listObjects(token, bucket, limit)` | `data:read` | `bucket`, `limit` | `$content$items` data frame |
+| `deleteObject(token, bucket, object)` | `data:write` | `bucket`, `object` (filename) | `$status_code` 200 |
+| `downloadFile(urn, output_urn, token, destfile)` | `data:read` | `urn` (encoded source), `output_urn` (encoded output), `destfile` | `$status_code` 200 |
+
+---
+
+## Model Derivative
+
+| Function | Required Scopes | Key Parameters | Returns |
+|---|---|---|---|
+| `translateObj(urn, token)` | `data:read data:write` | `urn` (Base-64 encoded) | `$content$result` (`"created"`), `$content$urn` |
+| `translateStl(urn, token)` | `data:read data:write` | `urn` (Base-64 encoded) | `$content$result`, `$content$urn` |
+| `translateSvf(urn, token)` | `data:read data:write` | `urn` (Base-64 encoded) | `$content$result`, `$content$urn` |
+| `checkFile(urn, token)` | `data:read` | `urn` (Base-64 encoded) | `$content$status` (`"pending"` / `"inprogress"` / `"success"`), `$content$progress` |
+| `getOutputUrn(urn, token)` | `data:read` | `urn` (raw, not encoded) | `$content$derivatives[[1]]$children[[1]]$urn` |
+| `getMetadata(urn, token)` | `data:read` | `urn` (Base-64 encoded) | `$content$data$metadata[[1]]$guid`, `$content$data$metadata[[1]]$name` |
+| `getObjectTree(guid, urn, token)` | `data:read` | `guid`, `urn` (Base-64 encoded) | `$content$data$objects` (nested list) |
+| `getData(guid, urn, token)` | `data:read` | `guid`, `urn` (Base-64 encoded) | `$content$data$collection` (list of objects with properties) |
+
+---
+
+## Design Automation
+
+| Function | Required Scopes | Key Parameters | Returns |
+|---|---|---|---|
+| `makePdf(source, destination, token)` | `code:all` | `source` (public URL to DWG), `destination` (public URL for output) | `$content$id` (WorkItem ID), `$content$status` |
+| `checkPdf(id, token)` | `code:all` | `id` (WorkItem ID from `makePdf()`) | `$content$status` (`"pending"` / `"inprogress"` / `"success"`), `$content$stats` |
+
+---
+
+## Reality Capture
+
+| Function | Required Scopes | Key Parameters | Returns |
+|---|---|---|---|
+| `createPhotoscene(name, format, token)` | `data:read data:write` | `name` (scene label), `format` (`"rcm"` / `"rcs"` / `"obj"` / `"ortho"` / `"report"`) | `$content$photoscene$photosceneid` |
+| `uploadImages(photoscene_id, files, token)` | `data:read data:write` | `photoscene_id`, `files` (character vector of local JPEG/PNG paths) | `$content$Files$file` (list of uploaded file records) |
+| `processPhotoscene(photoscene_id, token)` | `data:read data:write` | `photoscene_id` | `$content$photoscene$progress` (`"0"` on submission) |
+| `checkPhotoscene(photoscene_id, token)` | `data:read data:write` | `photoscene_id` | `$content$photoscene$progress` (string `"0"`–`"100"`), `$content$photoscene$progressmsg` |
+| `waitForPhotoscene(photoscene_id, token, interval, timeout, verbose)` | `data:read data:write` | `interval` (seconds between polls, default 30), `timeout` (max wait in seconds, default 1800) | Final `checkPhotoscene` response when `progress == "100"` |
+
+---
+
+## Viewer
+
+| Function | Required Scopes | Key Parameters | Returns |
+|---|---|---|---|
+| `viewer3D(urn, token, viewerType)` | `data:read` | `urn` (Base-64 encoded), `viewerType` (`"header"` / `"headless"` / `"vr"`) | Opens viewer in browser / Shiny |
+| `viewerUI(id, urn, token, viewerType)` | `data:read` | `id` (Shiny module ID), `urn`, `token`, `viewerType` | Shiny UI element for use in `fluidPage()` |
+
+---
+
+## Scope Quick Reference
+
+| Scope | Used by |
+|---|---|
+| `data:read` | Model Derivative, Viewer, Reality Capture (read) |
+| `data:write` | Data Management (upload/delete), Model Derivative (translate), Reality Capture |
+| `bucket:create` | Data Management (`makeBucket`) |
+| `bucket:read` | Data Management (`checkBucket`, `listBuckets`) |
+| `bucket:delete` | Data Management (`deleteBucket`) |
+| `code:all` | Design Automation |
+
+## Common Patterns
+
+### Base-64 encode a URN
+
+The Model Derivative and Viewer APIs require the URN to be Base-64 encoded. Use `jsonlite::base64_enc()`:
+
+```{r}
+#| eval: false
+myEncodedUrn <- jsonlite::base64_enc(myUrn)
+```
+
+### Poll until a job finishes
+
+All async jobs (`translateObj`, `translateSvf`, `makePdf`, `processPhotoscene`) follow the same pattern:
+
+```{r}
+#| eval: false
+repeat {
+  status <- checkFile(urn = myEncodedUrn, token = myToken)
+  if (status$content$status == "success") break
+  Sys.sleep(10)
+}
+```
+
+Use `waitForPhotoscene()` as a ready-made equivalent for Reality Capture jobs.

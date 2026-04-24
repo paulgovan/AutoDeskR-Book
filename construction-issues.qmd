@@ -1,0 +1,76 @@
+---
+title: "Construction Issues"
+---
+
+::: callout-note
+**Coming in a future release.** This chapter documents a planned addition to the AutoDeskR package. The API described here exists in APS but R wrapper functions are not yet available. Track progress at [github.com/paulgovan/AutoDeskR](https://github.com/paulgovan/AutoDeskR).
+:::
+
+# Construction Issues
+
+The [Construction Issues API](https://aps.autodesk.com/en/docs/acc/v1/overview/field-guide/issues/) provides programmatic access to the issue tracking system in AutoDesk Construction Cloud (ACC). Issues are used by field teams to log defects, RFIs, observations, and punch-list items against a project.
+
+From R, this API enables you to pull all open issues into a data frame, build quality dashboards, track resolution rates over time, or trigger alerts when critical issues are created.
+
+## Why It Matters
+
+Construction projects generate hundreds to thousands of issues. R's data manipulation and visualisation tools — dplyr, ggplot2, Shiny — are well suited to analysing this data, but only if it can be accessed programmatically. The Construction Issues API provides that access.
+
+Example analyses:
+- Distribution of open vs. closed issues by trade
+- Average time-to-resolution by issue type
+- Issue heat map by location (floor / zone)
+- Automated weekly issue summary emailed via `blastula`
+
+## Planned Functions
+
+| Function | Description |
+|---|---|
+| `listIssues(token, project_id, ...)` | List all issues in a project (paginated) |
+| `getIssue(token, project_id, issue_id)` | Retrieve a single issue with full details |
+| `createIssue(token, project_id, ...)` | Create a new issue |
+| `updateIssue(token, project_id, issue_id, ...)` | Update an issue's status, assignee, or due date |
+| `listIssueTypes(token, project_id)` | List available issue types and subtypes |
+| `listIssueCustomAttributes(token, project_id)` | List custom attribute definitions |
+
+## Planned Workflow
+
+```{r}
+#| eval: false
+# (Functions not yet implemented — illustrative only)
+library(AutoDeskR)
+library(dplyr)
+library(ggplot2)
+
+token      <- getToken(id, secret, scope = "data:read")
+project_id <- "b.abc12345-0000-0000-0000-000000000000"
+
+# Pull all issues
+issues_raw <- listIssues(token, project_id = project_id, limit = 200)
+issues_df  <- issues_raw$content$results
+
+# Summarise by status
+issues_df |>
+  count(status) |>
+  ggplot(aes(x = reorder(status, n), y = n)) +
+  geom_col(fill = "#6aaa2a") +
+  coord_flip() +
+  labs(title = "Issues by Status", x = NULL, y = "Count") +
+  theme_minimal()
+```
+
+## Issue Object Structure
+
+Each issue returned by the API has the following key fields:
+
+| Field | Description |
+|---|---|
+| `id` | Unique issue identifier |
+| `title` | Short description |
+| `status` | `open`, `in_review`, `closed` |
+| `issueType` | Type (e.g. `"Defect"`, `"RFI"`) |
+| `assignedTo` | Assignee user ID |
+| `dueDate` | ISO 8601 date string |
+| `createdAt` | Creation timestamp |
+| `updatedAt` | Last update timestamp |
+| `locationDescription` | Free-text location (e.g. `"Level 3, Grid C4"`) |

@@ -1,0 +1,202 @@
+---
+title: "Reality Capture"
+---
+
+# Reality Capture
+
+The Reality Capture API (also called Photo-to-3D) converts a set of overlapping photographs into a 3D mesh or point cloud. You upload images — from a phone, DSLR, or drone — and AutoDesk's cloud photogrammetry engine stitches them into a georeferenced 3D model you can download or feed into the viewer.
+
+Common use cases include:
+
+-   **As-built documentation** — capture a construction site weekly with a drone and generate a mesh for each visit
+-   **Heritage and inspection** — record a structure or asset in 3D from photos taken by field staff
+-   **Site topography** — convert aerial photography into a terrain mesh for use in civil design
+-   **Integration with other APIs** — translate the output mesh into OBJ or STL via the [Model Derivative](model-derivative.qmd) API for further analysis in R
+
+## Before You Start
+
+::: callout-tip
+**Image guidelines for best results:**
+
+-   Minimum **20 images** per scene; 50–200 is typical for a small structure
+-   **60–80 % overlap** between adjacent images — every part of the subject should appear in at least 3 photos
+-   Consistent, diffuse lighting; avoid harsh shadows or direct sun reflections
+-   Keep the camera moving around the object, not zooming in from a fixed point
+-   GPS/EXIF tags are optional but improve georeferencing accuracy
+:::
+
+## Step 1: Authenticate
+
+Reality Capture requires the `data:read` and `data:write` scopes:
+
+```{r}
+#| eval: false
+library(AutoDeskR)
+
+resp    <- getToken(
+  id     = Sys.getenv("client_id"),
+  secret = Sys.getenv("client_secret"),
+  scope  = "data:read data:write"
+)
+myToken <- resp$content$access_token
+#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
+```
+
+## Step 2: Create a Photoscene
+
+A **photoscene** is the container for your images and the resulting 3D output. The `format` parameter determines what file type is produced:
+
+| Format | Output |
+|---|---|
+| `"rcm"` | AutoDesk ReCap project (default) |
+| `"rcs"` | ReCap point cloud scan |
+| `"obj"` | Wavefront OBJ mesh |
+| `"ortho"` | Orthophoto + DSM GeoTIFF |
+| `"report"` | PDF quality report |
+
+```{r}
+#| eval: false
+ps             <- createPhotoscene(name = "site-survey-2026", format = "obj", token = myToken)
+myPhotosceneId <- ps$content$photoscene$photosceneid
+ps$content
+#> $photoscene
+#> $photoscene$photosceneid
+#> [1] "K2RDAPFIN0OPKGU9B65Q2TJD"
+#>
+#> $photoscene$scenename
+#> [1] "site-survey-2026"
+#>
+#> $photoscene$scenelink
+#> [1] "https://developer.api.autodesk.com/photo-to-3d/v1/photoscene/K2RDAPFIN0OPKGU9B65Q2TJD"
+```
+
+## Step 3: Upload Images
+
+Pass a character vector of local file paths. AutoDeskR transfers them in a single multipart POST. JPEG and PNG are supported.
+
+```{r}
+#| eval: false
+image_files <- c(
+  "photos/site_001.jpg",
+  "photos/site_002.jpg",
+  "photos/site_003.jpg"
+  # ... up to 1000 images per scene
+)
+
+imgs <- uploadImages(
+  photoscene_id = myPhotosceneId,
+  files         = image_files,
+  token         = myToken
+)
+imgs$content
+#> $Files
+#> $Files$file
+#> $Files$file[[1]]
+#> $Files$file[[1]]$filename
+#> [1] "site_001.jpg"
+#>
+#> $Files$file[[1]]$fileid
+#> [1] "A1B2C3D4E5F6G7H8"
+#>
+#> $Files$file[[1]]$filesize
+#> [1] 4718592
+#>
+#> $Files$file[[2]]$filename
+#> [1] "site_002.jpg"
+#>
+#> $Files$file[[2]]$fileid
+#> [1] "B2C3D4E5F6G7H8I9"
+#>
+#> $Files$file[[2]]$filesize
+#> [1] 5242880
+```
+
+::: callout-warning
+**Free-tier limits:** The APS free tier allows a maximum of **1 000 images per photoscene** and **10 photoscenes per month**. Exceeding these limits returns a `403 Forbidden` response. Upgrade to a paid plan for higher quotas.
+:::
+
+## Step 4: Start Processing
+
+Once all images are uploaded, trigger the reconstruction:
+
+```{r}
+#| eval: false
+proc <- processPhotoscene(photoscene_id = myPhotosceneId, token = myToken)
+proc$content
+#> $photoscene
+#> $photoscene$photosceneid
+#> [1] "K2RDAPFIN0OPKGU9B65Q2TJD"
+#>
+#> $photoscene$progress
+#> [1] "0"
+#>
+#> $photoscene$progressmsg
+#> [1] "Queued"
+```
+
+## Step 5: Poll for Completion
+
+### Option A — Manual polling
+
+```{r}
+#| eval: false
+status <- checkPhotoscene(photoscene_id = myPhotosceneId, token = myToken)
+status$content$photoscene
+#> $photosceneid
+#> [1] "K2RDAPFIN0OPKGU9B65Q2TJD"
+#>
+#> $progress
+#> [1] "75"
+#>
+#> $progressmsg
+#> [1] "Processing geometry"
+```
+
+`progress` is a string from `"0"` to `"100"`. When it reaches `"100"` the model is ready.
+
+### Option B — Block until done (recommended)
+
+`waitForPhotoscene()` polls every `interval` seconds and returns when `progress == "100"`:
+
+```{r}
+#| eval: false
+done <- waitForPhotoscene(
+  photoscene_id = myPhotosceneId,
+  token         = myToken,
+  interval      = 60,     # poll every 60 s
+  timeout       = 3600,   # give up after 1 hour
+  verbose       = TRUE
+)
+#> Reality Capture progress: 0 - Queued
+#> Reality Capture progress: 10 - Uploading files
+#> Reality Capture progress: 35 - Calibrating cameras
+#> Reality Capture progress: 60 - Building point cloud
+#> Reality Capture progress: 85 - Generating mesh
+#> Reality Capture progress: 100 - Done
+done$content$photoscene$progress
+#> [1] "100"
+```
+
+::: callout-warning
+**Processing time** depends on image count and scene complexity. A 50-image scene typically takes **5–15 minutes**; 500 images may take over an hour. Set `timeout` to at least twice your expected processing time to avoid premature errors.
+:::
+
+## Step 6: Download the Output Mesh
+
+Once `progress == "100"`, retrieve the download link from the completed photoscene response:
+
+```{r}
+#| eval: false
+# The output URL is embedded in the final checkPhotoscene response
+output_url <- done$content$photoscene$scenelink
+#> [1] "https://developer.api.autodesk.com/photo-to-3d/v1/photoscene/K2RDAPFIN0OPKGU9B65Q2TJD/properties"
+
+# Download the OBJ mesh
+download.file(
+  url      = paste0(output_url, "/output.obj"),
+  destfile = "site-survey-2026.obj",
+  headers  = c(Authorization = paste("Bearer", myToken))
+)
+```
+
+The downloaded OBJ file can be imported into R with the `rgl` or `Rvcg` packages for 3D visualisation and analysis, or translated further via the [Model Derivative](model-derivative.qmd) API.

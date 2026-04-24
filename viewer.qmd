@@ -1,0 +1,74 @@
+---
+title: "Viewer"
+---
+
+# Viewer
+
+AutoDesk provides a WebGL-based viewer for rendering 2D and 3D models. Before using the viewer, translate the file into SVF format and extract its encoded URN — see the **Model Derivative** chapter for those steps.
+
+## Launch the Viewer
+
+Pass the encoded URN and token to `viewer3D()` to open the viewer as a Shiny app. The `viewerType` parameter controls the viewer UI:
+
+| `viewerType` | Description |
+|---|---|
+| `"header"` | Full viewer with toolbar and side panels (default) |
+| `"headless"` | Viewer canvas only — no toolbar or panels |
+| `"vr"` | WebVR mode optimized for mobile devices |
+
+```{r}
+#| eval: false
+resp <- getToken(
+  id     = Sys.getenv("client_id"),
+  secret = Sys.getenv("client_secret"),
+  scope  = "data:read"
+)
+myToken      <- resp$content$access_token
+myEncodedUrn <- jsonlite::base64_enc(Sys.getenv("urn"))
+
+# Full viewer (default)
+viewer3D(urn = myEncodedUrn, token = myToken)
+
+# Headless — embed in a dashboard without chrome
+viewer3D(urn = myEncodedUrn, token = myToken, viewerType = "headless")
+
+# VR mode for mobile
+viewer3D(urn = myEncodedUrn, token = myToken, viewerType = "vr")
+```
+
+<img src="https://github.com/paulgovan/AutoDeskR/blob/master/inst/images/aerial.png?raw=true" height="500px" />
+
+## Embed in a Shiny App
+
+Use `viewerUI()` to embed the viewer inside any Shiny application via the Shiny Modules framework. The `id` parameter namespaces the module so multiple viewers can coexist on the same page.
+
+```{r}
+#| eval: false
+ui <- function(request) {
+  shiny::fluidPage(
+    viewerUI("viewer1", urn = myEncodedUrn, token = myToken)
+  )
+}
+
+server <- function(input, output, session) {}
+
+shiny::shinyApp(ui, server)
+```
+
+To show a headless viewer inside a `tabsetPanel`:
+
+```{r}
+#| eval: false
+ui <- function(request) {
+  shiny::fluidPage(
+    shiny::tabsetPanel(
+      shiny::tabPanel("Model", viewerUI("viewer1", myEncodedUrn, myToken, viewerType = "headless")),
+      shiny::tabPanel("Data",  shiny::verbatimTextOutput("meta"))
+    )
+  )
+}
+
+server <- function(input, output, session) {}
+
+shiny::shinyApp(ui, server)
+```
