@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>13&nbsp; Troubleshooting – R and the AutoDesk Platform</title>
+<title>22&nbsp; Troubleshooting – R for the Built Environment</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -72,6 +107,9 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<meta name="twitter:title" content="22&nbsp; Troubleshooting – R for the Built Environment">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -83,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./case-study.html">Reference</a></li><li class="breadcrumb-item"><a href="./troubleshooting.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Troubleshooting</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./case-study.html">Reference</a></li><li class="breadcrumb-item"><a href="./troubleshooting.html"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -100,7 +138,44 @@ ul.task-list li input[type="checkbox"] {
       <a href="./index.html" class="sidebar-logo-link">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">R and the AutoDesk Platform</a> 
+      <a href="./">R for the Built Environment</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/paulgovan/AutoDeskR-Book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./R-for-the-Built-Environment.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./R-for-the-Built-Environment.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -154,7 +229,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Core APIs</span></a>
+ <span class="menu-text">AutoDesk Platform Services</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -201,7 +276,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Project &amp; Account APIs</span></a>
+ <span class="menu-text">3D Geometry &amp; Meshes</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -209,26 +284,32 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-management-acc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ACC Data Management</span></span></a>
+  <a href="./mesh-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reading OBJ and STL Meshes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./construction-issues.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Construction Issues</span></span></a>
+  <a href="./mesh-metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Mesh Metrics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./account-admin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Account Admin</span></span></a>
+  <a href="./mesh-visualisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">3D Visualisation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./webhooks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Webhooks</span></span></a>
+  <a href="./point-cloud-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Point Cloud Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mesh-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mesh Comparison</span></span></a>
   </div>
 </li>
       </ul>
@@ -236,7 +317,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
+ <span class="menu-text">DWG &amp; DXF Analytics</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -244,20 +325,101 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./layer-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Layer Structure Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attribute-extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Attribute Extraction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cross-drawing-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cross-Drawing Comparison</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./drawing-reports.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Automated Drawing Reports</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Digital Twins</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tandem-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">AutoDesk Tandem Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sensor-streams.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Linking Sensor Streams</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./live-dashboards.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Live Dashboards</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Integration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mcp-server.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">MCP Server</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./case-study.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Function Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Function Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./troubleshooting.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
   </div>
 </li>
       </ul>
@@ -278,19 +440,27 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link active" data-scroll-target="#troubleshooting"><span class="header-section-number">14</span> Troubleshooting</a>
-  <ul class="collapse">
-  <li><a href="#common-issues" id="toc-common-issues" class="nav-link" data-scroll-target="#common-issues"><span class="header-section-number">14.1</span> Common Issues</a></li>
-  </ul></li>
+  <li><a href="#error-code-quick-reference" id="toc-error-code-quick-reference" class="nav-link active" data-scroll-target="#error-code-quick-reference"><span class="header-section-number">22.1</span> Error Code Quick Reference</a></li>
+  <li><a href="#diagnosing-any-error" id="toc-diagnosing-any-error" class="nav-link" data-scroll-target="#diagnosing-any-error"><span class="header-section-number">22.2</span> Diagnosing Any Error</a></li>
+  <li><a href="#installation-setup" id="toc-installation-setup" class="nav-link" data-scroll-target="#installation-setup"><span class="header-section-number">22.3</span> Installation &amp; Setup</a></li>
+  <li><a href="#authentication" id="toc-authentication" class="nav-link" data-scroll-target="#authentication"><span class="header-section-number">22.4</span> Authentication</a></li>
+  <li><a href="#data-management" id="toc-data-management" class="nav-link" data-scroll-target="#data-management"><span class="header-section-number">22.5</span> Data Management</a></li>
+  <li><a href="#model-derivative" id="toc-model-derivative" class="nav-link" data-scroll-target="#model-derivative"><span class="header-section-number">22.6</span> Model Derivative</a></li>
+  <li><a href="#design-automation" id="toc-design-automation" class="nav-link" data-scroll-target="#design-automation"><span class="header-section-number">22.7</span> Design Automation</a></li>
+  <li><a href="#reality-capture" id="toc-reality-capture" class="nav-link" data-scroll-target="#reality-capture"><span class="header-section-number">22.8</span> Reality Capture</a></li>
+  <li><a href="#viewer" id="toc-viewer" class="nav-link" data-scroll-target="#viewer"><span class="header-section-number">22.9</span> Viewer</a></li>
+  <li><a href="#d-geometry-rgl-rvcg" id="toc-d-geometry-rgl-rvcg" class="nav-link" data-scroll-target="#d-geometry-rgl-rvcg"><span class="header-section-number">22.10</span> 3D Geometry (rgl / Rvcg)</a></li>
+  <li><a href="#digital-twins-tandem" id="toc-digital-twins-tandem" class="nav-link" data-scroll-target="#digital-twins-tandem"><span class="header-section-number">22.11</span> Digital Twins (Tandem)</a></li>
+  <li><a href="#getting-more-help" id="toc-getting-more-help" class="nav-link" data-scroll-target="#getting-more-help"><span class="header-section-number">22.12</span> Getting More Help</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/paulgovan/AutoDeskR-Book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./case-study.html">Reference</a></li><li class="breadcrumb-item"><a href="./troubleshooting.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Troubleshooting</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./case-study.html">Reference</a></li><li class="breadcrumb-item"><a href="./troubleshooting.html"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Troubleshooting</span></h1>
+<h1 class="title"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></h1>
 </div>
 
 
@@ -307,20 +477,286 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="troubleshooting" class="level1" data-number="14">
-<h1 data-number="14"><span class="header-section-number">14</span> Troubleshooting</h1>
-<section id="common-issues" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="common-issues"><span class="header-section-number">14.1</span> Common Issues</h2>
-<p>Here is a running list of common issues that users have run into:</p>
-<p><strong>Problem:</strong> Some of the functions seem to work, others don’t.</p>
-<p><strong>Solution:</strong> Make sure to sign up for the correct APIs and services through AutoDesk Platform Services (APS) at <a href="https://aps.autodesk.com" class="uri">https://aps.autodesk.com</a>.</p>
-<p><strong>Problem:</strong> I can’t create bucket “mybucket”.</p>
-<p><strong>Solution:</strong> Try a unique bucket name.</p>
-<p><strong>Problem:</strong> I was able to create a bucket and upload a file, but I can’t translate the file.</p>
-<p><strong>Solution:</strong> Each task requires different tokens with different scopes. Make sure to create a token with the <code>data:read data:write</code> scopes in order to translate a file.</p>
-
-
+<p>Something’s not working. Don’t worry. APS errors are usually pretty informative once you know how to read them. This chapter is a reference for the most common problems, organised by HTTP status code and then by API area.</p>
+<section id="error-code-quick-reference" class="level2" data-number="22.1">
+<h2 data-number="22.1" class="anchored" data-anchor-id="error-code-quick-reference"><span class="header-section-number">22.1</span> Error Code Quick Reference</h2>
+<p>The first thing to check is always <code>resp$status_code</code>. Here’s what each code means and where to start looking:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Meaning</th>
+<th>Most likely cause</th>
+<th>First step</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>400</td>
+<td>Bad Request</td>
+<td>Malformed request body; non-public URL in Design Automation</td>
+<td>Check source/destination URLs; validate parameters</td>
+</tr>
+<tr class="even">
+<td>401</td>
+<td>Unauthorized</td>
+<td>Token expired or missing; wrong scope</td>
+<td>Re-call <code>getToken()</code> with correct scopes</td>
+</tr>
+<tr class="odd">
+<td>403</td>
+<td>Forbidden</td>
+<td>Free-tier quota exceeded; API not enabled for app</td>
+<td>Check quota in APS portal; enable the API on your app</td>
+</tr>
+<tr class="even">
+<td>404</td>
+<td>Not Found</td>
+<td>Wrong URN; object or bucket deleted; bad GUID</td>
+<td>Re-check URN encoding; confirm the resource exists</td>
+</tr>
+<tr class="odd">
+<td>409</td>
+<td>Conflict</td>
+<td>Bucket name already taken; bucket not empty before delete</td>
+<td>Use a unique bucket name; delete objects first</td>
+</tr>
+<tr class="even">
+<td>415</td>
+<td>Unsupported Media Type</td>
+<td>Source format not supported for this translation type</td>
+<td>Check the <a href="https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/supported-translations/">APS supported formats list</a></td>
+</tr>
+<tr class="odd">
+<td>429</td>
+<td>Too Many Requests</td>
+<td>Rate limit hit</td>
+<td>Add backoff with <code>aps_retry()</code> and <code>Sys.sleep()</code></td>
+</tr>
+<tr class="even">
+<td>500</td>
+<td>Internal Server Error</td>
+<td>Transient APS service error</td>
+<td>Wait 30 s and retry; check <a href="https://health.autodesk.com/">APS status</a></td>
+</tr>
+</tbody>
+</table>
 </section>
+<section id="diagnosing-any-error" class="level2" data-number="22.2">
+<h2 data-number="22.2" class="anchored" data-anchor-id="diagnosing-any-error"><span class="header-section-number">22.2</span> Diagnosing Any Error</h2>
+<p>Before diving into the per-API sections, check the full error payload. APS returns descriptive messages in the response body:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> <span class="fu">someApsFunctionCall</span>(...)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Always check the status first</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>resp<span class="sc">$</span>status_code</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 401</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The body usually tells you exactly what's wrong</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(resp<span class="sc">$</span>content)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of 3</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ errorCode       : chr "AUTH-001"</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ developerMessage: chr "The provided access token has expired."</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ userMessage     : chr "Access denied."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To see the raw HTTP traffic, useful when the body is empty or unexpected, use httr2’s verbose mode:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr2)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrap any request to trace the full exchange</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>req <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="st">"https://developer.api.autodesk.com/..."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_auth_bearer_token</span>(myToken) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_verbose</span>()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> <span class="fu">req_perform</span>(req)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+<section id="installation-setup" class="level2" data-number="22.3">
+<h2 data-number="22.3" class="anchored" data-anchor-id="installation-setup"><span class="header-section-number">22.3</span> Installation &amp; Setup</h2>
+<p><strong>Problem:</strong> <code>library(AutoDeskR)</code> throws <code>there is no package called 'AutoDeskR'</code>.</p>
+<p><strong>Solution:</strong> Install the package first:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"AutoDeskR"</span>)         <span class="co"># stable CRAN release</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"paulgovan/AutoDeskR"</span>)  <span class="co"># development version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p><strong>Problem:</strong> Functions return errors about missing dependencies (<code>httr2</code>, <code>jsonlite</code>, <code>curl</code>).</p>
+<p><strong>Solution:</strong> These are required dependencies and should install automatically. If they didn’t:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"httr2"</span>, <span class="st">"jsonlite"</span>, <span class="st">"curl"</span>, <span class="st">"shiny"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p><strong>Problem:</strong> Some functions work but others return 403 or unexpected 404 errors.</p>
+<p><strong>Solution:</strong> In the <a href="https://aps.autodesk.com">APS Developer Portal</a>, open your app’s settings and confirm that <strong>all required APIs are enabled</strong>. Each API product (Data Management, Model Derivative, Design Automation, Reality Capture) must be explicitly added to the app. A 403 on a valid token almost always means the API isn’t enabled for that app.</p>
+<hr>
+</section>
+<section id="authentication" class="level2" data-number="22.4">
+<h2 data-number="22.4" class="anchored" data-anchor-id="authentication"><span class="header-section-number">22.4</span> Authentication</h2>
+<p><strong>Problem:</strong> <code>getToken()</code> returns a 401, or <code>myToken</code> is <code>NULL</code>.</p>
+<p><strong>Solution:</strong> Double-check that your <code>~/.Renviron</code> file is loaded and that the variable names match exactly:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reload .Renviron without restarting R</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">readRenviron</span>(<span class="st">"~/.Renviron"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify the values are present</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="fu">Sys.getenv</span>(<span class="st">"client_id"</span>))      <span class="co"># should be &gt; 0</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="fu">Sys.getenv</span>(<span class="st">"client_secret"</span>))  <span class="co"># should be &gt; 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Also confirm the credentials belong to the correct app in the APS portal, a common mistake is having credentials from a sandbox app and trying to use a production bucket.</p>
+<hr>
+<p><strong>Problem:</strong> API calls that worked fine start returning 401 mid-session.</p>
+<p><strong>Solution:</strong> Tokens expire after exactly <strong>3600 seconds</strong> (1 hour). Re-call <code>getToken()</code> and update <code>myToken</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>resp    <span class="ot">&lt;-</span> <span class="fu">getToken</span>(<span class="at">id =</span> <span class="fu">Sys.getenv</span>(<span class="st">"client_id"</span>),</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">secret =</span> <span class="fu">Sys.getenv</span>(<span class="st">"client_secret"</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">scope  =</span> <span class="st">"data:read data:write"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>myToken <span class="ot">&lt;-</span> resp<span class="sc">$</span>content<span class="sc">$</span>access_token</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p><strong>Problem:</strong> Getting 401 even with a fresh token.</p>
+<p><strong>Solution:</strong> The token scope probably doesn’t match the API you’re calling. Each task requires specific scopes — check the table in the <a href="./authentication.html#scopes--only-ask-for-what-you-need">Authentication</a> chapter and make sure the scope string includes everything your call needs.</p>
+<hr>
+</section>
+<section id="data-management" class="level2" data-number="22.5">
+<h2 data-number="22.5" class="anchored" data-anchor-id="data-management"><span class="header-section-number">22.5</span> Data Management</h2>
+<p><strong>Problem:</strong> <code>makeBucket()</code> returns 409 Conflict.</p>
+<p><strong>Solution:</strong> Bucket names are <strong>globally unique across all APS applications</strong>. Add a distinctive prefix:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bad — almost certainly taken</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">makeBucket</span>(<span class="at">token =</span> myToken, <span class="at">bucket =</span> <span class="st">"test"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Good — scoped to your org and project</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">makeBucket</span>(<span class="at">token =</span> myToken, <span class="at">bucket =</span> <span class="st">"acmecorp-bridge-2026-dev"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p><strong>Problem:</strong> <code>deleteBucket()</code> returns 409.</p>
+<p><strong>Solution:</strong> The bucket still has objects in it. Delete them first:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List everything in the bucket</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>objects <span class="ot">&lt;-</span> <span class="fu">listObjects</span>(<span class="at">token =</span> myToken, <span class="at">bucket =</span> <span class="st">"mybucket"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete each object</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (key <span class="cf">in</span> objects<span class="sc">$</span>content<span class="sc">$</span>items<span class="sc">$</span>objectKey) {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">deleteObject</span>(<span class="at">token =</span> myToken, <span class="at">bucket =</span> <span class="st">"mybucket"</span>, <span class="at">object =</span> key)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Now delete the empty bucket</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">deleteBucket</span>(<span class="at">token =</span> myToken, <span class="at">bucket =</span> <span class="st">"mybucket"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p><strong>Problem:</strong> <code>uploadFile()</code> fails or times out on large files.</p>
+<p><strong>Solution:</strong> <code>uploadFile()</code> is limited to 100 MB. Use <code>uploadFileSigned()</code> for larger files. It transfers via signed S3 URLs which don’t have the same timeout constraints:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> <span class="fu">uploadFileSigned</span>(<span class="at">file =</span> <span class="st">"large_model.rvt"</span>, <span class="at">token =</span> myToken, <span class="at">bucket =</span> <span class="st">"mybucket"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p><strong>Problem:</strong> The encoded URN looks wrong or downstream functions can’t find the object.</p>
+<p><strong>Solution:</strong> The raw <code>objectId</code> from <code>uploadFile()</code> must be Base-64 encoded before passing to Model Derivative or Viewer functions. Make sure you’re encoding the right string:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>myUrn        <span class="ot">&lt;-</span> resp<span class="sc">$</span>content<span class="sc">$</span>objectId        <span class="co"># raw URN from upload</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>myEncodedUrn <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">base64_enc</span>(myUrn)  <span class="co"># encoded URN for all subsequent calls</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+<section id="model-derivative" class="level2" data-number="22.6">
+<h2 data-number="22.6" class="anchored" data-anchor-id="model-derivative"><span class="header-section-number">22.6</span> Model Derivative</h2>
+<p><strong>Problem:</strong> <code>translateObj()</code> returns 415 Unsupported Media Type.</p>
+<p><strong>Solution:</strong> Not all file types can produce OBJ output. Supported sources include DWG, IPT, IAM, IPN, F3D, and FBX. Check the <a href="https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/supported-translations/">full list</a>.</p>
+<hr>
+<p><strong>Problem:</strong> <code>checkFile()</code> stays in <code>"inprogress"</code> indefinitely.</p>
+<p><strong>Solution:</strong> Translation can take from seconds (simple DWGs) to many minutes (large Revit models). Wait at least 2× the expected time before giving up. If it’s genuinely stuck, the job may have failed silently. Check <code>resp$content$status</code> for <code>"failed"</code> and look at <code>resp$content$progress</code> for an error message:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> <span class="fu">checkFile</span>(<span class="at">urn =</span> myEncodedUrn, <span class="at">token =</span> myToken)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>resp<span class="sc">$</span>content<span class="sc">$</span>status</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "failed"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>resp<span class="sc">$</span>content<span class="sc">$</span>progress</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Translation failed: unsupported entity type on layer A-XREF"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p><strong>Problem:</strong> <code>getOutputUrn()</code> returns an empty <code>derivatives</code> list.</p>
+<p><strong>Solution:</strong> The file hasn’t finished translating yet, or the translation failed. Confirm <code>checkFile()</code> returns <code>status == "success"</code> before calling <code>getOutputUrn()</code>. Also confirm the <code>urn</code> you’re passing is the <em>raw</em> (un-encoded) URN, not the encoded one. <code>getOutputUrn()</code> takes the raw URN.</p>
+<hr>
+<p><strong>Problem:</strong> <code>getData()</code> returns a very large response that takes a long time or crashes R.</p>
+<p><strong>Solution:</strong> Complex files can return hundreds of thousands of objects. Filter to the layers or object IDs you care about by inspecting <code>getObjectTree()</code> first and only fetching data for the relevant subset.</p>
+<hr>
+</section>
+<section id="design-automation" class="level2" data-number="22.7">
+<h2 data-number="22.7" class="anchored" data-anchor-id="design-automation"><span class="header-section-number">22.7</span> Design Automation</h2>
+<p><strong>Problem:</strong> <code>makePdf()</code> returns 400 Bad Request.</p>
+<p><strong>Solution:</strong> Both the <code>source</code> and <code>destination</code> URLs must be <strong>publicly accessible</strong>. The AutoDesk cloud workers fetch and write these URLs directly. Common failures: - Private Google Drive share links (use “Anyone with the link” access) - <code>localhost</code> or <code>127.0.0.1</code> URLs (unreachable from the cloud) - Signed S3 URLs that have already expired</p>
+<hr>
+<p><strong>Problem:</strong> <code>checkPdf()</code> stays in <code>"pending"</code> for more than 5 minutes.</p>
+<p><strong>Solution:</strong> This usually means the job is queued behind other work items. Wait longer. Free-tier jobs can queue for 10–15 minutes at peak times. If it’s still pending after 30 minutes, cancel and resubmit.</p>
+<hr>
+</section>
+<section id="reality-capture" class="level2" data-number="22.8">
+<h2 data-number="22.8" class="anchored" data-anchor-id="reality-capture"><span class="header-section-number">22.8</span> Reality Capture</h2>
+<p><strong>Problem:</strong> The output mesh looks poor — holes, distorted geometry, missing areas.</p>
+<p><strong>Solution:</strong> Image quality is everything in photogrammetry. The most common causes of bad output: - <strong>Too few images</strong> — need at least 20, ideally 50+ - <strong>Insufficient overlap</strong> — every surface needs to appear in at least 3 photos from different angles - <strong>Reflective or transparent surfaces</strong> — glass and polished metal fool the matching algorithm - <strong>Inconsistent lighting</strong> — shots taken at different times of day with different shadows - <strong>Camera movement instead of subject rotation</strong> — move around the object, don’t zoom from a fixed point</p>
+<hr>
+<p><strong>Problem:</strong> <code>waitForPhotoscene()</code> times out before the job finishes.</p>
+<p><strong>Solution:</strong> Increase the <code>timeout</code> parameter. A 500-image scene can take 90+ minutes:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>done <span class="ot">&lt;-</span> <span class="fu">waitForPhotoscene</span>(<span class="at">photoscene_id =</span> myPhotosceneId,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">token         =</span> myToken,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">interval      =</span> <span class="dv">120</span>,   <span class="co"># check every 2 minutes</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">timeout       =</span> <span class="dv">7200</span>)  <span class="co"># wait up to 2 hours</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p><strong>Problem:</strong> I downloaded the RCS file but <code>lidR</code> can’t open it.</p>
+<p><strong>Solution:</strong> <code>lidR</code> reads LAS/LAZ, not AutoDesk’s RCS format. Convert the file first using <a href="https://www.cloudcompare.org/">CloudCompare</a> (free): <em>File → Open</em> → select the RCS → <em>File → Save As</em> → choose LAS format.</p>
+<hr>
+</section>
+<section id="viewer" class="level2" data-number="22.9">
+<h2 data-number="22.9" class="anchored" data-anchor-id="viewer"><span class="header-section-number">22.9</span> Viewer</h2>
+<p><strong>Problem:</strong> The viewer opens but shows a blank canvas.</p>
+<p><strong>Solution:</strong> The file must be translated to <strong>SVF</strong> format before the viewer can display it. OBJ and STL translations won’t work. Run <code>translateSvf()</code> and wait for <code>checkFile()</code> to return <code>status == "success"</code>, then reload the viewer.</p>
+<hr>
+<p><strong>Problem:</strong> The viewer throws a JavaScript authentication error.</p>
+<p><strong>Solution:</strong> The <code>data:read</code> scope is required. Other scopes (like <code>data:write</code>) are not enough on their own. Make sure <code>getToken()</code> was called with at least <code>scope = "data:read"</code>.</p>
+<hr>
+</section>
+<section id="d-geometry-rgl-rvcg" class="level2" data-number="22.10">
+<h2 data-number="22.10" class="anchored" data-anchor-id="d-geometry-rgl-rvcg"><span class="header-section-number">22.10</span> 3D Geometry (rgl / Rvcg)</h2>
+<p><strong>Problem:</strong> <code>rgl</code> window doesn’t open in RStudio Server or a headless environment.</p>
+<p><strong>Solution:</strong> Set the null device before loading <code>rgl</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">rgl.useNULL =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgl)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Now use rglwidget() to render to HTML instead of an OpenGL window</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p><strong>Problem:</strong> <code>vcgVolume()</code> returns zero or a nonsensical value.</p>
+<p><strong>Solution:</strong> <code>vcgVolume()</code> requires a <strong>watertight (closed) mesh</strong>. OBJ files translated from 2D DWG drawings are almost never watertight. Use the convex hull fallback from the <a href="./mesh-metrics.html">Mesh Metrics</a> chapter instead:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geometry)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>pts  <span class="ot">&lt;-</span> <span class="fu">t</span>(mesh_vcg<span class="sc">$</span>vb[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, ])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>hull <span class="ot">&lt;-</span> <span class="fu">convhulln</span>(pts, <span class="at">options =</span> <span class="st">"FA"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>hull<span class="sc">$</span>vol   <span class="co"># robust volume estimate for open meshes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p><strong>Problem:</strong> <code>vcgImport()</code> fails with a parsing error on the OBJ file.</p>
+<p><strong>Solution:</strong> The Model Derivative API sometimes produces multi-part OBJ files with multiple <code>mtllib</code> references. Try importing with <code>rgl::readOBJ()</code> first to confirm the file is valid, or open it in a text editor to check for obvious corruption near the top of the file.</p>
+<hr>
+</section>
+<section id="digital-twins-tandem" class="level2" data-number="22.11">
+<h2 data-number="22.11" class="anchored" data-anchor-id="digital-twins-tandem"><span class="header-section-number">22.11</span> Digital Twins (Tandem)</h2>
+<p><strong>Problem:</strong> Tandem API requests return 403 Forbidden even with a valid token.</p>
+<p><strong>Solution:</strong> The Tandem API requires an active <strong>AutoDesk Tandem subscription</strong>. It is not included in a standard APS free-tier account. Confirm the subscription is active in your AutoDesk account settings and that the app’s Client ID is associated with a Tandem-enabled account.</p>
+<hr>
+<p><strong>Problem:</strong> <code>resp_body_json()</code> returns an empty list from the <code>/groups</code> endpoint.</p>
+<p><strong>Solution:</strong> The authenticated app doesn’t have access to any Tandem facilities yet. Facilities must be explicitly shared with the app’s Client ID through the Tandem web interface. Log into <a href="https://tandem.autodesk.com">tandem.autodesk.com</a>, open the facility settings, and add the app as a viewer or owner.</p>
+<hr>
+</section>
+<section id="getting-more-help" class="level2" data-number="22.12">
+<h2 data-number="22.12" class="anchored" data-anchor-id="getting-more-help"><span class="header-section-number">22.12</span> Getting More Help</h2>
+<ul>
+<li><strong>APS community forum:</strong> <a href="https://community.autodesk.com/t5/autodesk-platform-services/ct-p/217">community.autodesk.com/t5/autodesk-platform-services</a> — AutoDesk staff monitor this actively</li>
+<li><strong>AutoDeskR GitHub issues:</strong> <a href="https://github.com/paulgovan/AutoDeskR/issues">github.com/paulgovan/AutoDeskR/issues</a> — for package-specific bugs</li>
+<li><strong>APS API status:</strong> <a href="https://health.autodesk.com/">health.autodesk.com</a> — check for ongoing incidents before spending time debugging</li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -727,7 +1163,7 @@ ul.task-list li input[type="checkbox"] {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./reference.html" class="pagination-link" aria-label="Function Reference">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Function Reference</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Function Reference</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -741,4 +1177,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/paulgovan/AutoDeskR-Book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

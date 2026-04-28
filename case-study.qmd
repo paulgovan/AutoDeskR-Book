@@ -2,8 +2,6 @@
 title: "Case Study: DWG to Shiny Dashboard"
 ---
 
-# Case Study: From DWG to Shiny Dashboard
-
 This chapter ties every API together in a single narrative. Starting from a raw DWG file on disk, we will authenticate, upload, translate, extract metadata, visualise layer data with ggplot2, and embed the live 3D model in a Shiny dashboard — all from R.
 
 The DWG file used throughout is `aerial.dwg`, the sample file bundled with AutoDeskR:
@@ -13,7 +11,7 @@ The DWG file used throughout is `aerial.dwg`, the sample file bundled with AutoD
 dwg_path <- system.file("samples/aerial.dwg", package = "AutoDeskR")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Step 1: Authenticate with Combined Scopes
 
@@ -34,7 +32,7 @@ myToken <- resp$content$access_token
 #> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
 ```
 
----
+------------------------------------------------------------------------
 
 ## Step 2: Create a Bucket and Upload the DWG
 
@@ -58,7 +56,7 @@ upload$content$size
 #> [1] 3145728
 ```
 
----
+------------------------------------------------------------------------
 
 ## Step 3: Translate to SVF
 
@@ -85,7 +83,7 @@ repeat {
 #> Status: success
 ```
 
----
+------------------------------------------------------------------------
 
 ## Step 4: Extract Layer Metadata
 
@@ -128,16 +126,21 @@ head(layers_df)
 #> 6  A-ANNO    3215.01
 ```
 
----
+------------------------------------------------------------------------
 
 ## Step 5: Visualise with ggplot2
 
 ```{r}
-#| eval: false
-# Aggregate area by layer
-layer_totals <- aggregate(area ~ layer, data = layers_df, FUN = sum)
-layer_totals <- layer_totals[order(-layer_totals$area), ]
+#| echo: false
+library(ggplot2)
+layer_totals <- data.frame(
+  layer = c("A-SITE","A-BLDG","A-ROAD","A-PARK","A-UTIL","A-ANNO"),
+  area  = c(196842.73, 42301.18, 28473.09, 15621.44, 8904.72, 3215.01)
+)
+```
 
+```{r}
+#| eval: true
 ggplot(layer_totals, aes(x = reorder(layer, area), y = area / 1000)) +
   geom_col(fill = "#6aaa2a") +
   coord_flip() +
@@ -150,9 +153,7 @@ ggplot(layer_totals, aes(x = reorder(layer, area), y = area / 1000)) +
   theme_minimal(base_size = 13)
 ```
 
-![Bar chart showing bounding-box area by DWG layer, with A-SITE dominating at ~197k units²](images/layers_plot.png){fig-alt="Horizontal bar chart of DWG layer areas"}
-
----
+------------------------------------------------------------------------
 
 ## Step 6: Build the Shiny Dashboard
 
@@ -193,17 +194,17 @@ shiny::shinyApp(ui, server)
 
 The finished dashboard shows the AutoDesk WebGL viewer on the left tab and the ggplot2 analysis on the right, both driven by data extracted live from the same DWG file through the APS APIs.
 
----
+------------------------------------------------------------------------
 
 ## Summary
 
-| Step | Function(s) | API |
-|---|---|---|
-| Authenticate | `getToken()` | Authentication |
-| Create bucket + upload | `makeBucket()`, `uploadFile()` | Data Management |
-| Translate to SVF | `translateSvf()`, `checkFile()` | Model Derivative |
-| Extract properties | `getMetadata()`, `getData()` | Model Derivative |
-| Visualise | `ggplot2` | — |
-| Embed viewer | `viewerUI()` | Viewer |
+| Step                   | Function(s)                     | API              |
+|------------------------|---------------------------------|------------------|
+| Authenticate           | `getToken()`                    | Authentication   |
+| Create bucket + upload | `makeBucket()`, `uploadFile()`  | Data Management  |
+| Translate to SVF       | `translateSvf()`, `checkFile()` | Model Derivative |
+| Extract properties     | `getMetadata()`, `getData()`    | Model Derivative |
+| Visualise              | `ggplot2`                       | —                |
+| Embed viewer           | `viewerUI()`                    | Viewer           |
 
 The full source for this case study is available at [github.com/paulgovan/AutoDeskR](https://github.com/paulgovan/AutoDeskR) in the `inst/examples/` directory.

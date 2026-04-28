@@ -2,38 +2,36 @@
 title: "Function Reference"
 ---
 
-# Function Reference
-
 Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** link to jump to full documentation and worked examples.
 
 ## Authentication
 
 | Function | Required Scopes | Key Parameters | Returns |
-|---|---|---|---|
+|----|----|----|----|
 | `getToken(id, secret, scope)` | — | `id`, `secret`, `scope` (space-separated string) | `$content$access_token`, `$content$expires_in` |
 
----
+------------------------------------------------------------------------
 
 ## Data Management
 
 | Function | Required Scopes | Key Parameters | Returns |
-|---|---|---|---|
+|----|----|----|----|
 | `makeBucket(token, bucket, policy)` | `bucket:create` | `bucket` (globally unique key), `policy` (`"transient"` / `"temporary"` / `"persistent"`) | `$content$bucketKey`, `$content$policyKey` |
 | `checkBucket(token, bucket)` | `bucket:read` | `bucket` | `$content$bucketKey`, `$content$policyKey` |
 | `deleteBucket(token, bucket)` | `bucket:delete` | `bucket` (must be empty) | `$status_code` 200 |
 | `uploadFile(file, token, bucket)` | `data:write` | `file` (local path, ≤ 100 MB), `bucket` | `$content$objectId` (URN), `$content$size` |
-| `uploadFileSigned(file, token, bucket)` | `data:write` | `file` (local path, > 100 MB), `bucket` | `$content$objectId` (URN) |
+| `uploadFileSigned(file, token, bucket)` | `data:write` | `file` (local path, \> 100 MB), `bucket` | `$content$objectId` (URN) |
 | `listBuckets(token, limit, startAt, region)` | `bucket:read` | `limit` (default 10), `startAt` (pagination key), `region` (`"US"` / `"EMEA"`) | `$content$items` data frame |
 | `listObjects(token, bucket, limit)` | `data:read` | `bucket`, `limit` | `$content$items` data frame |
 | `deleteObject(token, bucket, object)` | `data:write` | `bucket`, `object` (filename) | `$status_code` 200 |
 | `downloadFile(urn, output_urn, token, destfile)` | `data:read` | `urn` (encoded source), `output_urn` (encoded output), `destfile` | `$status_code` 200 |
 
----
+------------------------------------------------------------------------
 
 ## Model Derivative
 
 | Function | Required Scopes | Key Parameters | Returns |
-|---|---|---|---|
+|----|----|----|----|
 | `translateObj(urn, token)` | `data:read data:write` | `urn` (Base-64 encoded) | `$content$result` (`"created"`), `$content$urn` |
 | `translateStl(urn, token)` | `data:read data:write` | `urn` (Base-64 encoded) | `$content$result`, `$content$urn` |
 | `translateSvf(urn, token)` | `data:read data:write` | `urn` (Base-64 encoded) | `$content$result`, `$content$urn` |
@@ -43,42 +41,42 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 | `getObjectTree(guid, urn, token)` | `data:read` | `guid`, `urn` (Base-64 encoded) | `$content$data$objects` (nested list) |
 | `getData(guid, urn, token)` | `data:read` | `guid`, `urn` (Base-64 encoded) | `$content$data$collection` (list of objects with properties) |
 
----
+------------------------------------------------------------------------
 
 ## Design Automation
 
 | Function | Required Scopes | Key Parameters | Returns |
-|---|---|---|---|
+|----|----|----|----|
 | `makePdf(source, destination, token)` | `code:all` | `source` (public URL to DWG), `destination` (public URL for output) | `$content$id` (WorkItem ID), `$content$status` |
 | `checkPdf(id, token)` | `code:all` | `id` (WorkItem ID from `makePdf()`) | `$content$status` (`"pending"` / `"inprogress"` / `"success"`), `$content$stats` |
 
----
+------------------------------------------------------------------------
 
 ## Reality Capture
 
 | Function | Required Scopes | Key Parameters | Returns |
-|---|---|---|---|
+|----|----|----|----|
 | `createPhotoscene(name, format, token)` | `data:read data:write` | `name` (scene label), `format` (`"rcm"` / `"rcs"` / `"obj"` / `"ortho"` / `"report"`) | `$content$photoscene$photosceneid` |
 | `uploadImages(photoscene_id, files, token)` | `data:read data:write` | `photoscene_id`, `files` (character vector of local JPEG/PNG paths) | `$content$Files$file` (list of uploaded file records) |
 | `processPhotoscene(photoscene_id, token)` | `data:read data:write` | `photoscene_id` | `$content$photoscene$progress` (`"0"` on submission) |
 | `checkPhotoscene(photoscene_id, token)` | `data:read data:write` | `photoscene_id` | `$content$photoscene$progress` (string `"0"`–`"100"`), `$content$photoscene$progressmsg` |
 | `waitForPhotoscene(photoscene_id, token, interval, timeout, verbose)` | `data:read data:write` | `interval` (seconds between polls, default 30), `timeout` (max wait in seconds, default 1800) | Final `checkPhotoscene` response when `progress == "100"` |
 
----
+------------------------------------------------------------------------
 
 ## Viewer
 
 | Function | Required Scopes | Key Parameters | Returns |
-|---|---|---|---|
+|----|----|----|----|
 | `viewer3D(urn, token, viewerType)` | `data:read` | `urn` (Base-64 encoded), `viewerType` (`"header"` / `"headless"` / `"vr"`) | Opens viewer in browser / Shiny |
 | `viewerUI(id, urn, token, viewerType)` | `data:read` | `id` (Shiny module ID), `urn`, `token`, `viewerType` | Shiny UI element for use in `fluidPage()` |
 
----
+------------------------------------------------------------------------
 
 ## Scope Quick Reference
 
 | Scope | Used by |
-|---|---|
+|----|----|
 | `data:read` | Model Derivative, Viewer, Reality Capture (read) |
 | `data:write` | Data Management (upload/delete), Model Derivative (translate), Reality Capture |
 | `bucket:create` | Data Management (`makeBucket`) |
@@ -111,3 +109,202 @@ repeat {
 ```
 
 Use `waitForPhotoscene()` as a ready-made equivalent for Reality Capture jobs.
+
+------------------------------------------------------------------------
+
+# Supporting Packages
+
+The chapters outside the Core APIs part rely on the following R packages. This section lists the key functions used in the book and the chapter where each appears.
+
+------------------------------------------------------------------------
+
+## httr2
+
+Used for direct Tandem REST API calls in the Digital Twins chapters, and as the underlying HTTP engine for AutoDeskR.
+
+| Function | Description | Chapter |
+|----|----|----|
+| `request(url)` | Create a new HTTP request | [Tandem Overview](tandem-overview.qmd), [Sensor Streams](sensor-streams.qmd) |
+| `req_auth_bearer_token(req, token)` | Add a Bearer token header | [Tandem Overview](tandem-overview.qmd) |
+| `req_url_query(req, ...)` | Append query parameters | [Sensor Streams](sensor-streams.qmd) |
+| `req_perform(req)` | Execute the request | [Tandem Overview](tandem-overview.qmd) |
+| `req_verbose()` | Enable request/response tracing | [Troubleshooting](troubleshooting.qmd) |
+| `resp_body_json(resp)` | Parse response body as JSON | [Sensor Streams](sensor-streams.qmd) |
+
+------------------------------------------------------------------------
+
+## jsonlite
+
+| Function | Description | Chapter |
+|----|----|----|
+| `base64_enc(x)` | Base-64 encode a string (required for APS URNs) | [Model Derivative](model-derivative.qmd), [Case Study](case-study.qmd) |
+| `fromJSON(txt)` | Parse a JSON string into an R list | General |
+
+------------------------------------------------------------------------
+
+## Rvcg
+
+Mesh processing — surface area, volume, smoothing, and surface distance. [@R-Rvcg]
+
+| Function | Description | Chapter |
+|----|----|----|
+| `vcgImport(file)` | Import OBJ, STL, or PLY mesh as `tmesh3d` | [Reading Meshes](mesh-reading.qmd) |
+| `vcgArea(mesh)` | Compute total surface area | [Mesh Metrics](mesh-metrics.qmd) |
+| `vcgVolume(mesh)` | Compute volume (watertight meshes only) | [Mesh Metrics](mesh-metrics.qmd) |
+| `vcgSmooth(mesh, iteration, lambda)` | Laplacian smoothing | [Mesh Comparison](mesh-comparison.qmd) |
+| `vcgDist(mesh1, mesh2)` | Per-vertex surface distance | [Mesh Comparison](mesh-comparison.qmd) |
+
+------------------------------------------------------------------------
+
+## rgl
+
+Interactive 3D visualisation. [@R-rgl]
+
+| Function | Description | Chapter |
+|----|----|----|
+| `open3d()` | Open a new 3D graphics device | [Mesh Visualisation](mesh-visualisation.qmd) |
+| `shade3d(mesh, col)` | Render a mesh with per-vertex colours | [Mesh Visualisation](mesh-visualisation.qmd), [Mesh Comparison](mesh-comparison.qmd) |
+| `rglwidget()` | Embed interactive 3D widget in HTML | [Mesh Visualisation](mesh-visualisation.qmd) |
+| `readOBJ(file)` | Alternative OBJ reader | [Troubleshooting](troubleshooting.qmd) |
+| `options(rgl.useNULL = TRUE)` | Suppress OpenGL window (headless/server use) | [Troubleshooting](troubleshooting.qmd) |
+
+------------------------------------------------------------------------
+
+## geometry
+
+Computational geometry for open (non-watertight) meshes. [@R-geometry]
+
+| Function | Description | Chapter |
+|----|----|----|
+| `convhulln(pts, options)` | Convex hull with area and volume (`options = "FA"`) | [Mesh Metrics](mesh-metrics.qmd) |
+
+------------------------------------------------------------------------
+
+## rayshader
+
+High-quality 3D rendered images. [@R-rayshader]
+
+| Function | Description | Chapter |
+|----|----|----|
+| `render_snapshot(filename)` | Save a ray-traced render to file | [Mesh Visualisation](mesh-visualisation.qmd) |
+
+------------------------------------------------------------------------
+
+## lidR
+
+Point cloud analysis from LAS/LAZ files. [@R-lidR]
+
+| Function | Description | Chapter |
+|----|----|----|
+| `readLAS(file)` | Read a LAS or LAZ point cloud | [Point Cloud Analysis](point-cloud-analysis.qmd) |
+| `normalize_height(pc, algorithm)` | Normalise Z to ground level | [Point Cloud Analysis](point-cloud-analysis.qmd) |
+| `rasterize_canopy(pc, res, algorithm)` | Maximum-Z raster (canopy/roof height model) | [Point Cloud Analysis](point-cloud-analysis.qmd) |
+| `grid_density(pc, res)` | Point density raster | [Point Cloud Analysis](point-cloud-analysis.qmd) |
+| `voxelize_points(pc, res)` | Voxelise point cloud for volume estimation | [Point Cloud Analysis](point-cloud-analysis.qmd) |
+| `npoints(pc)` | Total point count | [Point Cloud Analysis](point-cloud-analysis.qmd) |
+| `area(pc)` | Survey footprint area | [Point Cloud Analysis](point-cloud-analysis.qmd) |
+
+------------------------------------------------------------------------
+
+## dplyr
+
+Data manipulation — filtering, grouping, joining. Used throughout the DWG Analytics and Digital Twins chapters.
+
+| Function | Description | Chapter |
+|----|----|----|
+| `group_by(...)` | Group rows for summarisation | [Layer Analysis](layer-analysis.qmd) |
+| `summarise(...)` | Aggregate within groups | [Layer Analysis](layer-analysis.qmd) |
+| `filter(...)` | Keep rows matching a condition | [Attribute Extraction](attribute-extraction.qmd) |
+| `select(...)` | Choose columns | [Sensor Streams](sensor-streams.qmd) |
+| `mutate(...)` | Add or transform columns | [Attribute Extraction](attribute-extraction.qmd) |
+| `inner_join(x, y, by)` | Join keeping rows in both tables | [Sensor Streams](sensor-streams.qmd) |
+| `left_join(x, y, by)` | Join keeping all rows from left table | [Sensor Streams](sensor-streams.qmd) |
+
+------------------------------------------------------------------------
+
+## tidyr
+
+| Function | Description | Chapter |
+|----|----|----|
+| `pivot_wider(data, names_from, values_from)` | Reshape long data to wide format | [Attribute Extraction](attribute-extraction.qmd) |
+
+------------------------------------------------------------------------
+
+## ggplot2
+
+Data visualisation. Used in DWG Analytics, Digital Twins, and the Case Study.
+
+| Function | Description | Chapter |
+|----|----|----|
+| `ggplot(data, aes(...))` | Initialise a plot | Multiple |
+| `geom_col()` | Bar chart (pre-counted values) | [Layer Analysis](layer-analysis.qmd) |
+| `geom_line()` | Line chart | [Sensor Streams](sensor-streams.qmd) |
+| `geom_histogram()` | Histogram | [Point Cloud Analysis](point-cloud-analysis.qmd), [Mesh Comparison](mesh-comparison.qmd) |
+| `geom_ribbon()` | Shaded confidence band | [Sensor Streams](sensor-streams.qmd) |
+| `geom_tile()` | Heatmap tiles | [Cross-Drawing Comparison](cross-drawing-comparison.qmd) |
+| `facet_wrap(~ var)` | Small multiples | [Sensor Streams](sensor-streams.qmd) |
+| `coord_flip()` | Swap x and y axes | [Layer Analysis](layer-analysis.qmd) |
+| `theme_minimal()` | Clean theme | Multiple |
+
+------------------------------------------------------------------------
+
+## gt
+
+Publication-quality tables for automated reports.[@R-gt]
+
+| Function | Description | Chapter |
+|----|----|----|
+| `gt(data)` | Create a gt table from a data frame | [Drawing Reports](drawing-reports.qmd) |
+| `tab_header(title, subtitle)` | Add a title and subtitle | [Drawing Reports](drawing-reports.qmd) |
+| `fmt_number(columns, decimals)` | Format numeric columns | [Drawing Reports](drawing-reports.qmd) |
+| `cols_label(...)` | Rename column headers | [Drawing Reports](drawing-reports.qmd) |
+| `tab_source_note(note)` | Add a footnote | [Drawing Reports](drawing-reports.qmd) |
+
+------------------------------------------------------------------------
+
+## shiny
+
+Interactive web applications and dashboards.
+
+| Function | Description | Chapter |
+|----|----|----|
+| `fluidPage(...)` | Standard responsive page layout | [Viewer](viewer.qmd), [Live Dashboards](live-dashboards.qmd) |
+| `tabsetPanel(...)` / `tabPanel(...)` | Tabbed layout | [Case Study](case-study.qmd) |
+| `renderPlot({})` | Reactive ggplot2 output | [Case Study](case-study.qmd) |
+| `plotOutput(id)` | Placeholder for a plot | [Case Study](case-study.qmd) |
+| `reactiveTimer(ms)` | Trigger reactive updates on a schedule | [Live Dashboards](live-dashboards.qmd) |
+| `shinyApp(ui, server)` | Launch the app | [Case Study](case-study.qmd) |
+| `deployApp()` | Deploy to shinyapps.io | [Live Dashboards](live-dashboards.qmd) |
+
+------------------------------------------------------------------------
+
+## dygraphs
+
+Interactive time-series plots for Shiny dashboards. [@R-dygraphs]
+
+| Function | Description | Chapter |
+|----|----|----|
+| `dygraph(data, main)` | Create an interactive time-series chart | [Live Dashboards](live-dashboards.qmd) |
+| `dyOptions(...)` | Customise colours, fill, axes | [Live Dashboards](live-dashboards.qmd) |
+| `dygraphOutput(id)` | Shiny UI placeholder | [Live Dashboards](live-dashboards.qmd) |
+| `renderDygraph({})` | Shiny server renderer | [Live Dashboards](live-dashboards.qmd) |
+
+------------------------------------------------------------------------
+
+## xts
+
+Time-series objects required by `dygraphs`.
+
+| Function | Description | Chapter |
+|----|----|----|
+| `xts(data, order.by)` | Create an extensible time-series object | [Live Dashboards](live-dashboards.qmd) |
+
+------------------------------------------------------------------------
+
+## quarto
+
+Programmatic report rendering.
+
+| Function | Description | Chapter |
+|----|----|----|
+| `quarto_render(input, execute_params)` | Render a `.qmd` file with injected parameters | [Drawing Reports](drawing-reports.qmd) |

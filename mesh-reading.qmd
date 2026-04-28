@@ -1,0 +1,115 @@
+---
+title: "Reading OBJ and STL Meshes"
+---
+
+Once you've translated a CAD file through the [Model Derivative](model-derivative.qmd) API, you've got an OBJ or STL file sitting on disk. Now the fun part: loading it into R.
+
+`rgl` [@R-rgl] and `Rvcg` [@R-Rvcg] both read OBJ and STL files. `rgl` is great for interactive viewing; `Rvcg` is the one to reach for when you want to compute things. It returns a `tmesh3d` object that plays nicely with the whole `Rvcg` family of analysis functions.
+
+```{mermaid}
+flowchart LR
+  A[CAD file\nin OSS bucket] --> B[translateObj / translateStl\nModel Derivative]
+  B --> C[downloadFile\narial.obj]
+  C --> D[vcgImport\ntmesh3d object]
+  D --> E[Analyse\nmetrics / visualise / compare]
+```
+
+## Prerequisites
+
+```{r}
+#| eval: false
+install.packages(c("rgl", "Rvcg"))
+```
+
+## Getting the OBJ File
+
+The full upstream chain, translate, poll, get output URN, download, picks up where the [Model Derivative](model-derivative.qmd) chapter left off:
+
+```{r}
+#| eval: false
+library(AutoDeskR)
+
+resp     <- getToken(id     = Sys.getenv("client_id"),
+                     secret = Sys.getenv("client_secret"),
+                     scope  = "data:read data:write")
+myToken  <- resp$content$access_token
+
+myEncodedUrn <- jsonlite::base64_enc(Sys.getenv("urn"))
+
+translateObj(urn = myEncodedUrn, token = myToken)
+
+repeat {
+  status <- checkFile(urn = myEncodedUrn, token = myToken)
+  if (status$content$status == "success") break
+  Sys.sleep(5)
+}
+
+outputUrn       <- getOutputUrn(urn = myEncodedUrn, token = myToken)
+myOutputUrn     <- outputUrn$content$derivatives[[1]]$children[[1]]$urn
+myEncodedOutput <- jsonlite::base64_enc(myOutputUrn)
+
+downloadFile(urn        = myEncodedUrn,
+             output_urn = myEncodedOutput,
+             token      = myToken,
+             destfile   = "aerial.obj")
+```
+
+## Reading with Rvcg (recommended for analysis)
+
+`vcgImport()` parses the OBJ and returns a `tmesh3d`, a list with a vertex matrix (`vb`) and a triangle index matrix (`it`). Every analysis function in the next three chapters works on this object.
+
+```{r}
+#| eval: false
+library(Rvcg)
+mesh_vcg <- vcgImport("aerial.obj")
+str(mesh_vcg)
+#> List of 4
+#>  $ vb     : num [1:4, 1:2847] ...   # homogeneous vertex coords (X/Y/Z/W)
+#>  $ it     : int [1:3, 1:1832] ...   # triangle face indices
+#>  $ normals: num [1:4, 1:2847] ...
+#>  $ material: list()
+```
+
+## Reading with rgl (for interactive viewing)
+
+`readOBJ()` returns a similar `mesh3d` object that you can render immediately:
+
+```{r}
+#| eval: false
+library(rgl)
+mesh_obj <- readOBJ("aerial.obj")
+```
+
+::: callout-tip
+OBJ files from the Model Derivative API sometimes contain multiple named objects (one per CAD layer or body). `vcgImport()` merges them into a single mesh by default. Use `rgl::readOBJ(material = TRUE)` if you need to keep them separate for per-layer analysis.
+:::
+
+## Reading STL
+
+Exactly the same call works for STL files. `vcgImport()` handles both formats transparently:
+
+```{r}
+#| eval: false
+mesh_stl <- vcgImport("aerial.stl")
+# Same tmesh3d structure — all subsequent chapters work identically on OBJ and STL
+```
+
+## Quick Inspection
+
+A few fast checks to make sure the mesh loaded correctly:
+
+```{r}
+#| eval: false
+cat("Vertices:", ncol(mesh_vcg$vb), "\n")
+#> Vertices: 2847
+cat("Faces:   ", ncol(mesh_vcg$it), "\n")
+#> Faces:    1832
+
+# Coordinate ranges — useful sanity check that units are what you expect
+apply(t(mesh_vcg$vb[1:3, ]), 2, range)
+#>           [,1]      [,2]  [,3]
+#> [1,] -142.830  -98.470  0.000
+#> [2,]  318.620  241.190 12.500
+```
+
+The `mesh_vcg` object lives on from here through the [Mesh Metrics](mesh-metrics.qmd), [3D Visualisation](mesh-visualisation.qmd), and [Mesh Comparison](mesh-comparison.qmd) chapters, so keep it in your environment.

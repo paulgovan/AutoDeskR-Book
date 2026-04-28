@@ -2,13 +2,21 @@
 title: "Data Management"
 ---
 
-# Data Management
+Think of the Data Management API as AutoDesk's cloud file system. Before you can translate a file, embed it in a viewer, or run Design Automation on it, the file needs to live up in APS storage. This chapter covers everything from creating a bucket to deleting one.
 
-The Data Management API provides a way to store and access design files across the AutoDesk Platform Services (APS).
+The storage model is simple: your app owns **buckets**, and buckets hold **objects** (your files).
+
+```{mermaid}
+graph LR
+  A[Your App] --> B[(Bucket)]
+  B --> C[object: aerial.dwg]
+  B --> D[object: office_plan.rvt]
+  B --> E[object: bridge.ifc]
+```
 
 ## Create a Bucket
 
-Buckets are named containers for your files. First get a token with the appropriate scopes, then call `makeBucket()`.
+Get a token first - bucket creation needs `bucket:create` and `bucket:read` scopes at minimum:
 
 ```{r}
 #| eval: false
@@ -21,16 +29,16 @@ myToken <- resp$content$access_token
 #> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
 ```
 
-Use `makeBucket()` to create a bucket. The `policy` parameter controls how long objects are retained:
+Bucket retention policy controls how long your objects stick around:
 
-| Policy | Retention |
-|---|---|
-| `"transient"` | 24 hours (default) |
-| `"temporary"` | 30 days |
-| `"persistent"` | Until explicitly deleted |
+| Policy         | Files live for               |
+|----------------|------------------------------|
+| `"transient"`  | 24 hours (great for testing) |
+| `"temporary"`  | 30 days                      |
+| `"persistent"` | Until you delete them        |
 
 ::: callout-warning
-**Bucket names are globally unique** across every APS application. A name like `"test"` or `"mybucket"` is almost certainly taken. Use a prefix that ties the name to your app or organisation, e.g. `"mycompany-myapp-prod"`. Attempting to create a duplicate returns a `409 Conflict`:
+**Bucket names are globally unique** — not just within your app, but across every APS application everywhere. A name like `"test"` is long gone. Use something specific to your organisation and project, e.g. `"acmecorp-bridge-analysis-prod"`. A duplicate name returns a `409 Conflict`:
 
 ```{r}
 #| eval: false
@@ -54,43 +62,26 @@ resp$content
 #> $createdDate
 #> [1] 1745356800000
 #>
-#> $permissions
-#> $permissions[[1]]$authId
-#> [1] "3MVG99OxTyEMCQ3gNp2PjtXbmT8T_MnfCTtpQkuiJNxGtXuoKP7"
-#>
-#> $permissions[[1]]$access
-#> [1] "full"
-#>
 #> $policyKey
 #> [1] "persistent"
 ```
 
-To check the status of a bucket:
+Check on a bucket anytime with `checkBucket()`:
 
 ```{r}
 #| eval: false
 resp <- checkBucket(token = myToken, bucket = "mybucket")
-resp$content
-#> $bucketKey
-#> [1] "mybucket"
-#>
-#> $bucketOwner
-#> [1] "3MVG99OxTyEMCQ3gNp2PjtXbmT8T_MnfCTtpQkuiJNxGtXuoKP7"
-#>
-#> $createdDate
-#> [1] 1745356800000
-#>
-#> $policyKey
+resp$content$policyKey
 #> [1] "persistent"
 ```
 
 ## Upload a File
 
-Use `uploadFile()` for files up to 100 MB. It returns an object containing the `bucketKey`, `objectId` (the URN), `objectKey` (filename), `size`, `contentType`, and `location`. Note the URN and store it in `.Renviron` for future use.
+`uploadFile()` handles files up to 100 MB. It returns the object's `objectId`, a URN that every other API will ask for, so save it somewhere handy:
 
 ```{r}
 #| eval: false
-resp <- uploadFile(
+resp  <- uploadFile(
   file   = system.file("samples/aerial.dwg", package = "AutoDeskR"),
   token  = myToken,
   bucket = "mybucket"
@@ -106,9 +97,6 @@ resp$content
 #> $objectKey
 #> [1] "aerial.dwg"
 #>
-#> $sha1
-#> [1] "7f3d9b2e1a6c4f8e0d5b3a9c7e2f1d4b8a6c0e3"
-#>
 #> $size
 #> [1] 3145728
 #>
@@ -119,84 +107,64 @@ resp$content
 #> [1] "https://developer.api.autodesk.com/oss/v2/buckets/mybucket/objects/aerial.dwg"
 ```
 
-### Upload Large Files (>100 MB)
+### Big Files (\> 100 MB)
 
-For files over 100 MB, use `uploadFileSigned()`, which transfers the file via signed S3 URLs to avoid timeout limits.
+For anything over 100 MB, use `uploadFileSigned()`. iI routes the transfer through signed S3 URLs to sidestep timeout limits:
 
 ```{r}
 #| eval: false
-resp <- uploadFileSigned(
+resp  <- uploadFileSigned(
   file   = "path/to/large_model.rvt",
   token  = myToken,
   bucket = "mybucket"
 )
 myUrn <- resp$content$objectId
-resp$content
-#> $bucketKey
-#> [1] "mybucket"
-#>
-#> $objectId
-#> [1] "urn:adsk.objects:os.object:mybucket/large_model.rvt"
-#>
-#> $objectKey
-#> [1] "large_model.rvt"
-#>
-#> $size
+resp$content$size
 #> [1] 524288000
-#>
-#> $contentType
-#> [1] "application/octet-stream"
-#>
-#> $location
-#> [1] "https://developer.api.autodesk.com/oss/v2/buckets/mybucket/objects/large_model.rvt"
 ```
 
 ## List Buckets and Objects
 
-List all buckets associated with your app. Use `limit` to control page size and `startAt` to paginate through results:
+See all buckets your app owns. Paginate with `limit` and `startAt`:
 
 ```{r}
 #| eval: false
 resp <- listBuckets(token = myToken, limit = 10)
 resp$content$items
-#>                          bucketKey                                    createdDate  policyKey
-#> 1                       mybucket                                  1745356800000 persistent
-#> 2                  archive-2025                                  1740000000000  temporary
-#> 3              visualization-dev                                  1738000000000  transient
+#>                          bucketKey    createdDate  policyKey
+#> 1                       mybucket  1745356800000 persistent
+#> 2                  archive-2025  1740000000000  temporary
+#> 3              visualization-dev  1738000000000  transient
 
-# Paginate to the next page
+# Next page
 resp <- listBuckets(token = myToken, limit = 10, startAt = "visualization-dev")
-resp$content$items
-#>              bucketKey      createdDate policyKey
-#> 1        test-sandbox    1735000000000 transient
 ```
 
-Use `region` to filter buckets by geography (`"US"` or `"EMEA"`):
+Filter by region if your app spans geographies:
 
 ```{r}
 #| eval: false
 resp <- listBuckets(token = myToken, region = "EMEA")
 resp$content$items
-#>       bucketKey      createdDate  policyKey
-#> 1  emea-models    1742000000000 persistent
-#> 2  emea-backup    1740000000000  temporary
+#>       bucketKey    createdDate  policyKey
+#> 1  emea-models  1742000000000 persistent
 ```
 
-List objects stored in a specific bucket:
+List the files inside a bucket:
 
 ```{r}
 #| eval: false
 resp <- listObjects(token = myToken, bucket = "mybucket", limit = 10)
 resp$content$items
-#>          objectKey                                              objectId   size
+#>          objectKey                                              objectId     size
 #> 1       aerial.dwg  urn:adsk.objects:os.object:mybucket/aerial.dwg      3145728
 #> 2  office_plan.rvt  urn:adsk.objects:os.object:mybucket/office_plan.rvt 52428800
-#> 3      bridge.ifc   urn:adsk.objects:os.object:mybucket/bridge.ifc      8388608
+#> 3      bridge.ifc   urn:adsk.objects:os.object:mybucket/bridge.ifc       8388608
 ```
 
 ## Delete Objects and Buckets
 
-Delete a specific object from a bucket:
+Remove a specific file:
 
 ```{r}
 #| eval: false
@@ -205,7 +173,7 @@ resp$status_code
 #> [1] 200
 ```
 
-Delete an entire bucket (the bucket must be empty first):
+Remove the whole bucket:
 
 ```{r}
 #| eval: false
@@ -215,7 +183,7 @@ resp$status_code
 ```
 
 ::: callout-warning
-**A bucket must be empty before it can be deleted.** Delete all objects with `deleteObject()` first. Attempting to delete a non-empty bucket returns a `409 Conflict`:
+**Empty the bucket first.** `deleteBucket()` won't touch a bucket that still has objects in it. Delete everything with `deleteObject()` first, or you'll get:
 
 ```{r}
 #| eval: false

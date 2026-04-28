@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Reality Capture – R and the AutoDesk Platform</title>
+<title>5&nbsp; Reality Capture – R for the Built Environment</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -105,8 +105,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
+<meta name="twitter:title" content="5&nbsp; Reality Capture – R for the Built Environment">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -118,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./authentication.html">Core APIs</a></li><li class="breadcrumb-item"><a href="./reality-capture.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Reality Capture</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./authentication.html">AutoDesk Platform Services</a></li><li class="breadcrumb-item"><a href="./reality-capture.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Reality Capture</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -135,7 +141,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <a href="./index.html" class="sidebar-logo-link">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">R and the AutoDesk Platform</a> 
+      <a href="./">R for the Built Environment</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/paulgovan/AutoDeskR-Book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./R-for-the-Built-Environment.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./R-for-the-Built-Environment.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -189,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Core APIs</span></a>
+ <span class="menu-text">AutoDesk Platform Services</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -236,7 +279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Project &amp; Account APIs</span></a>
+ <span class="menu-text">3D Geometry &amp; Meshes</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -244,26 +287,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-management-acc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ACC Data Management</span></span></a>
+  <a href="./mesh-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reading OBJ and STL Meshes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./construction-issues.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Construction Issues</span></span></a>
+  <a href="./mesh-metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Mesh Metrics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./account-admin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Account Admin</span></span></a>
+  <a href="./mesh-visualisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">3D Visualisation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./webhooks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Webhooks</span></span></a>
+  <a href="./point-cloud-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Point Cloud Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mesh-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mesh Comparison</span></span></a>
   </div>
 </li>
       </ul>
@@ -271,7 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
+ <span class="menu-text">DWG &amp; DXF Analytics</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -279,20 +328,101 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./layer-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Layer Structure Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attribute-extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Attribute Extraction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cross-drawing-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cross-Drawing Comparison</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./drawing-reports.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Automated Drawing Reports</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Digital Twins</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tandem-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">AutoDesk Tandem Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sensor-streams.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Linking Sensor Streams</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./live-dashboards.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Live Dashboards</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Integration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mcp-server.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">MCP Server</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./case-study.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Function Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Function Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./troubleshooting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
   </div>
 </li>
       </ul>
@@ -313,27 +443,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#reality-capture" id="toc-reality-capture" class="nav-link active" data-scroll-target="#reality-capture"><span class="header-section-number">6</span> Reality Capture</a>
+  <li><a href="#before-you-start" id="toc-before-you-start" class="nav-link active" data-scroll-target="#before-you-start"><span class="header-section-number">5.1</span> Before You Start</a></li>
+  <li><a href="#step-1-authenticate" id="toc-step-1-authenticate" class="nav-link" data-scroll-target="#step-1-authenticate"><span class="header-section-number">5.2</span> Step 1: Authenticate</a></li>
+  <li><a href="#step-2-create-a-photoscene" id="toc-step-2-create-a-photoscene" class="nav-link" data-scroll-target="#step-2-create-a-photoscene"><span class="header-section-number">5.3</span> Step 2: Create a Photoscene</a></li>
+  <li><a href="#step-3-upload-images" id="toc-step-3-upload-images" class="nav-link" data-scroll-target="#step-3-upload-images"><span class="header-section-number">5.4</span> Step 3: Upload Images</a></li>
+  <li><a href="#step-4-start-processing" id="toc-step-4-start-processing" class="nav-link" data-scroll-target="#step-4-start-processing"><span class="header-section-number">5.5</span> Step 4: Start Processing</a></li>
+  <li><a href="#step-5-wait-for-it" id="toc-step-5-wait-for-it" class="nav-link" data-scroll-target="#step-5-wait-for-it"><span class="header-section-number">5.6</span> Step 5: Wait for It</a>
   <ul class="collapse">
-  <li><a href="#before-you-start" id="toc-before-you-start" class="nav-link" data-scroll-target="#before-you-start"><span class="header-section-number">6.1</span> Before You Start</a></li>
-  <li><a href="#step-1-authenticate" id="toc-step-1-authenticate" class="nav-link" data-scroll-target="#step-1-authenticate"><span class="header-section-number">6.2</span> Step 1: Authenticate</a></li>
-  <li><a href="#step-2-create-a-photoscene" id="toc-step-2-create-a-photoscene" class="nav-link" data-scroll-target="#step-2-create-a-photoscene"><span class="header-section-number">6.3</span> Step 2: Create a Photoscene</a></li>
-  <li><a href="#step-3-upload-images" id="toc-step-3-upload-images" class="nav-link" data-scroll-target="#step-3-upload-images"><span class="header-section-number">6.4</span> Step 3: Upload Images</a></li>
-  <li><a href="#step-4-start-processing" id="toc-step-4-start-processing" class="nav-link" data-scroll-target="#step-4-start-processing"><span class="header-section-number">6.5</span> Step 4: Start Processing</a></li>
-  <li><a href="#step-5-poll-for-completion" id="toc-step-5-poll-for-completion" class="nav-link" data-scroll-target="#step-5-poll-for-completion"><span class="header-section-number">6.6</span> Step 5: Poll for Completion</a>
-  <ul class="collapse">
-  <li><a href="#option-a-manual-polling" id="toc-option-a-manual-polling" class="nav-link" data-scroll-target="#option-a-manual-polling"><span class="header-section-number">6.6.1</span> Option A — Manual polling</a></li>
-  <li><a href="#option-b-block-until-done-recommended" id="toc-option-b-block-until-done-recommended" class="nav-link" data-scroll-target="#option-b-block-until-done-recommended"><span class="header-section-number">6.6.2</span> Option B — Block until done (recommended)</a></li>
+  <li><a href="#option-a-block-until-done-recommended" id="toc-option-a-block-until-done-recommended" class="nav-link" data-scroll-target="#option-a-block-until-done-recommended"><span class="header-section-number">5.6.1</span> Option A — Block until done (recommended)</a></li>
+  <li><a href="#option-b-manual-polling" id="toc-option-b-manual-polling" class="nav-link" data-scroll-target="#option-b-manual-polling"><span class="header-section-number">5.6.2</span> Option B — Manual polling</a></li>
   </ul></li>
-  <li><a href="#step-6-download-the-output-mesh" id="toc-step-6-download-the-output-mesh" class="nav-link" data-scroll-target="#step-6-download-the-output-mesh"><span class="header-section-number">6.7</span> Step 6: Download the Output Mesh</a></li>
-  </ul></li>
+  <li><a href="#step-6-download-the-output" id="toc-step-6-download-the-output" class="nav-link" data-scroll-target="#step-6-download-the-output"><span class="header-section-number">5.7</span> Step 6: Download the Output</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/paulgovan/AutoDeskR-Book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./authentication.html">Core APIs</a></li><li class="breadcrumb-item"><a href="./reality-capture.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Reality Capture</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./authentication.html">AutoDesk Platform Services</a></li><li class="breadcrumb-item"><a href="./reality-capture.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Reality Capture</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Reality Capture</span></h1>
 </div>
@@ -352,18 +479,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="reality-capture" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Reality Capture</h1>
-<p>The Reality Capture API (also called Photo-to-3D) converts a set of overlapping photographs into a 3D mesh or point cloud. You upload images — from a phone, DSLR, or drone — and AutoDesk’s cloud photogrammetry engine stitches them into a georeferenced 3D model you can download or feed into the viewer.</p>
-<p>Common use cases include:</p>
-<ul>
-<li><strong>As-built documentation</strong> — capture a construction site weekly with a drone and generate a mesh for each visit</li>
-<li><strong>Heritage and inspection</strong> — record a structure or asset in 3D from photos taken by field staff</li>
-<li><strong>Site topography</strong> — convert aerial photography into a terrain mesh for use in civil design</li>
-<li><strong>Integration with other APIs</strong> — translate the output mesh into OBJ or STL via the <a href="./model-derivative.html">Model Derivative</a> API for further analysis in R</li>
-</ul>
-<section id="before-you-start" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="before-you-start"><span class="header-section-number">6.1</span> Before You Start</h2>
+<p>Got a folder of overlapping photos and want a 3D mesh? That’s the Reality Capture API (also called Photo-to-3D). You upload the images, AutoDesk’s photogrammetry engine does the heavy lifting, and you download a georeferenced 3D model — no specialised hardware or software required.</p>
+<p>Common uses: - <strong>As-built documentation</strong> — fly a drone over a construction site each week and generate a mesh for each visit - <strong>Heritage recording</strong> — photograph a structure with a phone and get a measurable 3D record - <strong>Site topography</strong> — turn aerial photos into a terrain mesh for civil design - <strong>Mesh analysis</strong> — feed the output into <code>Rvcg</code> via the <a href="./mesh-reading.html">3D Geometry</a> chapters</p>
+<p>The full workflow goes like this:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  A[Photos] --&gt; B[createPhotoscene]
+  B --&gt; C[uploadImages]
+  C --&gt; D[processPhotoscene]
+  D --&gt; E{waitForPhotoscene\nor checkPhotoscene}
+  E -- progress &lt; 100 --&gt; E
+  E -- progress = 100 --&gt; F[Download\nmesh / point cloud]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<section id="before-you-start" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="before-you-start"><span class="header-section-number">5.1</span> Before You Start</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -374,20 +512,20 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Image guidelines for best results:</strong></p>
+<p><strong>Good photos make good meshes.</strong> A few guidelines that will save you a lot of frustration:</p>
 <ul>
-<li>Minimum <strong>20 images</strong> per scene; 50–200 is typical for a small structure</li>
-<li><strong>60–80 % overlap</strong> between adjacent images — every part of the subject should appear in at least 3 photos</li>
-<li>Consistent, diffuse lighting; avoid harsh shadows or direct sun reflections</li>
-<li>Keep the camera moving around the object, not zooming in from a fixed point</li>
+<li>At least <strong>20 images</strong> per scene — 50–200 is typical for a small structure</li>
+<li><strong>60–80 % overlap</strong> between adjacent shots; every surface should appear in at least 3 photos</li>
+<li>Consistent, diffuse lighting — harsh shadows and mirror-like reflections confuse the algorithm</li>
+<li>Move the camera <em>around</em> the subject, don’t just zoom in from one spot</li>
 <li>GPS/EXIF tags are optional but improve georeferencing accuracy</li>
 </ul>
 </div>
 </div>
 </section>
-<section id="step-1-authenticate" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="step-1-authenticate"><span class="header-section-number">6.2</span> Step 1: Authenticate</h2>
-<p>Reality Capture requires the <code>data:read</code> and <code>data:write</code> scopes:</p>
+<section id="step-1-authenticate" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="step-1-authenticate"><span class="header-section-number">5.2</span> Step 1: Authenticate</h2>
+<p>Reality Capture needs <code>data:read</code> and <code>data:write</code> scopes:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AutoDeskR)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -396,13 +534,12 @@ Tip
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">secret =</span> <span class="fu">Sys.getenv</span>(<span class="st">"client_secret"</span>),</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">scope  =</span> <span class="st">"data:read data:write"</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>myToken <span class="ot">&lt;-</span> resp<span class="sc">$</span>content<span class="sc">$</span>access_token</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>myToken <span class="ot">&lt;-</span> resp<span class="sc">$</span>content<span class="sc">$</span>access_token</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="step-2-create-a-photoscene" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="step-2-create-a-photoscene"><span class="header-section-number">6.3</span> Step 2: Create a Photoscene</h2>
-<p>A <strong>photoscene</strong> is the container for your images and the resulting 3D output. The <code>format</code> parameter determines what file type is produced:</p>
+<section id="step-2-create-a-photoscene" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="step-2-create-a-photoscene"><span class="header-section-number">5.3</span> Step 2: Create a Photoscene</h2>
+<p>A <strong>photoscene</strong> is the container for your images and output. The <code>format</code> parameter controls what comes out the other end:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -417,11 +554,11 @@ Tip
 </tr>
 <tr class="even">
 <td><code>"rcs"</code></td>
-<td>ReCap point cloud scan</td>
+<td>ReCap point cloud — feeds into <a href="./point-cloud-analysis.html">Point Cloud Analysis</a></td>
 </tr>
 <tr class="odd">
 <td><code>"obj"</code></td>
-<td>Wavefront OBJ mesh</td>
+<td>Wavefront OBJ mesh — feeds into <a href="./mesh-reading.html">Reading OBJ and STL Meshes</a></td>
 </tr>
 <tr class="even">
 <td><code>"ortho"</code></td>
@@ -436,55 +573,30 @@ Tip
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ps             <span class="ot">&lt;-</span> <span class="fu">createPhotoscene</span>(<span class="at">name =</span> <span class="st">"site-survey-2026"</span>, <span class="at">format =</span> <span class="st">"obj"</span>, <span class="at">token =</span> myToken)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>myPhotosceneId <span class="ot">&lt;-</span> ps<span class="sc">$</span>content<span class="sc">$</span>photoscene<span class="sc">$</span>photosceneid</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ps<span class="sc">$</span>content</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $photoscene</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $photoscene$photosceneid</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "K2RDAPFIN0OPKGU9B65Q2TJD"</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $photoscene$scenename</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "site-survey-2026"</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $photoscene$scenelink</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "https://developer.api.autodesk.com/photo-to-3d/v1/photoscene/K2RDAPFIN0OPKGU9B65Q2TJD"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>myPhotosceneId</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "K2RDAPFIN0OPKGU9B65Q2TJD"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="step-3-upload-images" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="step-3-upload-images"><span class="header-section-number">6.4</span> Step 3: Upload Images</h2>
-<p>Pass a character vector of local file paths. AutoDeskR transfers them in a single multipart POST. JPEG and PNG are supported.</p>
+<section id="step-3-upload-images" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="step-3-upload-images"><span class="header-section-number">5.4</span> Step 3: Upload Images</h2>
+<p>Pass a character vector of local file paths. AutoDeskR bundles them into a single multipart POST. JPEG and PNG both work.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>image_files <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"photos/site_001.jpg"</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"photos/site_002.jpg"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"photos/site_003.jpg"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ... up to 1000 images per scene</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>imgs <span class="ot">&lt;-</span> <span class="fu">uploadImages</span>(</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">photoscene_id =</span> myPhotosceneId,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">files         =</span> image_files,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">token         =</span> myToken</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>imgs<span class="sc">$</span>content</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Files</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Files$file</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Files$file[[1]]</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Files$file[[1]]$filename</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "site_001.jpg"</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Files$file[[1]]$fileid</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "A1B2C3D4E5F6G7H8"</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Files$file[[1]]$filesize</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4718592</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Files$file[[2]]$filename</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "site_002.jpg"</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Files$file[[2]]$fileid</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "B2C3D4E5F6G7H8I9"</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Files$file[[2]]$filesize</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5242880</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>image_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"photos/"</span>, <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.jpg$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>imgs <span class="ot">&lt;-</span> <span class="fu">uploadImages</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">photoscene_id =</span> myPhotosceneId,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">files         =</span> image_files,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">token         =</span> myToken</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>imgs<span class="sc">$</span>content<span class="sc">$</span>Files<span class="sc">$</span>file[[<span class="dv">1</span>]]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $filename</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "site_001.jpg"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $fileid</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "A1B2C3D4E5F6G7H8"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $filesize</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4718592</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -496,64 +608,49 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Free-tier limits:</strong> The APS free tier allows a maximum of <strong>1 000 images per photoscene</strong> and <strong>10 photoscenes per month</strong>. Exceeding these limits returns a <code>403 Forbidden</code> response. Upgrade to a paid plan for higher quotas.</p>
+<p><strong>Free-tier limits:</strong> Maximum <strong>1,000 images per photoscene</strong> and <strong>10 photoscenes per month</strong>. Exceeding the quota returns a <code>403 Forbidden</code>. Upgrade to a paid plan for higher limits.</p>
 </div>
 </div>
 </section>
-<section id="step-4-start-processing" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="step-4-start-processing"><span class="header-section-number">6.5</span> Step 4: Start Processing</h2>
-<p>Once all images are uploaded, trigger the reconstruction:</p>
+<section id="step-4-start-processing" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="step-4-start-processing"><span class="header-section-number">5.5</span> Step 4: Start Processing</h2>
+<p>One call kicks off the reconstruction:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>proc <span class="ot">&lt;-</span> <span class="fu">processPhotoscene</span>(<span class="at">photoscene_id =</span> myPhotosceneId, <span class="at">token =</span> myToken)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>proc<span class="sc">$</span>content</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $photoscene</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $photoscene$photosceneid</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "K2RDAPFIN0OPKGU9B65Q2TJD"</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $photoscene$progress</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "0"</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $photoscene$progressmsg</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Queued"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>proc<span class="sc">$</span>content<span class="sc">$</span>photoscene<span class="sc">$</span>progressmsg</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Queued"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="step-5-poll-for-completion" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="step-5-poll-for-completion"><span class="header-section-number">6.6</span> Step 5: Poll for Completion</h2>
-<section id="option-a-manual-polling" class="level3" data-number="6.6.1">
-<h3 data-number="6.6.1" class="anchored" data-anchor-id="option-a-manual-polling"><span class="header-section-number">6.6.1</span> Option A — Manual polling</h3>
+<section id="step-5-wait-for-it" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="step-5-wait-for-it"><span class="header-section-number">5.6</span> Step 5: Wait for It</h2>
+<section id="option-a-block-until-done-recommended" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="option-a-block-until-done-recommended"><span class="header-section-number">5.6.1</span> Option A — Block until done (recommended)</h3>
+<p><code>waitForPhotoscene()</code> polls on a schedule and returns when the job finishes. Set <code>verbose = TRUE</code> to watch the progress tick up:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>status <span class="ot">&lt;-</span> <span class="fu">checkPhotoscene</span>(<span class="at">photoscene_id =</span> myPhotosceneId, <span class="at">token =</span> myToken)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>status<span class="sc">$</span>content<span class="sc">$</span>photoscene</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $photosceneid</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "K2RDAPFIN0OPKGU9B65Q2TJD"</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $progress</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "75"</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $progressmsg</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Processing geometry"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>done <span class="ot">&lt;-</span> <span class="fu">waitForPhotoscene</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">photoscene_id =</span> myPhotosceneId,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">token         =</span> myToken,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval      =</span> <span class="dv">60</span>,    <span class="co"># check every 60 seconds</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">timeout       =</span> <span class="dv">3600</span>,  <span class="co"># give up after an hour</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose       =</span> <span class="cn">TRUE</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 0 - Queued</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 10 - Uploading files</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 35 - Calibrating cameras</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 60 - Building point cloud</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 85 - Generating mesh</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 100 - Done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>progress</code> is a string from <code>"0"</code> to <code>"100"</code>. When it reaches <code>"100"</code> the model is ready.</p>
 </section>
-<section id="option-b-block-until-done-recommended" class="level3" data-number="6.6.2">
-<h3 data-number="6.6.2" class="anchored" data-anchor-id="option-b-block-until-done-recommended"><span class="header-section-number">6.6.2</span> Option B — Block until done (recommended)</h3>
-<p><code>waitForPhotoscene()</code> polls every <code>interval</code> seconds and returns when <code>progress == "100"</code>:</p>
+<section id="option-b-manual-polling" class="level3" data-number="5.6.2">
+<h3 data-number="5.6.2" class="anchored" data-anchor-id="option-b-manual-polling"><span class="header-section-number">5.6.2</span> Option B — Manual polling</h3>
+<p>If you want more control, call <code>checkPhotoscene()</code> yourself:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>done <span class="ot">&lt;-</span> <span class="fu">waitForPhotoscene</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">photoscene_id =</span> myPhotosceneId,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">token         =</span> myToken,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval      =</span> <span class="dv">60</span>,     <span class="co"># poll every 60 s</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">timeout       =</span> <span class="dv">3600</span>,   <span class="co"># give up after 1 hour</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose       =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 0 - Queued</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 10 - Uploading files</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 35 - Calibrating cameras</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 60 - Building point cloud</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 85 - Generating mesh</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Reality Capture progress: 100 - Done</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>done<span class="sc">$</span>content<span class="sc">$</span>photoscene<span class="sc">$</span>progress</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "100"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>status <span class="ot">&lt;-</span> <span class="fu">checkPhotoscene</span>(<span class="at">photoscene_id =</span> myPhotosceneId, <span class="at">token =</span> myToken)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>status<span class="sc">$</span>content<span class="sc">$</span>photoscene<span class="sc">$</span>progress</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "75"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>status<span class="sc">$</span>content<span class="sc">$</span>photoscene<span class="sc">$</span>progressmsg</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Processing geometry"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -565,30 +662,26 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Processing time</strong> depends on image count and scene complexity. A 50-image scene typically takes <strong>5–15 minutes</strong>; 500 images may take over an hour. Set <code>timeout</code> to at least twice your expected processing time to avoid premature errors.</p>
+<p><strong>Processing time scales with image count.</strong> A 50-image scene typically takes 5–15 minutes; 500 images may take over an hour. Set <code>timeout</code> generously — there’s nothing worse than a premature timeout on an 80-minute job.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="step-6-download-the-output-mesh" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="step-6-download-the-output-mesh"><span class="header-section-number">6.7</span> Step 6: Download the Output Mesh</h2>
-<p>Once <code>progress == "100"</code>, retrieve the download link from the completed photoscene response:</p>
+<section id="step-6-download-the-output" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="step-6-download-the-output"><span class="header-section-number">5.7</span> Step 6: Download the Output</h2>
+<p>When <code>progress</code> hits <code>"100"</code>, retrieve the download URL and save the mesh locally:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The output URL is embedded in the final checkPhotoscene response</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>output_url <span class="ot">&lt;-</span> done<span class="sc">$</span>content<span class="sc">$</span>photoscene<span class="sc">$</span>scenelink</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "https://developer.api.autodesk.com/photo-to-3d/v1/photoscene/K2RDAPFIN0OPKGU9B65Q2TJD/properties"</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the OBJ mesh</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">url      =</span> <span class="fu">paste0</span>(output_url, <span class="st">"/output.obj"</span>),</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">"site-survey-2026.obj"</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">headers  =</span> <span class="fu">c</span>(<span class="at">Authorization =</span> <span class="fu">paste</span>(<span class="st">"Bearer"</span>, myToken))</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>output_url <span class="ot">&lt;-</span> done<span class="sc">$</span>content<span class="sc">$</span>photoscene<span class="sc">$</span>scenelink</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">url      =</span> <span class="fu">paste0</span>(output_url, <span class="st">"/output.obj"</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">"site-survey-2026.obj"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">headers  =</span> <span class="fu">c</span>(<span class="at">Authorization =</span> <span class="fu">paste</span>(<span class="st">"Bearer"</span>, myToken))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The downloaded OBJ file can be imported into R with the <code>rgl</code> or <code>Rvcg</code> packages for 3D visualisation and analysis, or translated further via the <a href="./model-derivative.html">Model Derivative</a> API.</p>
+<p>From here, the OBJ file is ready for <a href="./mesh-reading.html">Reading OBJ and STL Meshes</a> or further translation via the <a href="./model-derivative.html">Model Derivative</a> API.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1009,4 +1102,4 @@ Warning
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/paulgovan/AutoDeskR-Book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

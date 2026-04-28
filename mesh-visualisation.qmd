@@ -1,0 +1,109 @@
+---
+title: "3D Visualisation"
+---
+
+Numbers are useful; actually *seeing* the mesh is better. This chapter covers two routes: `rgl` [@R-rgl] for interactive exploration in RStudio (spin it with the mouse, zoom in, inspect details), and `rayshader` [@R-rayshader] for rendering publication-quality static images.
+
+Both work on `mesh_vcg` from [Reading OBJ and STL Meshes](mesh-reading.qmd).
+
+## Interactive 3D with rgl
+
+`shade3d()` opens an OpenGL window where you can rotate and zoom with the mouse. Takes one line:
+
+```{r}
+#| eval: false
+library(rgl)
+open3d()
+shade3d(mesh_obj, col = "#C0C0C0", alpha = 0.9)
+bg3d("white")
+axes3d()
+title3d("Aerial DWG — Translated Mesh")
+```
+
+### Embedding in HTML Output
+
+`rgl` windows are interactive in RStudio but don't embed in HTML documents on their own. `rglwidget()` wraps the scene in a self-contained WebGL widget that works in any browser:
+
+```{r}
+#| eval: false
+# Add this once at the top of your document (setup chunk)
+knitr::knit_hooks$set(webgl = rgl::hook_webgl)
+
+open3d()
+shade3d(mesh_obj, col = "#4A90D9", alpha = 0.85)
+rglwidget()
+```
+
+::: callout-note
+The WebGL widget is fully self-contained in the rendered HTML. Readers can rotate and zoom without a running R server. It does require a modern browser (Chrome, Firefox, Safari, Edge all work fine).
+:::
+
+## Colouring by Height
+
+Map vertex Z-values to a colour ramp to reveal the model's vertical structure instantly. Blues for low, reds for high:
+
+```{r}
+#| eval: false
+z_vals <- mesh_vcg$vb[3, ]
+z_norm <- (z_vals - min(z_vals)) / diff(range(z_vals))   # 0–1
+
+cols      <- colorRampPalette(c("#2166ac", "#92c5de", "#f7f7f7",
+                                 "#f4a582", "#d6604d"))(100)
+vert_cols <- cols[ceiling(z_norm * 99) + 1]
+
+open3d()
+shade3d(mesh_obj, col = vert_cols)
+rglwidget()
+```
+
+## Rendered Images with rayshader
+
+`rayshader` renders the active `rgl` scene with ray-traced lighting and ambient occlusion, great for reports and presentations. The output is a PNG file.
+
+```{r}
+#| eval: false
+library(rayshader)
+
+vertices  <- t(mesh_vcg$vb[1:3, ])
+triangles <- t(mesh_vcg$it)
+
+open3d()
+triangles3d(vertices[triangles[, 1], ],
+            vertices[triangles[, 2], ],
+            vertices[triangles[, 3], ],
+            col = "steelblue")
+
+render_snapshot(filename    = "aerial_render.png",
+                width       = 1200,
+                height      = 900,
+                title_text  = "Aerial DWG — Rayshader Render",
+                title_color = "white",
+                title_size  = 24,
+                clear       = TRUE)
+```
+
+Include the render in your Quarto document with a standard image link:
+
+``` markdown
+![Aerial DWG rendered with rayshader](aerial_render.png)
+```
+
+## Depth of Field
+
+Add a depth-of-field effect to emphasise the model's 3D structure in the output image, works especially well for tall structures:
+
+```{r}
+#| eval: false
+render_depth(focus       = 0.7,
+             focallength = 200,
+             filename    = "aerial_dof.png")
+```
+
+## Quick Comparison: rgl vs. rayshader
+
+|               | `rgl`                   | `rayshader`            |
+|---------------|-------------------------|------------------------|
+| Output        | Interactive HTML widget | Static PNG             |
+| Use for       | Exploration, dashboards | Reports, presentations |
+| Render time   | Instant                 | Seconds–minutes        |
+| WebGL support | Yes (via `rglwidget()`) | No                     |

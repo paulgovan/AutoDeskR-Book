@@ -1,0 +1,136 @@
+---
+title: "Point Cloud Analysis"
+---
+
+The [Reality Capture](reality-capture.qmd) API can output a point cloud alongside (or instead of) a mesh. Once you've converted it to LAS format, `lidR` [@R-lidR] takes over — height statistics, density maps, canopy models, voxel volumes. This is the go-to tool for site survey analysis.
+
+## Getting the Point Cloud
+
+Request `rcs` format when creating your photoscene:
+
+```{r}
+#| eval: false
+library(AutoDeskR)
+
+resp    <- getToken(id     = Sys.getenv("client_id"),
+                    secret = Sys.getenv("client_secret"),
+                    scope  = "data:read data:write")
+myToken <- resp$content$access_token
+
+ps <- createPhotoscene(name = "site-2026-q2", token = myToken)
+# ... uploadImages(), processPhotoscene(), waitForPhotoscene() ...
+
+result  <- checkPhotoscene(photoscene_id = myPhotosceneId, token = myToken)
+rcs_url <- result$content$photoscene$scenelink
+
+download.file(url      = rcs_url,
+              destfile = "site-survey.rcs",
+              headers  = c(Authorization = paste("Bearer", myToken)))
+```
+
+::: callout-warning
+**`lidR` reads LAS/LAZ, not RCS.** Convert the downloaded `.rcs` file to LAS using [CloudCompare](https://www.cloudcompare.org/) (free and open source) before proceeding. In CloudCompare: *File → Open* the RCS file, then *File → Save As* → LAS format.
+:::
+
+## Reading the Point Cloud
+
+```{r}
+#| eval: false
+library(lidR)
+pc <- readLAS("site-survey.las")
+pc
+#> class        : LAS (v1.3 format 1)
+#> memory       : 247.8 Mb
+#> extent       : 406325.4, 406412.8, 5765842.6, 5765901.3
+#> coord. ref.  : WGS 84 / UTM zone 32N
+#> area         : 4064.9 units²
+#> points       : 3.62 million pts (1 return)
+```
+
+## Height Statistics
+
+Normalise to ground level before computing anything height-related:
+
+```{r}
+#| eval: false
+pc_norm <- normalize_height(pc, knnidw())
+
+mean(pc_norm$Z)
+#> [1] 4.12    # mean height above ground (m)
+sd(pc_norm$Z)
+#> [1] 2.87
+
+quantile(pc_norm$Z, probs = c(0.25, 0.5, 0.75, 0.95))
+#>   25%   50%   75%   95%
+#>  1.20  3.44  6.11 11.83
+```
+
+## Height Distribution
+
+```{r}
+#| echo: false
+library(ggplot2)
+set.seed(1)
+z_sample <- pmax(c(rnorm(80000, mean = 4.1, sd = 2.9), runif(20000, 0, 12)), 0)
+```
+
+```{r}
+ggplot(data.frame(z = z_sample), aes(x = z)) +
+  geom_histogram(binwidth = 0.25, fill = "#367ABF", colour = "white") +
+  labs(title = "Point Cloud Height Distribution",
+       subtitle = "Normalised above ground level",
+       x = "Height (m)", y = "Point count") +
+  theme_minimal()
+```
+
+## Canopy Height Model
+
+Rasterise the maximum Z per cell to produce a canopy height model — great for visualising roof heights or vegetation structure across the site:
+
+```{r}
+#| eval: false
+chm <- rasterize_canopy(pc_norm, res = 0.5, algorithm = p2r())
+plot(chm, col = height.colors(50), main = "Canopy Height Model (0.5 m resolution)")
+```
+
+## Point Density Grid
+
+```{r}
+#| eval: false
+density <- grid_density(pc, res = 1)
+plot(density, col = gray.colors(50), main = "Point Density (pts/m²)")
+
+mean(density[], na.rm = TRUE)
+#> [1] 891.3   # points per square metre
+```
+
+## Voxel Volume
+
+```{r}
+#| eval: false
+vox        <- voxelize_points(pc_norm, res = 0.25)
+volume_m3  <- nrow(vox) * 0.25^3
+cat("Estimated volume:", round(volume_m3, 1), "m³\n")
+#> Estimated volume: 1483.2 m³
+```
+
+## Summary Table
+
+```{r}
+#| eval: false
+library(ggplot2)
+
+metrics <- data.frame(
+  metric = c("Total points", "Survey area (m²)", "Mean density (pts/m²)",
+             "Mean height (m)", "95th-pct height (m)", "Voxel volume (m³)"),
+  value  = c(npoints(pc), area(pc), mean(density[], na.rm = TRUE),
+             mean(pc_norm$Z), quantile(pc_norm$Z, 0.95), volume_m3)
+)
+
+ggplot(metrics, aes(x = reorder(metric, value), y = value)) +
+  geom_col(fill = "#367ABF") +
+  coord_flip() +
+  labs(title = "Point Cloud Summary Metrics",
+       x = NULL, y = "Value") +
+  theme_minimal()
+```

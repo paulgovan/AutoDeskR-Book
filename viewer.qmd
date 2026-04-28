@@ -2,19 +2,19 @@
 title: "Viewer"
 ---
 
-# Viewer
+The AutoDesk Viewer is a WebGL-based 3D model browser that runs entirely in the browser. With AutoDeskR, you can embed it in a Shiny app with a single function call — no JavaScript required. Rotate, zoom, and inspect your models without leaving R.
 
-AutoDesk provides a WebGL-based viewer for rendering 2D and 3D models. Before using the viewer, translate the file into SVF format and extract its encoded URN — see the **Model Derivative** chapter for those steps.
+Before launching the viewer, you need a file translated to SVF format and its encoded URN — the [Model Derivative](model-derivative.qmd) chapter covers both steps.
 
 ## Launch the Viewer
 
-Pass the encoded URN and token to `viewer3D()` to open the viewer as a Shiny app. The `viewerType` parameter controls the viewer UI:
+`viewer3D()` opens a Shiny app with the viewer pre-loaded. The `viewerType` parameter controls the UI chrome:
 
-| `viewerType` | Description |
-|---|---|
-| `"header"` | Full viewer with toolbar and side panels (default) |
-| `"headless"` | Viewer canvas only — no toolbar or panels |
-| `"vr"` | WebVR mode optimized for mobile devices |
+| `viewerType` | What you get                                            |
+|--------------|---------------------------------------------------------|
+| `"header"`   | Full toolbar, navigation panels, and settings (default) |
+| `"headless"` | Viewer canvas only — clean embed for dashboards         |
+| `"vr"`       | WebVR mode, optimised for mobile                        |
 
 ```{r}
 #| eval: false
@@ -26,49 +26,81 @@ resp <- getToken(
 myToken      <- resp$content$access_token
 myEncodedUrn <- jsonlite::base64_enc(Sys.getenv("urn"))
 
-# Full viewer (default)
+# Full viewer — great for exploration
 viewer3D(urn = myEncodedUrn, token = myToken)
 
-# Headless — embed in a dashboard without chrome
+# Headless — embed in a dashboard without the toolbar chrome
 viewer3D(urn = myEncodedUrn, token = myToken, viewerType = "headless")
 
-# VR mode for mobile
+# VR mode for a phone or headset
 viewer3D(urn = myEncodedUrn, token = myToken, viewerType = "vr")
 ```
 
-<img src="https://github.com/paulgovan/AutoDeskR/blob/master/inst/images/aerial.png?raw=true" height="500px" />
+<img src="https://github.com/paulgovan/AutoDeskR/blob/master/inst/images/aerial.png?raw=true" height="500px"/>
 
 ## Embed in a Shiny App
 
-Use `viewerUI()` to embed the viewer inside any Shiny application via the Shiny Modules framework. The `id` parameter namespaces the module so multiple viewers can coexist on the same page.
+`viewerUI()` drops the viewer into any Shiny layout as a module. The `id` parameter namespaces the module so multiple viewers can live on the same page without stepping on each other.
 
 ```{r}
 #| eval: false
-ui <- function(request) {
-  shiny::fluidPage(
-    viewerUI("viewer1", urn = myEncodedUrn, token = myToken)
-  )
-}
+library(shiny)
+library(AutoDeskR)
+
+ui <- fluidPage(
+  viewerUI("viewer1", urn = myEncodedUrn, token = myToken)
+)
 
 server <- function(input, output, session) {}
 
-shiny::shinyApp(ui, server)
+shinyApp(ui, server)
 ```
 
-To show a headless viewer inside a `tabsetPanel`:
+### Viewer in a Tab Panel
+
+Headless mode is perfect for a multi-tab layout — the viewer sits in one tab and data tables or charts in another:
 
 ```{r}
 #| eval: false
-ui <- function(request) {
-  shiny::fluidPage(
-    shiny::tabsetPanel(
-      shiny::tabPanel("Model", viewerUI("viewer1", myEncodedUrn, myToken, viewerType = "headless")),
-      shiny::tabPanel("Data",  shiny::verbatimTextOutput("meta"))
+ui <- fluidPage(
+  tabsetPanel(
+    tabPanel("Model",
+      viewerUI("viewer1", myEncodedUrn, myToken, viewerType = "headless")
+    ),
+    tabPanel("Metadata",
+      verbatimTextOutput("meta")
+    ),
+    tabPanel("Layer Chart",
+      plotOutput("layer_plot")
     )
   )
+)
+
+server <- function(input, output, session) {
+  output$meta <- renderPrint({
+    # getData() results displayed alongside the viewer
+  })
 }
 
-server <- function(input, output, session) {}
-
-shiny::shinyApp(ui, server)
+shinyApp(ui, server)
 ```
+
+### Viewer + Sensor Dashboard
+
+Pair the headless viewer with a `dygraphs` time-series panel for a live digital twin layout — see the [Live Dashboards](live-dashboards.qmd) chapter for the full implementation:
+
+```{r}
+#| eval: false
+library(dygraphs)
+
+ui <- fluidPage(
+  fluidRow(
+    column(7, viewerUI("twin_viewer", myEncodedUrn, myToken, viewerType = "headless")),
+    column(5, dygraphOutput("sensor_plot", height = "500px"))
+  )
+)
+```
+
+## What's Displayed
+
+The viewer renders whatever the SVF translation produced. For a DWG file, that's the full drawing geometry organised by layer. For a Revit file, it's the full BIM model with element properties accessible in the side panel. Click any element in the viewer to inspect its properties — the same data that `getData()` returns programmatically.

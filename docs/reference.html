@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>12&nbsp; Function Reference – R and the AutoDesk Platform</title>
+<title>21&nbsp; Function Reference – R for the Built Environment</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -55,7 +55,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -107,6 +127,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<meta name="twitter:title" content="21&nbsp; Function Reference – R for the Built Environment">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -118,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./case-study.html">Reference</a></li><li class="breadcrumb-item"><a href="./reference.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Function Reference</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./case-study.html">Reference</a></li><li class="breadcrumb-item"><a href="./reference.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Function Reference</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -135,7 +158,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <a href="./index.html" class="sidebar-logo-link">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">R and the AutoDesk Platform</a> 
+      <a href="./">R for the Built Environment</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/paulgovan/AutoDeskR-Book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./R-for-the-Built-Environment.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./R-for-the-Built-Environment.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -189,7 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Core APIs</span></a>
+ <span class="menu-text">AutoDesk Platform Services</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -236,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Project &amp; Account APIs</span></a>
+ <span class="menu-text">3D Geometry &amp; Meshes</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -244,26 +304,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-management-acc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ACC Data Management</span></span></a>
+  <a href="./mesh-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reading OBJ and STL Meshes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./construction-issues.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Construction Issues</span></span></a>
+  <a href="./mesh-metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Mesh Metrics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./account-admin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Account Admin</span></span></a>
+  <a href="./mesh-visualisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">3D Visualisation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./webhooks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Webhooks</span></span></a>
+  <a href="./point-cloud-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Point Cloud Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mesh-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mesh Comparison</span></span></a>
   </div>
 </li>
       </ul>
@@ -271,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
+ <span class="menu-text">DWG &amp; DXF Analytics</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -279,20 +345,101 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./layer-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Layer Structure Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attribute-extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Attribute Extraction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cross-drawing-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cross-Drawing Comparison</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./drawing-reports.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Automated Drawing Reports</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Digital Twins</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tandem-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">AutoDesk Tandem Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sensor-streams.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Linking Sensor Streams</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./live-dashboards.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Live Dashboards</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Integration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mcp-server.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">MCP Server</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./case-study.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reference.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Function Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Function Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./troubleshooting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
   </div>
 </li>
       </ul>
@@ -313,30 +460,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#function-reference" id="toc-function-reference" class="nav-link active" data-scroll-target="#function-reference"><span class="header-section-number">13</span> Function Reference</a>
+  <li><a href="#authentication" id="toc-authentication" class="nav-link active" data-scroll-target="#authentication"><span class="header-section-number">21.1</span> Authentication</a></li>
+  <li><a href="#data-management" id="toc-data-management" class="nav-link" data-scroll-target="#data-management"><span class="header-section-number">21.2</span> Data Management</a></li>
+  <li><a href="#model-derivative" id="toc-model-derivative" class="nav-link" data-scroll-target="#model-derivative"><span class="header-section-number">21.3</span> Model Derivative</a></li>
+  <li><a href="#design-automation" id="toc-design-automation" class="nav-link" data-scroll-target="#design-automation"><span class="header-section-number">21.4</span> Design Automation</a></li>
+  <li><a href="#reality-capture" id="toc-reality-capture" class="nav-link" data-scroll-target="#reality-capture"><span class="header-section-number">21.5</span> Reality Capture</a></li>
+  <li><a href="#viewer" id="toc-viewer" class="nav-link" data-scroll-target="#viewer"><span class="header-section-number">21.6</span> Viewer</a></li>
+  <li><a href="#scope-quick-reference" id="toc-scope-quick-reference" class="nav-link" data-scroll-target="#scope-quick-reference"><span class="header-section-number">21.7</span> Scope Quick Reference</a></li>
+  <li><a href="#common-patterns" id="toc-common-patterns" class="nav-link" data-scroll-target="#common-patterns"><span class="header-section-number">21.8</span> Common Patterns</a>
   <ul class="collapse">
-  <li><a href="#authentication" id="toc-authentication" class="nav-link" data-scroll-target="#authentication"><span class="header-section-number">13.1</span> Authentication</a></li>
-  <li><a href="#data-management" id="toc-data-management" class="nav-link" data-scroll-target="#data-management"><span class="header-section-number">13.2</span> Data Management</a></li>
-  <li><a href="#model-derivative" id="toc-model-derivative" class="nav-link" data-scroll-target="#model-derivative"><span class="header-section-number">13.3</span> Model Derivative</a></li>
-  <li><a href="#design-automation" id="toc-design-automation" class="nav-link" data-scroll-target="#design-automation"><span class="header-section-number">13.4</span> Design Automation</a></li>
-  <li><a href="#reality-capture" id="toc-reality-capture" class="nav-link" data-scroll-target="#reality-capture"><span class="header-section-number">13.5</span> Reality Capture</a></li>
-  <li><a href="#viewer" id="toc-viewer" class="nav-link" data-scroll-target="#viewer"><span class="header-section-number">13.6</span> Viewer</a></li>
-  <li><a href="#scope-quick-reference" id="toc-scope-quick-reference" class="nav-link" data-scroll-target="#scope-quick-reference"><span class="header-section-number">13.7</span> Scope Quick Reference</a></li>
-  <li><a href="#common-patterns" id="toc-common-patterns" class="nav-link" data-scroll-target="#common-patterns"><span class="header-section-number">13.8</span> Common Patterns</a>
-  <ul class="collapse">
-  <li><a href="#base-64-encode-a-urn" id="toc-base-64-encode-a-urn" class="nav-link" data-scroll-target="#base-64-encode-a-urn"><span class="header-section-number">13.8.1</span> Base-64 encode a URN</a></li>
-  <li><a href="#poll-until-a-job-finishes" id="toc-poll-until-a-job-finishes" class="nav-link" data-scroll-target="#poll-until-a-job-finishes"><span class="header-section-number">13.8.2</span> Poll until a job finishes</a></li>
+  <li><a href="#base-64-encode-a-urn" id="toc-base-64-encode-a-urn" class="nav-link" data-scroll-target="#base-64-encode-a-urn"><span class="header-section-number">21.8.1</span> Base-64 encode a URN</a></li>
+  <li><a href="#poll-until-a-job-finishes" id="toc-poll-until-a-job-finishes" class="nav-link" data-scroll-target="#poll-until-a-job-finishes"><span class="header-section-number">21.8.2</span> Poll until a job finishes</a></li>
   </ul></li>
+  <li><a href="#supporting-packages" id="toc-supporting-packages" class="nav-link" data-scroll-target="#supporting-packages"><span class="header-section-number">22</span> Supporting Packages</a>
+  <ul class="collapse">
+  <li><a href="#httr2" id="toc-httr2" class="nav-link" data-scroll-target="#httr2"><span class="header-section-number">22.1</span> httr2</a></li>
+  <li><a href="#jsonlite" id="toc-jsonlite" class="nav-link" data-scroll-target="#jsonlite"><span class="header-section-number">22.2</span> jsonlite</a></li>
+  <li><a href="#rvcg" id="toc-rvcg" class="nav-link" data-scroll-target="#rvcg"><span class="header-section-number">22.3</span> Rvcg</a></li>
+  <li><a href="#rgl" id="toc-rgl" class="nav-link" data-scroll-target="#rgl"><span class="header-section-number">22.4</span> rgl</a></li>
+  <li><a href="#geometry" id="toc-geometry" class="nav-link" data-scroll-target="#geometry"><span class="header-section-number">22.5</span> geometry</a></li>
+  <li><a href="#rayshader" id="toc-rayshader" class="nav-link" data-scroll-target="#rayshader"><span class="header-section-number">22.6</span> rayshader</a></li>
+  <li><a href="#lidr" id="toc-lidr" class="nav-link" data-scroll-target="#lidr"><span class="header-section-number">22.7</span> lidR</a></li>
+  <li><a href="#dplyr" id="toc-dplyr" class="nav-link" data-scroll-target="#dplyr"><span class="header-section-number">22.8</span> dplyr</a></li>
+  <li><a href="#tidyr" id="toc-tidyr" class="nav-link" data-scroll-target="#tidyr"><span class="header-section-number">22.9</span> tidyr</a></li>
+  <li><a href="#ggplot2" id="toc-ggplot2" class="nav-link" data-scroll-target="#ggplot2"><span class="header-section-number">22.10</span> ggplot2</a></li>
+  <li><a href="#gt" id="toc-gt" class="nav-link" data-scroll-target="#gt"><span class="header-section-number">22.11</span> gt</a></li>
+  <li><a href="#shiny" id="toc-shiny" class="nav-link" data-scroll-target="#shiny"><span class="header-section-number">22.12</span> shiny</a></li>
+  <li><a href="#dygraphs" id="toc-dygraphs" class="nav-link" data-scroll-target="#dygraphs"><span class="header-section-number">22.13</span> dygraphs</a></li>
+  <li><a href="#xts" id="toc-xts" class="nav-link" data-scroll-target="#xts"><span class="header-section-number">22.14</span> xts</a></li>
+  <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto"><span class="header-section-number">22.15</span> quarto</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/paulgovan/AutoDeskR-Book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./case-study.html">Reference</a></li><li class="breadcrumb-item"><a href="./reference.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Function Reference</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./case-study.html">Reference</a></li><li class="breadcrumb-item"><a href="./reference.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Function Reference</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Function Reference</span></h1>
+<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Function Reference</span></h1>
 </div>
 
 
@@ -353,11 +515,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="function-reference" class="level1" data-number="13">
-<h1 data-number="13"><span class="header-section-number">13</span> Function Reference</h1>
 <p>Quick-lookup table for every exported AutoDeskR function. Click the <strong>Chapter</strong> link to jump to full documentation and worked examples.</p>
-<section id="authentication" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="authentication"><span class="header-section-number">13.1</span> Authentication</h2>
+<section id="authentication" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="authentication"><span class="header-section-number">21.1</span> Authentication</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -384,8 +544,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <hr>
 </section>
-<section id="data-management" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="data-management"><span class="header-section-number">13.2</span> Data Management</h2>
+<section id="data-management" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="data-management"><span class="header-section-number">21.2</span> Data Management</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -460,8 +620,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <hr>
 </section>
-<section id="model-derivative" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="model-derivative"><span class="header-section-number">13.3</span> Model Derivative</h2>
+<section id="model-derivative" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="model-derivative"><span class="header-section-number">21.3</span> Model Derivative</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -530,8 +690,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <hr>
 </section>
-<section id="design-automation" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="design-automation"><span class="header-section-number">13.4</span> Design Automation</h2>
+<section id="design-automation" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="design-automation"><span class="header-section-number">21.4</span> Design Automation</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -564,8 +724,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <hr>
 </section>
-<section id="reality-capture" class="level2" data-number="13.5">
-<h2 data-number="13.5" class="anchored" data-anchor-id="reality-capture"><span class="header-section-number">13.5</span> Reality Capture</h2>
+<section id="reality-capture" class="level2" data-number="21.5">
+<h2 data-number="21.5" class="anchored" data-anchor-id="reality-capture"><span class="header-section-number">21.5</span> Reality Capture</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -616,8 +776,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <hr>
 </section>
-<section id="viewer" class="level2" data-number="13.6">
-<h2 data-number="13.6" class="anchored" data-anchor-id="viewer"><span class="header-section-number">13.6</span> Viewer</h2>
+<section id="viewer" class="level2" data-number="21.6">
+<h2 data-number="21.6" class="anchored" data-anchor-id="viewer"><span class="header-section-number">21.6</span> Viewer</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -650,8 +810,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <hr>
 </section>
-<section id="scope-quick-reference" class="level2" data-number="13.7">
-<h2 data-number="13.7" class="anchored" data-anchor-id="scope-quick-reference"><span class="header-section-number">13.7</span> Scope Quick Reference</h2>
+<section id="scope-quick-reference" class="level2" data-number="21.7">
+<h2 data-number="21.7" class="anchored" data-anchor-id="scope-quick-reference"><span class="header-section-number">21.7</span> Scope Quick Reference</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -691,17 +851,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="common-patterns" class="level2" data-number="13.8">
-<h2 data-number="13.8" class="anchored" data-anchor-id="common-patterns"><span class="header-section-number">13.8</span> Common Patterns</h2>
-<section id="base-64-encode-a-urn" class="level3" data-number="13.8.1">
-<h3 data-number="13.8.1" class="anchored" data-anchor-id="base-64-encode-a-urn"><span class="header-section-number">13.8.1</span> Base-64 encode a URN</h3>
+<section id="common-patterns" class="level2" data-number="21.8">
+<h2 data-number="21.8" class="anchored" data-anchor-id="common-patterns"><span class="header-section-number">21.8</span> Common Patterns</h2>
+<section id="base-64-encode-a-urn" class="level3" data-number="21.8.1">
+<h3 data-number="21.8.1" class="anchored" data-anchor-id="base-64-encode-a-urn"><span class="header-section-number">21.8.1</span> Base-64 encode a URN</h3>
 <p>The Model Derivative and Viewer APIs require the URN to be Base-64 encoded. Use <code>jsonlite::base64_enc()</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>myEncodedUrn <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">base64_enc</span>(myUrn)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="poll-until-a-job-finishes" class="level3" data-number="13.8.2">
-<h3 data-number="13.8.2" class="anchored" data-anchor-id="poll-until-a-job-finishes"><span class="header-section-number">13.8.2</span> Poll until a job finishes</h3>
+<section id="poll-until-a-job-finishes" class="level3" data-number="21.8.2">
+<h3 data-number="21.8.2" class="anchored" data-anchor-id="poll-until-a-job-finishes"><span class="header-section-number">21.8.2</span> Poll until a job finishes</h3>
 <p>All async jobs (<code>translateObj</code>, <code>translateSvf</code>, <code>makePdf</code>, <code>processPhotoscene</code>) follow the same pattern:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
@@ -711,9 +871,584 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Use <code>waitForPhotoscene()</code> as a ready-made equivalent for Reality Capture jobs.</p>
-
-
+<hr>
 </section>
+</section>
+<section id="supporting-packages" class="level1" data-number="22">
+<h1 data-number="22"><span class="header-section-number">22</span> Supporting Packages</h1>
+<p>The chapters outside the Core APIs part rely on the following R packages. This section lists the key functions used in the book and the chapter where each appears.</p>
+<hr>
+<section id="httr2" class="level2" data-number="22.1">
+<h2 data-number="22.1" class="anchored" data-anchor-id="httr2"><span class="header-section-number">22.1</span> httr2</h2>
+<p>Used for direct Tandem REST API calls in the Digital Twins chapters, and as the underlying HTTP engine for AutoDeskR.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>request(url)</code></td>
+<td>Create a new HTTP request</td>
+<td><a href="./tandem-overview.html">Tandem Overview</a>, <a href="./sensor-streams.html">Sensor Streams</a></td>
+</tr>
+<tr class="even">
+<td><code>req_auth_bearer_token(req, token)</code></td>
+<td>Add a Bearer token header</td>
+<td><a href="./tandem-overview.html">Tandem Overview</a></td>
+</tr>
+<tr class="odd">
+<td><code>req_url_query(req, ...)</code></td>
+<td>Append query parameters</td>
+<td><a href="./sensor-streams.html">Sensor Streams</a></td>
+</tr>
+<tr class="even">
+<td><code>req_perform(req)</code></td>
+<td>Execute the request</td>
+<td><a href="./tandem-overview.html">Tandem Overview</a></td>
+</tr>
+<tr class="odd">
+<td><code>req_verbose()</code></td>
+<td>Enable request/response tracing</td>
+<td><a href="./troubleshooting.html">Troubleshooting</a></td>
+</tr>
+<tr class="even">
+<td><code>resp_body_json(resp)</code></td>
+<td>Parse response body as JSON</td>
+<td><a href="./sensor-streams.html">Sensor Streams</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="jsonlite" class="level2" data-number="22.2">
+<h2 data-number="22.2" class="anchored" data-anchor-id="jsonlite"><span class="header-section-number">22.2</span> jsonlite</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>base64_enc(x)</code></td>
+<td>Base-64 encode a string (required for APS URNs)</td>
+<td><a href="./model-derivative.html">Model Derivative</a>, <a href="./case-study.html">Case Study</a></td>
+</tr>
+<tr class="even">
+<td><code>fromJSON(txt)</code></td>
+<td>Parse a JSON string into an R list</td>
+<td>General</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="rvcg" class="level2" data-number="22.3">
+<h2 data-number="22.3" class="anchored" data-anchor-id="rvcg"><span class="header-section-number">22.3</span> Rvcg</h2>
+<p>Mesh processing — surface area, volume, smoothing, and surface distance. <span class="citation" data-cites="R-Rvcg">(<a href="references.html#ref-R-Rvcg" role="doc-biblioref">Schlager 2024</a>)</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>vcgImport(file)</code></td>
+<td>Import OBJ, STL, or PLY mesh as <code>tmesh3d</code></td>
+<td><a href="./mesh-reading.html">Reading Meshes</a></td>
+</tr>
+<tr class="even">
+<td><code>vcgArea(mesh)</code></td>
+<td>Compute total surface area</td>
+<td><a href="./mesh-metrics.html">Mesh Metrics</a></td>
+</tr>
+<tr class="odd">
+<td><code>vcgVolume(mesh)</code></td>
+<td>Compute volume (watertight meshes only)</td>
+<td><a href="./mesh-metrics.html">Mesh Metrics</a></td>
+</tr>
+<tr class="even">
+<td><code>vcgSmooth(mesh, iteration, lambda)</code></td>
+<td>Laplacian smoothing</td>
+<td><a href="./mesh-comparison.html">Mesh Comparison</a></td>
+</tr>
+<tr class="odd">
+<td><code>vcgDist(mesh1, mesh2)</code></td>
+<td>Per-vertex surface distance</td>
+<td><a href="./mesh-comparison.html">Mesh Comparison</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="rgl" class="level2" data-number="22.4">
+<h2 data-number="22.4" class="anchored" data-anchor-id="rgl"><span class="header-section-number">22.4</span> rgl</h2>
+<p>Interactive 3D visualisation. <span class="citation" data-cites="R-rgl">(<a href="references.html#ref-R-rgl" role="doc-biblioref">Adler, Murdoch, et al. 2024</a>)</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>open3d()</code></td>
+<td>Open a new 3D graphics device</td>
+<td><a href="./mesh-visualisation.html">Mesh Visualisation</a></td>
+</tr>
+<tr class="even">
+<td><code>shade3d(mesh, col)</code></td>
+<td>Render a mesh with per-vertex colours</td>
+<td><a href="./mesh-visualisation.html">Mesh Visualisation</a>, <a href="./mesh-comparison.html">Mesh Comparison</a></td>
+</tr>
+<tr class="odd">
+<td><code>rglwidget()</code></td>
+<td>Embed interactive 3D widget in HTML</td>
+<td><a href="./mesh-visualisation.html">Mesh Visualisation</a></td>
+</tr>
+<tr class="even">
+<td><code>readOBJ(file)</code></td>
+<td>Alternative OBJ reader</td>
+<td><a href="./troubleshooting.html">Troubleshooting</a></td>
+</tr>
+<tr class="odd">
+<td><code>options(rgl.useNULL = TRUE)</code></td>
+<td>Suppress OpenGL window (headless/server use)</td>
+<td><a href="./troubleshooting.html">Troubleshooting</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="geometry" class="level2" data-number="22.5">
+<h2 data-number="22.5" class="anchored" data-anchor-id="geometry"><span class="header-section-number">22.5</span> geometry</h2>
+<p>Computational geometry for open (non-watertight) meshes. <span class="citation" data-cites="R-geometry">(<a href="references.html#ref-R-geometry" role="doc-biblioref">Roussel, Sterratt, et al. 2024</a>)</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>convhulln(pts, options)</code></td>
+<td>Convex hull with area and volume (<code>options = "FA"</code>)</td>
+<td><a href="./mesh-metrics.html">Mesh Metrics</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="rayshader" class="level2" data-number="22.6">
+<h2 data-number="22.6" class="anchored" data-anchor-id="rayshader"><span class="header-section-number">22.6</span> rayshader</h2>
+<p>High-quality 3D rendered images. <span class="citation" data-cites="R-rayshader">(<a href="references.html#ref-R-rayshader" role="doc-biblioref">Morgan-Wall 2024</a>)</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>render_snapshot(filename)</code></td>
+<td>Save a ray-traced render to file</td>
+<td><a href="./mesh-visualisation.html">Mesh Visualisation</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="lidr" class="level2" data-number="22.7">
+<h2 data-number="22.7" class="anchored" data-anchor-id="lidr"><span class="header-section-number">22.7</span> lidR</h2>
+<p>Point cloud analysis from LAS/LAZ files. <span class="citation" data-cites="R-lidR">(<a href="references.html#ref-R-lidR" role="doc-biblioref">Roussel et al. 2020</a>)</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>readLAS(file)</code></td>
+<td>Read a LAS or LAZ point cloud</td>
+<td><a href="./point-cloud-analysis.html">Point Cloud Analysis</a></td>
+</tr>
+<tr class="even">
+<td><code>normalize_height(pc, algorithm)</code></td>
+<td>Normalise Z to ground level</td>
+<td><a href="./point-cloud-analysis.html">Point Cloud Analysis</a></td>
+</tr>
+<tr class="odd">
+<td><code>rasterize_canopy(pc, res, algorithm)</code></td>
+<td>Maximum-Z raster (canopy/roof height model)</td>
+<td><a href="./point-cloud-analysis.html">Point Cloud Analysis</a></td>
+</tr>
+<tr class="even">
+<td><code>grid_density(pc, res)</code></td>
+<td>Point density raster</td>
+<td><a href="./point-cloud-analysis.html">Point Cloud Analysis</a></td>
+</tr>
+<tr class="odd">
+<td><code>voxelize_points(pc, res)</code></td>
+<td>Voxelise point cloud for volume estimation</td>
+<td><a href="./point-cloud-analysis.html">Point Cloud Analysis</a></td>
+</tr>
+<tr class="even">
+<td><code>npoints(pc)</code></td>
+<td>Total point count</td>
+<td><a href="./point-cloud-analysis.html">Point Cloud Analysis</a></td>
+</tr>
+<tr class="odd">
+<td><code>area(pc)</code></td>
+<td>Survey footprint area</td>
+<td><a href="./point-cloud-analysis.html">Point Cloud Analysis</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="dplyr" class="level2" data-number="22.8">
+<h2 data-number="22.8" class="anchored" data-anchor-id="dplyr"><span class="header-section-number">22.8</span> dplyr</h2>
+<p>Data manipulation — filtering, grouping, joining. Used throughout the DWG Analytics and Digital Twins chapters.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>group_by(...)</code></td>
+<td>Group rows for summarisation</td>
+<td><a href="./layer-analysis.html">Layer Analysis</a></td>
+</tr>
+<tr class="even">
+<td><code>summarise(...)</code></td>
+<td>Aggregate within groups</td>
+<td><a href="./layer-analysis.html">Layer Analysis</a></td>
+</tr>
+<tr class="odd">
+<td><code>filter(...)</code></td>
+<td>Keep rows matching a condition</td>
+<td><a href="./attribute-extraction.html">Attribute Extraction</a></td>
+</tr>
+<tr class="even">
+<td><code>select(...)</code></td>
+<td>Choose columns</td>
+<td><a href="./sensor-streams.html">Sensor Streams</a></td>
+</tr>
+<tr class="odd">
+<td><code>mutate(...)</code></td>
+<td>Add or transform columns</td>
+<td><a href="./attribute-extraction.html">Attribute Extraction</a></td>
+</tr>
+<tr class="even">
+<td><code>inner_join(x, y, by)</code></td>
+<td>Join keeping rows in both tables</td>
+<td><a href="./sensor-streams.html">Sensor Streams</a></td>
+</tr>
+<tr class="odd">
+<td><code>left_join(x, y, by)</code></td>
+<td>Join keeping all rows from left table</td>
+<td><a href="./sensor-streams.html">Sensor Streams</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="tidyr" class="level2" data-number="22.9">
+<h2 data-number="22.9" class="anchored" data-anchor-id="tidyr"><span class="header-section-number">22.9</span> tidyr</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pivot_wider(data, names_from, values_from)</code></td>
+<td>Reshape long data to wide format</td>
+<td><a href="./attribute-extraction.html">Attribute Extraction</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="ggplot2" class="level2" data-number="22.10">
+<h2 data-number="22.10" class="anchored" data-anchor-id="ggplot2"><span class="header-section-number">22.10</span> ggplot2</h2>
+<p>Data visualisation. Used in DWG Analytics, Digital Twins, and the Case Study.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ggplot(data, aes(...))</code></td>
+<td>Initialise a plot</td>
+<td>Multiple</td>
+</tr>
+<tr class="even">
+<td><code>geom_col()</code></td>
+<td>Bar chart (pre-counted values)</td>
+<td><a href="./layer-analysis.html">Layer Analysis</a></td>
+</tr>
+<tr class="odd">
+<td><code>geom_line()</code></td>
+<td>Line chart</td>
+<td><a href="./sensor-streams.html">Sensor Streams</a></td>
+</tr>
+<tr class="even">
+<td><code>geom_histogram()</code></td>
+<td>Histogram</td>
+<td><a href="./point-cloud-analysis.html">Point Cloud Analysis</a>, <a href="./mesh-comparison.html">Mesh Comparison</a></td>
+</tr>
+<tr class="odd">
+<td><code>geom_ribbon()</code></td>
+<td>Shaded confidence band</td>
+<td><a href="./sensor-streams.html">Sensor Streams</a></td>
+</tr>
+<tr class="even">
+<td><code>geom_tile()</code></td>
+<td>Heatmap tiles</td>
+<td><a href="./cross-drawing-comparison.html">Cross-Drawing Comparison</a></td>
+</tr>
+<tr class="odd">
+<td><code>facet_wrap(~ var)</code></td>
+<td>Small multiples</td>
+<td><a href="./sensor-streams.html">Sensor Streams</a></td>
+</tr>
+<tr class="even">
+<td><code>coord_flip()</code></td>
+<td>Swap x and y axes</td>
+<td><a href="./layer-analysis.html">Layer Analysis</a></td>
+</tr>
+<tr class="odd">
+<td><code>theme_minimal()</code></td>
+<td>Clean theme</td>
+<td>Multiple</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="gt" class="level2" data-number="22.11">
+<h2 data-number="22.11" class="anchored" data-anchor-id="gt"><span class="header-section-number">22.11</span> gt</h2>
+<p>Publication-quality tables for automated reports.<span class="citation" data-cites="R-gt">(<a href="references.html#ref-R-gt" role="doc-biblioref">Iannone et al. 2024</a>)</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>gt(data)</code></td>
+<td>Create a gt table from a data frame</td>
+<td><a href="./drawing-reports.html">Drawing Reports</a></td>
+</tr>
+<tr class="even">
+<td><code>tab_header(title, subtitle)</code></td>
+<td>Add a title and subtitle</td>
+<td><a href="./drawing-reports.html">Drawing Reports</a></td>
+</tr>
+<tr class="odd">
+<td><code>fmt_number(columns, decimals)</code></td>
+<td>Format numeric columns</td>
+<td><a href="./drawing-reports.html">Drawing Reports</a></td>
+</tr>
+<tr class="even">
+<td><code>cols_label(...)</code></td>
+<td>Rename column headers</td>
+<td><a href="./drawing-reports.html">Drawing Reports</a></td>
+</tr>
+<tr class="odd">
+<td><code>tab_source_note(note)</code></td>
+<td>Add a footnote</td>
+<td><a href="./drawing-reports.html">Drawing Reports</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="shiny" class="level2" data-number="22.12">
+<h2 data-number="22.12" class="anchored" data-anchor-id="shiny"><span class="header-section-number">22.12</span> shiny</h2>
+<p>Interactive web applications and dashboards.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fluidPage(...)</code></td>
+<td>Standard responsive page layout</td>
+<td><a href="./viewer.html">Viewer</a>, <a href="./live-dashboards.html">Live Dashboards</a></td>
+</tr>
+<tr class="even">
+<td><code>tabsetPanel(...)</code> / <code>tabPanel(...)</code></td>
+<td>Tabbed layout</td>
+<td><a href="./case-study.html">Case Study</a></td>
+</tr>
+<tr class="odd">
+<td><code>renderPlot({})</code></td>
+<td>Reactive ggplot2 output</td>
+<td><a href="./case-study.html">Case Study</a></td>
+</tr>
+<tr class="even">
+<td><code>plotOutput(id)</code></td>
+<td>Placeholder for a plot</td>
+<td><a href="./case-study.html">Case Study</a></td>
+</tr>
+<tr class="odd">
+<td><code>reactiveTimer(ms)</code></td>
+<td>Trigger reactive updates on a schedule</td>
+<td><a href="./live-dashboards.html">Live Dashboards</a></td>
+</tr>
+<tr class="even">
+<td><code>shinyApp(ui, server)</code></td>
+<td>Launch the app</td>
+<td><a href="./case-study.html">Case Study</a></td>
+</tr>
+<tr class="odd">
+<td><code>deployApp()</code></td>
+<td>Deploy to shinyapps.io</td>
+<td><a href="./live-dashboards.html">Live Dashboards</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="dygraphs" class="level2" data-number="22.13">
+<h2 data-number="22.13" class="anchored" data-anchor-id="dygraphs"><span class="header-section-number">22.13</span> dygraphs</h2>
+<p>Interactive time-series plots for Shiny dashboards. <span class="citation" data-cites="R-dygraphs">(<a href="references.html#ref-R-dygraphs" role="doc-biblioref">Vanderkam et al. 2018</a>)</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>dygraph(data, main)</code></td>
+<td>Create an interactive time-series chart</td>
+<td><a href="./live-dashboards.html">Live Dashboards</a></td>
+</tr>
+<tr class="even">
+<td><code>dyOptions(...)</code></td>
+<td>Customise colours, fill, axes</td>
+<td><a href="./live-dashboards.html">Live Dashboards</a></td>
+</tr>
+<tr class="odd">
+<td><code>dygraphOutput(id)</code></td>
+<td>Shiny UI placeholder</td>
+<td><a href="./live-dashboards.html">Live Dashboards</a></td>
+</tr>
+<tr class="even">
+<td><code>renderDygraph({})</code></td>
+<td>Shiny server renderer</td>
+<td><a href="./live-dashboards.html">Live Dashboards</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="xts" class="level2" data-number="22.14">
+<h2 data-number="22.14" class="anchored" data-anchor-id="xts"><span class="header-section-number">22.14</span> xts</h2>
+<p>Time-series objects required by <code>dygraphs</code>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>xts(data, order.by)</code></td>
+<td>Create an extensible time-series object</td>
+<td><a href="./live-dashboards.html">Live Dashboards</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="quarto" class="level2" data-number="22.15">
+<h2 data-number="22.15" class="anchored" data-anchor-id="quarto"><span class="header-section-number">22.15</span> quarto</h2>
+<p>Programmatic report rendering.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>quarto_render(input, execute_params)</code></td>
+<td>Render a <code>.qmd</code> file with injected parameters</td>
+<td><a href="./drawing-reports.html">Drawing Reports</a></td>
+</tr>
+</tbody>
+</table>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-R-rgl" class="csl-entry" role="listitem">
+Adler, Daniel, Duncan Murdoch, et al. 2024. <em>Rgl: 3D Visualization Using OpenGL</em>. <a href="https://dmurdoch.github.io/rgl/">https://dmurdoch.github.io/rgl/</a>.
+</div>
+<div id="ref-R-gt" class="csl-entry" role="listitem">
+Iannone, Richard, Joe Cheng, Barret Schloerke, Ellis Hughes, Alexandra Lauer, JooYoung Seo, Ken Brevoort, and Olivier Roy. 2024. <em>Gt: Easily Create Presentation-Ready Display Tables</em>. <a href="https://gt.rstudio.com">https://gt.rstudio.com</a>.
+</div>
+<div id="ref-R-rayshader" class="csl-entry" role="listitem">
+Morgan-Wall, Tyler. 2024. <em>Rayshader: Create Maps and Visualize Data in 2D and 3D</em>. <a href="https://www.rayshader.com">https://www.rayshader.com</a>.
+</div>
+<div id="ref-R-lidR" class="csl-entry" role="listitem">
+Roussel, Jean-Romain, David Auty, Nicholas C. Coops, Piotr Tompalski, Tristan R. H. Goodbody, Alexis Sanchez Meador, Jean-François Bourdon, Florian de Boissieu, and Alexis Achim. 2020. <span>“lidR: An r Package for Analysis of Airborne Laser Scanning (ALS) Data.”</span> <em>Remote Sensing of Environment</em> 251: 112061. <a href="https://doi.org/10.1016/j.rse.2020.112061">https://doi.org/10.1016/j.rse.2020.112061</a>.
+</div>
+<div id="ref-R-geometry" class="csl-entry" role="listitem">
+Roussel, Jean-Romain, David C. Sterratt, et al. 2024. <em>Geometry: Mesh Generation and Surface Tessellation</em>. <a href="https://davidcsterratt.github.io/geometry/">https://davidcsterratt.github.io/geometry/</a>.
+</div>
+<div id="ref-R-Rvcg" class="csl-entry" role="listitem">
+Schlager, Stefan. 2024. <em>Rvcg: Manipulations of Triangular Meshes Based on the ’VCGLIB’ API</em>. <a href="https://CRAN.R-project.org/package=Rvcg">https://CRAN.R-project.org/package=Rvcg</a>.
+</div>
+<div id="ref-R-dygraphs" class="csl-entry" role="listitem">
+Vanderkam, Dan, JJ Allaire, Jonathan Owen, Daniel Gromer, and Benoit Thieurmel. 2018. <em>Dygraphs: Interface to ’Dygraphs’ Interactive Time Series Charting Library</em>. <a href="https://CRAN.R-project.org/package=dygraphs">https://CRAN.R-project.org/package=dygraphs</a>.
+</div>
+</div>
 </section>
 </section>
 
@@ -1121,12 +1856,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./case-study.html" class="pagination-link" aria-label="Case Study: DWG to Shiny Dashboard">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./troubleshooting.html" class="pagination-link" aria-label="Troubleshooting">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1135,4 +1870,4 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/paulgovan/AutoDeskR-Book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

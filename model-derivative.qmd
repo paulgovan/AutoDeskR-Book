@@ -2,13 +2,22 @@
 title: "Model Derivative"
 ---
 
-# Model Derivative
+A DWG file sitting in a bucket is just bytes. The Model Derivative API is what turns those bytes into something useful, OBJ and STL meshes you can analyse in R, SVF viewables you can embed in a browser, or structured metadata you can query with `dplyr`. This chapter covers the full translation workflow.
 
-The Model Derivative API enables users to translate their designs into different formats and extract model data.
+The pattern is always the same: submit a job, poll until it finishes, then pull the output.
 
-## Translate a File into OBJ Format
+```{mermaid}
+flowchart LR
+  A[Upload file\nuploadFile] --> B[Translate\ntranslateObj / translateSvf]
+  B --> C{checkFile}
+  C -- pending / inprogress --> C
+  C -- success --> D[Get output URN\ngetOutputUrn]
+  D --> E[Download\ndownloadFile]
+```
 
-First get an access token with the `data:read` and `data:write` scopes. Note that only certain file types can be translated into OBJ format.
+## Translate to OBJ
+
+First get a token with `data:read` and `data:write` scopes. Note that only certain source formats can produce OBJ output (DWG, IPT, IAM, IPN, F3D, FBX. See the [APS supported formats list](https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/supported-translations/) for the full matrix).
 
 ```{r}
 #| eval: false
@@ -18,10 +27,9 @@ resp <- getToken(
   scope  = "data:read data:write"
 )
 myToken <- resp$content$access_token
-#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
 ```
 
-The platform requires the file's URN to be Base-64 encoded:
+APS requires the file's URN to be Base-64 encoded before it'll accept it — `jsonlite::base64_enc()` handles that:
 
 ```{r}
 #| eval: false
@@ -30,7 +38,7 @@ myEncodedUrn
 #> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
 ```
 
-Translate the file into OBJ format:
+Kick off the translation:
 
 ```{r}
 #| eval: false
@@ -42,14 +50,12 @@ resp$content
 #> $urn
 #> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
 #>
-#> $acceptedJobs
-#> $acceptedJobs$output
 #> $acceptedJobs$output$formats[[1]]$type
 #> [1] "obj"
 ```
 
 ::: callout-warning
-**OBJ translation supports a limited set of source formats.** Supported types include IAM, IPT, IPN, DWG, F3D, and FBX. Submitting an unsupported format (e.g. a raw PDF or image) returns a `415 Unsupported Media Type`:
+**OBJ translation only accepts certain source formats.** Submitting an unsupported format returns a `415 Unsupported Media Type`:
 
 ```{r}
 #| eval: false
@@ -58,22 +64,14 @@ resp$status_code
 resp$content$diagnostic
 #> [1] "File type not supported for OBJ translation."
 ```
-
-See the [APS supported formats list](https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/supported-translations/) for the full matrix.
 :::
 
-Check the status of the translation:
+Poll `checkFile()` until `status` hits `"success"`. The job can take anywhere from a few seconds to a few minutes depending on file complexity:
 
 ```{r}
 #| eval: false
 resp <- checkFile(urn = myEncodedUrn, token = myToken)
 resp$content
-#> $type
-#> [1] "design"
-#>
-#> $hasThumbnail
-#> [1] "true"
-#>
 #> $status
 #> [1] "success"
 #>
@@ -82,31 +80,20 @@ resp$content
 #>
 #> $region
 #> [1] "US"
-#>
-#> $urn
-#> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
 ```
 
 ::: callout-note
-`status` progresses through `"pending"` → `"inprogress"` → `"success"`. Poll `checkFile()` until `status` is `"success"` before attempting to download. Use the `aps_retry()` helper from the [Authentication](authentication.qmd#rate-limits) chapter to handle rate limiting automatically.
+Translation status moves through `"pending"` → `"inprogress"` → `"success"`. Don't try to download before you see `"success"` — there's nothing there yet. Use the `aps_retry()` helper from the [Authentication](authentication.qmd#rate-limits) chapter to handle rate limiting while you wait.
 :::
 
-When translation is complete, retrieve the output URN of the translated file (different from the source URN). The response may include URNs for multiple output types (obj, svf, png) — find the one ending in `.obj`:
+Retrieve the output URN, then download:
 
 ```{r}
 #| eval: false
 resp <- getOutputUrn(urn = myUrn, token = Sys.getenv("token"))
-myOutputUrn <- resp$content$derivatives[[1]]$children[[1]]$urn
-myOutputUrn
-#> [1] "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQv
-#>       YWVyaWFsLmR3Zw==/output/geometry/bc3339b2-73cd-4fba-9cb3-15363703a354.obj"
-```
-
-Download the OBJ file locally using the `destfile` parameter:
-
-```{r}
-#| eval: false
+myOutputUrn        <- resp$content$derivatives[[1]]$children[[1]]$urn
 myEncodedOutputUrn <- jsonlite::base64_enc(myOutputUrn)
+
 resp <- downloadFile(
   urn        = myEncodedUrn,
   output_urn = myEncodedOutputUrn,
@@ -117,67 +104,39 @@ resp$status_code
 #> [1] 200
 ```
 
-## Translate a File into STL Format
+## Translate to STL
 
-Use `translateStl()`, which follows the same pattern as `translateObj()`:
+Same pattern as OBJ, different function:
 
 ```{r}
 #| eval: false
 resp <- translateStl(urn = myEncodedUrn, token = myToken)
-resp$content
-#> $result
-#> [1] "created"
-#>
-#> $urn
-#> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
-#>
-#> $acceptedJobs
-#> $acceptedJobs$output$formats[[1]]$type
+resp$content$acceptedJobs$output$formats[[1]]$type
 #> [1] "stl"
-```
 
-Check the status:
-
-```{r}
-#| eval: false
-resp <- checkFile(urn = myEncodedUrn, token = myToken)
-resp$content
-#> $status
-#> [1] "success"
-#>
-#> $progress
-#> [1] "complete"
-#>
-#> $derivatives[[1]]$outputType
-#> [1] "stl"
-#>
-#> $derivatives[[1]]$status
-#> [1] "success"
-```
-
-## Extract Data from a File
-
-After uploading a file and encoding its URN, translate it into SVF format to unlock metadata and geometry extraction:
-
-```{r}
-#| eval: false
-resp <- translateSvf(urn = myEncodedUrn, token = myToken)
-resp$content
-#> $result
-#> [1] "created"
-#>
-#> $urn
-#> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
-#>
-#> $acceptedJobs$output$formats[[1]]$type
-#> [1] "svf"
-
+# Poll until done
 resp <- checkFile(urn = myEncodedUrn, token = myToken)
 resp$content$status
 #> [1] "success"
 ```
 
-Retrieve file metadata using `getMetadata()`, which returns the `type`, `name`, and `guid` of each viewable. Note the `guid` and store it in `.Renviron` for reuse:
+## Extract Metadata from a File
+
+SVF format unlocks the structured metadata inside a model. The object tree, property sets, layer information. This is the format the Viewer also uses.
+
+```{r}
+#| eval: false
+resp <- translateSvf(urn = myEncodedUrn, token = myToken)
+resp$content$result
+#> [1] "created"
+
+# Wait for it...
+resp <- checkFile(urn = myEncodedUrn, token = myToken)
+resp$content$status
+#> [1] "success"
+```
+
+`getMetadata()` returns the viewable GUIDs. You'll need the GUID for every subsequent metadata call:
 
 ```{r}
 #| eval: false
@@ -187,12 +146,8 @@ resp$content$data
 #> $type
 #> [1] "metadata"
 #>
-#> $metadata
 #> $metadata[[1]]$name
 #> [1] "aerial"
-#>
-#> $metadata[[1]]$role
-#> [1] "3d"
 #>
 #> $metadata[[1]]$guid
 #> [1] "a7b3c9d2-4e1f-4a8b-b6c2-9d3e7f5a1b4c"
@@ -201,7 +156,7 @@ resp$content$data
 #> [1] TRUE
 ```
 
-Retrieve the full object tree of the model:
+`getObjectTree()` returns the model's full object hierarchy. For a DWG, the children of the root node are its layers:
 
 ```{r}
 #| eval: false
@@ -213,24 +168,17 @@ resp$content$data$objects[[1]]
 #> $name
 #> [1] "aerial.dwg"
 #>
-#> $objects
-#> $objects[[1]]$objectid
-#> [1] 2
 #> $objects[[1]]$name
 #> [1] "Layer: A-SITE"
 #>
-#> $objects[[2]]$objectid
-#> [1] 3
 #> $objects[[2]]$name
 #> [1] "Layer: A-BLDG"
 #>
-#> $objects[[3]]$objectid
-#> [1] 4
 #> $objects[[3]]$name
 #> [1] "Layer: A-ROAD"
 ```
 
-Extract all geometry properties and material data from the model:
+`getData()` pulls all geometry properties and material data, bounding boxes, layer assignments, custom attributes. This is the raw material for the [Layer Structure Analysis](layer-analysis.qmd) chapter:
 
 ```{r}
 #| eval: false
@@ -242,22 +190,16 @@ resp$content$data$collection[[1]]
 #> $name
 #> [1] "Layer: A-SITE"
 #>
-#> $properties
 #> $properties$`Layer and Material`$Layer
 #> [1] "A-SITE"
-#>
-#> $properties$`Layer and Material`$Material
-#> [1] "ByLayer"
 #>
 #> $properties$Geometry$`Bounding Box Min X`
 #> [1] -142.83
 #>
-#> $properties$Geometry$`Bounding Box Min Y`
-#> [1]  -98.47
-#>
 #> $properties$Geometry$`Bounding Box Max X`
 #> [1]  318.62
-#>
-#> $properties$Geometry$`Bounding Box Max Y`
-#> [1]  241.19
 ```
+
+::: callout-warning
+**`getData()` can be large.** Complex models return thousands of objects in a single response. For very large DWGs, consider filtering the object tree first to identify only the layers or elements you care about.
+:::

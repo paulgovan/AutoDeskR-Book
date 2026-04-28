@@ -1,6 +1,6 @@
 # Getting Started {.unnumbered}
 
-This chapter walks through everything you need to make your first successful API call with AutoDeskR: creating an AutoDesk account, registering an application, securing your credentials, and running a minimal end-to-end example.
+Five steps stand between you and your first successful API call. By the end of this chapter you'll have credentials stored safely, AutoDeskR installed, and a file sitting in a cloud bucket ready for translation.
 
 ## System Requirements
 
@@ -15,14 +15,14 @@ If you do not already have an AutoDesk account, register for free at [autodesk.c
 
 ## Step 2: Register an APS Application
 
-APS uses OAuth 2.0. Every API call must be authenticated with a **Client ID** and **Client Secret** that belong to a registered application.
+APS uses OAuth 2.0 — every API call needs a token, and every token comes from a registered app. Here's how to get one:
 
 1.  Go to the [APS Developer Portal](https://aps.autodesk.com) and sign in.
 2.  Click **My Apps → Create Application**.
-3.  Give your app a name (e.g., `AutoDeskR-dev`) and select the APIs you plan to use. For the examples in this book, enable **Data Management**, **Model Derivative**, and **Design Automation**.
-4.  Click **Create**. Your **Client ID** and **Client Secret** will be displayed on the app's detail page.
+3.  Give your app a name (e.g., `AutoDeskR-dev`) and enable the APIs you need. For the examples in this book: **Data Management**, **Model Derivative**, and **Design Automation**.
+4.  Click **Create**. Your **Client ID** and **Client Secret** appear on the app detail page.
 
-Keep these credentials private. Never commit them to version control.
+Keep these private. If they end up in a public Git repo, rotate them immediately.
 
 ## Step 3: Store Credentials Securely
 
@@ -35,15 +35,15 @@ usethis::edit_r_environ()
 Add the following lines, replacing the placeholder values:
 
 ```
-APS_CLIENT_ID=your_client_id_here
-APS_CLIENT_SECRET=your_client_secret_here
+client_id=your_client_id_here
+client_secret=your_client_secret_here
 ```
 
 Save the file and restart R. You can then retrieve the values in any script without hard-coding them:
 
 ``` r
-id     <- Sys.getenv("APS_CLIENT_ID")
-secret <- Sys.getenv("APS_CLIENT_SECRET")
+id     <- Sys.getenv("client_id")
+secret <- Sys.getenv("client_secret")
 ```
 
 See the [Authentication](authentication.qmd) chapter for a full explanation of OAuth scopes and token management.
@@ -84,8 +84,8 @@ The following code demonstrates a complete round-trip: authenticate, create a st
 library(AutoDeskR)
 
 # Read credentials from environment
-id     <- Sys.getenv("APS_CLIENT_ID")
-secret <- Sys.getenv("APS_CLIENT_SECRET")
+id     <- Sys.getenv("client_id")
+secret <- Sys.getenv("client_secret")
 
 # 1. Get an access token with the scopes needed for data management
 token <- getToken(id, secret, scope = "data:read data:write bucket:create bucket:read")
@@ -124,7 +124,7 @@ If the upload succeeds, `listObjects()` will return a data frame containing your
 With your credentials configured and a file uploaded, you are ready to explore the full API:
 
 | Chapter | What it covers |
-|---|---|
+|----|----|
 | [Authentication](authentication.qmd) | Token scopes, token refresh, rate-limit handling |
 | [Data Management](data-management.qmd) | Buckets, large-file uploads, pagination |
 | [Model Derivative](model-derivative.qmd) | Translating files to OBJ, STL, SVF; extracting metadata |

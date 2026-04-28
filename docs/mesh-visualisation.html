@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9&nbsp; Account Admin – R and the AutoDesk Platform</title>
+<title>9&nbsp; 3D Visualisation – R for the Built Environment</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -55,7 +55,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -65,8 +85,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./webhooks.html" rel="next">
-<link href="./construction-issues.html" rel="prev">
+<link href="./point-cloud-analysis.html" rel="next">
+<link href="./mesh-metrics.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -107,6 +127,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<meta name="twitter:title" content="9&nbsp; 3D Visualisation – R for the Built Environment">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -118,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data-management-acc.html">Project &amp; Account APIs</a></li><li class="breadcrumb-item"><a href="./account-admin.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Account Admin</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mesh-reading.html">3D Geometry &amp; Meshes</a></li><li class="breadcrumb-item"><a href="./mesh-visualisation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">3D Visualisation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -135,7 +158,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <a href="./index.html" class="sidebar-logo-link">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">R and the AutoDesk Platform</a> 
+      <a href="./">R for the Built Environment</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/paulgovan/AutoDeskR-Book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./R-for-the-Built-Environment.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./R-for-the-Built-Environment.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -189,7 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Core APIs</span></a>
+ <span class="menu-text">AutoDesk Platform Services</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -236,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Project &amp; Account APIs</span></a>
+ <span class="menu-text">3D Geometry &amp; Meshes</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -244,26 +304,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-management-acc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ACC Data Management</span></span></a>
+  <a href="./mesh-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reading OBJ and STL Meshes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./construction-issues.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Construction Issues</span></span></a>
+  <a href="./mesh-metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Mesh Metrics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./account-admin.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Account Admin</span></span></a>
+  <a href="./mesh-visualisation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">3D Visualisation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./webhooks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Webhooks</span></span></a>
+  <a href="./point-cloud-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Point Cloud Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mesh-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mesh Comparison</span></span></a>
   </div>
 </li>
       </ul>
@@ -271,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
+ <span class="menu-text">DWG &amp; DXF Analytics</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -279,20 +345,101 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./layer-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Layer Structure Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attribute-extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Attribute Extraction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cross-drawing-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cross-Drawing Comparison</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./drawing-reports.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Automated Drawing Reports</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Digital Twins</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tandem-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">AutoDesk Tandem Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sensor-streams.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Linking Sensor Streams</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./live-dashboards.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Live Dashboards</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">AI Integration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mcp-server.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">MCP Server</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./case-study.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Function Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Function Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./troubleshooting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
   </div>
 </li>
       </ul>
@@ -313,22 +460,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#account-admin" id="toc-account-admin" class="nav-link active" data-scroll-target="#account-admin"><span class="header-section-number">10</span> Account Admin</a>
+  <li><a href="#interactive-3d-with-rgl" id="toc-interactive-3d-with-rgl" class="nav-link active" data-scroll-target="#interactive-3d-with-rgl"><span class="header-section-number">9.1</span> Interactive 3D with rgl</a>
   <ul class="collapse">
-  <li><a href="#why-it-matters" id="toc-why-it-matters" class="nav-link" data-scroll-target="#why-it-matters"><span class="header-section-number">10.1</span> Why It Matters</a></li>
-  <li><a href="#planned-functions" id="toc-planned-functions" class="nav-link" data-scroll-target="#planned-functions"><span class="header-section-number">10.2</span> Planned Functions</a></li>
-  <li><a href="#planned-workflow" id="toc-planned-workflow" class="nav-link" data-scroll-target="#planned-workflow"><span class="header-section-number">10.3</span> Planned Workflow</a></li>
-  <li><a href="#required-scopes" id="toc-required-scopes" class="nav-link" data-scroll-target="#required-scopes"><span class="header-section-number">10.4</span> Required Scopes</a></li>
+  <li><a href="#embedding-in-html-output" id="toc-embedding-in-html-output" class="nav-link" data-scroll-target="#embedding-in-html-output"><span class="header-section-number">9.1.1</span> Embedding in HTML Output</a></li>
   </ul></li>
+  <li><a href="#colouring-by-height" id="toc-colouring-by-height" class="nav-link" data-scroll-target="#colouring-by-height"><span class="header-section-number">9.2</span> Colouring by Height</a></li>
+  <li><a href="#rendered-images-with-rayshader" id="toc-rendered-images-with-rayshader" class="nav-link" data-scroll-target="#rendered-images-with-rayshader"><span class="header-section-number">9.3</span> Rendered Images with rayshader</a></li>
+  <li><a href="#depth-of-field" id="toc-depth-of-field" class="nav-link" data-scroll-target="#depth-of-field"><span class="header-section-number">9.4</span> Depth of Field</a></li>
+  <li><a href="#quick-comparison-rgl-vs.-rayshader" id="toc-quick-comparison-rgl-vs.-rayshader" class="nav-link" data-scroll-target="#quick-comparison-rgl-vs.-rayshader"><span class="header-section-number">9.5</span> Quick Comparison: rgl vs.&nbsp;rayshader</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/paulgovan/AutoDeskR-Book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data-management-acc.html">Project &amp; Account APIs</a></li><li class="breadcrumb-item"><a href="./account-admin.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Account Admin</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mesh-reading.html">3D Geometry &amp; Meshes</a></li><li class="breadcrumb-item"><a href="./mesh-visualisation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">3D Visualisation</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Account Admin</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">3D Visualisation</span></h1>
 </div>
 
 
@@ -345,6 +493,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>Numbers are useful; actually <em>seeing</em> the mesh is better. This chapter covers two routes: <code>rgl</code> <span class="citation" data-cites="R-rgl">(<a href="references.html#ref-R-rgl" role="doc-biblioref">Adler, Murdoch, et al. 2024</a>)</span> for interactive exploration in RStudio (spin it with the mouse, zoom in, inspect details), and <code>rayshader</code> <span class="citation" data-cites="R-rayshader">(<a href="references.html#ref-R-rayshader" role="doc-biblioref">Morgan-Wall 2024</a>)</span> for rendering publication-quality static images.</p>
+<p>Both work on <code>mesh_vcg</code> from <a href="./mesh-reading.html">Reading OBJ and STL Meshes</a>.</p>
+<section id="interactive-3d-with-rgl" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="interactive-3d-with-rgl"><span class="header-section-number">9.1</span> Interactive 3D with rgl</h2>
+<p><code>shade3d()</code> opens an OpenGL window where you can rotate and zoom with the mouse. Takes one line:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgl)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">open3d</span>()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shade3d</span>(mesh_obj, <span class="at">col =</span> <span class="st">"#C0C0C0"</span>, <span class="at">alpha =</span> <span class="fl">0.9</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bg3d</span>(<span class="st">"white"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">axes3d</span>()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">title3d</span>(<span class="st">"Aerial DWG — Translated Mesh"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="embedding-in-html-output" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="embedding-in-html-output"><span class="header-section-number">9.1.1</span> Embedding in HTML Output</h3>
+<p><code>rgl</code> windows are interactive in RStudio but don’t embed in HTML documents on their own. <code>rglwidget()</code> wraps the scene in a self-contained WebGL widget that works in any browser:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add this once at the top of your document (setup chunk)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>knit_hooks<span class="sc">$</span><span class="fu">set</span>(<span class="at">webgl =</span> rgl<span class="sc">::</span>hook_webgl)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">open3d</span>()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">shade3d</span>(mesh_obj, <span class="at">col =</span> <span class="st">"#4A90D9"</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rglwidget</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -355,143 +527,105 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Coming in a future release.</strong> This chapter documents a planned addition to the AutoDeskR package. The API described here exists in APS but R wrapper functions are not yet available. Track progress at <a href="https://github.com/paulgovan/AutoDeskR">github.com/paulgovan/AutoDeskR</a>.</p>
+<p>The WebGL widget is fully self-contained in the rendered HTML. Readers can rotate and zoom without a running R server. It does require a modern browser (Chrome, Firefox, Safari, Edge all work fine).</p>
 </div>
 </div>
-<section id="account-admin" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> Account Admin</h1>
-<p>The <a href="https://aps.autodesk.com/en/docs/acc/v1/overview/field-guide/account-admin/">Account Admin API</a> allows administrators to manage ACC accounts, projects, users, and companies programmatically. This is the API behind the “Account Admin” module in the ACC web interface.</p>
-<p>For organisations that provision dozens of projects and hundreds of users, R scripting can replace tedious manual administration: bulk-create projects from a spreadsheet, synchronise user lists from an HR system, or audit permissions across an entire portfolio.</p>
-<section id="why-it-matters" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="why-it-matters"><span class="header-section-number">10.1</span> Why It Matters</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Task</th>
-<th>Without API</th>
-<th>With API</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Create 20 projects</td>
-<td>20 × manual form fills</td>
-<td>One R script reading from a data frame</td>
-</tr>
-<tr class="even">
-<td>Add 50 users to a project</td>
-<td>50 × manual invitations</td>
-<td><code>lapply()</code> over a user list</td>
-</tr>
-<tr class="odd">
-<td>Audit who has admin rights</td>
-<td>Manual review per project</td>
-<td><code>listUsers()</code> + dplyr filter</td>
-</tr>
-</tbody>
-</table>
 </section>
-<section id="planned-functions" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="planned-functions"><span class="header-section-number">10.2</span> Planned Functions</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Function</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>listAccounts(token)</code></td>
-<td>List all BIM 360 / ACC accounts accessible to the token</td>
-</tr>
-<tr class="even">
-<td><code>createProject(token, account_id, ...)</code></td>
-<td>Create a new project in an account</td>
-</tr>
-<tr class="odd">
-<td><code>getProject(token, account_id, project_id)</code></td>
-<td>Retrieve project details</td>
-</tr>
-<tr class="even">
-<td><code>updateProject(token, account_id, project_id, ...)</code></td>
-<td>Update project metadata</td>
-</tr>
-<tr class="odd">
-<td><code>listUsers(token, account_id, project_id)</code></td>
-<td>List users in a project</td>
-</tr>
-<tr class="even">
-<td><code>addUser(token, account_id, project_id, ...)</code></td>
-<td>Add a user with a specified role</td>
-</tr>
-<tr class="odd">
-<td><code>removeUser(token, account_id, project_id, user_id)</code></td>
-<td>Remove a user from a project</td>
-</tr>
-<tr class="even">
-<td><code>listCompanies(token, account_id)</code></td>
-<td>List companies / subcontractors in the account</td>
-</tr>
-<tr class="odd">
-<td><code>addCompany(token, account_id, ...)</code></td>
-<td>Create a new company record</td>
-</tr>
-</tbody>
-</table>
 </section>
-<section id="planned-workflow" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="planned-workflow"><span class="header-section-number">10.3</span> Planned Workflow</h2>
+<section id="colouring-by-height" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="colouring-by-height"><span class="header-section-number">9.2</span> Colouring by Height</h2>
+<p>Map vertex Z-values to a colour ramp to reveal the model’s vertical structure instantly. Blues for low, reds for high:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (Functions not yet implemented — illustrative only)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Bulk-create projects from a data frame</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AutoDeskR)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>token      <span class="ot">&lt;-</span> <span class="fu">getToken</span>(id, secret, <span class="at">scope =</span> <span class="st">"account:read account:write"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>account_id <span class="ot">&lt;-</span> <span class="st">"abc12345-0000-0000-0000-000000000000"</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Read project list from a CSV</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>projects_to_create <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"new_projects.csv"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns: name, type, start_date, end_date, timezone</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(projects_to_create))) {</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  row <span class="ot">&lt;-</span> projects_to_create[i, ]</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">createProject</span>(</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">token      =</span> token,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">account_id =</span> account_id,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">name       =</span> row<span class="sc">$</span>name,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">type       =</span> row<span class="sc">$</span>type,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">start_date =</span> row<span class="sc">$</span>start_date,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">end_date   =</span> row<span class="sc">$</span>end_date</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="fl">0.5</span>)   <span class="co"># respect rate limits</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Audit: find all users with admin role across all projects</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>all_projects <span class="ot">&lt;-</span> <span class="fu">listProjects</span>(token, <span class="at">account_id =</span> account_id)<span class="sc">$</span>content<span class="sc">$</span>data</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>admins <span class="ot">&lt;-</span> <span class="fu">lapply</span>(all_projects, <span class="cf">function</span>(p) {</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  users <span class="ot">&lt;-</span> <span class="fu">listUsers</span>(token, <span class="at">account_id =</span> account_id, <span class="at">project_id =</span> p<span class="sc">$</span>id)<span class="sc">$</span>content<span class="sc">$</span>results</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(users, role <span class="sc">==</span> <span class="st">"admin"</span>)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>admins_df <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, admins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>z_vals <span class="ot">&lt;-</span> mesh_vcg<span class="sc">$</span>vb[<span class="dv">3</span>, ]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>z_norm <span class="ot">&lt;-</span> (z_vals <span class="sc">-</span> <span class="fu">min</span>(z_vals)) <span class="sc">/</span> <span class="fu">diff</span>(<span class="fu">range</span>(z_vals))   <span class="co"># 0–1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cols      <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"#2166ac"</span>, <span class="st">"#92c5de"</span>, <span class="st">"#f7f7f7"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"#f4a582"</span>, <span class="st">"#d6604d"</span>))(<span class="dv">100</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>vert_cols <span class="ot">&lt;-</span> cols[<span class="fu">ceiling</span>(z_norm <span class="sc">*</span> <span class="dv">99</span>) <span class="sc">+</span> <span class="dv">1</span>]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">open3d</span>()</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">shade3d</span>(mesh_obj, <span class="at">col =</span> vert_cols)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rglwidget</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="required-scopes" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="required-scopes"><span class="header-section-number">10.4</span> Required Scopes</h2>
-<p>Account Admin functions require the <code>account:read</code> and/or <code>account:write</code> scopes depending on whether you are reading or modifying data. These scopes must be enabled for your APS application in the developer portal.</p>
-
-
+<section id="rendered-images-with-rayshader" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="rendered-images-with-rayshader"><span class="header-section-number">9.3</span> Rendered Images with rayshader</h2>
+<p><code>rayshader</code> renders the active <code>rgl</code> scene with ray-traced lighting and ambient occlusion, great for reports and presentations. The output is a PNG file.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rayshader)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>vertices  <span class="ot">&lt;-</span> <span class="fu">t</span>(mesh_vcg<span class="sc">$</span>vb[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, ])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>triangles <span class="ot">&lt;-</span> <span class="fu">t</span>(mesh_vcg<span class="sc">$</span>it)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">open3d</span>()</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">triangles3d</span>(vertices[triangles[, <span class="dv">1</span>], ],</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            vertices[triangles[, <span class="dv">2</span>], ],</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            vertices[triangles[, <span class="dv">3</span>], ],</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"steelblue"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">render_snapshot</span>(<span class="at">filename    =</span> <span class="st">"aerial_render.png"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">width       =</span> <span class="dv">1200</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">height      =</span> <span class="dv">900</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">title_text  =</span> <span class="st">"Aerial DWG — Rayshader Render"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">title_color =</span> <span class="st">"white"</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">title_size  =</span> <span class="dv">24</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">clear       =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Include the render in your Quarto document with a standard image link:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="al">![Aerial DWG rendered with rayshader](aerial_render.png)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="depth-of-field" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="depth-of-field"><span class="header-section-number">9.4</span> Depth of Field</h2>
+<p>Add a depth-of-field effect to emphasise the model’s 3D structure in the output image, works especially well for tall structures:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">render_depth</span>(<span class="at">focus       =</span> <span class="fl">0.7</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">focallength =</span> <span class="dv">200</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">filename    =</span> <span class="st">"aerial_dof.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="quick-comparison-rgl-vs.-rayshader" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="quick-comparison-rgl-vs.-rayshader"><span class="header-section-number">9.5</span> Quick Comparison: rgl vs.&nbsp;rayshader</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th><code>rgl</code></th>
+<th><code>rayshader</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Output</td>
+<td>Interactive HTML widget</td>
+<td>Static PNG</td>
+</tr>
+<tr class="even">
+<td>Use for</td>
+<td>Exploration, dashboards</td>
+<td>Reports, presentations</td>
+</tr>
+<tr class="odd">
+<td>Render time</td>
+<td>Instant</td>
+<td>Seconds–minutes</td>
+</tr>
+<tr class="even">
+<td>WebGL support</td>
+<td>Yes (via <code>rglwidget()</code>)</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-R-rgl" class="csl-entry" role="listitem">
+Adler, Daniel, Duncan Murdoch, et al. 2024. <em>Rgl: 3D Visualization Using OpenGL</em>. <a href="https://dmurdoch.github.io/rgl/">https://dmurdoch.github.io/rgl/</a>.
+</div>
+<div id="ref-R-rayshader" class="csl-entry" role="listitem">
+Morgan-Wall, Tyler. 2024. <em>Rayshader: Create Maps and Visualize Data in 2D and 3D</em>. <a href="https://www.rayshader.com">https://www.rayshader.com</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -897,13 +1031,13 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./construction-issues.html" class="pagination-link" aria-label="Construction Issues">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Construction Issues</span></span>
+      <a href="./mesh-metrics.html" class="pagination-link" aria-label="Mesh Metrics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Mesh Metrics</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./webhooks.html" class="pagination-link" aria-label="Webhooks">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Webhooks</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./point-cloud-analysis.html" class="pagination-link" aria-label="Point Cloud Analysis">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Point Cloud Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -912,4 +1046,4 @@ Note
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/paulgovan/AutoDeskR-Book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

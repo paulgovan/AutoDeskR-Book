@@ -8,7 +8,7 @@ This is a **Quarto book** documenting the [AutoDeskR](https://github.com/paulgov
 
 ## Build Commands
 
-```bash
+``` bash
 # Render the full book (HTML + PDF)
 quarto render
 
@@ -26,26 +26,26 @@ Open `Book.Rproj` in RStudio to use the integrated project environment.
 
 The book has two layers of content:
 
-1. **Quarto chapters** (`*.qmd`) — the active build source defined in `_quarto.yml`. Currently contains introductory/stub content (index, intro, summary, references).
+1.  **Quarto chapters** (`*.qmd`) — the active build source defined in `_quarto.yml`. Currently contains introductory/stub content (index, intro, summary, references).
 
-2. **Legacy GitBook content** (`*.md` files and subdirectories) — the more complete API documentation referenced by `SUMMARY.md`. These are not yet wired into the Quarto build.
+2.  **Legacy GitBook content** (`*.md` files and subdirectories) — the more complete API documentation referenced by `SUMMARY.md`. These are not yet wired into the Quarto build.
 
 ### Content Structure
 
-- `authentication.md` — OAuth token setup
-- `quick_start.md` — Package installation and overview
-- `viewer.md` — AutoDesk Viewer integration (large file, ~343KB)
-- `common-issues.md` — Troubleshooting guide
-- `data_management/` — OSS bucket and file upload tutorial
-- `model_derivative/` — File translation and data extraction tutorials
-- `design_automation/` — DWG-to-PDF conversion tutorial
+-   `authentication.md` — OAuth token setup
+-   `quick_start.md` — Package installation and overview
+-   `viewer.md` — AutoDesk Viewer integration (large file, \~343KB)
+-   `common-issues.md` — Troubleshooting guide
+-   `data_management/` — OSS bucket and file upload tutorial
+-   `model_derivative/` — File translation and data extraction tutorials
+-   `design_automation/` — DWG-to-PDF conversion tutorial
 
 ### Configuration Files
 
-- `_quarto.yml` — Primary build config (HTML theme: cosmo, PDF class: scrreprt)
-- `book.json` — Legacy GitBook config (not used by Quarto build)
-- `references.bib` — Bibliography database
-- `Book.Rproj` — RStudio project file
+-   `_quarto.yml` — Primary build config (HTML theme: cosmo, PDF class: scrreprt)
+-   `book.json` — Legacy GitBook config (not used by Quarto build)
+-   `references.bib` — Bibliography database
+-   `Book.Rproj` — RStudio project file
 
 ## Key Integration Note
 

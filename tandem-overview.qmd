@@ -1,0 +1,115 @@
+---
+title: "AutoDesk Tandem Overview"
+---
+
+A BIM model is a snapshot of a building at design time. A **digital twin** takes that same model and connects it to the building's live operational data — temperature sensors, occupancy counters, energy meters — so you can see what's actually happening inside, not just what was drawn. AutoDesk Tandem is APS's platform for building and querying digital twins.
+
+This chapter introduces Tandem concepts and shows how to talk to the Tandem REST API directly from R using `httr2` [@R-httr2] and a standard APS token from `getToken()`. See [@autodesk-tandem] for the full API reference.
+
+The relationship between a BIM model and a Tandem twin looks like this:
+
+```{mermaid}
+graph LR
+  A[BIM Model\nRVT / DWG file] --> B[Model Derivative API\ngetObjectTree / getData]
+  A --> C[Tandem\nDigital Twin]
+  C --> D[Sensor Streams\ntemperature / CO₂ / energy]
+  B -- objectId --> C
+  D -- time-series data --> E[R Analysis\nhttr2 + dplyr]
+  B -- metadata --> E
+```
+
+::: callout-tip
+Tandem requires an active **AutoDesk Tandem subscription** in addition to an APS app registration. Authentication uses the same OAuth Bearer token as the rest of this book — no extra credential setup needed.
+:::
+
+## Twin vs. BIM Model
+
+| | BIM Model | Digital Twin |
+|---|---|---|
+| Primary data | Geometry + properties | Geometry + live sensor streams |
+| Update frequency | Per design revision | Continuous / real-time |
+| Primary use | Design & construction | Operations & maintenance |
+| APS API | Model Derivative | Tandem REST |
+| R entry point | `getObjectTree()`, `getData()` | `httr2::request()` |
+
+## Authentication
+
+The Tandem API accepts the same Bearer token as all other APS services:
+
+```{r}
+#| eval: false
+library(AutoDeskR)
+library(httr2)
+
+resp    <- getToken(id     = Sys.getenv("client_id"),
+                    secret = Sys.getenv("client_secret"),
+                    scope  = "data:read")
+myToken <- resp$content$access_token
+```
+
+## Listing Facilities
+
+A *facility* in Tandem is the digital twin of a building or site — the top-level container for model data and sensor streams. List all facilities your token can access:
+
+```{r}
+#| eval: false
+facilities_resp <- request("https://tandem.autodesk.com/api/v1/groups") |>
+  req_auth_bearer_token(myToken) |>
+  req_perform()
+
+facilities <- resp_body_json(facilities_resp)
+
+facilities_df <- lapply(facilities, function(f) {
+  data.frame(id = f$id, name = f$name, stringsAsFactors = FALSE)
+}) |> do.call(what = rbind)
+
+facilities_df
+#>                                     id               name
+#> 1  urn:adsk.dtdm:facility.abc123def456  Office Block A
+#> 2  urn:adsk.dtdm:facility.xyz789uvw012  Warehouse Site B
+```
+
+## Facility Details
+
+```{r}
+#| eval: false
+facilityId <- "urn:adsk.dtdm:facility.abc123def456"
+
+facility_resp <- request(
+  paste0("https://tandem.autodesk.com/api/v1/twins/", facilityId)
+) |>
+  req_auth_bearer_token(myToken) |>
+  req_perform()
+
+facility <- resp_body_json(facility_resp)
+cat("Name:        ", facility$displayName, "\n")
+#> Name:         Office Block A
+cat("Created:     ", facility$createTime, "\n")
+#> Created:      2025-11-04T09:22:14Z
+cat("Linked URNs:", length(facility$links), "\n")
+#> Linked URNs:  2
+```
+
+`facility$links` contains the APS Model Derivative URNs of the BIM models embedded in this twin — the same URNs you'd pass to `getObjectTree()` or `getData()`, which is what makes the `objectId` the key that links the two worlds together.
+
+## Looking Up an Element
+
+Any `objectId` from `getData()` can be looked up in Tandem to find the corresponding physical element and its classification:
+
+```{r}
+#| eval: false
+element_resp <- request(
+  paste0("https://tandem.autodesk.com/api/v1/twins/",
+         facilityId, "/elements/", 42L)   # objectId 42
+) |>
+  req_auth_bearer_token(myToken) |>
+  req_perform()
+
+element <- resp_body_json(element_resp)
+cat("Name:          ", element$displayName, "\n")
+#> Name:           Level 2 HVAC Unit
+cat("Classification:", element$classification, "\n")
+#> Classification: MEP:HVAC:Air Handling Unit
+```
+
+The [Linking Sensor Streams](sensor-streams.qmd) chapter shows how to pull time-series readings for elements like this one.

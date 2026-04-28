@@ -2,19 +2,331 @@
 title: "Troubleshooting"
 ---
 
-# Troubleshooting
+Something's not working. Don't worry. APS errors are usually pretty informative once you know how to read them. This chapter is a reference for the most common problems, organised by HTTP status code and then by API area.
 
-## Common Issues
-Here is a running list of common issues that users have run into:
+## Error Code Quick Reference
 
-**Problem:** Some of the functions seem to work, others don't.
+The first thing to check is always `resp$status_code`. Here's what each code means and where to start looking:
 
-**Solution:** Make sure to sign up for the correct APIs and services through AutoDesk Platform Services (APS) at <https://aps.autodesk.com>.
+| Code | Meaning | Most likely cause | First step |
+|------------------|------------------|------------------|------------------|
+| 400 | Bad Request | Malformed request body; non-public URL in Design Automation | Check source/destination URLs; validate parameters |
+| 401 | Unauthorized | Token expired or missing; wrong scope | Re-call `getToken()` with correct scopes |
+| 403 | Forbidden | Free-tier quota exceeded; API not enabled for app | Check quota in APS portal; enable the API on your app |
+| 404 | Not Found | Wrong URN; object or bucket deleted; bad GUID | Re-check URN encoding; confirm the resource exists |
+| 409 | Conflict | Bucket name already taken; bucket not empty before delete | Use a unique bucket name; delete objects first |
+| 415 | Unsupported Media Type | Source format not supported for this translation type | Check the [APS supported formats list](https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/supported-translations/) |
+| 429 | Too Many Requests | Rate limit hit | Add backoff with `aps_retry()` and `Sys.sleep()` |
+| 500 | Internal Server Error | Transient APS service error | Wait 30 s and retry; check [APS status](https://health.autodesk.com/) |
 
-**Problem:** I can't create bucket "mybucket".
+## Diagnosing Any Error
 
-**Solution:** Try a unique bucket name.
+Before diving into the per-API sections, check the full error payload. APS returns descriptive messages in the response body:
 
-**Problem:** I was able to create a bucket and upload a file, but I can't translate the file.
+```{r}
+#| eval: false
+resp <- someApsFunctionCall(...)
 
-**Solution:** Each task requires different tokens with different scopes. Make sure to create a token with the `data:read data:write` scopes in order to translate a file.
+# Always check the status first
+resp$status_code
+#> [1] 401
+
+# The body usually tells you exactly what's wrong
+str(resp$content)
+#> List of 3
+#>  $ errorCode       : chr "AUTH-001"
+#>  $ developerMessage: chr "The provided access token has expired."
+#>  $ userMessage     : chr "Access denied."
+```
+
+To see the raw HTTP traffic, useful when the body is empty or unexpected, use httr2's verbose mode:
+
+```{r}
+#| eval: false
+library(httr2)
+# Wrap any request to trace the full exchange
+req <- request("https://developer.api.autodesk.com/...") |>
+  req_auth_bearer_token(myToken) |>
+  req_verbose()
+resp <- req_perform(req)
+```
+
+------------------------------------------------------------------------
+
+## Installation & Setup
+
+**Problem:** `library(AutoDeskR)` throws `there is no package called 'AutoDeskR'`.
+
+**Solution:** Install the package first:
+
+```{r}
+#| eval: false
+install.packages("AutoDeskR")         # stable CRAN release
+# or
+devtools::install_github("paulgovan/AutoDeskR")  # development version
+```
+
+------------------------------------------------------------------------
+
+**Problem:** Functions return errors about missing dependencies (`httr2`, `jsonlite`, `curl`).
+
+**Solution:** These are required dependencies and should install automatically. If they didn't:
+
+```{r}
+#| eval: false
+install.packages(c("httr2", "jsonlite", "curl", "shiny"))
+```
+
+------------------------------------------------------------------------
+
+**Problem:** Some functions work but others return 403 or unexpected 404 errors.
+
+**Solution:** In the [APS Developer Portal](https://aps.autodesk.com), open your app's settings and confirm that **all required APIs are enabled**. Each API product (Data Management, Model Derivative, Design Automation, Reality Capture) must be explicitly added to the app. A 403 on a valid token almost always means the API isn't enabled for that app.
+
+------------------------------------------------------------------------
+
+## Authentication
+
+**Problem:** `getToken()` returns a 401, or `myToken` is `NULL`.
+
+**Solution:** Double-check that your `~/.Renviron` file is loaded and that the variable names match exactly:
+
+```{r}
+#| eval: false
+# Reload .Renviron without restarting R
+readRenviron("~/.Renviron")
+
+# Verify the values are present
+nchar(Sys.getenv("client_id"))      # should be > 0
+nchar(Sys.getenv("client_secret"))  # should be > 0
+```
+
+Also confirm the credentials belong to the correct app in the APS portal, a common mistake is having credentials from a sandbox app and trying to use a production bucket.
+
+------------------------------------------------------------------------
+
+**Problem:** API calls that worked fine start returning 401 mid-session.
+
+**Solution:** Tokens expire after exactly **3600 seconds** (1 hour). Re-call `getToken()` and update `myToken`:
+
+```{r}
+#| eval: false
+resp    <- getToken(id = Sys.getenv("client_id"),
+                    secret = Sys.getenv("client_secret"),
+                    scope  = "data:read data:write")
+myToken <- resp$content$access_token
+```
+
+------------------------------------------------------------------------
+
+**Problem:** Getting 401 even with a fresh token.
+
+**Solution:** The token scope probably doesn't match the API you're calling. Each task requires specific scopes — check the table in the [Authentication](authentication.qmd#scopes--only-ask-for-what-you-need) chapter and make sure the scope string includes everything your call needs.
+
+------------------------------------------------------------------------
+
+## Data Management
+
+**Problem:** `makeBucket()` returns 409 Conflict.
+
+**Solution:** Bucket names are **globally unique across all APS applications**. Add a distinctive prefix:
+
+```{r}
+#| eval: false
+# Bad — almost certainly taken
+makeBucket(token = myToken, bucket = "test")
+
+# Good — scoped to your org and project
+makeBucket(token = myToken, bucket = "acmecorp-bridge-2026-dev")
+```
+
+------------------------------------------------------------------------
+
+**Problem:** `deleteBucket()` returns 409.
+
+**Solution:** The bucket still has objects in it. Delete them first:
+
+```{r}
+#| eval: false
+# List everything in the bucket
+objects <- listObjects(token = myToken, bucket = "mybucket")
+
+# Delete each object
+for (key in objects$content$items$objectKey) {
+  deleteObject(token = myToken, bucket = "mybucket", object = key)
+}
+
+# Now delete the empty bucket
+deleteBucket(token = myToken, bucket = "mybucket")
+```
+
+------------------------------------------------------------------------
+
+**Problem:** `uploadFile()` fails or times out on large files.
+
+**Solution:** `uploadFile()` is limited to 100 MB. Use `uploadFileSigned()` for larger files. It transfers via signed S3 URLs which don't have the same timeout constraints:
+
+```{r}
+#| eval: false
+resp <- uploadFileSigned(file = "large_model.rvt", token = myToken, bucket = "mybucket")
+```
+
+------------------------------------------------------------------------
+
+**Problem:** The encoded URN looks wrong or downstream functions can't find the object.
+
+**Solution:** The raw `objectId` from `uploadFile()` must be Base-64 encoded before passing to Model Derivative or Viewer functions. Make sure you're encoding the right string:
+
+```{r}
+#| eval: false
+myUrn        <- resp$content$objectId        # raw URN from upload
+myEncodedUrn <- jsonlite::base64_enc(myUrn)  # encoded URN for all subsequent calls
+```
+
+------------------------------------------------------------------------
+
+## Model Derivative
+
+**Problem:** `translateObj()` returns 415 Unsupported Media Type.
+
+**Solution:** Not all file types can produce OBJ output. Supported sources include DWG, IPT, IAM, IPN, F3D, and FBX. Check the [full list](https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/supported-translations/).
+
+------------------------------------------------------------------------
+
+**Problem:** `checkFile()` stays in `"inprogress"` indefinitely.
+
+**Solution:** Translation can take from seconds (simple DWGs) to many minutes (large Revit models). Wait at least 2× the expected time before giving up. If it's genuinely stuck, the job may have failed silently. Check `resp$content$status` for `"failed"` and look at `resp$content$progress` for an error message:
+
+```{r}
+#| eval: false
+resp <- checkFile(urn = myEncodedUrn, token = myToken)
+resp$content$status
+#> [1] "failed"
+resp$content$progress
+#> [1] "Translation failed: unsupported entity type on layer A-XREF"
+```
+
+------------------------------------------------------------------------
+
+**Problem:** `getOutputUrn()` returns an empty `derivatives` list.
+
+**Solution:** The file hasn't finished translating yet, or the translation failed. Confirm `checkFile()` returns `status == "success"` before calling `getOutputUrn()`. Also confirm the `urn` you're passing is the *raw* (un-encoded) URN, not the encoded one. `getOutputUrn()` takes the raw URN.
+
+------------------------------------------------------------------------
+
+**Problem:** `getData()` returns a very large response that takes a long time or crashes R.
+
+**Solution:** Complex files can return hundreds of thousands of objects. Filter to the layers or object IDs you care about by inspecting `getObjectTree()` first and only fetching data for the relevant subset.
+
+------------------------------------------------------------------------
+
+## Design Automation
+
+**Problem:** `makePdf()` returns 400 Bad Request.
+
+**Solution:** Both the `source` and `destination` URLs must be **publicly accessible**. The AutoDesk cloud workers fetch and write these URLs directly. Common failures: - Private Google Drive share links (use "Anyone with the link" access) - `localhost` or `127.0.0.1` URLs (unreachable from the cloud) - Signed S3 URLs that have already expired
+
+------------------------------------------------------------------------
+
+**Problem:** `checkPdf()` stays in `"pending"` for more than 5 minutes.
+
+**Solution:** This usually means the job is queued behind other work items. Wait longer. Free-tier jobs can queue for 10–15 minutes at peak times. If it's still pending after 30 minutes, cancel and resubmit.
+
+------------------------------------------------------------------------
+
+## Reality Capture
+
+**Problem:** The output mesh looks poor — holes, distorted geometry, missing areas.
+
+**Solution:** Image quality is everything in photogrammetry. The most common causes of bad output: - **Too few images** — need at least 20, ideally 50+ - **Insufficient overlap** — every surface needs to appear in at least 3 photos from different angles - **Reflective or transparent surfaces** — glass and polished metal fool the matching algorithm - **Inconsistent lighting** — shots taken at different times of day with different shadows - **Camera movement instead of subject rotation** — move around the object, don't zoom from a fixed point
+
+------------------------------------------------------------------------
+
+**Problem:** `waitForPhotoscene()` times out before the job finishes.
+
+**Solution:** Increase the `timeout` parameter. A 500-image scene can take 90+ minutes:
+
+```{r}
+#| eval: false
+done <- waitForPhotoscene(photoscene_id = myPhotosceneId,
+                           token         = myToken,
+                           interval      = 120,   # check every 2 minutes
+                           timeout       = 7200)  # wait up to 2 hours
+```
+
+------------------------------------------------------------------------
+
+**Problem:** I downloaded the RCS file but `lidR` can't open it.
+
+**Solution:** `lidR` reads LAS/LAZ, not AutoDesk's RCS format. Convert the file first using [CloudCompare](https://www.cloudcompare.org/) (free): *File → Open* → select the RCS → *File → Save As* → choose LAS format.
+
+------------------------------------------------------------------------
+
+## Viewer
+
+**Problem:** The viewer opens but shows a blank canvas.
+
+**Solution:** The file must be translated to **SVF** format before the viewer can display it. OBJ and STL translations won't work. Run `translateSvf()` and wait for `checkFile()` to return `status == "success"`, then reload the viewer.
+
+------------------------------------------------------------------------
+
+**Problem:** The viewer throws a JavaScript authentication error.
+
+**Solution:** The `data:read` scope is required. Other scopes (like `data:write`) are not enough on their own. Make sure `getToken()` was called with at least `scope = "data:read"`.
+
+------------------------------------------------------------------------
+
+## 3D Geometry (rgl / Rvcg)
+
+**Problem:** `rgl` window doesn't open in RStudio Server or a headless environment.
+
+**Solution:** Set the null device before loading `rgl`:
+
+```{r}
+#| eval: false
+options(rgl.useNULL = TRUE)
+library(rgl)
+# Now use rglwidget() to render to HTML instead of an OpenGL window
+```
+
+------------------------------------------------------------------------
+
+**Problem:** `vcgVolume()` returns zero or a nonsensical value.
+
+**Solution:** `vcgVolume()` requires a **watertight (closed) mesh**. OBJ files translated from 2D DWG drawings are almost never watertight. Use the convex hull fallback from the [Mesh Metrics](mesh-metrics.qmd) chapter instead:
+
+```{r}
+#| eval: false
+library(geometry)
+pts  <- t(mesh_vcg$vb[1:3, ])
+hull <- convhulln(pts, options = "FA")
+hull$vol   # robust volume estimate for open meshes
+```
+
+------------------------------------------------------------------------
+
+**Problem:** `vcgImport()` fails with a parsing error on the OBJ file.
+
+**Solution:** The Model Derivative API sometimes produces multi-part OBJ files with multiple `mtllib` references. Try importing with `rgl::readOBJ()` first to confirm the file is valid, or open it in a text editor to check for obvious corruption near the top of the file.
+
+------------------------------------------------------------------------
+
+## Digital Twins (Tandem)
+
+**Problem:** Tandem API requests return 403 Forbidden even with a valid token.
+
+**Solution:** The Tandem API requires an active **AutoDesk Tandem subscription**. It is not included in a standard APS free-tier account. Confirm the subscription is active in your AutoDesk account settings and that the app's Client ID is associated with a Tandem-enabled account.
+
+------------------------------------------------------------------------
+
+**Problem:** `resp_body_json()` returns an empty list from the `/groups` endpoint.
+
+**Solution:** The authenticated app doesn't have access to any Tandem facilities yet. Facilities must be explicitly shared with the app's Client ID through the Tandem web interface. Log into [tandem.autodesk.com](https://tandem.autodesk.com), open the facility settings, and add the app as a viewer or owner.
+
+------------------------------------------------------------------------
+
+## Getting More Help
+
+-   **APS community forum:** [community.autodesk.com/t5/autodesk-platform-services](https://community.autodesk.com/t5/autodesk-platform-services/ct-p/217) — AutoDesk staff monitor this actively
+-   **AutoDeskR GitHub issues:** [github.com/paulgovan/AutoDeskR/issues](https://github.com/paulgovan/AutoDeskR/issues) — for package-specific bugs
+-   **APS API status:** [health.autodesk.com](https://health.autodesk.com/) — check for ongoing incidents before spending time debugging

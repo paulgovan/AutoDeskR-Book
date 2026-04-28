@@ -1,0 +1,127 @@
+---
+title: "MCP Server"
+---
+
+AI assistants are increasingly useful not just for answering questions but for *doing things*, calling APIs, reading files, running analyses. The Model Context Protocol (MCP) is the open standard that makes that possible. It defines how an AI assistant discovers and calls external tools during a conversation, in the same way a web browser discovers and calls REST APIs.
+
+AutoDeskR functions are exactly the kind of tools an AI agent would want to call. "Summarise the layers in this DWG." "Translate this file and give me the bounding box." "Fetch the last 24 hours of HVAC sensor readings." Each of those is a handful of AutoDeskR function calls, and with an MCP server in front of them, an AI assistant can make those calls itself, without you writing a single line of R.
+
+This chapter shows how to expose AutoDeskR as an MCP server so that Claude Desktop, VS Code Copilot, or any other MCP-compatible client can query BIM models directly.
+
+## Proposed Tools
+
+The table below maps ten useful MCP tools to their underlying AutoDeskR functions. Each tool is a thin wrapper. It handles authentication, calls the relevant function(s), and returns a structured JSON result.
+
+| MCP Tool | Wraps | Description |
+|------------------------|------------------------|------------------------|
+| `get_token` | `getToken()` | Authenticate and return a bearer token |
+| `upload_file` | `makeBucket()` + `uploadFile()` | Create a bucket and upload a local file |
+| `translate_file` | `translateObj()` / `translateSvf()` + `checkFile()` | Translate a file and poll until complete |
+| `get_layer_summary` | `translateSvf()` + `getData()` | Layer-level object count and area for a DWG |
+| `get_object_tree` | `getObjectTree()` | Model hierarchy as a JSON tree |
+| `get_metadata` | `getMetadata()` | List available metadata GUIDs for a translated model |
+| `download_mesh` | `getOutputUrn()` + `downloadFile()` | Download the translated OBJ/STL to a local path |
+| `make_pdf` | `makePdf()` + `checkPdf()` | Convert a DWG to PDF via Design Automation |
+| `get_sensor_streams` | Tandem REST API | List sensor streams for a Tandem facility |
+| `get_stream_readings` | Tandem REST API | Fetch time-series readings for a stream |
+
+## Setting Up a Local MCP Server
+
+The [`mcpr`](https://github.com/devOpifex/mcpr) package provides the MCP transport layer for R. Install it from GitHub:
+
+```{r}
+#| eval: false
+devtools::install_github("devOpifex/mcpr")
+```
+
+A minimal server registers tools and starts listening. Here's a working example for the `get_layer_summary` tool:
+
+```{r}
+#| eval: false
+library(mcpr)
+library(AutoDeskR)
+
+# Authenticate once at startup using environment variables
+.token <- local({
+  resp <- getToken(
+    id     = Sys.getenv("client_id"),
+    secret = Sys.getenv("client_secret"),
+    scope  = "data:read data:write bucket:create"
+  )
+  resp$content$access_token
+})
+
+# Register the tool
+mcp_tool(
+  name        = "get_layer_summary",
+  description = "Return object count and total area by layer for a translated DWG URN.",
+  params = list(
+    urn = mcp_param("string", "The raw objectId URN returned by uploadFile()")
+  ),
+  handler = function(urn) {
+    encoded  <- jsonlite::base64_enc(urn)
+    resp     <- getData(urn = encoded, token = .token)
+    objects  <- resp$content$data$objects
+
+    layer_counts <- table(sapply(objects, `[[`, "name"))
+    data.frame(layer = names(layer_counts),
+               n_objects = as.integer(layer_counts))
+  }
+)
+
+# Start the server (stdio transport for Claude Desktop)
+mcp_serve()
+```
+
+```         
+#> MCP server listening on stdio
+#> Registered tools: get_layer_summary
+```
+
+Add more tools by repeating the `mcp_tool()` pattern before calling `mcp_serve()`.
+
+## Connecting to Claude Desktop
+
+Claude Desktop reads its MCP server list from a JSON config file. On macOS, open or create `~/Library/Application Support/Claude/claude_desktop_config.json` and add an entry for the AutoDeskR server:
+
+``` json
+{
+  "mcpServers": {
+    "autodeskr": {
+      "command": "Rscript",
+      "args": ["/path/to/autodeskr-mcp-server.R"],
+      "env": {
+        "client_id": "your_aps_client_id",
+        "client_secret": "your_aps_client_secret"
+      }
+    }
+  }
+}
+```
+
+Restart Claude Desktop. The AutoDeskR tools will appear in the tool palette and Claude will call them automatically when relevant.
+
+## Example Agent Conversations
+
+Once connected, you can have conversations like:
+
+> **You:** I've uploaded `aerial.dwg` to bucket `acmecorp-dev`. The objectId is `urn:adsk.objects:os.object:acmecorp-dev/aerial.dwg`. Summarise the layers.
+
+> **Claude:** *(calls `get_layer_summary`)* The drawing has 8 layers. The largest by object count is `A-DIMS` with 62 objects, followed by `A-TEXT` with 47. The largest by area is `A-SITE` at 156,823 square units.
+
+> **You:** Compare the layer sets in `floor_plan_v1.dwg` and `floor_plan_v2.dwg`.
+
+> **Claude:** *(calls `get_layer_summary` twice, compares results)* Version 2 adds `A-FURN` (34 objects) and `A-FURN-NEW` (12 objects). `A-TEMP-SITE` was present in v1 but has been removed.
+
+> **You:** Fetch the last 24 hours of temperature readings from the HVAC sensor on level 2.
+
+> **Claude:** *(calls `get_stream_readings`)* The stream `strm:temp-hvac-l2` shows a mean of 22.1 °C over the last 24 hours, ranging from 21.4 °C to 23.0 °C. Peak temperature was at 14:30 UTC.
+
+## Security Considerations
+
+A few things to keep in mind before deploying:
+
+-   **Credentials:** Pass `client_id` and `client_secret` via environment variables (as shown in the config above), never hardcoded in the script. The server reads them at startup via `Sys.getenv()`.
+-   **Token expiry:** APS tokens expire after 3600 seconds. For long-running servers, refresh the token periodically. Add a `Sys.time()` check in the handler and re-call `getToken()` if more than 50 minutes have elapsed.
+-   **Rate limits:** APS enforces per-app rate limits. If the agent calls tools rapidly (e.g. in a loop over many files), add `Sys.sleep(0.5)` between calls. HTTP 429 responses should trigger a backoff, not a crash.
+-   **Scope:** Request only the scopes the server actually needs. A read-only analysis server only needs `data:read`; it doesn't need `data:write` or `bucket:create`.

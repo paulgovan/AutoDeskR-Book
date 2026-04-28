@@ -2,16 +2,24 @@
 title: "Design Automation"
 ---
 
-# Design Automation
+Need to convert a DWG to PDF without spinning up an AutoCAD licence? Design Automation is AutoDesk's answer to cloud-based CAD scripting. You submit a work item, AutoDesk runs it on their infrastructure, and the output lands in a destination URL you specify.
 
-The Design Automation API provides the ability to perform automated tasks on design files in the cloud.
+This chapter focuses on the most common use case: DWG → PDF.
 
-## Convert a DWG File to a PDF File
+```{mermaid}
+flowchart LR
+  A[DWG file\nat source URL] --> B[makePdf\nsubmit work item]
+  B --> C{checkPdf}
+  C -- pending / inprogress --> C
+  C -- success --> D[PDF file\nat destination URL]
+```
 
-Use `makePdf()` to convert a DWG file to a PDF file. The token must be generated with the `code:all` scope.
+## Convert a DWG to PDF
+
+`makePdf()` submits the conversion job. The token needs the `code:all` scope. This is specific to Design Automation and different from the data scopes used elsewhere.
 
 ::: callout-warning
-**Both `source` and `destination` must be publicly accessible URLs.** Private Google Drive links, localhost paths, or signed S3 URLs with expired signatures will cause the job to fail with a `400 Bad Request`. Use a public file host or a pre-signed URL with sufficient expiry time.
+**Both `source` and `destination` must be publicly accessible URLs.** Private Google Drive links, localhost paths, and short-lived signed S3 URLs won't work. The AutoDesk cloud workers need to be able to reach them directly. Use a public host or a pre-signed URL with plenty of time left on it.
 :::
 
 ```{r}
@@ -22,7 +30,6 @@ resp <- getToken(
   scope  = "code:all"
 )
 myToken <- resp$content$access_token
-#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
 ```
 
 ```{r}
@@ -30,7 +37,7 @@ myToken <- resp$content$access_token
 mySource      <- "http://download.autodesk.com/us/samplefiles/acad/visualization_-_aerial.dwg"
 myDestination <- "https://drive.google.com/folderview?id=0BygncDVHf60mTDZVNDltLThLNmM&usp=sharing"
 
-resp <- makePdf(source = mySource, destination = myDestination, token = myToken)
+resp         <- makePdf(source = mySource, destination = myDestination, token = myToken)
 myWorkItemId <- resp$content$id
 resp$content
 #> $id
@@ -39,38 +46,13 @@ resp$content
 #> $status
 #> [1] "pending"
 #>
-#> $stats
 #> $stats$timeQueued
 #> [1] "2026-04-23T10:15:30.412Z"
 ```
 
-Check the status of the conversion using the WorkItem `id` returned by `makePdf()`:
+## Poll for Completion
 
-```{r}
-#| eval: false
-resp <- checkPdf(id = myWorkItemId, token = myToken)
-resp$content
-#> $id
-#> [1] "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-#>
-#> $status
-#> [1] "success"
-#>
-#> $stats
-#> $stats$timeQueued
-#> [1] "2026-04-23T10:15:30.412Z"
-#>
-#> $stats$timeDownloadStarted
-#> [1] "2026-04-23T10:15:31.804Z"
-#>
-#> $stats$timeInstructionsStarted
-#> [1] "2026-04-23T10:15:34.217Z"
-#>
-#> $stats$timeFinished
-#> [1] "2026-04-23T10:15:48.993Z"
-```
-
-The response includes a `status` field (`pending`, `inprogress`, or `success`) and `stats` with timing information. Poll `checkPdf()` until `status` is `"success"`. Use the `aps_retry()` helper from the [Authentication](authentication.qmd#rate-limits) chapter to add automatic backoff:
+Use the work item `id` to check status. A simple DWG typically takes **15–30 seconds**; complex drawings with many layers or external references take longer.
 
 ```{r}
 #| eval: false
@@ -85,4 +67,63 @@ repeat {
 #> Status: success
 ```
 
-A typical conversion of a simple DWG takes **15–30 seconds**. Complex drawings with many layers or external references may take longer. The PDF will be written to the `destination` URL once the job completes.
+The full timing breakdown when it's done:
+
+```{r}
+#| eval: false
+resp$content
+#> $id
+#> [1] "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+#>
+#> $status
+#> [1] "success"
+#>
+#> $stats$timeQueued
+#> [1] "2026-04-23T10:15:30.412Z"
+#>
+#> $stats$timeDownloadStarted
+#> [1] "2026-04-23T10:15:31.804Z"
+#>
+#> $stats$timeInstructionsStarted
+#> [1] "2026-04-23T10:15:34.217Z"
+#>
+#> $stats$timeFinished
+#> [1] "2026-04-23T10:15:48.993Z"
+```
+
+Once `status` is `"success"`, the PDF is waiting at your `destination` URL.
+
+## Batch Conversion
+
+Converting a folder of DWGs is just a loop:
+
+```{r}
+#| eval: false
+dwg_urls  <- c(
+  "https://files.example.com/floor_plan.dwg",
+  "https://files.example.com/site_plan.dwg",
+  "https://files.example.com/elevations.dwg"
+)
+dest_base <- "https://output.example.com/pdfs/"
+
+job_ids <- vapply(dwg_urls, function(url) {
+  fname <- sub(".*/", "", url)
+  resp  <- makePdf(source      = url,
+                   destination = paste0(dest_base, sub("\\.dwg$", ".pdf", fname)),
+                   token       = myToken)
+  resp$content$id
+}, character(1))
+
+# Poll until all jobs complete
+repeat {
+  statuses <- vapply(job_ids, function(id) {
+    checkPdf(id = id, token = myToken)$content$status
+  }, character(1))
+  cat(format(Sys.time(), "%H:%M:%S"), "—", paste(statuses, collapse = " | "), "\n")
+  if (all(statuses == "success")) break
+  Sys.sleep(10)
+}
+#> 10:20:05 — pending | pending | inprogress
+#> 10:20:15 — success | inprogress | inprogress
+#> 10:20:25 — success | success | success
+```

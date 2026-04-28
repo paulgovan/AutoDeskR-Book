@@ -1,0 +1,133 @@
+---
+title: "Automated Drawing Reports"
+---
+
+You've got the layer summary, the attribute data, the charts. Now let's wrap it all into a polished, reproducible report that regenerates automatically whenever a new DWG lands in the bucket. This chapter combines `gt` [@R-gt] tables with Quarto's parameterised rendering to produce professional HTML reports with one function call.
+
+## A gt Summary Table
+
+`gt` turns a data frame into a presentation-ready table in a few chained calls. The `layer_summary` from [Layer Structure Analysis](layer-analysis.qmd) is a natural fit:
+
+```{r}
+#| eval: false
+library(gt)
+
+layer_summary |>
+  gt() |>
+  tab_header(
+    title    = "Drawing Layer Summary",
+    subtitle = "aerial.dwg — AutoDeskR extraction"
+  ) |>
+  cols_label(
+    layer      = "Layer",
+    n_objects  = "Objects",
+    total_area = "Total Area",
+    mean_area  = "Mean Area"
+  ) |>
+  fmt_number(columns = c(total_area, mean_area), decimals = 1) |>
+  tab_style(
+    style     = cell_fill(color = "#EBF3FB"),
+    locations = cells_column_labels()
+  ) |>
+  tab_source_note(
+    source_note = paste("Extracted", Sys.Date(), "via AutoDeskR v0.4.0")
+  ) |>
+  tab_options(table.font.size = "small")
+```
+
+## Parameterised Reports
+
+A parameterised Quarto document accepts different inputs at render time, making it reusable for any DWG without editing the source file. Add a `params` block to the YAML:
+
+``` yaml
+---
+title: "Drawing Report"
+format: html
+params:
+  urn: "YOUR_URN_HERE"
+  drawing_name: "aerial.dwg"
+---
+```
+
+Access the parameters inside the document:
+
+```{r}
+#| eval: false
+urn          <- params$urn
+drawing_name <- params$drawing_name
+```
+
+Use `drawing_name` in headings so each rendered report is self-labelled:
+
+```{r}
+#| eval: false
+cat("## Layer Summary:", drawing_name, "\n")
+```
+
+## Render Programmatically
+
+`quarto::quarto_render()` renders the parameterised template to a named output file. Loop over your drawing list to generate a report for each one:
+
+```{r}
+#| eval: false
+library(quarto)
+
+drawings <- list(
+  list(urn = urns[["site_plan.dwg"]],      name = "site_plan"),
+  list(urn = urns[["floor_plan_v2.dwg"]], name = "floor_plan_v2")
+)
+
+for (dwg in drawings) {
+  quarto_render(
+    input          = "drawing-reports.qmd",
+    output_file    = paste0("report_", dwg$name, ".html"),
+    execute_params = list(
+      urn          = dwg$urn,
+      drawing_name = paste0(dwg$name, ".dwg")
+    )
+  )
+  cat("Generated: report_", dwg$name, ".html\n", sep = "")
+}
+#> Generated: report_site_plan.html
+#> Generated: report_floor_plan_v2.html
+```
+
+## Scheduling Reports
+
+Keep reports fresh automatically by triggering `quarto_render()` on a schedule.
+
+**GitHub Actions** — run on a cron or whenever DWGs are pushed:
+
+``` yaml
+# .github/workflows/drawing-report.yml
+on:
+  schedule:
+    - cron: "0 6 * * 1"   # every Monday at 06:00 UTC
+  push:
+    paths: ["dwg-files/**"]
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+      - run: Rscript -e 'quarto::quarto_render("drawing-reports.qmd")'
+```
+
+**cronR (local)** — schedule from a local R session:
+
+```{r}
+#| eval: false
+library(cronR)
+cmd <- cron_rscript("render_reports.R")
+cron_add(command     = cmd,
+         frequency   = "weekly",
+         at          = "06:00",
+         id          = "drawing_report",
+         description = "Weekly DWG report")
+```
+
+::: callout-tip
+Store credentials (`client_id`, `client_secret`, bucket name) as GitHub Actions secrets or in `~/.Renviron` on the local machine. Never hardcode them in the report source file. Your future self will thank you.
+:::

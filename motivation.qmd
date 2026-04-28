@@ -2,19 +2,21 @@
 
 ## The Problem
 
-AutoDesk Platform Services (APS) is one of the most capable cloud platforms for working with CAD and BIM data. It can translate design files between dozens of formats, extract rich geometry and metadata from models, automate DWG processing at scale, and render 3D models interactively in a browser — all without requiring a local AutoCAD or Revit installation.
+The built environment is full of data. Layer structure, geometry, material properties, object attributes, energy performance figures, sensor readings linked to physical elements, all of it sits inside proprietary file formats that the rest of the data science world can't easily reach. The tools that can read these files (AutoCAD, Revit, Rhino) are desktop applications built for design, not analysis. They're not going to produce a ggplot2 chart or feed a Shiny dashboard.
 
-The challenge is that APS speaks REST. Every operation — uploading a file, kicking off a translation job, querying model metadata — requires constructing authenticated HTTP requests, handling base64-encoded URNs, polling asynchronous job queues, and parsing nested JSON responses. For engineers and architects who live in R, this friction is enough to make APS feel out of reach.
+The result is an unnecessary gap. Engineers and architects generate rich, spatially-grounded data every day. Data scientists who could turn that data into insight have no good way to access it. Both teams end up frustrated, exporting things to CSV by hand and losing half the structure in the process.
 
 ## The Opportunity
 
-R has become the lingua franca for quantitative work in architecture, engineering, and construction (AEC) analytics. Structural engineers use it to process sensor data. Sustainability consultants use it to model energy performance. BIM managers use it to audit model quality across large portfolios. Shiny brings these analyses to non-technical stakeholders through interactive web applications.
+R has quietly become the lingua franca for quantitative work in architecture, engineering, and construction (AEC). Structural engineers use it to crunch sensor data. Sustainability consultants model energy performance in it. BIM managers audit model quality across large portfolios with it. And Shiny brings all of that to non-technical stakeholders through interactive dashboards.
 
-What has been missing is a direct connection between R's data science ecosystem and the 3D model data locked inside CAD files. A DWG file is not just a drawing — it contains geometry, layer structure, material properties, and embedded attributes that are genuinely useful for analysis. An SVF model rendered in a browser can be linked to live data in a Shiny dashboard. A PDF exported from a DWG can be generated automatically as part of a reporting pipeline.
+What's been missing is a clean bridge between R's data science ecosystem and the 3D model data locked inside CAD files. A DWG file isn't just a drawing, it's geometry, layer structure, material properties, and embedded attributes that are genuinely interesting to analyse. An as-built point cloud from a drone survey can be compared against a design mesh to quantify construction deviations. A BIM model wired to live sensor data becomes a digital twin that a Shiny app can query in real time.
 
 ## The Solution
 
-AutoDeskR wraps the APS REST API in idiomatic R functions, handling authentication, encoding, and job polling so that you don't have to. A workflow that would otherwise require dozens of raw `httr` calls and careful reading of API documentation is reduced to a few lines:
+This book builds that bridge using the AutoDesk Platform Services (APS) cloud API as its primary engine. AutoDesk is the dominant platform in the AEC industry, and APS can translate design files between dozens of formats, extract rich geometry and metadata from BIM models, automate DWG processing at scale, and render 3D models interactively in a browser — all without a local AutoCAD or Revit installation.
+
+The catch is that APS speaks REST. Every operation means authenticated HTTP requests, base64-encoded URNs, polling asynchronous job queues, and parsing deeply nested JSON. AutoDeskR [@R-AutoDeskR] wraps all of that in idiomatic R functions. Authentication, encoding, polling — handled. A workflow that would otherwise mean dozens of raw HTTP calls comes down to a handful of lines:
 
 ``` r
 library(AutoDeskR)
@@ -25,8 +27,10 @@ upload <- uploadFile(token, "model.dwg", bucket$bucketKey)
 job    <- translateFile(token, upload$objectId, "svf")
 ```
 
-The goal is not to abstract APS away entirely — understanding the underlying API makes you more effective. Rather, AutoDeskR removes the boilerplate so you can spend your time on the analysis, not the plumbing.
+The goal isn't to paper over APS entirely. Understanding what's happening under the hood makes you more effective. AutoDeskR just removes the boilerplate so you can spend your time on the analysis, not the plumbing.
 
 ## Who This Book Is For
 
-This book is for R users who work with or alongside CAD and BIM data and want to automate, analyse, or visualise it without leaving the R environment. No prior experience with APS or AutoDesk products is assumed. If you can install an R package and run a script, you have everything you need to get started.
+This book is for R users who work with or alongside CAD and BIM data and want to automate, analyse, or visualise it without leaving the R environment. The techniques here, mesh analysis, layer analytics, digital twin patterns, point cloud processing, apply to BIM and CAD data broadly, not just data that came from AutoDesk software. AutoDesk is where we start because that's where most of the industry's data currently lives, but the analytical mindset carries over wherever the files come from.
+
+No prior experience with APS, AutoDesk, or the AEC industry is assumed. If you can install an R package and run a script, you have everything you need.

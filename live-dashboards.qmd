@@ -1,0 +1,178 @@
+---
+title: "Live Dashboards"
+---
+
+Here's where everything comes together: the 3D viewer from the [Viewer](viewer.qmd) chapter on the left, live sensor charts from [Linking Sensor Streams](sensor-streams.qmd) on the right, all in one Shiny app that refreshes automatically. This is what a digital twin dashboard looks like in R.
+
+```{mermaid}
+graph LR
+  A[getToken] --> B[viewer3D\nAutoDesk Viewer]
+  A --> C[Tandem API\nhttr2]
+  C --> D[dygraph\ntime-series chart]
+  B --> E[Shiny Dashboard]
+  D --> E
+```
+
+## Required Packages
+
+```{r}
+#| eval: false
+install.packages(c("shiny", "dygraphs", "xts", "httr2"))
+```
+
+## Helper: Fetch Stream Readings
+
+Define a reusable function that the Shiny server calls reactively:
+
+```{r}
+#| eval: false
+library(AutoDeskR)
+library(httr2)
+library(dygraphs)
+library(xts)
+library(shiny)
+
+get_stream_readings <- function(token, facility_id, stream_id, hours_back = 24) {
+  end_time   <- Sys.time()
+  start_time <- end_time - hours_back * 3600
+  resp <- request(
+    paste0("https://tandem.autodesk.com/api/v1/twins/",
+           facility_id, "/streams/", stream_id)
+  ) |>
+    req_url_query(
+      start = format(start_time, "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
+      end   = format(end_time,   "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+    ) |>
+    req_auth_bearer_token(token) |>
+    req_perform()
+  readings <- resp_body_json(resp)
+  data.frame(
+    timestamp = as.POSIXct(vapply(readings$values, `[[`, character(1), "t"),
+                            format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
+    value     = vapply(readings$values, `[[`, numeric(1), "v"),
+    stringsAsFactors = FALSE
+  )
+}
+```
+
+## App Startup
+
+Fetch the token and stream list once, before the UI and server are defined:
+
+```{r}
+#| eval: false
+myToken      <- getToken(id     = Sys.getenv("client_id"),
+                         secret = Sys.getenv("client_secret"),
+                         scope  = "data:read")$content$access_token
+myEncodedUrn <- jsonlite::base64_enc(Sys.getenv("urn"))
+facilityId   <- "urn:adsk.dtdm:facility.abc123def456"
+
+streams_resp <- request(
+  paste0("https://tandem.autodesk.com/api/v1/twins/", facilityId, "/streams")
+) |>
+  req_auth_bearer_token(myToken) |>
+  req_perform()
+streams <- resp_body_json(streams_resp)
+
+stream_choices <- setNames(
+  vapply(streams, `[[`, character(1), "id"),
+  vapply(streams, `[[`, character(1), "displayName")
+)
+```
+
+## UI Layout
+
+Viewer on the left, controls and chart on the right:
+
+```{r}
+#| eval: false
+ui <- fluidPage(
+  titlePanel("Digital Twin Dashboard"),
+  fluidRow(
+    column(7,
+      viewer3D(urn        = myEncodedUrn,
+               token      = myToken,
+               viewerType = "headless")
+    ),
+    column(5,
+      selectInput("stream_id", "Sensor stream:",
+                  choices = stream_choices),
+      sliderInput("hours_back", "Time window (hours):",
+                  min = 1, max = 168, value = 24, step = 1),
+      dygraphOutput("sensor_plot", height = "320px"),
+      tableOutput("stats_table")
+    )
+  )
+)
+```
+
+## Server Logic
+
+A `reactiveTimer` polls Tandem every 60 seconds so the chart stays current without the user having to refresh the page:
+
+```{r}
+#| eval: false
+server <- function(input, output, session) {
+
+  auto_refresh <- reactiveTimer(60000)   # 60 seconds
+
+  readings <- reactive({
+    auto_refresh()   # re-run on the timer tick
+    get_stream_readings(token       = myToken,
+                        facility_id = facilityId,
+                        stream_id   = input$stream_id,
+                        hours_back  = input$hours_back)
+  })
+
+  output$sensor_plot <- renderDygraph({
+    df   <- readings()
+    ts   <- xts(df$value, order.by = df$timestamp)
+    name <- names(stream_choices)[stream_choices == input$stream_id]
+    dygraph(ts, main = name) |>
+      dyRangeSelector() |>
+      dyOptions(fillGraph = TRUE, fillAlpha = 0.15,
+                drawGrid  = TRUE, colors   = "#367ABF") |>
+      dyAxis("y", label = "Value")
+  })
+
+  output$stats_table <- renderTable({
+    df <- readings()
+    data.frame(
+      Metric = c("Readings", "Mean", "Min", "Max"),
+      Value  = c(nrow(df),
+                 round(mean(df$value), 2),
+                 round(min(df$value),  2),
+                 round(max(df$value),  2))
+    )
+  }, striped = TRUE, bordered = TRUE, align = "lr")
+}
+
+shinyApp(ui, server)
+```
+
+::: callout-warning
+The Shiny server fetches Tandem data from R, not from the user's browser, so CORS restrictions don't apply. The server process does need outbound HTTPS access to `tandem.autodesk.com`, so check this if you're deploying on a restricted corporate network.
+:::
+
+## Deploying to shinyapps.io
+
+Keep credentials out of the app source. Pass them as server environment variables at deploy time:
+
+```{r}
+#| eval: false
+library(rsconnect)
+
+deployApp(
+  appDir     = ".",
+  appName    = "twin-dashboard",
+  appEnvVars = list(
+    client_id     = Sys.getenv("client_id"),
+    client_secret = Sys.getenv("client_secret"),
+    urn           = Sys.getenv("urn")
+  )
+)
+```
+
+::: callout-tip
+The access token retrieved at startup expires after **1 hour**. For a long-running production deployment, move `getToken()` inside `get_stream_readings()` so a fresh token is requested on every poll rather than once at startup.
+:::
