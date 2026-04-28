@@ -36,7 +36,9 @@ viewer3D(urn = myEncodedUrn, token = myToken, viewerType = "headless")
 viewer3D(urn = myEncodedUrn, token = myToken, viewerType = "vr")
 ```
 
-<img src="https://github.com/paulgovan/AutoDeskR/blob/master/inst/images/aerial.png?raw=true" height="500px"/>
+::: callout-note
+When you run `viewer3D()` in RStudio or a browser, a WebGL viewport opens and you can rotate, zoom, and click elements to inspect their properties. The viewer renders whatever SVF translation produced: layer geometry for DWG files, full BIM elements for Revit.
+:::
 
 ## Embed in a Shiny App
 

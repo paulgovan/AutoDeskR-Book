@@ -14,7 +14,7 @@ Both work on `mesh_vcg` from [Reading OBJ and STL Meshes](mesh-reading.qmd).
 #| eval: false
 library(rgl)
 open3d()
-shade3d(mesh_obj, col = "#C0C0C0", alpha = 0.9)
+shade3d(mesh_vcg, col = "#C0C0C0", alpha = 0.9)
 bg3d("white")
 axes3d()
 title3d("Aerial DWG — Translated Mesh")
@@ -30,7 +30,7 @@ title3d("Aerial DWG — Translated Mesh")
 knitr::knit_hooks$set(webgl = rgl::hook_webgl)
 
 open3d()
-shade3d(mesh_obj, col = "#4A90D9", alpha = 0.85)
+shade3d(mesh_vcg, col = "#4A90D9", alpha = 0.85)
 rglwidget()
 ```
 
@@ -52,7 +52,7 @@ cols      <- colorRampPalette(c("#2166ac", "#92c5de", "#f7f7f7",
 vert_cols <- cols[ceiling(z_norm * 99) + 1]
 
 open3d()
-shade3d(mesh_obj, col = vert_cols)
+shade3d(mesh_vcg, col = vert_cols)
 rglwidget()
 ```
 

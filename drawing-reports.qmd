@@ -66,20 +66,29 @@ cat("## Layer Summary:", drawing_name, "\n")
 
 ## Render Programmatically
 
-`quarto::quarto_render()` renders the parameterised template to a named output file. Loop over your drawing list to generate a report for each one:
+`quarto::quarto_render()` renders the parameterised template to a named output file. The template should be a **separate `.qmd` file** (e.g., `report-template.qmd`) that contains the YAML `params` block and the analysis code — not this book chapter. Save the parameterised document as `report-template.qmd`, then loop over your drawing list:
 
 ```{r}
 #| eval: false
+library(AutoDeskR)
 library(quarto)
 
+# Build a named list of URNs from the objects in your bucket
+resp  <- listObjects(token = myToken, bucket = "my-project-bucket")
+items <- resp$content$items   # data frame: objectKey, objectId, size
+
+urns <- setNames(items$objectId, items$objectKey)
+# urns[["site_plan.dwg"]]      → "urn:adsk.objects:os.object:..."
+# urns[["floor_plan_v2.dwg"]]  → "urn:adsk.objects:os.object:..."
+
 drawings <- list(
-  list(urn = urns[["site_plan.dwg"]],      name = "site_plan"),
+  list(urn = urns[["site_plan.dwg"]],     name = "site_plan"),
   list(urn = urns[["floor_plan_v2.dwg"]], name = "floor_plan_v2")
 )
 
 for (dwg in drawings) {
   quarto_render(
-    input          = "drawing-reports.qmd",
+    input          = "report-template.qmd",   # the template, not this chapter
     output_file    = paste0("report_", dwg$name, ".html"),
     execute_params = list(
       urn          = dwg$urn,

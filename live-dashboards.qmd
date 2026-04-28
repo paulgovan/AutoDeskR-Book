@@ -32,7 +32,13 @@ library(dygraphs)
 library(xts)
 library(shiny)
 
-get_stream_readings <- function(token, facility_id, stream_id, hours_back = 24) {
+get_stream_readings <- function(facility_id, stream_id, hours_back = 24) {
+  token <- getToken(
+    id     = Sys.getenv("client_id"),
+    secret = Sys.getenv("client_secret"),
+    scope  = "data:read"
+  )$content$access_token
+
   end_time   <- Sys.time()
   start_time <- end_time - hours_back * 3600
   resp <- request(
@@ -61,10 +67,10 @@ Fetch the token and stream list once, before the UI and server are defined:
 
 ```{r}
 #| eval: false
+myEncodedUrn <- jsonlite::base64_enc(Sys.getenv("urn"))
 myToken      <- getToken(id     = Sys.getenv("client_id"),
                          secret = Sys.getenv("client_secret"),
                          scope  = "data:read")$content$access_token
-myEncodedUrn <- jsonlite::base64_enc(Sys.getenv("urn"))
 facilityId   <- "urn:adsk.dtdm:facility.abc123def456"
 
 streams_resp <- request(
@@ -118,8 +124,7 @@ server <- function(input, output, session) {
 
   readings <- reactive({
     auto_refresh()   # re-run on the timer tick
-    get_stream_readings(token       = myToken,
-                        facility_id = facilityId,
+    get_stream_readings(facility_id = facilityId,
                         stream_id   = input$stream_id,
                         hours_back  = input$hours_back)
   })
@@ -173,6 +178,3 @@ deployApp(
 )
 ```
 
-::: callout-tip
-The access token retrieved at startup expires after **1 hour**. For a long-running production deployment, move `getToken()` inside `get_stream_readings()` so a fresh token is requested on every poll rather than once at startup.
-:::

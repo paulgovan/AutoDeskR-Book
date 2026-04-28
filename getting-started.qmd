@@ -131,4 +131,16 @@ With your credentials configured and a file uploaded, you are ready to explore t
 | [Design Automation](design-automation.qmd) | DWG-to-PDF conversion pipelines |
 | [Reality Capture](reality-capture.qmd) | Photo-to-3D mesh from drone or phone images |
 | [Viewer](viewer.qmd) | Embedding the 3D viewer in Shiny and R Markdown |
+| [Mesh Reading](mesh-reading.qmd) | Importing OBJ and STL files; inspecting geometry |
+| [Mesh Metrics](mesh-metrics.qmd) | Surface area, volume, bounding box |
+| [3D Visualisation](mesh-visualisation.qmd) | Interactive rgl widgets and rayshader renders |
+| [Point Cloud Analysis](point-cloud-analysis.qmd) | LAS/LAZ files; height normalisation; density rasters |
+| [Layer Analysis](layer-analysis.qmd) | Counting and summarising DWG layers |
+| [Attribute Extraction](attribute-extraction.qmd) | Reading object properties from Model Derivative |
+| [Cross-Drawing Comparison](cross-drawing-comparison.qmd) | Diffing layer tables across drawing revisions |
+| [Drawing Reports](drawing-reports.qmd) | Parameterised gt reports rendered with Quarto |
+| [Tandem Overview](tandem-overview.qmd) | Connecting to AutoDesk Tandem facilities |
+| [Sensor Streams](sensor-streams.qmd) | Fetching live sensor readings |
+| [Live Dashboards](live-dashboards.qmd) | Viewer + sensor chart in a single Shiny app |
+| [MCP Server](mcp-server.qmd) | Exposing AutoDeskR as an AI agent tool |
 | [Troubleshooting](troubleshooting.qmd) | Common errors and how to fix them |
