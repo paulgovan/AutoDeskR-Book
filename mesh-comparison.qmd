@@ -95,7 +95,11 @@ A histogram puts the distribution in context and makes it easy to spot whether d
 #| echo: false
 library(ggplot2)
 set.seed(42)
-d <- c(rexp(2400, rate = 8), runif(447, 0.3, 5))
+d <- pmax(c(
+  abs(rnorm(1700, mean = 0.022, sd = 0.016)),   # well-built areas ~22 mm
+  abs(rnorm(800,  mean = 0.083, sd = 0.025)),   # minor deviations ~83 mm
+  abs(rnorm(347,  mean = 0.210, sd = 0.060))    # problem areas ~210 mm
+), 0)
 ```
 
 ```{r}
@@ -104,6 +108,7 @@ ggplot(data.frame(deviation_mm = d * 1000), aes(x = deviation_mm)) +
   geom_vline(xintercept = 50, linetype = "dashed", colour = "#d6604d", linewidth = 0.8) +
   annotate("text", x = 55, y = Inf, label = "50 mm tolerance",
            hjust = 0, vjust = 1.5, colour = "#d6604d", size = 3.5) +
+  coord_cartesian(xlim = c(0, 400)) +
   labs(title = "As-Designed vs. As-Built Deviation",
        subtitle = "Per-vertex surface distance",
        x = "Deviation (mm)",

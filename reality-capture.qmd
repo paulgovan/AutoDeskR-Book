@@ -2,13 +2,14 @@
 title: "Reality Capture"
 ---
 
-Got a folder of overlapping photos and want a 3D mesh? That's the Reality Capture API (also called Photo-to-3D). You upload the images, AutoDesk's photogrammetry engine does the heavy lifting, and you download a georeferenced 3D model — no specialised hardware or software required.
+Got a folder of overlapping photos and want a 3D mesh? That's the Reality Capture API (also called Photo-to-3D). You upload the images, AutoDesk's photogrammetry engine does the heavy lifting, and you download a georeferenced 3D model. No specialised hardware or software required.
 
 Common uses:
--   **As-built documentation** — fly a drone over a construction site each week and generate a mesh for each visit
--   **Heritage recording** — photograph a structure with a phone and get a measurable 3D record
--   **Site topography** — turn aerial photos into a terrain mesh for civil design
--   **Mesh analysis** — feed the output into `Rvcg` via the [3D Geometry](mesh-reading.qmd) chapters
+
+- **As-built documentation** — fly a drone over a construction site each week and generate a mesh for each visit
+- **Heritage recording** — photograph a structure with a phone and get a measurable 3D record
+- **Site topography** — turn aerial photos into a terrain mesh for civil design
+- **Mesh analysis** — feed the output into `Rvcg` via the [3D Geometry](mesh-reading.qmd) chapters
 
 The full workflow goes like this:
 
@@ -55,7 +56,7 @@ myToken <- resp$content$access_token
 A **photoscene** is the container for your images and output. The `format` parameter controls what comes out the other end:
 
 | Format | Output |
-|---|---|
+|------------------------------------|------------------------------------|
 | `"rcm"` | AutoDesk ReCap project (default) |
 | `"rcs"` | ReCap point cloud — feeds into [Point Cloud Analysis](point-cloud-analysis.qmd) |
 | `"obj"` | Wavefront OBJ mesh — feeds into [Reading OBJ and STL Meshes](mesh-reading.qmd) |
@@ -146,7 +147,7 @@ status$content$photoscene$progressmsg
 ```
 
 ::: callout-warning
-**Processing time scales with image count.** A 50-image scene typically takes 5–15 minutes; 500 images may take over an hour. Set `timeout` generously — there's nothing worse than a premature timeout on an 80-minute job.
+**Processing time scales with image count.** A 50-image scene typically takes 5–15 minutes; 500 images may take over an hour. Set `timeout` generously. There's nothing worse than a premature timeout on an 80-minute job.
 :::
 
 ## Step 6: Download the Output

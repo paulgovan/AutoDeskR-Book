@@ -224,7 +224,11 @@ resp$content$progress
 
 **Problem:** `makePdf()` returns 400 Bad Request.
 
-**Solution:** Both the `source` and `destination` URLs must be **publicly accessible**. The AutoDesk cloud workers fetch and write these URLs directly. Common failures: - Private Google Drive share links (use "Anyone with the link" access) - `localhost` or `127.0.0.1` URLs (unreachable from the cloud) - Signed S3 URLs that have already expired
+**Solution:** Both the `source` and `destination` URLs must be **publicly accessible**. The AutoDesk cloud workers fetch and write these URLs directly. Common failures:
+
+- Private Google Drive share links (use "Anyone with the link" access)
+- `localhost` or `127.0.0.1` URLs (unreachable from the cloud)
+- Signed S3 URLs that have already expired
 
 ------------------------------------------------------------------------
 
@@ -238,7 +242,13 @@ resp$content$progress
 
 **Problem:** The output mesh looks poor — holes, distorted geometry, missing areas.
 
-**Solution:** Image quality is everything in photogrammetry. The most common causes of bad output: - **Too few images** — need at least 20, ideally 50+ - **Insufficient overlap** — every surface needs to appear in at least 3 photos from different angles - **Reflective or transparent surfaces** — glass and polished metal fool the matching algorithm - **Inconsistent lighting** — shots taken at different times of day with different shadows - **Camera movement instead of subject rotation** — move around the object, don't zoom from a fixed point
+**Solution:** Image quality is everything in photogrammetry. The most common causes of bad output:
+
+- **Too few images** — need at least 20, ideally 50+
+- **Insufficient overlap** — every surface needs to appear in at least 3 photos from different angles
+- **Reflective or transparent surfaces** — glass and polished metal fool the matching algorithm
+- **Inconsistent lighting** — shots taken at different times of day with different shadows
+- **Camera movement instead of subject rotation** — move around the object, don't zoom from a fixed point
 
 ------------------------------------------------------------------------
 

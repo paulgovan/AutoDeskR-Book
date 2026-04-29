@@ -2,7 +2,7 @@
 title: "AutoDesk Tandem Overview"
 ---
 
-A BIM model is a snapshot of a building at design time. A **digital twin** takes that same model and connects it to the building's live operational data — temperature sensors, occupancy counters, energy meters — so you can see what's actually happening inside, not just what was drawn. AutoDesk Tandem is APS's platform for building and querying digital twins.
+A BIM model is a snapshot of a building at design time. A **digital twin** takes that same model and connects it to the building's live operational data, temperature sensors, occupancy counters, energy meters, so you can see what's actually happening inside, not just what was drawn. AutoDesk Tandem is APS's platform for building and querying digital twins.
 
 This chapter introduces Tandem concepts and shows how to talk to the Tandem REST API directly from R using `httr2` [@R-httr2] and a standard APS token from `getToken()`. See [@autodesk-tandem] for the full API reference.
 
@@ -19,13 +19,13 @@ graph LR
 ```
 
 ::: callout-tip
-Tandem requires an active **AutoDesk Tandem subscription** in addition to an APS app registration. Authentication uses the same OAuth Bearer token as the rest of this book — no extra credential setup needed.
+Tandem requires an active **AutoDesk Tandem subscription** in addition to an APS app registration. Authentication uses the same OAuth Bearer token as the rest of this book, no extra credential setup needed.
 :::
 
 ## Twin vs. BIM Model
 
-| | BIM Model | Digital Twin |
-|---|---|---|
+|   | BIM Model | Digital Twin |
+|------------------------|------------------------|------------------------|
 | Primary data | Geometry + properties | Geometry + live sensor streams |
 | Update frequency | Per design revision | Continuous / real-time |
 | Primary use | Design & construction | Operations & maintenance |
@@ -49,7 +49,7 @@ myToken <- resp$content$access_token
 
 ## Listing Facilities
 
-A *facility* in Tandem is the digital twin of a building or site — the top-level container for model data and sensor streams. List all facilities your token can access:
+A *facility* in Tandem is the digital twin of a building or site, the top-level container for model data and sensor streams. List all facilities your token can access:
 
 ```{r}
 #| eval: false
@@ -90,7 +90,7 @@ cat("Linked URNs:", length(facility$links), "\n")
 #> Linked URNs:  2
 ```
 
-`facility$links` contains the APS Model Derivative URNs of the BIM models embedded in this twin — the same URNs you'd pass to `getObjectTree()` or `getData()`, which is what makes the `objectId` the key that links the two worlds together.
+`facility$links` contains the APS Model Derivative URNs of the BIM models embedded in this twin, the same URNs you'd pass to `getObjectTree()` or `getData()`, which is what makes the `objectId` the key that links the two worlds together.
 
 ## Looking Up an Element
 

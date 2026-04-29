@@ -657,8 +657,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The AutoDesk Viewer is a WebGL-based 3D model browser that runs entirely in the browser. With AutoDeskR, you can embed it in a Shiny app with a single function call — no JavaScript required. Rotate, zoom, and inspect your models without leaving R.</p>
-<p>Before launching the viewer, you need a file translated to SVF format and its encoded URN — the <a href="./model-derivative.html">Model Derivative</a> chapter covers both steps.</p>
+<p>The AutoDesk Viewer is a WebGL-based 3D model browser that runs entirely in the browser. With AutoDeskR, you can embed it in a Shiny app with a single function call, no JavaScript required. Rotate, zoom, and inspect your models without leaving R.</p>
+<p>Before launching the viewer, you need a file translated to SVF format and its encoded URN. The <a href="./model-derivative.html">Model Derivative</a> chapter covers both steps.</p>
 <section id="launch-the-viewer" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="launch-the-viewer"><span class="header-section-number">6.1</span> Launch the Viewer</h2>
 <p><code>viewer3D()</code> opens a Shiny app with the viewer pre-loaded. The <code>viewerType</code> parameter controls the UI chrome:</p>
@@ -737,7 +737,7 @@ Note
 </div>
 <section id="viewer-in-a-tab-panel" class="level3" data-number="6.2.1">
 <h3 data-number="6.2.1" class="anchored" data-anchor-id="viewer-in-a-tab-panel"><span class="header-section-number">6.2.1</span> Viewer in a Tab Panel</h3>
-<p>Headless mode is perfect for a multi-tab layout — the viewer sits in one tab and data tables or charts in another:</p>
+<p>Headless mode is perfect for a multi-tab layout. The viewer sits in one tab and data tables or charts in another:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabsetPanel</span>(</span>
@@ -764,7 +764,7 @@ Note
 </section>
 <section id="viewer-sensor-dashboard" class="level3" data-number="6.2.2">
 <h3 data-number="6.2.2" class="anchored" data-anchor-id="viewer-sensor-dashboard"><span class="header-section-number">6.2.2</span> Viewer + Sensor Dashboard</h3>
-<p>Pair the headless viewer with a <code>dygraphs</code> time-series panel for a live digital twin layout — see the <a href="./live-dashboards.html">Live Dashboards</a> chapter for the full implementation:</p>
+<p>Pair the headless viewer with a <code>dygraphs</code> time-series panel for a live digital twin layout. See the <a href="./live-dashboards.html">Live Dashboards</a> chapter for the full implementation:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dygraphs)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -779,7 +779,7 @@ Note
 </section>
 <section id="whats-displayed" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="whats-displayed"><span class="header-section-number">6.3</span> What’s Displayed</h2>
-<p>The viewer renders whatever the SVF translation produced. For a DWG file, that’s the full drawing geometry organised by layer. For a Revit file, it’s the full BIM model with element properties accessible in the side panel. Click any element in the viewer to inspect its properties — the same data that <code>getData()</code> returns programmatically.</p>
+<p>The viewer renders whatever the SVF translation produced. For a DWG file, that’s the full drawing geometry organised by layer. For a Revit file, it’s the full BIM model with element properties accessible in the side panel. Click any element in the viewer to inspect its properties, the same data that <code>getData()</code> returns programmatically.</p>
 
 
 </section>

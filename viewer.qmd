@@ -2,9 +2,9 @@
 title: "Viewer"
 ---
 
-The AutoDesk Viewer is a WebGL-based 3D model browser that runs entirely in the browser. With AutoDeskR, you can embed it in a Shiny app with a single function call — no JavaScript required. Rotate, zoom, and inspect your models without leaving R.
+The AutoDesk Viewer is a WebGL-based 3D model browser that runs entirely in the browser. With AutoDeskR, you can embed it in a Shiny app with a single function call, no JavaScript required. Rotate, zoom, and inspect your models without leaving R.
 
-Before launching the viewer, you need a file translated to SVF format and its encoded URN — the [Model Derivative](model-derivative.qmd) chapter covers both steps.
+Before launching the viewer, you need a file translated to SVF format and its encoded URN. The [Model Derivative](model-derivative.qmd) chapter covers both steps.
 
 ## Launch the Viewer
 
@@ -60,7 +60,7 @@ shinyApp(ui, server)
 
 ### Viewer in a Tab Panel
 
-Headless mode is perfect for a multi-tab layout — the viewer sits in one tab and data tables or charts in another:
+Headless mode is perfect for a multi-tab layout. The viewer sits in one tab and data tables or charts in another:
 
 ```{r}
 #| eval: false
@@ -89,7 +89,7 @@ shinyApp(ui, server)
 
 ### Viewer + Sensor Dashboard
 
-Pair the headless viewer with a `dygraphs` time-series panel for a live digital twin layout — see the [Live Dashboards](live-dashboards.qmd) chapter for the full implementation:
+Pair the headless viewer with a `dygraphs` time-series panel for a live digital twin layout. See the [Live Dashboards](live-dashboards.qmd) chapter for the full implementation:
 
 ```{r}
 #| eval: false
@@ -105,4 +105,4 @@ ui <- fluidPage(
 
 ## What's Displayed
 
-The viewer renders whatever the SVF translation produced. For a DWG file, that's the full drawing geometry organised by layer. For a Revit file, it's the full BIM model with element properties accessible in the side panel. Click any element in the viewer to inspect its properties — the same data that `getData()` returns programmatically.
+The viewer renders whatever the SVF translation produced. For a DWG file, that's the full drawing geometry organised by layer. For a Revit file, it's the full BIM model with element properties accessible in the side panel. Click any element in the viewer to inspect its properties, the same data that `getData()` returns programmatically.

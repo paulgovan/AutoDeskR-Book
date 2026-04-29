@@ -2,7 +2,7 @@
 title: "Authentication"
 ---
 
-Before AutoDeskR can talk to any APS endpoint, it needs a token — a temporary credential that proves your app is who it says it is. This chapter covers how to get one, keep it safe, and deal with the inevitable moment when it expires.
+Before AutoDeskR can talk to any APS endpoint, it needs a token, a temporary credential that proves your app is who it says it is. This chapter covers how to get one, keep it safe, and deal with the inevitable moment when it expires.
 
 APS uses **2-legged OAuth 2.0** (client credentials flow): your app sends its Client ID and Secret, and AutoDesk hands back an access token. No user login involved, perfect for server-side scripts and automated pipelines.
 
@@ -34,7 +34,7 @@ Reload the file without restarting R:
 readRenviron("~/.Renviron")
 ```
 
-Then pull values at runtime with `Sys.getenv()` — credentials never appear in your code. See [Wrapping APIs](https://httr2.r-lib.org/articles/wrapping-apis.html) in the httr2 docs for more on this pattern.
+Then pull values at runtime with `Sys.getenv()`. Credentials never appear in your code. See [Wrapping APIs](https://httr2.r-lib.org/articles/wrapping-apis.html) in the httr2 docs for more on this pattern.
 
 ## Get an Access Token
 

@@ -657,7 +657,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Before AutoDeskR can talk to any APS endpoint, it needs a token — a temporary credential that proves your app is who it says it is. This chapter covers how to get one, keep it safe, and deal with the inevitable moment when it expires.</p>
+<p>Before AutoDeskR can talk to any APS endpoint, it needs a token, a temporary credential that proves your app is who it says it is. This chapter covers how to get one, keep it safe, and deal with the inevitable moment when it expires.</p>
 <p>APS uses <strong>2-legged OAuth 2.0</strong> (client credentials flow): your app sends its Client ID and Secret, and AutoDesk hands back an access token. No user login involved, perfect for server-side scripts and automated pipelines.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
@@ -688,7 +688,7 @@ urn = "YOUR_URN"</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readRenviron</span>(<span class="st">"~/.Renviron"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Then pull values at runtime with <code>Sys.getenv()</code> — credentials never appear in your code. See <a href="https://httr2.r-lib.org/articles/wrapping-apis.html">Wrapping APIs</a> in the httr2 docs for more on this pattern.</p>
+<p>Then pull values at runtime with <code>Sys.getenv()</code>. Credentials never appear in your code. See <a href="https://httr2.r-lib.org/articles/wrapping-apis.html">Wrapping APIs</a> in the httr2 docs for more on this pattern.</p>
 </section>
 <section id="get-an-access-token" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="get-an-access-token"><span class="header-section-number">1.2</span> Get an Access Token</h2>

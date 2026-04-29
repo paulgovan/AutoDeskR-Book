@@ -2,7 +2,7 @@
 title: "Point Cloud Analysis"
 ---
 
-The [Reality Capture](reality-capture.qmd) API can output a point cloud alongside (or instead of) a mesh. Once you've converted it to LAS format, `lidR` [@R-lidR] takes over — height statistics, density maps, canopy models, voxel volumes. This is the go-to tool for site survey analysis.
+The [Reality Capture](reality-capture.qmd) API can output a point cloud alongside (or instead of) a mesh. Once you've converted it to LAS format, `lidR` [@R-lidR] takes over, height statistics, density maps, canopy models, voxel volumes. This is the go-to tool for site survey analysis.
 
 ## Getting the Point Cloud
 
@@ -85,7 +85,7 @@ ggplot(data.frame(z = z_sample), aes(x = z)) +
 
 ## Canopy Height Model
 
-Rasterise the maximum Z per cell to produce a canopy height model — great for visualising roof heights or vegetation structure across the site:
+Rasterise the maximum Z per cell to produce a canopy height model, great for visualising roof heights or vegetation structure across the site:
 
 ```{r}
 #| eval: false

@@ -6,20 +6,6 @@ This book uses the [AutoDeskR](https://github.com/paulgovan/AutoDeskR) R package
 
 Whether you're a data scientist who just inherited a folder of DWG files, or a BIM manager who wants to automate something that currently takes three software packages and a prayer, this book is for you.
 
-## Why R?
-
-Fair question. Most AEC professionals use Python, .NET, or whatever scripting language AutoCAD yells at you in. So why drag R into this?
-
-**Because the audience isn't architects, it's analysts.** The real use case here is the data scientist who gets handed a folder of DWG files and told to "make a dashboard out of this." That person lives in R. They know dplyr, they know ggplot2, they know Shiny. AutoDeskR gives them a bridge to the CAD world without forcing them to learn a whole new stack.
-
-**Because the Python SDK is for building applications.** It's great if you're writing production software. But if you want to pull geometry data, run some summary statistics, and produce a polished report with a table and a plot, R's ecosystem (ggplot2, gt, Quarto) is still unmatched. The wrapper isn't competing with the Python SDK; it's serving a different job.
-
-**Because thin wrappers encode real expertise.** Yes, a sophisticated user could call the APS REST API directly with `httr2`. But do they know that the object URN needs to be Base64-encoded before passing it to the Model Derivative API? That tokens expire after exactly 3600 seconds? That bucket names are globally unique across *all* APS applications? AutoDeskR quietly handles all of that so you can focus on the analysis, not the plumbing.
-
-**Because API drift is a fact of life, not a dealbreaker.** AutoDesk updates its APIs. So do Google, AWS, and everyone else. Staying close to the API surface means fewer moving parts to break, and direct `httr2` calls would have exactly the same maintenance problem with more boilerplate.
-
-**Because the free tier is for experimenting, and that's the whole point.** Once you've prototyped something worth running in production, you're almost certainly inside an organisation that's already paying for AutoDesk products, and API access comes with the subscription.
-
 ## What You'll Learn
 
 Each chapter covers a different piece of the BIM and CAD analytics ecosystem:

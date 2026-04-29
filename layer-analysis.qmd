@@ -2,7 +2,7 @@
 title: "Layer Structure Analysis"
 ---
 
-Every DWG and DXF file organises its geometry into named layers. Unlock those layers through the [Model Derivative](model-derivative.qmd) API and you've got a structured dataset ready for `dplyr`. This chapter extracts per-layer element counts and areas and charts them — no CAD software required.
+Every DWG and DXF file organises its geometry into named layers. Unlock those layers through the [Model Derivative](model-derivative.qmd) API and you've got a structured dataset ready for `dplyr`. This chapter extracts per-layer element counts and areas and charts them, no CAD software required.
 
 The data flows like this:
 

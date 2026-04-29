@@ -2,7 +2,7 @@
 title: "Linking Sensor Streams"
 ---
 
-Each element in a Tandem facility can have sensor streams attached to it — named time-series channels that report temperature, CO₂, occupancy, energy consumption, or whatever the building management system sends. Because streams are keyed to the same `objectId` that `getObjectTree()` and `getData()` use, joining live sensor data to BIM metadata is just a regular table join.
+Each element in a Tandem facility can have sensor streams attached to it, named time-series channels that report temperature, CO₂, occupancy, energy consumption, or whatever the building management system sends. Because streams are keyed to the same `objectId` that `getObjectTree()` and `getData()` use, joining live sensor data to BIM metadata is just a regular table join.
 
 This chapter uses the facility set up in [AutoDesk Tandem Overview](tandem-overview.qmd).
 

@@ -648,7 +648,6 @@ div.csl-indent {
   <ul>
   <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
   <ul class="collapse">
-  <li><a href="#why-r" id="toc-why-r" class="nav-link" data-scroll-target="#why-r">Why R?</a></li>
   <li><a href="#what-youll-learn" id="toc-what-youll-learn" class="nav-link" data-scroll-target="#what-youll-learn">What You’ll Learn</a></li>
   <li><a href="#how-this-book-is-structured" id="toc-how-this-book-is-structured" class="nav-link" data-scroll-target="#how-this-book-is-structured">How This Book is Structured</a></li>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
@@ -700,15 +699,6 @@ div.csl-indent {
 <p>The built environment generates an enormous amount of data. Architectural drawings, structural models, survey point clouds, energy performance figures, sensor readings from every floor of every building. Most of it sits inside proprietary formats that R has historically had no good way to reach. <em>R for the Built Environment</em> changes that.</p>
 <p>This book uses the <a href="https://github.com/paulgovan/AutoDeskR">AutoDeskR</a> R package <span class="citation" data-cites="R-AutoDeskR">(<a href="references.html#ref-R-AutoDeskR" role="doc-biblioref">Govan 2024</a>)</span> and the <a href="https://aps.autodesk.com">AutoDesk Platform Services (APS)</a> cloud API as the primary bridge to that data, translating design files, extracting geometry, connecting live sensor streams, and embedding interactive 3D models in Shiny dashboards. AutoDesk is the dominant platform in the AEC industry, so it’s a practical place to start. But the analytical techniques here, mesh analysis, layer analytics, digital twin patterns, MCP tool exposure, apply to any BIM or CAD data, wherever it comes from.</p>
 <p>Whether you’re a data scientist who just inherited a folder of DWG files, or a BIM manager who wants to automate something that currently takes three software packages and a prayer, this book is for you.</p>
-<section id="why-r" class="level2">
-<h2 class="anchored" data-anchor-id="why-r">Why R?</h2>
-<p>Fair question. Most AEC professionals use Python, .NET, or whatever scripting language AutoCAD yells at you in. So why drag R into this?</p>
-<p><strong>Because the audience isn’t architects, it’s analysts.</strong> The real use case here is the data scientist who gets handed a folder of DWG files and told to “make a dashboard out of this.” That person lives in R. They know dplyr, they know ggplot2, they know Shiny. AutoDeskR gives them a bridge to the CAD world without forcing them to learn a whole new stack.</p>
-<p><strong>Because the Python SDK is for building applications.</strong> It’s great if you’re writing production software. But if you want to pull geometry data, run some summary statistics, and produce a polished report with a table and a plot, R’s ecosystem (ggplot2, gt, Quarto) is still unmatched. The wrapper isn’t competing with the Python SDK; it’s serving a different job.</p>
-<p><strong>Because thin wrappers encode real expertise.</strong> Yes, a sophisticated user could call the APS REST API directly with <code>httr2</code>. But do they know that the object URN needs to be Base64-encoded before passing it to the Model Derivative API? That tokens expire after exactly 3600 seconds? That bucket names are globally unique across <em>all</em> APS applications? AutoDeskR quietly handles all of that so you can focus on the analysis, not the plumbing.</p>
-<p><strong>Because API drift is a fact of life, not a dealbreaker.</strong> AutoDesk updates its APIs. So do Google, AWS, and everyone else. Staying close to the API surface means fewer moving parts to break, and direct <code>httr2</code> calls would have exactly the same maintenance problem with more boilerplate.</p>
-<p><strong>Because the free tier is for experimenting, and that’s the whole point.</strong> Once you’ve prototyped something worth running in production, you’re almost certainly inside an organisation that’s already paying for AutoDesk products, and API access comes with the subscription.</p>
-</section>
 <section id="what-youll-learn" class="level2">
 <h2 class="anchored" data-anchor-id="what-youll-learn">What You’ll Learn</h2>
 <p>Each chapter covers a different piece of the BIM and CAD analytics ecosystem:</p>
