@@ -37,11 +37,12 @@ Each chapter covers a different piece of the BIM and CAD analytics ecosystem:
 
 ## How This Book is Structured
 
-The book is organised into seven parts. You don't have to read them in order, each chapter is reasonably self-contained, but the parts do build on each other if you want the full picture.
+The book is organised into eight parts. You don't have to read them in order, each chapter is reasonably self-contained, but the parts do build on each other if you want the full picture.
 
 | Part | Chapters | What you'll do |
 |----|----|----|
-| **Front Matter** | Motivation, Getting Started, Acknowledgements | Understand the why; set up credentials |
+| **Front Matter** | Motivation, Acknowledgements | Understand the why |
+| **Getting Started** | Getting Started | Install the package and make your first API call |
 | **AutoDesk Platform Services** | Authentication → Viewer | The six main APS APIs, start to finish |
 | **3D Geometry & Meshes** | Reading → Visualisation → Point Clouds → Comparison | Import, measure, and compare translated mesh files |
 | **DWG & DXF Analytics** | Layer Analysis → Attributes → Comparison → Reports | Extract meaning from drawing data |

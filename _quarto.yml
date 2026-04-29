@@ -17,9 +17,11 @@ book:
     - part: "Front Matter"
       chapters:
         - motivation.qmd
-        - getting-started.qmd
         - acknowledgements.qmd
         - license.qmd
+    - part: "Getting Started"
+      chapters:
+        - getting-started.qmd
     - part: "AutoDesk Platform Services"
       chapters:
         - authentication.qmd
@@ -68,6 +70,11 @@ format:
     geometry: margin=1in
     fontsize: 11pt
     colorlinks: true
-    linkcolor: "367ABF"
+    linkcolor: bookblue
+    header-includes: |
+      \usepackage{xcolor}
+      \definecolor{bookblue}{HTML}{367ABF}
+  epub:
+    cover-image: cover.png
 
 editor: visual

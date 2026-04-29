@@ -1,46 +1,82 @@
 [
   {
-    "objectID": "design-automation.html",
-    "href": "design-automation.html",
-    "title": "4  Design Automation",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "R for the Built Environment",
     "section": "",
-    "text": "4.1 Convert a DWG to PDF\nNeed to convert a DWG to PDF without spinning up an AutoCAD licence? Design Automation is AutoDesk’s answer to cloud-based CAD scripting. You submit a work item, AutoDesk runs it on their infrastructure, and the output lands in a destination URL you specify.\nThis chapter focuses on the most common use case: DWG → PDF.\nmakePdf() submits the conversion job. The token needs the code:all scope. This is specific to Design Automation and different from the data scopes used elsewhere.\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"code:all\"\n)\nmyToken &lt;- resp$content$access_token\nmySource      &lt;- \"http://download.autodesk.com/us/samplefiles/acad/visualization_-_aerial.dwg\"\nmyDestination &lt;- \"https://drive.google.com/folderview?id=0BygncDVHf60mTDZVNDltLThLNmM&usp=sharing\"\n\nresp         &lt;- makePdf(source = mySource, destination = myDestination, token = myToken)\nmyWorkItemId &lt;- resp$content$id\nresp$content\n#&gt; $id\n#&gt; [1] \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"\n#&gt;\n#&gt; $status\n#&gt; [1] \"pending\"\n#&gt;\n#&gt; $stats$timeQueued\n#&gt; [1] \"2026-04-23T10:15:30.412Z\"",
+    "text": "Preface\nThe built environment generates an enormous amount of data. Architectural drawings, structural models, survey point clouds, energy performance figures, sensor readings from every floor of every building. Most of it sits inside proprietary formats that R has historically had no good way to reach. R for the Built Environment changes that.\nThis book uses the AutoDeskR R package (Govan 2024) and the AutoDesk Platform Services (APS) cloud API as the primary bridge to that data, translating design files, extracting geometry, connecting live sensor streams, and embedding interactive 3D models in Shiny dashboards. AutoDesk is the dominant platform in the AEC industry, so it’s a practical place to start. But the analytical techniques here, mesh analysis, layer analytics, digital twin patterns, MCP tool exposure, apply to any BIM or CAD data, wherever it comes from.\nWhether you’re a data scientist who just inherited a folder of DWG files, or a BIM manager who wants to automate something that currently takes three software packages and a prayer, this book is for you.",
     "crumbs": [
-      "AutoDesk Platform Services",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Design Automation</span>"
+      "Preface"
     ]
   },
   {
-    "objectID": "design-automation.html#convert-a-dwg-to-pdf",
-    "href": "design-automation.html#convert-a-dwg-to-pdf",
-    "title": "4  Design Automation",
-    "section": "",
-    "text": "Warning\n\n\n\nBoth source and destination must be publicly accessible URLs. Private Google Drive links, localhost paths, and short-lived signed S3 URLs won’t work. The AutoDesk cloud workers need to be able to reach them directly. Use a public host or a pre-signed URL with plenty of time left on it.",
+    "objectID": "index.html#why-r",
+    "href": "index.html#why-r",
+    "title": "R for the Built Environment",
+    "section": "Why R?",
+    "text": "Why R?\nFair question. Most AEC professionals use Python, .NET, or whatever scripting language AutoCAD yells at you in. So why drag R into this?\nBecause the audience isn’t architects, it’s analysts. The real use case here is the data scientist who gets handed a folder of DWG files and told to “make a dashboard out of this.” That person lives in R. They know dplyr, they know ggplot2, they know Shiny. AutoDeskR gives them a bridge to the CAD world without forcing them to learn a whole new stack.\nBecause the Python SDK is for building applications. It’s great if you’re writing production software. But if you want to pull geometry data, run some summary statistics, and produce a polished report with a table and a plot, R’s ecosystem (ggplot2, gt, Quarto) is still unmatched. The wrapper isn’t competing with the Python SDK; it’s serving a different job.\nBecause thin wrappers encode real expertise. Yes, a sophisticated user could call the APS REST API directly with httr2. But do they know that the object URN needs to be Base64-encoded before passing it to the Model Derivative API? That tokens expire after exactly 3600 seconds? That bucket names are globally unique across all APS applications? AutoDeskR quietly handles all of that so you can focus on the analysis, not the plumbing.\nBecause API drift is a fact of life, not a dealbreaker. AutoDesk updates its APIs. So do Google, AWS, and everyone else. Staying close to the API surface means fewer moving parts to break, and direct httr2 calls would have exactly the same maintenance problem with more boilerplate.\nBecause the free tier is for experimenting, and that’s the whole point. Once you’ve prototyped something worth running in production, you’re almost certainly inside an organisation that’s already paying for AutoDesk products, and API access comes with the subscription.",
     "crumbs": [
-      "AutoDesk Platform Services",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Design Automation</span>"
+      "Preface"
     ]
   },
   {
-    "objectID": "design-automation.html#poll-for-completion",
-    "href": "design-automation.html#poll-for-completion",
-    "title": "4  Design Automation",
-    "section": "4.2 Poll for Completion",
-    "text": "4.2 Poll for Completion\nUse the work item id to check status. A simple DWG typically takes 15–30 seconds; complex drawings with many layers or external references take longer.\n\nrepeat {\n  resp &lt;- checkPdf(id = myWorkItemId, token = myToken)\n  cat(\"Status:\", resp$content$status, \"\\n\")\n  if (resp$content$status == \"success\") break\n  Sys.sleep(5)\n}\n#&gt; Status: pending\n#&gt; Status: inprogress\n#&gt; Status: success\n\nThe full timing breakdown when it’s done:\n\nresp$content\n#&gt; $id\n#&gt; [1] \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"\n#&gt;\n#&gt; $status\n#&gt; [1] \"success\"\n#&gt;\n#&gt; $stats$timeQueued\n#&gt; [1] \"2026-04-23T10:15:30.412Z\"\n#&gt;\n#&gt; $stats$timeDownloadStarted\n#&gt; [1] \"2026-04-23T10:15:31.804Z\"\n#&gt;\n#&gt; $stats$timeInstructionsStarted\n#&gt; [1] \"2026-04-23T10:15:34.217Z\"\n#&gt;\n#&gt; $stats$timeFinished\n#&gt; [1] \"2026-04-23T10:15:48.993Z\"\n\nOnce status is \"success\", the PDF is waiting at your destination URL.",
+    "objectID": "index.html#what-youll-learn",
+    "href": "index.html#what-youll-learn",
+    "title": "R for the Built Environment",
+    "section": "What You’ll Learn",
+    "text": "What You’ll Learn\nEach chapter covers a different piece of the BIM and CAD analytics ecosystem:\n\nAuthentication — grab an OAuth token in one line and never think about it again\nData Management — upload files to the cloud, wrangle buckets, and pull objects back down\nModel Derivative — translate design files into OBJ, STL, and SVF; extract geometry and metadata\nDesign Automation — run DWG-to-PDF conversion in the cloud, no AutoCAD required\nReality Capture — turn a set of overlapping photos into a 3D mesh\nViewer — embed a live 3D model viewer in a Shiny app with two lines of code\n3D Geometry & Meshes — import, measure, and visualise translated mesh files\nDWG & DXF Analytics — parse layer structure, extract attributes, compare drawing revisions\nDigital Twins — link live sensor data to BIM elements via AutoDesk Tandem\nMCP Server — expose AutoDeskR as an AI agent tool so LLMs can query BIM models directly",
     "crumbs": [
-      "AutoDesk Platform Services",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Design Automation</span>"
+      "Preface"
     ]
   },
   {
-    "objectID": "design-automation.html#batch-conversion",
-    "href": "design-automation.html#batch-conversion",
-    "title": "4  Design Automation",
-    "section": "4.3 Batch Conversion",
-    "text": "4.3 Batch Conversion\nConverting a folder of DWGs is just a loop:\n\ndwg_urls  &lt;- c(\n  \"https://files.example.com/floor_plan.dwg\",\n  \"https://files.example.com/site_plan.dwg\",\n  \"https://files.example.com/elevations.dwg\"\n)\ndest_base &lt;- \"https://output.example.com/pdfs/\"\n\njob_ids &lt;- vapply(dwg_urls, function(url) {\n  fname &lt;- sub(\".*/\", \"\", url)\n  resp  &lt;- makePdf(source      = url,\n                   destination = paste0(dest_base, sub(\"\\\\.dwg$\", \".pdf\", fname)),\n                   token       = myToken)\n  resp$content$id\n}, character(1))\n\n# Poll until all jobs complete\nrepeat {\n  statuses &lt;- vapply(job_ids, function(id) {\n    checkPdf(id = id, token = myToken)$content$status\n  }, character(1))\n  cat(format(Sys.time(), \"%H:%M:%S\"), \"—\", paste(statuses, collapse = \" | \"), \"\\n\")\n  if (all(statuses == \"success\")) break\n  Sys.sleep(10)\n}\n#&gt; 10:20:05 — pending | pending | inprogress\n#&gt; 10:20:15 — success | inprogress | inprogress\n#&gt; 10:20:25 — success | success | success",
+    "objectID": "index.html#how-this-book-is-structured",
+    "href": "index.html#how-this-book-is-structured",
+    "title": "R for the Built Environment",
+    "section": "How This Book is Structured",
+    "text": "How This Book is Structured\nThe book is organised into eight parts. You don’t have to read them in order, each chapter is reasonably self-contained, but the parts do build on each other if you want the full picture.\n\n\n\n\n\n\n\n\nPart\nChapters\nWhat you’ll do\n\n\n\n\nFront Matter\nMotivation, Acknowledgements\nUnderstand the why\n\n\nGetting Started\nGetting Started\nInstall the package and make your first API call\n\n\nAutoDesk Platform Services\nAuthentication → Viewer\nThe six main APS APIs, start to finish\n\n\n3D Geometry & Meshes\nReading → Visualisation → Point Clouds → Comparison\nImport, measure, and compare translated mesh files\n\n\nDWG & DXF Analytics\nLayer Analysis → Attributes → Comparison → Reports\nExtract meaning from drawing data\n\n\nDigital Twins\nTandem Overview → Sensor Streams → Live Dashboards\nJoin live sensor readings to BIM elements\n\n\nAI Integration\nMCP Server\nExpose AutoDeskR as a tool for AI agents\n\n\nReference\nCase Study, Function Reference, Troubleshooting\nWorked example, lookup tables, and help",
     "crumbs": [
-      "AutoDesk Platform Services",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Design Automation</span>"
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "R for the Built Environment",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nTo follow along you’ll need:\n\nR (version 4.0 or later) and, optionally, RStudio\nA free AutoDesk account with an APS application registered at aps.autodesk.com.The Getting Started chapter walks you through it step by step\nAn internet connection (all the action happens in AutoDesk’s cloud)\n\nNo prior CAD or BIM experience assumed. If you’re comfortable running an R script, you’re ready.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "R for the Built Environment",
+    "section": "Installation",
+    "text": "Installation\nInstall the stable release from CRAN:\ninstall.packages(\"AutoDeskR\")\nOr grab the development version from GitHub if you like living on the edge:\ndevtools::install_github(\"paulgovan/AutoDeskR\")",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use-this-book",
+    "href": "index.html#how-to-use-this-book",
+    "title": "R for the Built Environment",
+    "section": "How to Use This Book",
+    "text": "How to Use This Book\nNew to APS? Start with Getting Started and work through the chapters in order, each one builds on the previous. Already know the APS basics? Jump straight to whatever chapter covers your use case. The Troubleshooting chapter is always there when something goes sideways.\nAll code examples are copy-paste ready and work with #| eval: false so they won’t execute during book rendering but will run just fine in your R session.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#where-this-is-headed",
+    "href": "index.html#where-this-is-headed",
+    "title": "R for the Built Environment",
+    "section": "Where This is Headed",
+    "text": "Where This is Headed\nThis book covers a lot of ground, but the APS API catalogue is bigger than any one book. Here’s what’s on the horizon.\nNear-term package additions — AutoDeskR currently wraps the six core APS APIs. The next wave of functions will cover the richer ACC project hierarchy (Hubs → Projects → Folders → Items → Versions), which is required for working with BIM 360 and ACC projects where files live in managed folder trees rather than flat OSS buckets. Alongside that: Webhooks (so your pipelines can react to events instead of polling), Construction Issues (live project health data in R), and Account Admin (bulk user and project management via script instead of clicking through a web interface a hundred times).\nAdvanced Design Automation — makePdf() is just the beginning. APS Design Automation also supports Revit, 3ds Max, Inventor, and Fusion, meaning you can run custom scripts against any of those engines from R without installing the software locally. Generalised submitWorkItem() and listEngines() functions are planned to unlock that.\nLonger-term — Model Coordination (clash detection and model sets, once the ACC hierarchy is in place), Forma (AutoDesk’s AEC industry cloud), and Cost Management (budget and financial data for project dashboards) are all on the radar. And as IFC, Speckle, and other open BIM platforms mature, they belong here too. The guiding rule: if it takes built environment data as its primary input, it belongs in this book.\nTrack progress and file requests at github.com/paulgovan/AutoDeskR.\n\n\n\n\nGovan, Paul. 2024. AutoDeskR: An Interface to the AutoDesk Platform Services APIs. https://github.com/paulgovan/AutoDeskR.",
+    "crumbs": [
+      "Preface"
     ]
   },
   {
@@ -85,94 +121,6 @@
     "crumbs": [
       "Front Matter",
       "Motivation"
-    ]
-  },
-  {
-    "objectID": "getting-started.html",
-    "href": "getting-started.html",
-    "title": "Getting Started",
-    "section": "",
-    "text": "System Requirements\nFive steps stand between you and your first successful API call. By the end of this chapter you’ll have credentials stored safely, AutoDeskR installed, and a file sitting in a cloud bucket ready for translation.",
-    "crumbs": [
-      "Front Matter",
-      "Getting Started"
-    ]
-  },
-  {
-    "objectID": "getting-started.html#system-requirements",
-    "href": "getting-started.html#system-requirements",
-    "title": "Getting Started",
-    "section": "",
-    "text": "R 4.0 or later\nRStudio (optional but recommended)\nAn internet connection\nA free AutoDesk account (created below)",
-    "crumbs": [
-      "Front Matter",
-      "Getting Started"
-    ]
-  },
-  {
-    "objectID": "getting-started.html#step-1-create-an-autodesk-account",
-    "href": "getting-started.html#step-1-create-an-autodesk-account",
-    "title": "Getting Started",
-    "section": "Step 1: Create an AutoDesk Account",
-    "text": "Step 1: Create an AutoDesk Account\nIf you do not already have an AutoDesk account, register for free at autodesk.com. A standard account gives you access to the APS free tier, which is sufficient for development and moderate usage.",
-    "crumbs": [
-      "Front Matter",
-      "Getting Started"
-    ]
-  },
-  {
-    "objectID": "getting-started.html#step-2-register-an-aps-application",
-    "href": "getting-started.html#step-2-register-an-aps-application",
-    "title": "Getting Started",
-    "section": "Step 2: Register an APS Application",
-    "text": "Step 2: Register an APS Application\nAPS uses OAuth 2.0 — every API call needs a token, and every token comes from a registered app. Here’s how to get one:\n\nGo to the APS Developer Portal and sign in.\nClick My Apps → Create Application.\nGive your app a name (e.g., AutoDeskR-dev) and enable the APIs you need. For the examples in this book: Data Management, Model Derivative, and Design Automation.\nClick Create. Your Client ID and Client Secret appear on the app detail page.\n\nKeep these private. If they end up in a public Git repo, rotate them immediately.",
-    "crumbs": [
-      "Front Matter",
-      "Getting Started"
-    ]
-  },
-  {
-    "objectID": "getting-started.html#step-3-store-credentials-securely",
-    "href": "getting-started.html#step-3-store-credentials-securely",
-    "title": "Getting Started",
-    "section": "Step 3: Store Credentials Securely",
-    "text": "Step 3: Store Credentials Securely\nThe safest way to use credentials in R is through environment variables stored in ~/.Renviron. Open or create that file:\nusethis::edit_r_environ()\nAdd the following lines, replacing the placeholder values:\nclient_id=your_client_id_here\nclient_secret=your_client_secret_here\nSave the file and restart R. You can then retrieve the values in any script without hard-coding them:\nid     &lt;- Sys.getenv(\"client_id\")\nsecret &lt;- Sys.getenv(\"client_secret\")\nSee the Authentication chapter for a full explanation of OAuth scopes and token management.",
-    "crumbs": [
-      "Front Matter",
-      "Getting Started"
-    ]
-  },
-  {
-    "objectID": "getting-started.html#step-4-install-autodeskr",
-    "href": "getting-started.html#step-4-install-autodeskr",
-    "title": "Getting Started",
-    "section": "Step 4: Install AutoDeskR",
-    "text": "Step 4: Install AutoDeskR\nInstall the stable release from CRAN:\ninstall.packages(\"AutoDeskR\")\nOr install the development version from GitHub:\ndevtools::install_github(\"paulgovan/AutoDeskR\")",
-    "crumbs": [
-      "Front Matter",
-      "Getting Started"
-    ]
-  },
-  {
-    "objectID": "getting-started.html#step-5-your-first-workflow",
-    "href": "getting-started.html#step-5-your-first-workflow",
-    "title": "Getting Started",
-    "section": "Step 5: Your First Workflow",
-    "text": "Step 5: Your First Workflow\nThe diagram below shows the typical flow through the AutoDeskR APIs:\n\n\n\n\n\nflowchart LR\n  A([Create APS App]) --&gt; B[getToken]\n  B --&gt; C[makeBucket]\n  C --&gt; D[uploadFile]\n  D --&gt; E{Use case}\n  E --&gt; F[translateObj / translateSvf]\n  E --&gt; G[makePdf]\n  E --&gt; H[createPhotoscene]\n  F --&gt; I[viewer3D]\n\n\n\n\n\n\nThe following code demonstrates a complete round-trip: authenticate, create a storage bucket, upload a file, and verify the upload.\nlibrary(AutoDeskR)\n\n# Read credentials from environment\nid     &lt;- Sys.getenv(\"client_id\")\nsecret &lt;- Sys.getenv(\"client_secret\")\n\n# 1. Get an access token with the scopes needed for data management\ntoken &lt;- getToken(id, secret, scope = \"data:read data:write bucket:create bucket:read\")\ntoken$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"\ntoken$content$expires_in\n#&gt; [1] 3600\n\n# 2. Create a persistent storage bucket (bucket names must be globally unique)\nbucket &lt;- makeBucket(token, bucketKey = \"my-first-autodeskr-bucket\", policyKey = \"persistent\")\nbucket$content$bucketKey\n#&gt; [1] \"my-first-autodeskr-bucket\"\nbucket$content$policyKey\n#&gt; [1] \"persistent\"\n\n# 3. Upload a local file (≤100 MB)\nresult &lt;- uploadFile(token,\n                     localPath = \"path/to/your/file.dwg\",\n                     bucketKey = bucket$bucketKey)\nresult$content$objectKey\n#&gt; [1] \"file.dwg\"\nresult$content$size\n#&gt; [1] 3145728\n\n# 4. List objects in the bucket to confirm the upload succeeded\nobjects &lt;- listObjects(token, bucketKey = bucket$bucketKey)\nprint(objects$content$items)\n#&gt;   objectKey                                                         objectId    size\n#&gt; 1  file.dwg  urn:adsk.objects:os.object:my-first-autodeskr-bucket/file.dwg  3145728\nIf the upload succeeds, listObjects() will return a data frame containing your file’s objectKey, objectId (a URN), and size. The objectId is used in subsequent chapters when translating the file or loading it in the viewer.",
-    "crumbs": [
-      "Front Matter",
-      "Getting Started"
-    ]
-  },
-  {
-    "objectID": "getting-started.html#whats-next",
-    "href": "getting-started.html#whats-next",
-    "title": "Getting Started",
-    "section": "What’s Next",
-    "text": "What’s Next\nWith your credentials configured and a file uploaded, you are ready to explore the full API:\n\n\n\nChapter\nWhat it covers\n\n\n\n\nAuthentication\nToken scopes, token refresh, rate-limit handling\n\n\nData Management\nBuckets, large-file uploads, pagination\n\n\nModel Derivative\nTranslating files to OBJ, STL, SVF; extracting metadata\n\n\nDesign Automation\nDWG-to-PDF conversion pipelines\n\n\nReality Capture\nPhoto-to-3D mesh from drone or phone images\n\n\nViewer\nEmbedding the 3D viewer in Shiny and R Markdown\n\n\nTroubleshooting\nCommon errors and how to fix them",
-    "crumbs": [
-      "Front Matter",
-      "Getting Started"
     ]
   },
   {
@@ -239,6 +187,94 @@
     "crumbs": [
       "Front Matter",
       "License"
+    ]
+  },
+  {
+    "objectID": "getting-started.html",
+    "href": "getting-started.html",
+    "title": "Getting Started",
+    "section": "",
+    "text": "System Requirements\nFive steps stand between you and your first successful API call. By the end of this chapter you’ll have credentials stored safely, AutoDeskR installed, and a file sitting in a cloud bucket ready for translation.",
+    "crumbs": [
+      "Getting Started",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#system-requirements",
+    "href": "getting-started.html#system-requirements",
+    "title": "Getting Started",
+    "section": "",
+    "text": "R 4.0 or later\nRStudio (optional but recommended)\nAn internet connection\nA free AutoDesk account (created below)",
+    "crumbs": [
+      "Getting Started",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#step-1-create-an-autodesk-account",
+    "href": "getting-started.html#step-1-create-an-autodesk-account",
+    "title": "Getting Started",
+    "section": "Step 1: Create an AutoDesk Account",
+    "text": "Step 1: Create an AutoDesk Account\nIf you do not already have an AutoDesk account, register for free at autodesk.com. A standard account gives you access to the APS free tier, which is sufficient for development and moderate usage.",
+    "crumbs": [
+      "Getting Started",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#step-2-register-an-aps-application",
+    "href": "getting-started.html#step-2-register-an-aps-application",
+    "title": "Getting Started",
+    "section": "Step 2: Register an APS Application",
+    "text": "Step 2: Register an APS Application\nAPS uses OAuth 2.0 — every API call needs a token, and every token comes from a registered app. Here’s how to get one:\n\nGo to the APS Developer Portal and sign in.\nClick My Apps → Create Application.\nGive your app a name (e.g., AutoDeskR-dev) and enable the APIs you need. For the examples in this book: Data Management, Model Derivative, and Design Automation.\nClick Create. Your Client ID and Client Secret appear on the app detail page.\n\nKeep these private. If they end up in a public Git repo, rotate them immediately.",
+    "crumbs": [
+      "Getting Started",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#step-3-store-credentials-securely",
+    "href": "getting-started.html#step-3-store-credentials-securely",
+    "title": "Getting Started",
+    "section": "Step 3: Store Credentials Securely",
+    "text": "Step 3: Store Credentials Securely\nThe safest way to use credentials in R is through environment variables stored in ~/.Renviron. Open or create that file:\nusethis::edit_r_environ()\nAdd the following lines, replacing the placeholder values:\nclient_id=your_client_id_here\nclient_secret=your_client_secret_here\nSave the file and restart R. You can then retrieve the values in any script without hard-coding them:\nid     &lt;- Sys.getenv(\"client_id\")\nsecret &lt;- Sys.getenv(\"client_secret\")\nSee the Authentication chapter for a full explanation of OAuth scopes and token management.",
+    "crumbs": [
+      "Getting Started",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#step-4-install-autodeskr",
+    "href": "getting-started.html#step-4-install-autodeskr",
+    "title": "Getting Started",
+    "section": "Step 4: Install AutoDeskR",
+    "text": "Step 4: Install AutoDeskR\nInstall the stable release from CRAN:\ninstall.packages(\"AutoDeskR\")\nOr install the development version from GitHub:\ndevtools::install_github(\"paulgovan/AutoDeskR\")",
+    "crumbs": [
+      "Getting Started",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#step-5-your-first-workflow",
+    "href": "getting-started.html#step-5-your-first-workflow",
+    "title": "Getting Started",
+    "section": "Step 5: Your First Workflow",
+    "text": "Step 5: Your First Workflow\nThe diagram below shows the typical flow through the AutoDeskR APIs:\n\n\n\n\n\nflowchart LR\n  A([Create APS App]) --&gt; B[getToken]\n  B --&gt; C[makeBucket]\n  C --&gt; D[uploadFile]\n  D --&gt; E{Use case}\n  E --&gt; F[translateObj / translateSvf]\n  E --&gt; G[makePdf]\n  E --&gt; H[createPhotoscene]\n  F --&gt; I[viewer3D]\n\n\n\n\n\n\nThe following code demonstrates a complete round-trip: authenticate, create a storage bucket, upload a file, and verify the upload.\nlibrary(AutoDeskR)\n\n# Read credentials from environment\nid     &lt;- Sys.getenv(\"client_id\")\nsecret &lt;- Sys.getenv(\"client_secret\")\n\n# 1. Get an access token with the scopes needed for data management\ntoken &lt;- getToken(id, secret, scope = \"data:read data:write bucket:create bucket:read\")\ntoken$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"\ntoken$content$expires_in\n#&gt; [1] 3600\n\n# 2. Create a persistent storage bucket (bucket names must be globally unique)\nbucket &lt;- makeBucket(token, bucketKey = \"my-first-autodeskr-bucket\", policyKey = \"persistent\")\nbucket$content$bucketKey\n#&gt; [1] \"my-first-autodeskr-bucket\"\nbucket$content$policyKey\n#&gt; [1] \"persistent\"\n\n# 3. Upload a local file (≤100 MB)\nresult &lt;- uploadFile(token,\n                     localPath = \"path/to/your/file.dwg\",\n                     bucketKey = bucket$bucketKey)\nresult$content$objectKey\n#&gt; [1] \"file.dwg\"\nresult$content$size\n#&gt; [1] 3145728\n\n# 4. List objects in the bucket to confirm the upload succeeded\nobjects &lt;- listObjects(token, bucketKey = bucket$bucketKey)\nprint(objects$content$items)\n#&gt;   objectKey                                                         objectId    size\n#&gt; 1  file.dwg  urn:adsk.objects:os.object:my-first-autodeskr-bucket/file.dwg  3145728\nIf the upload succeeds, listObjects() will return a data frame containing your file’s objectKey, objectId (a URN), and size. The objectId is used in subsequent chapters when translating the file or loading it in the viewer.",
+    "crumbs": [
+      "Getting Started",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#whats-next",
+    "href": "getting-started.html#whats-next",
+    "title": "Getting Started",
+    "section": "What’s Next",
+    "text": "What’s Next\nWith your credentials configured and a file uploaded, you are ready to explore the full API:\n\n\n\nChapter\nWhat it covers\n\n\n\n\nAuthentication\nToken scopes, token refresh, rate-limit handling\n\n\nData Management\nBuckets, large-file uploads, pagination\n\n\nModel Derivative\nTranslating files to OBJ, STL, SVF; extracting metadata\n\n\nDesign Automation\nDWG-to-PDF conversion pipelines\n\n\nReality Capture\nPhoto-to-3D mesh from drone or phone images\n\n\nViewer\nEmbedding the 3D viewer in Shiny and R Markdown\n\n\nMesh Reading\nImporting OBJ and STL files; inspecting geometry\n\n\nMesh Metrics\nSurface area, volume, bounding box\n\n\n3D Visualisation\nInteractive rgl widgets and rayshader renders\n\n\nPoint Cloud Analysis\nLAS/LAZ files; height normalisation; density rasters\n\n\nLayer Analysis\nCounting and summarising DWG layers\n\n\nAttribute Extraction\nReading object properties from Model Derivative\n\n\nCross-Drawing Comparison\nDiffing layer tables across drawing revisions\n\n\nDrawing Reports\nParameterised gt reports rendered with Quarto\n\n\nTandem Overview\nConnecting to AutoDesk Tandem facilities\n\n\nSensor Streams\nFetching live sensor readings\n\n\nLive Dashboards\nViewer + sensor chart in a single Shiny app\n\n\nMCP Server\nExposing AutoDeskR as an AI agent tool\n\n\nTroubleshooting\nCommon errors and how to fix them",
+    "crumbs": [
+      "Getting Started",
+      "Getting Started"
     ]
   },
   {
@@ -396,6 +432,50 @@
     ]
   },
   {
+    "objectID": "design-automation.html",
+    "href": "design-automation.html",
+    "title": "4  Design Automation",
+    "section": "",
+    "text": "4.1 Convert a DWG to PDF\nNeed to convert a DWG to PDF without spinning up an AutoCAD licence? Design Automation is AutoDesk’s answer to cloud-based CAD scripting. You submit a work item, AutoDesk runs it on their infrastructure, and the output lands in a destination URL you specify.\nThis chapter focuses on the most common use case: DWG → PDF.\nmakePdf() submits the conversion job. The token needs the code:all scope. This is specific to Design Automation and different from the data scopes used elsewhere.\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"code:all\"\n)\nmyToken &lt;- resp$content$access_token\nmySource      &lt;- \"http://download.autodesk.com/us/samplefiles/acad/visualization_-_aerial.dwg\"\nmyDestination &lt;- \"https://drive.google.com/folderview?id=0BygncDVHf60mTDZVNDltLThLNmM&usp=sharing\"\n\nresp         &lt;- makePdf(source = mySource, destination = myDestination, token = myToken)\nmyWorkItemId &lt;- resp$content$id\nresp$content\n#&gt; $id\n#&gt; [1] \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"\n#&gt;\n#&gt; $status\n#&gt; [1] \"pending\"\n#&gt;\n#&gt; $stats$timeQueued\n#&gt; [1] \"2026-04-23T10:15:30.412Z\"",
+    "crumbs": [
+      "AutoDesk Platform Services",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Design Automation</span>"
+    ]
+  },
+  {
+    "objectID": "design-automation.html#convert-a-dwg-to-pdf",
+    "href": "design-automation.html#convert-a-dwg-to-pdf",
+    "title": "4  Design Automation",
+    "section": "",
+    "text": "Warning\n\n\n\nBoth source and destination must be publicly accessible URLs. Private Google Drive links, localhost paths, and short-lived signed S3 URLs won’t work. The AutoDesk cloud workers need to be able to reach them directly. Use a public host or a pre-signed URL with plenty of time left on it.",
+    "crumbs": [
+      "AutoDesk Platform Services",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Design Automation</span>"
+    ]
+  },
+  {
+    "objectID": "design-automation.html#poll-for-completion",
+    "href": "design-automation.html#poll-for-completion",
+    "title": "4  Design Automation",
+    "section": "4.2 Poll for Completion",
+    "text": "4.2 Poll for Completion\nUse the work item id to check status. A simple DWG typically takes 15–30 seconds; complex drawings with many layers or external references take longer.\n\nrepeat {\n  resp &lt;- checkPdf(id = myWorkItemId, token = myToken)\n  cat(\"Status:\", resp$content$status, \"\\n\")\n  if (resp$content$status == \"success\") break\n  Sys.sleep(5)\n}\n#&gt; Status: pending\n#&gt; Status: inprogress\n#&gt; Status: success\n\nThe full timing breakdown when it’s done:\n\nresp$content\n#&gt; $id\n#&gt; [1] \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"\n#&gt;\n#&gt; $status\n#&gt; [1] \"success\"\n#&gt;\n#&gt; $stats$timeQueued\n#&gt; [1] \"2026-04-23T10:15:30.412Z\"\n#&gt;\n#&gt; $stats$timeDownloadStarted\n#&gt; [1] \"2026-04-23T10:15:31.804Z\"\n#&gt;\n#&gt; $stats$timeInstructionsStarted\n#&gt; [1] \"2026-04-23T10:15:34.217Z\"\n#&gt;\n#&gt; $stats$timeFinished\n#&gt; [1] \"2026-04-23T10:15:48.993Z\"\n\nOnce status is \"success\", the PDF is waiting at your destination URL.",
+    "crumbs": [
+      "AutoDesk Platform Services",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Design Automation</span>"
+    ]
+  },
+  {
+    "objectID": "design-automation.html#batch-conversion",
+    "href": "design-automation.html#batch-conversion",
+    "title": "4  Design Automation",
+    "section": "4.3 Batch Conversion",
+    "text": "4.3 Batch Conversion\nConverting a folder of DWGs is just a loop:\n\ndwg_urls  &lt;- c(\n  \"https://files.example.com/floor_plan.dwg\",\n  \"https://files.example.com/site_plan.dwg\",\n  \"https://files.example.com/elevations.dwg\"\n)\ndest_base &lt;- \"https://output.example.com/pdfs/\"\n\njob_ids &lt;- vapply(dwg_urls, function(url) {\n  fname &lt;- sub(\".*/\", \"\", url)\n  resp  &lt;- makePdf(source      = url,\n                   destination = paste0(dest_base, sub(\"\\\\.dwg$\", \".pdf\", fname)),\n                   token       = myToken)\n  resp$content$id\n}, character(1))\n\n# Poll until all jobs complete\nrepeat {\n  statuses &lt;- vapply(job_ids, function(id) {\n    checkPdf(id = id, token = myToken)$content$status\n  }, character(1))\n  cat(format(Sys.time(), \"%H:%M:%S\"), \"—\", paste(statuses, collapse = \" | \"), \"\\n\")\n  if (all(statuses == \"success\")) break\n  Sys.sleep(10)\n}\n#&gt; 10:20:05 — pending | pending | inprogress\n#&gt; 10:20:15 — success | inprogress | inprogress\n#&gt; 10:20:25 — success | success | success",
+    "crumbs": [
+      "AutoDesk Platform Services",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Design Automation</span>"
+    ]
+  },
+  {
     "objectID": "reality-capture.html",
     "href": "reality-capture.html",
     "title": "5  Reality Capture",
@@ -499,7 +579,7 @@
     "href": "viewer.html#launch-the-viewer",
     "title": "6  Viewer",
     "section": "",
-    "text": "viewerType\nWhat you get\n\n\n\n\n\"header\"\nFull toolbar, navigation panels, and settings (default)\n\n\n\"headless\"\nViewer canvas only — clean embed for dashboards\n\n\n\"vr\"\nWebVR mode, optimised for mobile",
+    "text": "viewerType\nWhat you get\n\n\n\n\n\"header\"\nFull toolbar, navigation panels, and settings (default)\n\n\n\"headless\"\nViewer canvas only — clean embed for dashboards\n\n\n\"vr\"\nWebVR mode, optimised for mobile\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nWhen you run viewer3D() in RStudio or a browser, a WebGL viewport opens and you can rotate, zoom, and click elements to inspect their properties. The viewer renders whatever SVF translation produced: layer geometry for DWG files, full BIM elements for Revit.",
     "crumbs": [
       "AutoDesk Platform Services",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Viewer</span>"
@@ -675,7 +755,7 @@
     "href": "mesh-visualisation.html",
     "title": "9  3D Visualisation",
     "section": "",
-    "text": "9.1 Interactive 3D with rgl\nNumbers are useful; actually seeing the mesh is better. This chapter covers two routes: rgl (Adler, Murdoch, et al. 2024) for interactive exploration in RStudio (spin it with the mouse, zoom in, inspect details), and rayshader (Morgan-Wall 2024) for rendering publication-quality static images.\nBoth work on mesh_vcg from Reading OBJ and STL Meshes.\nshade3d() opens an OpenGL window where you can rotate and zoom with the mouse. Takes one line:\nlibrary(rgl)\nopen3d()\nshade3d(mesh_obj, col = \"#C0C0C0\", alpha = 0.9)\nbg3d(\"white\")\naxes3d()\ntitle3d(\"Aerial DWG — Translated Mesh\")",
+    "text": "9.1 Interactive 3D with rgl\nNumbers are useful; actually seeing the mesh is better. This chapter covers two routes: rgl (Adler, Murdoch, et al. 2024) for interactive exploration in RStudio (spin it with the mouse, zoom in, inspect details), and rayshader (Morgan-Wall 2024) for rendering publication-quality static images.\nBoth work on mesh_vcg from Reading OBJ and STL Meshes.\nshade3d() opens an OpenGL window where you can rotate and zoom with the mouse. Takes one line:\nlibrary(rgl)\nopen3d()\nshade3d(mesh_vcg, col = \"#C0C0C0\", alpha = 0.9)\nbg3d(\"white\")\naxes3d()\ntitle3d(\"Aerial DWG — Translated Mesh\")",
     "crumbs": [
       "3D Geometry & Meshes",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>3D Visualisation</span>"
@@ -686,7 +766,7 @@
     "href": "mesh-visualisation.html#interactive-3d-with-rgl",
     "title": "9  3D Visualisation",
     "section": "",
-    "text": "9.1.1 Embedding in HTML Output\nrgl windows are interactive in RStudio but don’t embed in HTML documents on their own. rglwidget() wraps the scene in a self-contained WebGL widget that works in any browser:\n\n# Add this once at the top of your document (setup chunk)\nknitr::knit_hooks$set(webgl = rgl::hook_webgl)\n\nopen3d()\nshade3d(mesh_obj, col = \"#4A90D9\", alpha = 0.85)\nrglwidget()\n\n\n\n\n\n\n\nNote\n\n\n\nThe WebGL widget is fully self-contained in the rendered HTML. Readers can rotate and zoom without a running R server. It does require a modern browser (Chrome, Firefox, Safari, Edge all work fine).",
+    "text": "9.1.1 Embedding in HTML Output\nrgl windows are interactive in RStudio but don’t embed in HTML documents on their own. rglwidget() wraps the scene in a self-contained WebGL widget that works in any browser:\n\n# Add this once at the top of your document (setup chunk)\nknitr::knit_hooks$set(webgl = rgl::hook_webgl)\n\nopen3d()\nshade3d(mesh_vcg, col = \"#4A90D9\", alpha = 0.85)\nrglwidget()\n\n\n\n\n\n\n\nNote\n\n\n\nThe WebGL widget is fully self-contained in the rendered HTML. Readers can rotate and zoom without a running R server. It does require a modern browser (Chrome, Firefox, Safari, Edge all work fine).",
     "crumbs": [
       "3D Geometry & Meshes",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>3D Visualisation</span>"
@@ -697,7 +777,7 @@
     "href": "mesh-visualisation.html#colouring-by-height",
     "title": "9  3D Visualisation",
     "section": "9.2 Colouring by Height",
-    "text": "9.2 Colouring by Height\nMap vertex Z-values to a colour ramp to reveal the model’s vertical structure instantly. Blues for low, reds for high:\n\nz_vals &lt;- mesh_vcg$vb[3, ]\nz_norm &lt;- (z_vals - min(z_vals)) / diff(range(z_vals))   # 0–1\n\ncols      &lt;- colorRampPalette(c(\"#2166ac\", \"#92c5de\", \"#f7f7f7\",\n                                 \"#f4a582\", \"#d6604d\"))(100)\nvert_cols &lt;- cols[ceiling(z_norm * 99) + 1]\n\nopen3d()\nshade3d(mesh_obj, col = vert_cols)\nrglwidget()",
+    "text": "9.2 Colouring by Height\nMap vertex Z-values to a colour ramp to reveal the model’s vertical structure instantly. Blues for low, reds for high:\n\nz_vals &lt;- mesh_vcg$vb[3, ]\nz_norm &lt;- (z_vals - min(z_vals)) / diff(range(z_vals))   # 0–1\n\ncols      &lt;- colorRampPalette(c(\"#2166ac\", \"#92c5de\", \"#f7f7f7\",\n                                 \"#f4a582\", \"#d6604d\"))(100)\nvert_cols &lt;- cols[ceiling(z_norm * 99) + 1]\n\nopen3d()\nshade3d(mesh_vcg, col = vert_cols)\nrglwidget()",
     "crumbs": [
       "3D Geometry & Meshes",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>3D Visualisation</span>"
@@ -1181,7 +1261,7 @@
     "href": "drawing-reports.html#render-programmatically",
     "title": "15  Automated Drawing Reports",
     "section": "15.3 Render Programmatically",
-    "text": "15.3 Render Programmatically\nquarto::quarto_render() renders the parameterised template to a named output file. Loop over your drawing list to generate a report for each one:\n\nlibrary(quarto)\n\ndrawings &lt;- list(\n  list(urn = urns[[\"site_plan.dwg\"]],      name = \"site_plan\"),\n  list(urn = urns[[\"floor_plan_v2.dwg\"]], name = \"floor_plan_v2\")\n)\n\nfor (dwg in drawings) {\n  quarto_render(\n    input          = \"drawing-reports.qmd\",\n    output_file    = paste0(\"report_\", dwg$name, \".html\"),\n    execute_params = list(\n      urn          = dwg$urn,\n      drawing_name = paste0(dwg$name, \".dwg\")\n    )\n  )\n  cat(\"Generated: report_\", dwg$name, \".html\\n\", sep = \"\")\n}\n#&gt; Generated: report_site_plan.html\n#&gt; Generated: report_floor_plan_v2.html",
+    "text": "15.3 Render Programmatically\nquarto::quarto_render() renders the parameterised template to a named output file. The template should be a separate .qmd file (e.g., report-template.qmd) that contains the YAML params block and the analysis code — not this book chapter. Save the parameterised document as report-template.qmd, then loop over your drawing list:\n\nlibrary(AutoDeskR)\nlibrary(quarto)\n\n# Build a named list of URNs from the objects in your bucket\nresp  &lt;- listObjects(token = myToken, bucket = \"my-project-bucket\")\nitems &lt;- resp$content$items   # data frame: objectKey, objectId, size\n\nurns &lt;- setNames(items$objectId, items$objectKey)\n# urns[[\"site_plan.dwg\"]]      → \"urn:adsk.objects:os.object:...\"\n# urns[[\"floor_plan_v2.dwg\"]]  → \"urn:adsk.objects:os.object:...\"\n\ndrawings &lt;- list(\n  list(urn = urns[[\"site_plan.dwg\"]],     name = \"site_plan\"),\n  list(urn = urns[[\"floor_plan_v2.dwg\"]], name = \"floor_plan_v2\")\n)\n\nfor (dwg in drawings) {\n  quarto_render(\n    input          = \"report-template.qmd\",   # the template, not this chapter\n    output_file    = paste0(\"report_\", dwg$name, \".html\"),\n    execute_params = list(\n      urn          = dwg$urn,\n      drawing_name = paste0(dwg$name, \".dwg\")\n    )\n  )\n  cat(\"Generated: report_\", dwg$name, \".html\\n\", sep = \"\")\n}\n#&gt; Generated: report_site_plan.html\n#&gt; Generated: report_floor_plan_v2.html",
     "crumbs": [
       "DWG & DXF Analytics",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Automated Drawing Reports</span>"
@@ -1346,7 +1426,7 @@
     "href": "live-dashboards.html#helper-fetch-stream-readings",
     "title": "18  Live Dashboards",
     "section": "18.2 Helper: Fetch Stream Readings",
-    "text": "18.2 Helper: Fetch Stream Readings\nDefine a reusable function that the Shiny server calls reactively:\n\nlibrary(AutoDeskR)\nlibrary(httr2)\nlibrary(dygraphs)\nlibrary(xts)\nlibrary(shiny)\n\nget_stream_readings &lt;- function(token, facility_id, stream_id, hours_back = 24) {\n  end_time   &lt;- Sys.time()\n  start_time &lt;- end_time - hours_back * 3600\n  resp &lt;- request(\n    paste0(\"https://tandem.autodesk.com/api/v1/twins/\",\n           facility_id, \"/streams/\", stream_id)\n  ) |&gt;\n    req_url_query(\n      start = format(start_time, \"%Y-%m-%dT%H:%M:%SZ\", tz = \"UTC\"),\n      end   = format(end_time,   \"%Y-%m-%dT%H:%M:%SZ\", tz = \"UTC\")\n    ) |&gt;\n    req_auth_bearer_token(token) |&gt;\n    req_perform()\n  readings &lt;- resp_body_json(resp)\n  data.frame(\n    timestamp = as.POSIXct(vapply(readings$values, `[[`, character(1), \"t\"),\n                            format = \"%Y-%m-%dT%H:%M:%SZ\", tz = \"UTC\"),\n    value     = vapply(readings$values, `[[`, numeric(1), \"v\"),\n    stringsAsFactors = FALSE\n  )\n}",
+    "text": "18.2 Helper: Fetch Stream Readings\nDefine a reusable function that the Shiny server calls reactively:\n\nlibrary(AutoDeskR)\nlibrary(httr2)\nlibrary(dygraphs)\nlibrary(xts)\nlibrary(shiny)\n\nget_stream_readings &lt;- function(facility_id, stream_id, hours_back = 24) {\n  token &lt;- getToken(\n    id     = Sys.getenv(\"client_id\"),\n    secret = Sys.getenv(\"client_secret\"),\n    scope  = \"data:read\"\n  )$content$access_token\n\n  end_time   &lt;- Sys.time()\n  start_time &lt;- end_time - hours_back * 3600\n  resp &lt;- request(\n    paste0(\"https://tandem.autodesk.com/api/v1/twins/\",\n           facility_id, \"/streams/\", stream_id)\n  ) |&gt;\n    req_url_query(\n      start = format(start_time, \"%Y-%m-%dT%H:%M:%SZ\", tz = \"UTC\"),\n      end   = format(end_time,   \"%Y-%m-%dT%H:%M:%SZ\", tz = \"UTC\")\n    ) |&gt;\n    req_auth_bearer_token(token) |&gt;\n    req_perform()\n  readings &lt;- resp_body_json(resp)\n  data.frame(\n    timestamp = as.POSIXct(vapply(readings$values, `[[`, character(1), \"t\"),\n                            format = \"%Y-%m-%dT%H:%M:%SZ\", tz = \"UTC\"),\n    value     = vapply(readings$values, `[[`, numeric(1), \"v\"),\n    stringsAsFactors = FALSE\n  )\n}",
     "crumbs": [
       "Digital Twins",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Live Dashboards</span>"
@@ -1357,7 +1437,7 @@
     "href": "live-dashboards.html#app-startup",
     "title": "18  Live Dashboards",
     "section": "18.3 App Startup",
-    "text": "18.3 App Startup\nFetch the token and stream list once, before the UI and server are defined:\n\nmyToken      &lt;- getToken(id     = Sys.getenv(\"client_id\"),\n                         secret = Sys.getenv(\"client_secret\"),\n                         scope  = \"data:read\")$content$access_token\nmyEncodedUrn &lt;- jsonlite::base64_enc(Sys.getenv(\"urn\"))\nfacilityId   &lt;- \"urn:adsk.dtdm:facility.abc123def456\"\n\nstreams_resp &lt;- request(\n  paste0(\"https://tandem.autodesk.com/api/v1/twins/\", facilityId, \"/streams\")\n) |&gt;\n  req_auth_bearer_token(myToken) |&gt;\n  req_perform()\nstreams &lt;- resp_body_json(streams_resp)\n\nstream_choices &lt;- setNames(\n  vapply(streams, `[[`, character(1), \"id\"),\n  vapply(streams, `[[`, character(1), \"displayName\")\n)",
+    "text": "18.3 App Startup\nFetch the token and stream list once, before the UI and server are defined:\n\nmyEncodedUrn &lt;- jsonlite::base64_enc(Sys.getenv(\"urn\"))\nmyToken      &lt;- getToken(id     = Sys.getenv(\"client_id\"),\n                         secret = Sys.getenv(\"client_secret\"),\n                         scope  = \"data:read\")$content$access_token\nfacilityId   &lt;- \"urn:adsk.dtdm:facility.abc123def456\"\n\nstreams_resp &lt;- request(\n  paste0(\"https://tandem.autodesk.com/api/v1/twins/\", facilityId, \"/streams\")\n) |&gt;\n  req_auth_bearer_token(myToken) |&gt;\n  req_perform()\nstreams &lt;- resp_body_json(streams_resp)\n\nstream_choices &lt;- setNames(\n  vapply(streams, `[[`, character(1), \"id\"),\n  vapply(streams, `[[`, character(1), \"displayName\")\n)",
     "crumbs": [
       "Digital Twins",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Live Dashboards</span>"
@@ -1379,7 +1459,7 @@
     "href": "live-dashboards.html#server-logic",
     "title": "18  Live Dashboards",
     "section": "18.5 Server Logic",
-    "text": "18.5 Server Logic\nA reactiveTimer polls Tandem every 60 seconds so the chart stays current without the user having to refresh the page:\n\nserver &lt;- function(input, output, session) {\n\n  auto_refresh &lt;- reactiveTimer(60000)   # 60 seconds\n\n  readings &lt;- reactive({\n    auto_refresh()   # re-run on the timer tick\n    get_stream_readings(token       = myToken,\n                        facility_id = facilityId,\n                        stream_id   = input$stream_id,\n                        hours_back  = input$hours_back)\n  })\n\n  output$sensor_plot &lt;- renderDygraph({\n    df   &lt;- readings()\n    ts   &lt;- xts(df$value, order.by = df$timestamp)\n    name &lt;- names(stream_choices)[stream_choices == input$stream_id]\n    dygraph(ts, main = name) |&gt;\n      dyRangeSelector() |&gt;\n      dyOptions(fillGraph = TRUE, fillAlpha = 0.15,\n                drawGrid  = TRUE, colors   = \"#367ABF\") |&gt;\n      dyAxis(\"y\", label = \"Value\")\n  })\n\n  output$stats_table &lt;- renderTable({\n    df &lt;- readings()\n    data.frame(\n      Metric = c(\"Readings\", \"Mean\", \"Min\", \"Max\"),\n      Value  = c(nrow(df),\n                 round(mean(df$value), 2),\n                 round(min(df$value),  2),\n                 round(max(df$value),  2))\n    )\n  }, striped = TRUE, bordered = TRUE, align = \"lr\")\n}\n\nshinyApp(ui, server)\n\n\n\n\n\n\n\nWarning\n\n\n\nThe Shiny server fetches Tandem data from R, not from the user’s browser, so CORS restrictions don’t apply. The server process does need outbound HTTPS access to tandem.autodesk.com, so check this if you’re deploying on a restricted corporate network.",
+    "text": "18.5 Server Logic\nA reactiveTimer polls Tandem every 60 seconds so the chart stays current without the user having to refresh the page:\n\nserver &lt;- function(input, output, session) {\n\n  auto_refresh &lt;- reactiveTimer(60000)   # 60 seconds\n\n  readings &lt;- reactive({\n    auto_refresh()   # re-run on the timer tick\n    get_stream_readings(facility_id = facilityId,\n                        stream_id   = input$stream_id,\n                        hours_back  = input$hours_back)\n  })\n\n  output$sensor_plot &lt;- renderDygraph({\n    df   &lt;- readings()\n    ts   &lt;- xts(df$value, order.by = df$timestamp)\n    name &lt;- names(stream_choices)[stream_choices == input$stream_id]\n    dygraph(ts, main = name) |&gt;\n      dyRangeSelector() |&gt;\n      dyOptions(fillGraph = TRUE, fillAlpha = 0.15,\n                drawGrid  = TRUE, colors   = \"#367ABF\") |&gt;\n      dyAxis(\"y\", label = \"Value\")\n  })\n\n  output$stats_table &lt;- renderTable({\n    df &lt;- readings()\n    data.frame(\n      Metric = c(\"Readings\", \"Mean\", \"Min\", \"Max\"),\n      Value  = c(nrow(df),\n                 round(mean(df$value), 2),\n                 round(min(df$value),  2),\n                 round(max(df$value),  2))\n    )\n  }, striped = TRUE, bordered = TRUE, align = \"lr\")\n}\n\nshinyApp(ui, server)\n\n\n\n\n\n\n\nWarning\n\n\n\nThe Shiny server fetches Tandem data from R, not from the user’s browser, so CORS restrictions don’t apply. The server process does need outbound HTTPS access to tandem.autodesk.com, so check this if you’re deploying on a restricted corporate network.",
     "crumbs": [
       "Digital Twins",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Live Dashboards</span>"
@@ -1390,7 +1470,7 @@
     "href": "live-dashboards.html#deploying-to-shinyapps.io",
     "title": "18  Live Dashboards",
     "section": "18.6 Deploying to shinyapps.io",
-    "text": "18.6 Deploying to shinyapps.io\nKeep credentials out of the app source. Pass them as server environment variables at deploy time:\n\nlibrary(rsconnect)\n\ndeployApp(\n  appDir     = \".\",\n  appName    = \"twin-dashboard\",\n  appEnvVars = list(\n    client_id     = Sys.getenv(\"client_id\"),\n    client_secret = Sys.getenv(\"client_secret\"),\n    urn           = Sys.getenv(\"urn\")\n  )\n)\n\n\n\n\n\n\n\nTip\n\n\n\nThe access token retrieved at startup expires after 1 hour. For a long-running production deployment, move getToken() inside get_stream_readings() so a fresh token is requested on every poll rather than once at startup.",
+    "text": "18.6 Deploying to shinyapps.io\nKeep credentials out of the app source. Pass them as server environment variables at deploy time:\n\nlibrary(rsconnect)\n\ndeployApp(\n  appDir     = \".\",\n  appName    = \"twin-dashboard\",\n  appEnvVars = list(\n    client_id     = Sys.getenv(\"client_id\"),\n    client_secret = Sys.getenv(\"client_secret\"),\n    urn           = Sys.getenv(\"urn\")\n  )\n)",
     "crumbs": [
       "Digital Twins",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Live Dashboards</span>"
@@ -1954,86 +2034,6 @@
     "text": "Adler, Daniel, Duncan Murdoch, et al. 2024. Rgl: 3D Visualization\nUsing OpenGL. https://dmurdoch.github.io/rgl/.\n\n\nAutodesk, Inc. 2024. “AutoDesk Tandem API — Developer\nDocumentation.” https://tandem.autodesk.com/api/v1/.\n\n\nGovan, Paul. 2024. AutoDeskR: An Interface to the AutoDesk Platform\nServices APIs. https://github.com/paulgovan/AutoDeskR.\n\n\nIannone, Richard, Joe Cheng, Barret Schloerke, Ellis Hughes, Alexandra\nLauer, JooYoung Seo, Ken Brevoort, and Olivier Roy. 2024. Gt: Easily\nCreate Presentation-Ready Display Tables. https://gt.rstudio.com.\n\n\nMorgan-Wall, Tyler. 2024. Rayshader: Create Maps and Visualize Data\nin 2D and 3D. https://www.rayshader.com.\n\n\nRoussel, Jean-Romain, David Auty, Nicholas C. Coops, Piotr Tompalski,\nTristan R. H. Goodbody, Alexis Sanchez Meador, Jean-François Bourdon,\nFlorian de Boissieu, and Alexis Achim. 2020. “lidR: An r Package\nfor Analysis of Airborne Laser Scanning (ALS) Data.” Remote\nSensing of Environment 251: 112061. https://doi.org/10.1016/j.rse.2020.112061.\n\n\nRoussel, Jean-Romain, David C. Sterratt, et al. 2024. Geometry: Mesh\nGeneration and Surface Tessellation. https://davidcsterratt.github.io/geometry/.\n\n\nSchlager, Stefan. 2024. Rvcg: Manipulations of Triangular Meshes\nBased on the ’VCGLIB’ API. https://CRAN.R-project.org/package=Rvcg.\n\n\nVanderkam, Dan, JJ Allaire, Jonathan Owen, Daniel Gromer, and Benoit\nThieurmel. 2018. Dygraphs: Interface to ’Dygraphs’ Interactive Time\nSeries Charting Library. https://CRAN.R-project.org/package=dygraphs.\n\n\nWickham, Hadley. 2024. Httr2: Perform HTTP Requests and Process the\nResponses. https://httr2.r-lib.org.",
     "crumbs": [
       "References"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "R for the Built Environment",
-    "section": "",
-    "text": "Preface\nThe built environment generates an enormous amount of data. Architectural drawings, structural models, survey point clouds, energy performance figures, sensor readings from every floor of every building. Most of it sits inside proprietary formats that R has historically had no good way to reach. R for the Built Environment changes that.\nThis book uses the AutoDeskR R package (Govan 2024) and the AutoDesk Platform Services (APS) cloud API as the primary bridge to that data, translating design files, extracting geometry, connecting live sensor streams, and embedding interactive 3D models in Shiny dashboards. AutoDesk is the dominant platform in the AEC industry, so it’s a practical place to start. But the analytical techniques here, mesh analysis, layer analytics, digital twin patterns, MCP tool exposure, apply to any BIM or CAD data, wherever it comes from.\nWhether you’re a data scientist who just inherited a folder of DWG files, or a BIM manager who wants to automate something that currently takes three software packages and a prayer, this book is for you.",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
-    "objectID": "index.html#why-r",
-    "href": "index.html#why-r",
-    "title": "R for the Built Environment",
-    "section": "Why R?",
-    "text": "Why R?\nFair question. Most AEC professionals use Python, .NET, or whatever scripting language AutoCAD yells at you in. So why drag R into this?\nBecause the audience isn’t architects, it’s analysts. The real use case here is the data scientist who gets handed a folder of DWG files and told to “make a dashboard out of this.” That person lives in R. They know dplyr, they know ggplot2, they know Shiny. AutoDeskR gives them a bridge to the CAD world without forcing them to learn a whole new stack.\nBecause the Python SDK is for building applications. It’s great if you’re writing production software. But if you want to pull geometry data, run some summary statistics, and produce a polished report with a table and a plot, R’s ecosystem (ggplot2, gt, Quarto) is still unmatched. The wrapper isn’t competing with the Python SDK; it’s serving a different job.\nBecause thin wrappers encode real expertise. Yes, a sophisticated user could call the APS REST API directly with httr2. But do they know that the object URN needs to be Base64-encoded before passing it to the Model Derivative API? That tokens expire after exactly 3600 seconds? That bucket names are globally unique across all APS applications? AutoDeskR quietly handles all of that so you can focus on the analysis, not the plumbing.\nBecause API drift is a fact of life, not a dealbreaker. AutoDesk updates its APIs. So do Google, AWS, and everyone else. Staying close to the API surface means fewer moving parts to break, and direct httr2 calls would have exactly the same maintenance problem with more boilerplate.\nBecause the free tier is for experimenting, and that’s the whole point. Once you’ve prototyped something worth running in production, you’re almost certainly inside an organisation that’s already paying for AutoDesk products, and API access comes with the subscription.",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
-    "objectID": "index.html#what-youll-learn",
-    "href": "index.html#what-youll-learn",
-    "title": "R for the Built Environment",
-    "section": "What You’ll Learn",
-    "text": "What You’ll Learn\nEach chapter covers a different piece of the BIM and CAD analytics ecosystem:\n\nAuthentication — grab an OAuth token in one line and never think about it again\nData Management — upload files to the cloud, wrangle buckets, and pull objects back down\nModel Derivative — translate design files into OBJ, STL, and SVF; extract geometry and metadata\nDesign Automation — run DWG-to-PDF conversion in the cloud, no AutoCAD required\nReality Capture — turn a set of overlapping photos into a 3D mesh\nViewer — embed a live 3D model viewer in a Shiny app with two lines of code\n3D Geometry & Meshes — import, measure, and visualise translated mesh files\nDWG & DXF Analytics — parse layer structure, extract attributes, compare drawing revisions\nDigital Twins — link live sensor data to BIM elements via AutoDesk Tandem\nMCP Server — expose AutoDeskR as an AI agent tool so LLMs can query BIM models directly",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
-    "objectID": "index.html#how-this-book-is-structured",
-    "href": "index.html#how-this-book-is-structured",
-    "title": "R for the Built Environment",
-    "section": "How This Book is Structured",
-    "text": "How This Book is Structured\nThe book is organised into seven parts. You don’t have to read them in order, each chapter is reasonably self-contained, but the parts do build on each other if you want the full picture.\n\n\n\n\n\n\n\n\nPart\nChapters\nWhat you’ll do\n\n\n\n\nFront Matter\nMotivation, Getting Started, Acknowledgements\nUnderstand the why; set up credentials\n\n\nAutoDesk Platform Services\nAuthentication → Viewer\nThe six main APS APIs, start to finish\n\n\n3D Geometry & Meshes\nReading → Visualisation → Point Clouds → Comparison\nImport, measure, and compare translated mesh files\n\n\nDWG & DXF Analytics\nLayer Analysis → Attributes → Comparison → Reports\nExtract meaning from drawing data\n\n\nDigital Twins\nTandem Overview → Sensor Streams → Live Dashboards\nJoin live sensor readings to BIM elements\n\n\nAI Integration\nMCP Server\nExpose AutoDeskR as a tool for AI agents\n\n\nReference\nCase Study, Function Reference, Troubleshooting\nWorked example, lookup tables, and help",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
-    "objectID": "index.html#prerequisites",
-    "href": "index.html#prerequisites",
-    "title": "R for the Built Environment",
-    "section": "Prerequisites",
-    "text": "Prerequisites\nTo follow along you’ll need:\n\nR (version 4.0 or later) and, optionally, RStudio\nA free AutoDesk account with an APS application registered at aps.autodesk.com.The Getting Started chapter walks you through it step by step\nAn internet connection (all the action happens in AutoDesk’s cloud)\n\nNo prior CAD or BIM experience assumed. If you’re comfortable running an R script, you’re ready.",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
-    "objectID": "index.html#installation",
-    "href": "index.html#installation",
-    "title": "R for the Built Environment",
-    "section": "Installation",
-    "text": "Installation\nInstall the stable release from CRAN:\ninstall.packages(\"AutoDeskR\")\nOr grab the development version from GitHub if you like living on the edge:\ndevtools::install_github(\"paulgovan/AutoDeskR\")",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
-    "objectID": "index.html#how-to-use-this-book",
-    "href": "index.html#how-to-use-this-book",
-    "title": "R for the Built Environment",
-    "section": "How to Use This Book",
-    "text": "How to Use This Book\nNew to APS? Start with Getting Started and work through the chapters in order, each one builds on the previous. Already know the APS basics? Jump straight to whatever chapter covers your use case. The Troubleshooting chapter is always there when something goes sideways.\nAll code examples are copy-paste ready and work with #| eval: false so they won’t execute during book rendering but will run just fine in your R session.",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
-    "objectID": "index.html#where-this-is-headed",
-    "href": "index.html#where-this-is-headed",
-    "title": "R for the Built Environment",
-    "section": "Where This is Headed",
-    "text": "Where This is Headed\nThis book covers a lot of ground, but the APS API catalogue is bigger than any one book. Here’s what’s on the horizon.\nNear-term package additions — AutoDeskR currently wraps the six core APS APIs. The next wave of functions will cover the richer ACC project hierarchy (Hubs → Projects → Folders → Items → Versions), which is required for working with BIM 360 and ACC projects where files live in managed folder trees rather than flat OSS buckets. Alongside that: Webhooks (so your pipelines can react to events instead of polling), Construction Issues (live project health data in R), and Account Admin (bulk user and project management via script instead of clicking through a web interface a hundred times).\nAdvanced Design Automation — makePdf() is just the beginning. APS Design Automation also supports Revit, 3ds Max, Inventor, and Fusion , meaning you can run custom scripts against any of those engines from R without installing the software locally. Generalised submitWorkItem() and listEngines() functions are planned to unlock that.\nLonger-term — Model Coordination (clash detection and model sets, once the ACC hierarchy is in place), Forma (AutoDesk’s AEC industry cloud), and Cost Management (budget and financial data for project dashboards) are all on the radar. And as IFC, Speckle, and other open BIM platforms mature, they belong here too. The guiding rule: if it takes built environment data as its primary input, it belongs in this book.\nTrack progress and file requests at github.com/paulgovan/AutoDeskR.\n\n\n\n\nGovan, Paul. 2024. AutoDeskR: An Interface to the AutoDesk Platform Services APIs. https://github.com/paulgovan/AutoDeskR.",
-    "crumbs": [
-      "Preface"
     ]
   }
 ]
