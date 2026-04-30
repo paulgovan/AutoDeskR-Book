@@ -726,7 +726,7 @@ div.csl-indent {
 </section>
 <section id="render-programmatically" class="level2" data-number="15.3">
 <h2 data-number="15.3" class="anchored" data-anchor-id="render-programmatically"><span class="header-section-number">15.3</span> Render Programmatically</h2>
-<p><code>quarto::quarto_render()</code> renders the parameterised template to a named output file. The template should be a <strong>separate <code>.qmd</code> file</strong> (e.g., <code>report-template.qmd</code>) that contains the YAML <code>params</code> block and the analysis code — not this book chapter. Save the parameterised document as <code>report-template.qmd</code>, then loop over your drawing list:</p>
+<p><code>quarto::quarto_render()</code> renders the parameterised template to a named output file. The template should be a <strong>separate <code>.qmd</code> file</strong> (e.g., <code>report-template.qmd</code>) that contains the YAML <code>params</code> block and the analysis code, not this book chapter. Save the parameterised document as <code>report-template.qmd</code>, then loop over your drawing list:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AutoDeskR)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quarto)</span>

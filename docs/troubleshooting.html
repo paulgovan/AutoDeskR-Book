@@ -868,7 +868,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="design-automation" class="level2" data-number="22.7">
 <h2 data-number="22.7" class="anchored" data-anchor-id="design-automation"><span class="header-section-number">22.7</span> Design Automation</h2>
 <p><strong>Problem:</strong> <code>makePdf()</code> returns 400 Bad Request.</p>
-<p><strong>Solution:</strong> Both the <code>source</code> and <code>destination</code> URLs must be <strong>publicly accessible</strong>. The AutoDesk cloud workers fetch and write these URLs directly. Common failures: - Private Google Drive share links (use “Anyone with the link” access) - <code>localhost</code> or <code>127.0.0.1</code> URLs (unreachable from the cloud) - Signed S3 URLs that have already expired</p>
+<p><strong>Solution:</strong> Both the <code>source</code> and <code>destination</code> URLs must be <strong>publicly accessible</strong>. The AutoDesk cloud workers fetch and write these URLs directly. Common failures:</p>
+<ul>
+<li>Private Google Drive share links (use “Anyone with the link” access)</li>
+<li><code>localhost</code> or <code>127.0.0.1</code> URLs (unreachable from the cloud)</li>
+<li>Signed S3 URLs that have already expired</li>
+</ul>
 <hr>
 <p><strong>Problem:</strong> <code>checkPdf()</code> stays in <code>"pending"</code> for more than 5 minutes.</p>
 <p><strong>Solution:</strong> This usually means the job is queued behind other work items. Wait longer. Free-tier jobs can queue for 10–15 minutes at peak times. If it’s still pending after 30 minutes, cancel and resubmit.</p>
@@ -877,7 +882,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="reality-capture" class="level2" data-number="22.8">
 <h2 data-number="22.8" class="anchored" data-anchor-id="reality-capture"><span class="header-section-number">22.8</span> Reality Capture</h2>
 <p><strong>Problem:</strong> The output mesh looks poor — holes, distorted geometry, missing areas.</p>
-<p><strong>Solution:</strong> Image quality is everything in photogrammetry. The most common causes of bad output: - <strong>Too few images</strong> — need at least 20, ideally 50+ - <strong>Insufficient overlap</strong> — every surface needs to appear in at least 3 photos from different angles - <strong>Reflective or transparent surfaces</strong> — glass and polished metal fool the matching algorithm - <strong>Inconsistent lighting</strong> — shots taken at different times of day with different shadows - <strong>Camera movement instead of subject rotation</strong> — move around the object, don’t zoom from a fixed point</p>
+<p><strong>Solution:</strong> Image quality is everything in photogrammetry. The most common causes of bad output:</p>
+<ul>
+<li><strong>Too few images</strong> — need at least 20, ideally 50+</li>
+<li><strong>Insufficient overlap</strong> — every surface needs to appear in at least 3 photos from different angles</li>
+<li><strong>Reflective or transparent surfaces</strong> — glass and polished metal fool the matching algorithm</li>
+<li><strong>Inconsistent lighting</strong> — shots taken at different times of day with different shadows</li>
+<li><strong>Camera movement instead of subject rotation</strong> — move around the object, don’t zoom from a fixed point</li>
+</ul>
 <hr>
 <p><strong>Problem:</strong> <code>waitForPhotoscene()</code> times out before the job finishes.</p>
 <p><strong>Solution:</strong> Increase the <code>timeout</code> parameter. A 500-image scene can take 90+ minutes:</p>

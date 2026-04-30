@@ -679,7 +679,7 @@ div.csl-indent {
 </header>
 
 
-<p>The <a href="./reality-capture.html">Reality Capture</a> API can output a point cloud alongside (or instead of) a mesh. Once you’ve converted it to LAS format, <code>lidR</code> <span class="citation" data-cites="R-lidR">(<a href="references.html#ref-R-lidR" role="doc-biblioref">Roussel et al. 2020</a>)</span> takes over — height statistics, density maps, canopy models, voxel volumes. This is the go-to tool for site survey analysis.</p>
+<p>The <a href="./reality-capture.html">Reality Capture</a> API can output a point cloud alongside (or instead of) a mesh. Once you’ve converted it to LAS format, <code>lidR</code> <span class="citation" data-cites="R-lidR">(<a href="references.html#ref-R-lidR" role="doc-biblioref">Roussel et al. 2020</a>)</span> takes over, height statistics, density maps, canopy models, voxel volumes. This is the go-to tool for site survey analysis.</p>
 <section id="getting-the-point-cloud" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="getting-the-point-cloud"><span class="header-section-number">10.1</span> Getting the Point Cloud</h2>
 <p>Request <code>rcs</code> format when creating your photoscene:</p>
@@ -770,7 +770,7 @@ Warning
 </section>
 <section id="canopy-height-model" class="level2" data-number="10.5">
 <h2 data-number="10.5" class="anchored" data-anchor-id="canopy-height-model"><span class="header-section-number">10.5</span> Canopy Height Model</h2>
-<p>Rasterise the maximum Z per cell to produce a canopy height model — great for visualising roof heights or vegetation structure across the site:</p>
+<p>Rasterise the maximum Z per cell to produce a canopy height model, great for visualising roof heights or vegetation structure across the site:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>chm <span class="ot">&lt;-</span> <span class="fu">rasterize_canopy</span>(pc_norm, <span class="at">res =</span> <span class="fl">0.5</span>, <span class="at">algorithm =</span> <span class="fu">p2r</span>())</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(chm, <span class="at">col =</span> <span class="fu">height.colors</span>(<span class="dv">50</span>), <span class="at">main =</span> <span class="st">"Canopy Height Model (0.5 m resolution)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

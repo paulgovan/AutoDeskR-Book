@@ -678,7 +678,7 @@ div.csl-indent {
 </header>
 
 
-<p>A BIM model is a snapshot of a building at design time. A <strong>digital twin</strong> takes that same model and connects it to the building’s live operational data — temperature sensors, occupancy counters, energy meters — so you can see what’s actually happening inside, not just what was drawn. AutoDesk Tandem is APS’s platform for building and querying digital twins.</p>
+<p>A BIM model is a snapshot of a building at design time. A <strong>digital twin</strong> takes that same model and connects it to the building’s live operational data, temperature sensors, occupancy counters, energy meters, so you can see what’s actually happening inside, not just what was drawn. AutoDesk Tandem is APS’s platform for building and querying digital twins.</p>
 <p>This chapter introduces Tandem concepts and shows how to talk to the Tandem REST API directly from R using <code>httr2</code> <span class="citation" data-cites="R-httr2">(<a href="references.html#ref-R-httr2" role="doc-biblioref">Wickham 2024</a>)</span> and a standard APS token from <code>getToken()</code>. See <span class="citation" data-cites="autodesk-tandem">(<a href="references.html#ref-autodesk-tandem" role="doc-biblioref">Autodesk, Inc. 2024</a>)</span> for the full API reference.</p>
 <p>The relationship between a BIM model and a Tandem twin looks like this:</p>
 <div class="cell" data-layout-align="default">
@@ -709,7 +709,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Tandem requires an active <strong>AutoDesk Tandem subscription</strong> in addition to an APS app registration. Authentication uses the same OAuth Bearer token as the rest of this book — no extra credential setup needed.</p>
+<p>Tandem requires an active <strong>AutoDesk Tandem subscription</strong> in addition to an APS app registration. Authentication uses the same OAuth Bearer token as the rest of this book, no extra credential setup needed.</p>
 </div>
 </div>
 <section id="twin-vs.-bim-model" class="level2" data-number="16.1">
@@ -771,7 +771,7 @@ Tip
 </section>
 <section id="listing-facilities" class="level2" data-number="16.3">
 <h2 data-number="16.3" class="anchored" data-anchor-id="listing-facilities"><span class="header-section-number">16.3</span> Listing Facilities</h2>
-<p>A <em>facility</em> in Tandem is the digital twin of a building or site — the top-level container for model data and sensor streams. List all facilities your token can access:</p>
+<p>A <em>facility</em> in Tandem is the digital twin of a building or site, the top-level container for model data and sensor streams. List all facilities your token can access:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>facilities_resp <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="st">"https://tandem.autodesk.com/api/v1/groups"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_auth_bearer_token</span>(myToken) <span class="sc">|&gt;</span></span>
@@ -808,7 +808,7 @@ Tip
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Linked URNs:"</span>, <span class="fu">length</span>(facility<span class="sc">$</span>links), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Linked URNs:  2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>facility$links</code> contains the APS Model Derivative URNs of the BIM models embedded in this twin — the same URNs you’d pass to <code>getObjectTree()</code> or <code>getData()</code>, which is what makes the <code>objectId</code> the key that links the two worlds together.</p>
+<p><code>facility$links</code> contains the APS Model Derivative URNs of the BIM models embedded in this twin, the same URNs you’d pass to <code>getObjectTree()</code> or <code>getData()</code>, which is what makes the <code>objectId</code> the key that links the two worlds together.</p>
 </section>
 <section id="looking-up-an-element" class="level2" data-number="16.5">
 <h2 data-number="16.5" class="anchored" data-anchor-id="looking-up-an-element"><span class="header-section-number">16.5</span> Looking Up an Element</h2>

@@ -67,14 +67,25 @@ format:
       dark: darkly
   pdf:
     documentclass: scrreprt
+    classoption: [oneside]
     geometry: margin=1in
     fontsize: 11pt
     colorlinks: true
     linkcolor: bookblue
-    header-includes: |
-      \usepackage{xcolor}
-      \definecolor{bookblue}{HTML}{367ABF}
+    urlcolor: bookblue
+    citecolor: bookblue
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    code-overflow: wrap
+    highlight-style: tango
+    include-in-header: latex/preamble.tex
   epub:
     cover-image: cover.png
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    epub-chapter-level: 1
+    css: epub.css
 
 editor: visual

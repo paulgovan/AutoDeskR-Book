@@ -1,0 +1,18 @@
+\usepackage{xcolor}
+\definecolor{bookblue}{HTML}{367ABF}
+
+% Page headers: chapter name on left, page number on right
+\usepackage{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\clearpairofpagestyles
+\ohead{\pagemark}
+\ihead{\leftmark}
+\setkomafont{pageheadfoot}{\small\normalfont}
+
+% Code block line wrapping (fvextra works with Quarto's Verbatim env)
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{%
+  breaklines, breakanywhere, commandchars=\\\{\}}
+
+% Tighter spacing inside callout boxes
+\setlength{\fboxsep}{6pt}
