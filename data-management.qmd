@@ -109,7 +109,7 @@ resp$content
 
 ### Big Files (\> 100 MB)
 
-For anything over 100 MB, use `uploadFileSigned()`. iI routes the transfer through signed S3 URLs to sidestep timeout limits:
+For anything over 100 MB, use `uploadFileSigned()`. It routes the transfer through signed S3 URLs to sidestep timeout limits:
 
 ```{r}
 #| eval: false

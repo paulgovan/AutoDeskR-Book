@@ -21,10 +21,10 @@ The catch is that APS speaks REST. Every operation means authenticated HTTP requ
 ``` r
 library(AutoDeskR)
 
-token  <- getToken(id, secret, scope = "data:read data:write bucket:create")
-bucket <- makeBucket(token, "my-project-bucket")
-upload <- uploadFile(token, "model.dwg", bucket$bucketKey)
-job    <- translateFile(token, upload$objectId, "svf")
+token  <- getToken(id = id, secret = secret, scope = "data:read data:write bucket:create")
+bucket <- makeBucket(token = token, bucket = "my-project-bucket")
+upload <- uploadFile(file = "model.dwg", token = token, bucket = bucket$bucketKey)
+job    <- translateFile(urn = upload$objectId, token = token, type = "svf")
 ```
 
 The goal isn't to paper over APS entirely. Understanding what's happening under the hood makes you more effective. AutoDeskR just removes the boilerplate so you can spend your time on the analysis, not the plumbing.

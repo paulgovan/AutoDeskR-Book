@@ -41,7 +41,7 @@ The book is organised into eight parts. You don't have to read them in order, ea
 To follow along you'll need:
 
 -   **R** (version 4.0 or later) and, optionally, RStudio
--   A free **AutoDesk account** with an APS application registered at [aps.autodesk.com](https://aps.autodesk.com).The [Getting Started](getting-started.qmd) chapter walks you through it step by step
+-   A free **AutoDesk account** with an APS application registered at [aps.autodesk.com](https://aps.autodesk.com). The [Getting Started](getting-started.qmd) chapter walks you through it step by step
 -   An internet connection (all the action happens in AutoDesk's cloud)
 
 No prior CAD or BIM experience assumed. If you're comfortable running an R script, you're ready.

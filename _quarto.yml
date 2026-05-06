@@ -1,6 +1,7 @@
 project:
   type: book
   output-dir: docs
+  post-render: fix-epub.py
 
 book:
   title: "R for the Built Environment"

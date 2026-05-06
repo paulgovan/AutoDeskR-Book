@@ -6,6 +6,10 @@ Need to convert a DWG to PDF without spinning up an AutoCAD licence? Design Auto
 
 This chapter focuses on the most common use case: DWG → PDF.
 
+::: callout-note
+**Other engines are supported but not yet wrapped.** APS Design Automation also runs Revit, 3ds Max, Inventor, and Fusion 360 scripts via a generalised `submitWorkItem()` / `listEngines()` pattern. AutoDeskR currently exposes `makePdf()` as a convenience wrapper; support for the other engines is on the roadmap. See [github.com/paulgovan/AutoDeskR](https://github.com/paulgovan/AutoDeskR) to track progress or request prioritisation.
+:::
+
 ```{mermaid}
 flowchart LR
   A[DWG file\nat source URL] --> B[makePdf\nsubmit work item]

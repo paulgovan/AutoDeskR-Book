@@ -90,7 +90,7 @@ Retrieve the output URN, then download:
 
 ```{r}
 #| eval: false
-resp <- getOutputUrn(urn = myUrn, token = Sys.getenv("token"))
+resp <- getOutputUrn(urn = myUrn, token = myToken)
 myOutputUrn        <- resp$content$derivatives[[1]]$children[[1]]$urn
 myEncodedOutputUrn <- jsonlite::base64_enc(myOutputUrn)
 

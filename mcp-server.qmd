@@ -59,9 +59,14 @@ mcp_tool(
     urn = mcp_param("string", "The raw objectId URN returned by uploadFile()")
   ),
   handler = function(urn) {
-    encoded  <- jsonlite::base64_enc(urn)
-    resp     <- getData(urn = encoded, token = .token)
-    objects  <- resp$content$data$objects
+    encoded <- jsonlite::base64_enc(urn)
+
+    # Retrieve the viewable GUID before fetching properties
+    meta    <- getMetadata(urn = encoded, token = .token)
+    guid    <- meta$content$data$metadata[[1]]$guid
+
+    resp    <- getData(guid = guid, urn = encoded, token = .token)
+    objects <- resp$content$data$collection
 
     layer_counts <- table(sapply(objects, `[[`, "name"))
     data.frame(layer = names(layer_counts),

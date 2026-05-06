@@ -3,7 +3,7 @@
 
 local function fix_html(text)
   -- Match `class` followed by whitespace, `>`, or `/` but not `=`
-  return text:gsub('(%s)class([%s>/])', '%1class=""%2')
+  return text:gsub('(%s)class([%s>/])', '%1class="figure"%2')
 end
 
 function RawBlock(el)
