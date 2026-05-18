@@ -59,6 +59,9 @@ book:
         - troubleshooting.qmd
     - references.qmd
 
+execute:
+  freeze: auto
+
 bibliography: references.bib
 
 format:

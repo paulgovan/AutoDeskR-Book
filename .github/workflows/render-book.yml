@@ -1,0 +1,72 @@
+name: Render Book
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 3 * * 1"  # Every Monday at 03:00 UTC — refreshes frozen API output
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'schedule'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.4"
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            AutoDeskR
+            testthat
+            httptest2
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Run tests
+        run: Rscript -e "testthat::test_dir('tests/testthat')"
+
+      - name: Render book (uses frozen output for API chapters)
+        run: quarto render
+
+      - name: Upload rendered book
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-html
+          path: docs/
+
+  live-api:
+    # Runs weekly with real credentials to refresh frozen output
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    env:
+      client_id: ${{ secrets.AUTODESK_CLIENT_ID }}
+      client_secret: ${{ secrets.AUTODESK_CLIENT_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.4"
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: AutoDeskR
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render with live API (refreshes _freeze/)
+        run: quarto render
+
+      - name: Commit refreshed freeze output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _freeze/
+          git diff --staged --quiet || git commit -m "chore: refresh frozen API output"
+          git push

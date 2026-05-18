@@ -19,7 +19,7 @@ graph LR
 Get a token first - bucket creation needs `bucket:create` and `bucket:read` scopes at minimum:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- getToken(
   id     = Sys.getenv("client_id"),
   secret = Sys.getenv("client_secret"),
@@ -41,7 +41,7 @@ Bucket retention policy controls how long your objects stick around:
 **Bucket names are globally unique** — not just within your app, but across every APS application everywhere. A name like `"test"` is long gone. Use something specific to your organisation and project, e.g. `"acmecorp-bridge-analysis-prod"`. A duplicate name returns a `409 Conflict`:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp$status_code
 #> [1] 409
 resp$content$reason
@@ -50,7 +50,7 @@ resp$content$reason
 :::
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- makeBucket(token = myToken, bucket = "mybucket", policy = "persistent")
 resp$content
 #> $bucketKey
@@ -69,7 +69,7 @@ resp$content
 Check on a bucket anytime with `checkBucket()`:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- checkBucket(token = myToken, bucket = "mybucket")
 resp$content$policyKey
 #> [1] "persistent"
@@ -80,7 +80,7 @@ resp$content$policyKey
 `uploadFile()` handles files up to 100 MB. It returns the object's `objectId`, a URN that every other API will ask for, so save it somewhere handy:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp  <- uploadFile(
   file   = system.file("samples/aerial.dwg", package = "AutoDeskR"),
   token  = myToken,
@@ -112,7 +112,7 @@ resp$content
 For anything over 100 MB, use `uploadFileSigned()`. It routes the transfer through signed S3 URLs to sidestep timeout limits:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp  <- uploadFileSigned(
   file   = "path/to/large_model.rvt",
   token  = myToken,
@@ -128,7 +128,7 @@ resp$content$size
 See all buckets your app owns. Paginate with `limit` and `startAt`:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- listBuckets(token = myToken, limit = 10)
 resp$content$items
 #>                          bucketKey    createdDate  policyKey
@@ -143,7 +143,7 @@ resp <- listBuckets(token = myToken, limit = 10, startAt = "visualization-dev")
 Filter by region if your app spans geographies:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- listBuckets(token = myToken, region = "EMEA")
 resp$content$items
 #>       bucketKey    createdDate  policyKey
@@ -153,7 +153,7 @@ resp$content$items
 List the files inside a bucket:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- listObjects(token = myToken, bucket = "mybucket", limit = 10)
 resp$content$items
 #>          objectKey                                              objectId     size
@@ -167,7 +167,7 @@ resp$content$items
 Remove a specific file:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- deleteObject(token = myToken, bucket = "mybucket", object = "aerial.dwg")
 resp$status_code
 #> [1] 200
@@ -176,7 +176,7 @@ resp$status_code
 Remove the whole bucket:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- deleteBucket(token = myToken, bucket = "mybucket")
 resp$status_code
 #> [1] 200
@@ -186,7 +186,7 @@ resp$status_code
 **Empty the bucket first.** `deleteBucket()` won't touch a bucket that still has objects in it. Delete everything with `deleteObject()` first, or you'll get:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp$status_code
 #> [1] 409
 resp$content$reason

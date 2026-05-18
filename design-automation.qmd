@@ -27,7 +27,7 @@ flowchart LR
 :::
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- getToken(
   id     = Sys.getenv("client_id"),
   secret = Sys.getenv("client_secret"),
@@ -37,7 +37,7 @@ myToken <- resp$content$access_token
 ```
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 mySource      <- "http://download.autodesk.com/us/samplefiles/acad/visualization_-_aerial.dwg"
 myDestination <- "https://drive.google.com/folderview?id=0BygncDVHf60mTDZVNDltLThLNmM&usp=sharing"
 
@@ -59,7 +59,7 @@ resp$content
 Use the work item `id` to check status. A simple DWG typically takes **15–30 seconds**; complex drawings with many layers or external references take longer.
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 repeat {
   resp <- checkPdf(id = myWorkItemId, token = myToken)
   cat("Status:", resp$content$status, "\n")
@@ -74,7 +74,7 @@ repeat {
 The full timing breakdown when it's done:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp$content
 #> $id
 #> [1] "f47ac10b-58cc-4372-a567-0e02b2c3d479"
@@ -102,7 +102,7 @@ Once `status` is `"success"`, the PDF is waiting at your `destination` URL.
 Converting a folder of DWGs is just a loop:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 dwg_urls  <- c(
   "https://files.example.com/floor_plan.dwg",
   "https://files.example.com/site_plan.dwg",

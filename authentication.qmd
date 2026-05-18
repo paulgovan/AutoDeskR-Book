@@ -32,7 +32,7 @@ Store only long-lived credentials — `client_id` and `client_secret` — in `.R
 Reload the file without restarting R:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 readRenviron("~/.Renviron")
 ```
 
@@ -43,7 +43,7 @@ Then pull values at runtime with `Sys.getenv()`. Credentials never appear in you
 One function call does it all:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp    <- getToken(id = Sys.getenv("client_id"), secret = Sys.getenv("client_secret"))
 myToken <- resp$content$access_token
 myToken
@@ -55,7 +55,7 @@ myToken
 The full response also tells you what you're working with:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 str(resp$content)
 #> List of 3
 #>  $ access_token: chr "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR..."
@@ -67,7 +67,7 @@ str(resp$content)
 **Tokens expire after 1 hour.** A `401 Unauthorized` mid-session almost always means your token timed out — just call `getToken()` again.
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp$status_code
 #> [1] 401
 resp$content$errorCode
@@ -99,7 +99,7 @@ The `scope` parameter controls which APIs the token can access. It's good practi
 Pass multiple scopes as a space-separated string:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- getToken(
   id     = Sys.getenv("client_id"),
   secret = Sys.getenv("client_secret"),
@@ -113,7 +113,7 @@ myToken <- resp$content$access_token
 APS enforces per-application rate limits (typically 60–300 requests per minute depending on the endpoint). Hit the ceiling and you get **HTTP 429**:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp$status_code
 #> [1] 429
 resp$content$errorCode
@@ -125,7 +125,7 @@ resp$content$developerMessage
 This simple retry helper wraps any function call that might get rate-limited:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 aps_retry <- function(fn, max_tries = 3, wait = 10) {
   for (i in seq_len(max_tries)) {
     resp <- fn()

@@ -20,7 +20,7 @@ flowchart LR
 First get a token with `data:read` and `data:write` scopes. Note that only certain source formats can produce OBJ output (DWG, IPT, IAM, IPN, F3D, FBX. See the [APS supported formats list](https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/supported-translations/) for the full matrix).
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- getToken(
   id     = Sys.getenv("client_id"),
   secret = Sys.getenv("client_secret"),
@@ -32,7 +32,7 @@ myToken <- resp$content$access_token
 APS requires the file's URN to be Base-64 encoded before it'll accept it — `jsonlite::base64_enc()` handles that:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 myEncodedUrn <- jsonlite::base64_enc(myUrn)
 myEncodedUrn
 #> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
@@ -41,7 +41,7 @@ myEncodedUrn
 Kick off the translation:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- translateObj(urn = myEncodedUrn, token = myToken)
 resp$content
 #> $result
@@ -58,7 +58,7 @@ resp$content
 **OBJ translation only accepts certain source formats.** Submitting an unsupported format returns a `415 Unsupported Media Type`:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp$status_code
 #> [1] 415
 resp$content$diagnostic
@@ -69,7 +69,7 @@ resp$content$diagnostic
 Poll `checkFile()` until `status` hits `"success"`. The job can take anywhere from a few seconds to a few minutes depending on file complexity:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- checkFile(urn = myEncodedUrn, token = myToken)
 resp$content
 #> $status
@@ -89,7 +89,7 @@ Translation status moves through `"pending"` → `"inprogress"` → `"success"`.
 Retrieve the output URN, then download:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- getOutputUrn(urn = myUrn, token = myToken)
 myOutputUrn        <- resp$content$derivatives[[1]]$children[[1]]$urn
 myEncodedOutputUrn <- jsonlite::base64_enc(myOutputUrn)
@@ -109,7 +109,7 @@ resp$status_code
 Same pattern as OBJ, different function:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- translateStl(urn = myEncodedUrn, token = myToken)
 resp$content$acceptedJobs$output$formats[[1]]$type
 #> [1] "stl"
@@ -125,7 +125,7 @@ resp$content$status
 SVF format unlocks the structured metadata inside a model. The object tree, property sets, layer information. This is the format the Viewer also uses.
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- translateSvf(urn = myEncodedUrn, token = myToken)
 resp$content$result
 #> [1] "created"
@@ -139,7 +139,7 @@ resp$content$status
 `getMetadata()` returns the viewable GUIDs. You'll need the GUID for every subsequent metadata call:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp   <- getMetadata(urn = myEncodedUrn, token = myToken)
 myGuid <- resp$content$data$metadata[[1]]$guid
 resp$content$data
@@ -159,7 +159,7 @@ resp$content$data
 `getObjectTree()` returns the model's full object hierarchy. For a DWG, the children of the root node are its layers:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- getObjectTree(guid = myGuid, urn = myEncodedUrn, token = myToken)
 resp$content$data$objects[[1]]
 #> $objectid
@@ -181,7 +181,7 @@ resp$content$data$objects[[1]]
 `getData()` pulls all geometry properties and material data, bounding boxes, layer assignments, custom attributes. This is the raw material for the [Layer Structure Analysis](layer-analysis.qmd) chapter:
 
 ```{r}
-#| eval: false
+#| eval: !expr nzchar(Sys.getenv("client_id"))
 resp <- getData(guid = myGuid, urn = myEncodedUrn, token = myToken)
 resp$content$data$collection[[1]]
 #> $objectid
