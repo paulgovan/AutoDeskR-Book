@@ -9,9 +9,10 @@ on:
     - cron: "0 3 * * 1"  # Every Monday at 03:00 UTC — refreshes frozen API output
 
 jobs:
-  render:
+  test:
     runs-on: ubuntu-latest
     if: github.event_name != 'schedule'
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -19,21 +20,49 @@ jobs:
         with:
           r-version: "4.4"
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          packages: |
-            AutoDeskR
-            testthat
-
-      - uses: quarto-dev/quarto-actions/setup@v2
+      - name: Install test dependencies
+        run: Rscript -e "install.packages(c('AutoDeskR', 'testthat'), repos = 'https://cloud.r-project.org')"
 
       - name: Run tests
         run: Rscript -e "testthat::test_dir('tests/testthat')"
 
-      - name: Render book (uses frozen output for API chapters)
+  render:
+    runs-on: ubuntu-latest
+    # Only render when _freeze/ exists (populated by a developer with credentials)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    timeout-minutes: 30
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check freeze directory exists
+        id: check_freeze
+        run: |
+          if [ -d "_freeze" ] && [ "$(ls -A _freeze)" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "::warning::_freeze/ is empty — skipping render. Run quarto render locally with credentials first and commit _freeze/."
+          fi
+
+      - uses: r-lib/actions/setup-r@v2
+        if: steps.check_freeze.outputs.exists == 'true'
+        with:
+          r-version: "4.4"
+
+      - name: Install render dependencies
+        if: steps.check_freeze.outputs.exists == 'true'
+        run: Rscript -e "install.packages('AutoDeskR', repos = 'https://cloud.r-project.org')"
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        if: steps.check_freeze.outputs.exists == 'true'
+
+      - name: Render book (uses frozen output)
+        if: steps.check_freeze.outputs.exists == 'true'
         run: quarto render
 
       - name: Upload rendered book
+        if: steps.check_freeze.outputs.exists == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: book-html
@@ -53,9 +82,8 @@ jobs:
         with:
           r-version: "4.4"
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          packages: AutoDeskR
+      - name: Install render dependencies
+        run: Rscript -e "install.packages('AutoDeskR', repos = 'https://cloud.r-project.org')"
 
       - uses: quarto-dev/quarto-actions/setup@v2
 
