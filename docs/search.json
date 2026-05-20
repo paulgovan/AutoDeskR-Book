@@ -192,67 +192,67 @@
   {
     "objectID": "getting-started.html",
     "href": "getting-started.html",
-    "title": "Getting Started",
+    "title": "Basic Workflow",
     "section": "",
     "text": "System Requirements\nFive steps stand between you and your first successful API call. By the end of this chapter you’ll have credentials stored safely, AutoDeskR installed, and a file sitting in a cloud bucket ready for translation.",
     "crumbs": [
       "Getting Started",
-      "Getting Started"
+      "Basic Workflow"
     ]
   },
   {
     "objectID": "getting-started.html#system-requirements",
     "href": "getting-started.html#system-requirements",
-    "title": "Getting Started",
+    "title": "Basic Workflow",
     "section": "",
     "text": "R 4.0 or later\nRStudio (optional but recommended)\nAn internet connection\nA free AutoDesk account (created below)",
     "crumbs": [
       "Getting Started",
-      "Getting Started"
+      "Basic Workflow"
     ]
   },
   {
     "objectID": "getting-started.html#step-1-create-an-autodesk-account",
     "href": "getting-started.html#step-1-create-an-autodesk-account",
-    "title": "Getting Started",
+    "title": "Basic Workflow",
     "section": "Step 1: Create an AutoDesk Account",
     "text": "Step 1: Create an AutoDesk Account\nIf you do not already have an AutoDesk account, register for free at autodesk.com. A standard account gives you access to the APS free tier, which is sufficient for development and moderate usage.",
     "crumbs": [
       "Getting Started",
-      "Getting Started"
+      "Basic Workflow"
     ]
   },
   {
     "objectID": "getting-started.html#step-2-register-an-aps-application",
     "href": "getting-started.html#step-2-register-an-aps-application",
-    "title": "Getting Started",
+    "title": "Basic Workflow",
     "section": "Step 2: Register an APS Application",
     "text": "Step 2: Register an APS Application\nAPS uses OAuth 2.0 — every API call needs a token, and every token comes from a registered app. Here’s how to get one:\n\nGo to the APS Developer Portal and sign in.\nClick My Apps → Create Application.\nGive your app a name (e.g., AutoDeskR-dev) and enable the APIs you need. For the examples in this book: Data Management, Model Derivative, and Design Automation.\nClick Create. Your Client ID and Client Secret appear on the app detail page.\n\nKeep these private. If they end up in a public Git repo, rotate them immediately.",
     "crumbs": [
       "Getting Started",
-      "Getting Started"
+      "Basic Workflow"
     ]
   },
   {
     "objectID": "getting-started.html#step-3-store-credentials-securely",
     "href": "getting-started.html#step-3-store-credentials-securely",
-    "title": "Getting Started",
+    "title": "Basic Workflow",
     "section": "Step 3: Store Credentials Securely",
     "text": "Step 3: Store Credentials Securely\nThe safest way to use credentials in R is through environment variables stored in ~/.Renviron. Open or create that file:\nusethis::edit_r_environ()\nAdd the following lines, replacing the placeholder values:\nclient_id=your_client_id_here\nclient_secret=your_client_secret_here\nSave the file and restart R. You can then retrieve the values in any script without hard-coding them:\nid     &lt;- Sys.getenv(\"client_id\")\nsecret &lt;- Sys.getenv(\"client_secret\")\nSee the Authentication chapter for a full explanation of OAuth scopes and token management.",
     "crumbs": [
       "Getting Started",
-      "Getting Started"
+      "Basic Workflow"
     ]
   },
   {
     "objectID": "getting-started.html#step-4-install-autodeskr",
     "href": "getting-started.html#step-4-install-autodeskr",
-    "title": "Getting Started",
+    "title": "Basic Workflow",
     "section": "Step 4: Install AutoDeskR",
     "text": "Step 4: Install AutoDeskR\nInstall the stable release from CRAN:\ninstall.packages(\"AutoDeskR\")\nOr install the development version from GitHub:\ndevtools::install_github(\"paulgovan/AutoDeskR\")",
     "crumbs": [
       "Getting Started",
-      "Getting Started"
+      "Basic Workflow"
     ]
   },
   {
@@ -269,12 +269,12 @@
   {
     "objectID": "getting-started.html#whats-next",
     "href": "getting-started.html#whats-next",
-    "title": "Getting Started",
+    "title": "Basic Workflow",
     "section": "What’s Next",
     "text": "What’s Next\nWith your credentials configured and a file uploaded, you are ready to explore the full API:\n\n\n\nChapter\nWhat it covers\n\n\n\n\nAuthentication\nToken scopes, token refresh, rate-limit handling\n\n\nData Management\nBuckets, large-file uploads, pagination\n\n\nModel Derivative\nTranslating files to OBJ, STL, SVF; extracting metadata\n\n\nDesign Automation\nDWG-to-PDF conversion pipelines\n\n\nReality Capture\nPhoto-to-3D mesh from drone or phone images\n\n\nViewer\nEmbedding the 3D viewer in Shiny and R Markdown\n\n\nMesh Reading\nImporting OBJ and STL files; inspecting geometry\n\n\nMesh Metrics\nSurface area, volume, bounding box\n\n\n3D Visualisation\nInteractive rgl widgets and rayshader renders\n\n\nPoint Cloud Analysis\nLAS/LAZ files; height normalisation; density rasters\n\n\nLayer Analysis\nCounting and summarising DWG layers\n\n\nAttribute Extraction\nReading object properties from Model Derivative\n\n\nCross-Drawing Comparison\nDiffing layer tables across drawing revisions\n\n\nDrawing Reports\nParameterised gt reports rendered with Quarto\n\n\nTandem Overview\nConnecting to AutoDesk Tandem facilities\n\n\nSensor Streams\nFetching live sensor readings\n\n\nLive Dashboards\nViewer + sensor chart in a single Shiny app\n\n\nMCP Server\nExposing AutoDeskR as an AI agent tool\n\n\nTroubleshooting\nCommon errors and how to fix them",
     "crumbs": [
       "Getting Started",
-      "Getting Started"
+      "Basic Workflow"
     ]
   },
   {
@@ -2045,6 +2045,28 @@
     "crumbs": [
       "Front Matter",
       "Motivation"
+    ]
+  },
+  {
+    "objectID": "motivation.html#why-this-book-still-matters-in-the-age-of-ai",
+    "href": "motivation.html#why-this-book-still-matters-in-the-age-of-ai",
+    "title": "Motivation",
+    "section": "Why This Book Still Matters in the Age of AI",
+    "text": "Why This Book Still Matters in the Age of AI\nLLMs can write R code but can’t validate it against live APIs. An AI assistant can suggest getToken() but doesn’t know that bucket names are globally unique across every APS application in existence, that tokens expire in exactly 3600 seconds, or that object URNs must be Base64-encoded before passing them to the Model Derivative API. The working patterns in this book are what an AI coding assistant needs to get the details right on the first try, not after three rounds of debugging cryptic 400 errors.\nAutoDeskR as an MCP server turns AI agents into built-environment tools. The MCP Server chapter shows how to expose AutoDeskR as a tool that LLMs like Claude can call directly, letting an AI agent query live building data, pull sensor streams from a digital twin, or trigger a DWG-to-PDF conversion through natural language. Understanding the underlying API is what lets you decide which capabilities to expose and how to shape what those agents can actually do.\nThe data bridge problem hasn’t gone away. AI doesn’t change the fact that AEC data lives in proprietary formats on proprietary platforms. An LLM that can’t reach a DWG file, a BIM model, or a sensor stream can’t reason about it. AutoDeskR remains the bridge that puts that data in front of both R analysts and AI systems.\nStructured wrappers reduce hallucination surface. Thin, well-named functions with clear arguments give AI coding tools a smaller surface to get wrong. Calling makeBucket(token, bucket, policy) is far harder to hallucinate badly than constructing a raw httr2 request with the correct endpoint, authentication header, content type, and JSON body shape.",
+    "crumbs": [
+      "Front Matter",
+      "Motivation"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#step-5-a-complete-round-trip",
+    "href": "getting-started.html#step-5-a-complete-round-trip",
+    "title": "Basic Workflow",
+    "section": "Step 5: A Complete Round-Trip",
+    "text": "Step 5: A Complete Round-Trip\nThe diagram below shows the typical flow through the AutoDeskR APIs:\n\n\n\n\n\nflowchart LR\n  A([Create APS App]) --&gt; B[getToken]\n  B --&gt; C[makeBucket]\n  C --&gt; D[uploadFile]\n  D --&gt; E{Use case}\n  E --&gt; F[translateObj / translateSvf]\n  E --&gt; G[makePdf]\n  E --&gt; H[createPhotoscene]\n  F --&gt; I[viewer3D]\n\n\n\n\n\n\nThe following code demonstrates a complete round-trip: authenticate, create a storage bucket, upload a file, and verify the upload.\nlibrary(AutoDeskR)\n\n# Read credentials from environment\nid     &lt;- Sys.getenv(\"client_id\")\nsecret &lt;- Sys.getenv(\"client_secret\")\n\n# 1. Get an access token with the scopes needed for data management\ntoken &lt;- getToken(id, secret, scope = \"data:read data:write bucket:create bucket:read\")\ntoken$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"\ntoken$content$expires_in\n#&gt; [1] 3600\n\n# 2. Create a persistent storage bucket (bucket names must be globally unique)\nbucket &lt;- makeBucket(token, bucketKey = \"my-first-autodeskr-bucket\", policyKey = \"persistent\")\nbucket$content$bucketKey\n#&gt; [1] \"my-first-autodeskr-bucket\"\nbucket$content$policyKey\n#&gt; [1] \"persistent\"\n\n# 3. Upload a local file (≤100 MB)\nresult &lt;- uploadFile(token,\n                     localPath = \"path/to/your/file.dwg\",\n                     bucketKey = bucket$bucketKey)\nresult$content$objectKey\n#&gt; [1] \"file.dwg\"\nresult$content$size\n#&gt; [1] 3145728\n\n# 4. List objects in the bucket to confirm the upload succeeded\nobjects &lt;- listObjects(token, bucketKey = bucket$bucketKey)\nprint(objects$content$items)\n#&gt;   objectKey                                                         objectId    size\n#&gt; 1  file.dwg  urn:adsk.objects:os.object:my-first-autodeskr-bucket/file.dwg  3145728\nIf the upload succeeds, listObjects() will return a data frame containing your file’s objectKey, objectId (a URN), and size. The objectId is used in subsequent chapters when translating the file or loading it in the viewer.",
+    "crumbs": [
+      "Getting Started",
+      "Basic Workflow"
     ]
   }
 ]

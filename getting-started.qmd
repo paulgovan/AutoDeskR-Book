@@ -1,13 +1,13 @@
-# Getting Started {.unnumbered}
+# Basic Workflow {.unnumbered}
 
 Five steps stand between you and your first successful API call. By the end of this chapter you'll have credentials stored safely, AutoDeskR installed, and a file sitting in a cloud bucket ready for translation.
 
 ## System Requirements
 
--   **R** 4.0 or later
--   **RStudio** (optional but recommended)
--   An internet connection
--   A free AutoDesk account (created below)
+- **R** 4.0 or later
+- **RStudio** (optional but recommended)
+- An internet connection
+- A free AutoDesk account (created below)
 
 ## Step 1: Create an AutoDesk Account
 
@@ -34,7 +34,7 @@ usethis::edit_r_environ()
 
 Add the following lines, replacing the placeholder values:
 
-```
+```         
 client_id=your_client_id_here
 client_secret=your_client_secret_here
 ```
@@ -124,7 +124,7 @@ If the upload succeeds, `listObjects()` will return a data frame containing your
 With your credentials configured and a file uploaded, you are ready to explore the full API:
 
 | Chapter | What it covers |
-|----|----|
+|------------------------------------|------------------------------------|
 | [Authentication](authentication.qmd) | Token scopes, token refresh, rate-limit handling |
 | [Data Management](data-management.qmd) | Buckets, large-file uploads, pagination |
 | [Model Derivative](model-derivative.qmd) | Translating files to OBJ, STL, SVF; extracting metadata |

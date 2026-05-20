@@ -20,7 +20,7 @@ sequenceDiagram
 
 Your Client ID and Secret are like a username and password for your app. Keep them out of your source files and version control. The cleanest approach in R is to stash them in `~/.Renviron`:
 
-```
+```         
 client_id = "YOUR_CLIENT_ID"
 client_secret = "YOUR_CLIENT_SECRET"
 ```
