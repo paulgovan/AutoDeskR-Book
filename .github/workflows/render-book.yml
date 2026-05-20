@@ -21,7 +21,7 @@ jobs:
           r-version: "4.4"
 
       - name: Install test dependencies
-        run: Rscript -e "install.packages(c('AutoDeskR', 'testthat'), repos = 'https://cloud.r-project.org')"
+        run: Rscript -e "pak::pak(c('AutoDeskR', 'testthat'))"
 
       - name: Run tests
         run: Rscript -e "testthat::test_dir('tests/testthat')"
@@ -52,7 +52,7 @@ jobs:
 
       - name: Install render dependencies
         if: steps.check_freeze.outputs.exists == 'true'
-        run: Rscript -e "install.packages('AutoDeskR', repos = 'https://cloud.r-project.org')"
+        run: Rscript -e "pak::pak('AutoDeskR')"
 
       - uses: quarto-dev/quarto-actions/setup@v2
         if: steps.check_freeze.outputs.exists == 'true'
@@ -83,7 +83,7 @@ jobs:
           r-version: "4.4"
 
       - name: Install render dependencies
-        run: Rscript -e "install.packages('AutoDeskR', repos = 'https://cloud.r-project.org')"
+        run: Rscript -e "pak::pak('AutoDeskR')"
 
       - uses: quarto-dev/quarto-actions/setup@v2
 
