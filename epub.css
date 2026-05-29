@@ -5,6 +5,7 @@ pre, code {
   background-color: #f5f5f5;
   white-space: pre-wrap;
   word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 /* Callout-note / callout-warning / callout-tip boxes */
@@ -19,4 +20,19 @@ pre, code {
 figcaption {
   font-size: 0.85em;
   color: #555;
+}
+
+/* Figures and inline images: never exceed viewport */
+img, figure img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Tables: scroll horizontally on narrow screens */
+table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }

@@ -20,3 +20,8 @@
 
 % Tighter spacing inside callout boxes
 \setlength{\fboxsep}{6pt}
+
+% Reduce table font size to prevent wide columns from overflowing the text width
+\usepackage{etoolbox}
+\AtBeginEnvironment{longtable}{\small}
+\AtBeginEnvironment{tabular}{\small}

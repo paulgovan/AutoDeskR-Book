@@ -83,6 +83,8 @@ format:
     number-sections: true
     fig-width: 6.5
     fig-height: 4.5
+    fig-cap-location: bottom
+    linestretch: 1.15
     code-overflow: wrap
     highlight-style: tango
     include-in-header: latex/preamble.tex
@@ -92,6 +94,8 @@ format:
     toc-depth: 2
     number-sections: false
     epub-chapter-level: 1
+    fig-cap-location: bottom
+    highlight-style: tango
     css: epub.css
     filters:
       - filters/epub-fix.lua

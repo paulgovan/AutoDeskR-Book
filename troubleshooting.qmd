@@ -9,7 +9,7 @@ Something's not working. Don't worry. APS errors are usually pretty informative 
 The first thing to check is always `resp$status_code`. Here's what each code means and where to start looking:
 
 | Code | Meaning | Most likely cause | First step |
-|------------------|------------------|------------------|------------------|
+|:-----|:--------|:----------------------------------|:----------------------------------|
 | 400 | Bad Request | Malformed request body; non-public URL in Design Automation | Check source/destination URLs; validate parameters |
 | 401 | Unauthorized | Token expired or missing; wrong scope | Re-call `getToken()` with correct scopes |
 | 403 | Forbidden | Free-tier quota exceeded; API not enabled for app | Check quota in APS portal; enable the API on your app |
