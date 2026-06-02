@@ -53,9 +53,13 @@ jobs:
         with:
           r-version: "4.4"
 
-      - name: Install render dependencies
+      - uses: r-lib/actions/setup-r-dependencies@v2
         if: steps.check_freeze.outputs.exists == 'true'
-        run: Rscript -e "install.packages('AutoDeskR', repos = 'https://packagemanager.posit.co/cran/__linux__/jammy/latest')"
+        with:
+          packages: |
+            AutoDeskR
+            knitr
+            rmarkdown
 
       - uses: quarto-dev/quarto-actions/setup@v2
         if: steps.check_freeze.outputs.exists == 'true'
@@ -85,8 +89,12 @@ jobs:
         with:
           r-version: "4.4"
 
-      - name: Install render dependencies
-        run: Rscript -e "install.packages('AutoDeskR', repos = 'https://packagemanager.posit.co/cran/__linux__/jammy/latest')"
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            AutoDeskR
+            knitr
+            rmarkdown
 
       - uses: quarto-dev/quarto-actions/setup@v2
 
