@@ -29,10 +29,14 @@ img, figure img {
   display: block;
 }
 
-/* Tables: scroll horizontally on narrow screens */
+/* Tables: fixed layout so columns fill the viewport width in EPUB readers */
 table {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  table-layout: fixed;
+}
+
+td, th {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }

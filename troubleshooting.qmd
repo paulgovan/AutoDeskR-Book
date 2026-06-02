@@ -19,6 +19,8 @@ The first thing to check is always `resp$status_code`. Here's what each code mea
 | 429 | Too Many Requests | Rate limit hit | Add backoff with `aps_retry()` and `Sys.sleep()` |
 | 500 | Internal Server Error | Transient APS service error | Wait 30 s and retry; check [APS status](https://health.autodesk.com/) |
 
+: {tbl-colwidths="[8,15,42,35]"}
+
 ## Diagnosing Any Error
 
 Before diving into the per-API sections, check the full error payload. APS returns descriptive messages in the response body:

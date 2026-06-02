@@ -86,6 +86,7 @@ format:
     fig-cap-location: bottom
     linestretch: 1.15
     code-overflow: wrap
+    fig-pos: "H"
     highlight-style: tango
     include-in-header: latex/preamble.tex
   epub:
