@@ -75,6 +75,15 @@ jobs:
           name: book-html
           path: docs/
 
+      - name: Commit rendered book
+        if: steps.check_freeze.outputs.exists == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git diff --staged --quiet || git commit -m "chore: render book"
+          git push
+
   live-api:
     # Runs weekly with real credentials to refresh frozen output
     runs-on: ubuntu-latest
@@ -105,6 +114,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add _freeze/
-          git diff --staged --quiet || git commit -m "chore: refresh frozen API output"
+          git add _freeze/ docs/
+          git diff --staged --quiet || git commit -m "chore: refresh frozen API output and docs"
           git push
