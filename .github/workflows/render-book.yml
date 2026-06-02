@@ -81,7 +81,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/
-          git diff --staged --quiet || git commit -m "chore: render book"
+          git diff --staged --quiet || git commit -m "chore: render book [skip ci]"
           git push
 
   live-api:
@@ -115,5 +115,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add _freeze/ docs/
-          git diff --staged --quiet || git commit -m "chore: refresh frozen API output and docs"
+          git diff --staged --quiet || git commit -m "chore: refresh frozen API output and docs [skip ci]"
           git push
