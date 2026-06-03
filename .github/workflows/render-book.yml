@@ -64,6 +64,10 @@ jobs:
       - uses: quarto-dev/quarto-actions/setup@v2
         if: steps.check_freeze.outputs.exists == 'true'
 
+      - name: Install Chromium (Mermaid → PNG)
+        if: steps.check_freeze.outputs.exists == 'true'
+        run: quarto install chromium
+
       - name: Render book (uses frozen output)
         if: steps.check_freeze.outputs.exists == 'true'
         run: quarto render
@@ -106,6 +110,9 @@ jobs:
             rmarkdown
 
       - uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install Chromium (Mermaid → PNG)
+        run: quarto install chromium
 
       - name: Render with live API (refreshes _freeze/)
         run: quarto render
