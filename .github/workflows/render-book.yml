@@ -19,6 +19,7 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: "4.4"
+          use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -52,21 +53,17 @@ jobs:
         if: steps.check_freeze.outputs.exists == 'true'
         with:
           r-version: "4.4"
+          use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         if: steps.check_freeze.outputs.exists == 'true'
         with:
           packages: |
-            AutoDeskR
             knitr
             rmarkdown
 
       - uses: quarto-dev/quarto-actions/setup@v2
         if: steps.check_freeze.outputs.exists == 'true'
-
-      - name: Install Chromium (Mermaid → PNG)
-        if: steps.check_freeze.outputs.exists == 'true'
-        run: quarto install chromium
 
       - name: Render book (uses frozen output)
         if: steps.check_freeze.outputs.exists == 'true'
@@ -101,6 +98,7 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: "4.4"
+          use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -110,9 +108,6 @@ jobs:
             rmarkdown
 
       - uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Install Chromium (Mermaid → PNG)
-        run: quarto install chromium
 
       - name: Render with live API (refreshes _freeze/)
         run: quarto render
