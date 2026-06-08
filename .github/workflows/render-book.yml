@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: "0 3 * * 1"  # Every Monday at 03:00 UTC — refreshes frozen API output
 
+# Allow the render/live-api jobs to push the rendered docs/ and refreshed _freeze/
+permissions:
+  contents: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
