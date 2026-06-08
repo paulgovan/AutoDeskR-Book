@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     # Only render when _freeze/ exists (populated by a developer with credentials)
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    timeout-minutes: 30
+    timeout-minutes: 15
     needs: test
     steps:
       - uses: actions/checkout@v4
@@ -65,9 +65,9 @@ jobs:
       - uses: quarto-dev/quarto-actions/setup@v2
         if: steps.check_freeze.outputs.exists == 'true'
 
-      - name: Render book (uses frozen output)
+      - name: Render book (HTML only — PDF/EPUB are built locally and committed)
         if: steps.check_freeze.outputs.exists == 'true'
-        run: quarto render
+        run: quarto render --to html
 
       - name: Upload rendered book
         if: steps.check_freeze.outputs.exists == 'true'
@@ -109,8 +109,8 @@ jobs:
 
       - uses: quarto-dev/quarto-actions/setup@v2
 
-      - name: Render with live API (refreshes _freeze/)
-        run: quarto render
+      - name: Render with live API (HTML only — refreshes _freeze/)
+        run: quarto render --to html
 
       - name: Commit refreshed freeze output
         run: |
