@@ -68,10 +68,12 @@ jobs:
 
       - uses: quarto-dev/quarto-actions/setup@v2
         if: steps.check_freeze.outputs.exists == 'true'
+        with:
+          tinytex: true
 
-      - name: Render book (HTML only — PDF/EPUB are built locally and committed)
+      - name: Render book (HTML + PDF + EPUB)
         if: steps.check_freeze.outputs.exists == 'true'
-        run: quarto render --to html
+        run: quarto render
 
       - name: Upload rendered book
         if: steps.check_freeze.outputs.exists == 'true'
@@ -112,9 +114,11 @@ jobs:
             rmarkdown
 
       - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
 
-      - name: Render with live API (HTML only — refreshes _freeze/)
-        run: quarto render --to html
+      - name: Render with live API (HTML + PDF + EPUB — refreshes _freeze/)
+        run: quarto render
 
       - name: Commit refreshed freeze output
         run: |
