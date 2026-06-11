@@ -22,6 +22,25 @@ quarto preview
 
 Open `Book.Rproj` in RStudio to use the integrated project environment.
 
+### PDF / EPUB downloads (build locally, do not render in CI)
+
+The sidebar download menu (`downloads: [pdf, epub]` in `_quarto.yml`) serves
+`docs/R-for-the-Built-Environment.pdf` and `.epub`. These are **built locally
+and committed** — CI renders **HTML only**.
+
+Reason: building PDF/EPUB makes Quarto rasterize the `{mermaid}` diagrams and
+`rgl`/htmlwidget output with a headless Chrome, which hangs on the GitHub runner
+and times the workflow out. Do **not** change the CI render steps back to a bare
+`quarto render` (all formats); keep them as `quarto render --to html`.
+
+To refresh the downloadable files after content changes, run ALL formats together (running them separately clears `docs/` each time, deleting the other formats):
+
+``` bash
+quarto render   # renders HTML + PDF + EPUB, then runs fix-epub.py
+```
+
+then commit the updated `docs/`.
+
 ## Architecture
 
 The book has two layers of content:

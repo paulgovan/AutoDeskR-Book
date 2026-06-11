@@ -14,6 +14,7 @@ Common uses:
 The full workflow goes like this:
 
 ```{mermaid}
+%%| fig-width: 6.5
 flowchart LR
   A[Photos] --> B[createPhotoscene]
   B --> C[uploadImages]

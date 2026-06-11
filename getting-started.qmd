@@ -67,12 +67,13 @@ devtools::install_github("paulgovan/AutoDeskR")
 The diagram below shows the typical flow through the AutoDeskR APIs:
 
 ```{mermaid}
-flowchart LR
+%%| fig-width: 6.5
+flowchart TD
   A([Create APS App]) --> B[getToken]
   B --> C[makeBucket]
   C --> D[uploadFile]
   D --> E{Use case}
-  E --> F[translateObj / translateSvf]
+  E --> F[translateObj /\ntranslateSvf]
   E --> G[makePdf]
   E --> H[createPhotoscene]
   F --> I[viewer3D]
@@ -81,6 +82,7 @@ flowchart LR
 Not sure which API to use? The diagram below maps your input file type and goal to the right chapter:
 
 ```{mermaid}
+%%| fig-width: 6.5
 flowchart TD
   A{What do you\nhave?} --> B[DWG / DXF]
   A --> C[RVT / IFC / other BIM]

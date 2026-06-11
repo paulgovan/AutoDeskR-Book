@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     # Only render when _freeze/ exists (populated by a developer with credentials)
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    timeout-minutes: 40
+    timeout-minutes: 15
     needs: test
     steps:
       - uses: actions/checkout@v4
@@ -66,22 +66,14 @@ jobs:
             knitr
             rmarkdown
 
-      - name: Cache TinyTeX
-        if: steps.check_freeze.outputs.exists == 'true'
-        uses: actions/cache@v4
-        with:
-          path: ~/.TinyTeX
-          key: tinytex-${{ runner.os }}-${{ hashFiles('latex/preamble.tex', '_quarto.yml') }}
-          restore-keys: tinytex-${{ runner.os }}-
-
       - uses: quarto-dev/quarto-actions/setup@v2
         if: steps.check_freeze.outputs.exists == 'true'
-        with:
-          tinytex: true
 
-      - name: Render book (HTML + PDF + EPUB)
+      # HTML only: PDF/EPUB need headless Chrome (mermaid + rgl widgets), which
+      # hangs on the runner. Those are built locally and committed to docs/.
+      - name: Render book (HTML)
         if: steps.check_freeze.outputs.exists == 'true'
-        run: quarto render
+        run: quarto render --to html
 
       - name: Upload rendered book
         if: steps.check_freeze.outputs.exists == 'true'
@@ -123,11 +115,10 @@ jobs:
             rmarkdown
 
       - uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          tinytex: true
 
-      - name: Render with live API (HTML + PDF + EPUB — refreshes _freeze/)
-        run: quarto render
+      # HTML only refreshes _freeze/ without the Chrome-dependent PDF/EPUB build.
+      - name: Render with live API (HTML — refreshes _freeze/)
+        run: quarto render --to html
 
       - name: Commit refreshed freeze output
         run: |

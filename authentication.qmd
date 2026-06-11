@@ -7,6 +7,7 @@ Before AutoDeskR can talk to any APS endpoint, it needs a token, a temporary cre
 APS uses **2-legged OAuth 2.0** (client credentials flow): your app sends its Client ID and Secret, and AutoDesk hands back an access token. No user login involved, perfect for server-side scripts and automated pipelines.
 
 ```{mermaid}
+%%| fig-width: 6.5
 sequenceDiagram
   participant R as Your R Script
   participant APS as AutoDesk APS

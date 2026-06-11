@@ -272,7 +272,7 @@
     "href": "getting-started.html#step-5-a-complete-round-trip",
     "title": "Basic Workflow",
     "section": "Step 5: A Complete Round-Trip",
-    "text": "Step 5: A Complete Round-Trip\nThe diagram below shows the typical flow through the AutoDeskR APIs:\n\n\n\n\n\nflowchart LR\n  A([Create APS App]) --&gt; B[getToken]\n  B --&gt; C[makeBucket]\n  C --&gt; D[uploadFile]\n  D --&gt; E{Use case}\n  E --&gt; F[translateObj / translateSvf]\n  E --&gt; G[makePdf]\n  E --&gt; H[createPhotoscene]\n  F --&gt; I[viewer3D]\n\n\n\n\n\n\nNot sure which API to use? The diagram below maps your input file type and goal to the right chapter:\n\n\n\n\n\nflowchart TD\n  A{What do you\\nhave?} --&gt; B[DWG / DXF]\n  A --&gt; C[RVT / IFC / other BIM]\n  A --&gt; D[Photos / drone imagery]\n\n  B --&gt; B1[Layer counts & attributes\\nLayer Analysis · Attribute Extraction]\n  B --&gt; B2[Convert to PDF\\nDesign Automation]\n  B --&gt; B3[3D mesh for analysis\\nModel Derivative → OBJ]\n\n  C --&gt; C1[Embed 3D viewer\\nViewer]\n  C --&gt; C2[Extract BIM metadata\\nModel Derivative → SVF]\n  C --&gt; C3[Digital twin\\nTandem Overview]\n\n  D --&gt; D1[3D mesh\\nReality Capture → OBJ]\n  D --&gt; D2[Point cloud\\nReality Capture → RCS → Point Cloud Analysis]\n\n\n\n\n\n\nThe following code demonstrates a complete round-trip: authenticate, create a storage bucket, upload a file, and verify the upload.\nlibrary(AutoDeskR)\n\n# Read credentials from environment\nid     &lt;- Sys.getenv(\"client_id\")\nsecret &lt;- Sys.getenv(\"client_secret\")\n\n# 1. Get an access token with the scopes needed for data management\ntoken &lt;- getToken(id, secret, scope = \"data:read data:write bucket:create bucket:read\")\ntoken$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"\ntoken$content$expires_in\n#&gt; [1] 3600\n\n# 2. Create a persistent storage bucket (bucket names must be globally unique)\nbucket &lt;- makeBucket(token, bucketKey = \"my-first-autodeskr-bucket\", policyKey = \"persistent\")\nbucket$content$bucketKey\n#&gt; [1] \"my-first-autodeskr-bucket\"\nbucket$content$policyKey\n#&gt; [1] \"persistent\"\n\n# 3. Upload a local file (≤100 MB)\nresult &lt;- uploadFile(token,\n                     localPath = \"path/to/your/file.dwg\",\n                     bucketKey = bucket$bucketKey)\nresult$content$objectKey\n#&gt; [1] \"file.dwg\"\nresult$content$size\n#&gt; [1] 3145728\n\n# 4. List objects in the bucket to confirm the upload succeeded\nobjects &lt;- listObjects(token, bucketKey = bucket$bucketKey)\nprint(objects$content$items)\n#&gt;   objectKey                                                         objectId    size\n#&gt; 1  file.dwg  urn:adsk.objects:os.object:my-first-autodeskr-bucket/file.dwg  3145728\nIf the upload succeeds, listObjects() will return a data frame containing your file’s objectKey, objectId (a URN), and size. The objectId is used in subsequent chapters when translating the file or loading it in the viewer.",
+    "text": "Step 5: A Complete Round-Trip\nThe diagram below shows the typical flow through the AutoDeskR APIs:\n\n\n\n\n\nflowchart TD\n  A([Create APS App]) --&gt; B[getToken]\n  B --&gt; C[makeBucket]\n  C --&gt; D[uploadFile]\n  D --&gt; E{Use case}\n  E --&gt; F[translateObj /\\ntranslateSvf]\n  E --&gt; G[makePdf]\n  E --&gt; H[createPhotoscene]\n  F --&gt; I[viewer3D]\n\n\n\n\n\n\nNot sure which API to use? The diagram below maps your input file type and goal to the right chapter:\n\n\n\n\n\nflowchart TD\n  A{What do you\\nhave?} --&gt; B[DWG / DXF]\n  A --&gt; C[RVT / IFC / other BIM]\n  A --&gt; D[Photos / drone imagery]\n\n  B --&gt; B1[Layer counts & attributes\\nLayer Analysis · Attribute Extraction]\n  B --&gt; B2[Convert to PDF\\nDesign Automation]\n  B --&gt; B3[3D mesh for analysis\\nModel Derivative → OBJ]\n\n  C --&gt; C1[Embed 3D viewer\\nViewer]\n  C --&gt; C2[Extract BIM metadata\\nModel Derivative → SVF]\n  C --&gt; C3[Digital twin\\nTandem Overview]\n\n  D --&gt; D1[3D mesh\\nReality Capture → OBJ]\n  D --&gt; D2[Point cloud\\nReality Capture → RCS → Point Cloud Analysis]\n\n\n\n\n\n\nThe following code demonstrates a complete round-trip: authenticate, create a storage bucket, upload a file, and verify the upload.\nlibrary(AutoDeskR)\n\n# Read credentials from environment\nid     &lt;- Sys.getenv(\"client_id\")\nsecret &lt;- Sys.getenv(\"client_secret\")\n\n# 1. Get an access token with the scopes needed for data management\ntoken &lt;- getToken(id, secret, scope = \"data:read data:write bucket:create bucket:read\")\ntoken$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"\ntoken$content$expires_in\n#&gt; [1] 3600\n\n# 2. Create a persistent storage bucket (bucket names must be globally unique)\nbucket &lt;- makeBucket(token, bucketKey = \"my-first-autodeskr-bucket\", policyKey = \"persistent\")\nbucket$content$bucketKey\n#&gt; [1] \"my-first-autodeskr-bucket\"\nbucket$content$policyKey\n#&gt; [1] \"persistent\"\n\n# 3. Upload a local file (≤100 MB)\nresult &lt;- uploadFile(token,\n                     localPath = \"path/to/your/file.dwg\",\n                     bucketKey = bucket$bucketKey)\nresult$content$objectKey\n#&gt; [1] \"file.dwg\"\nresult$content$size\n#&gt; [1] 3145728\n\n# 4. List objects in the bucket to confirm the upload succeeded\nobjects &lt;- listObjects(token, bucketKey = bucket$bucketKey)\nprint(objects$content$items)\n#&gt;   objectKey                                                         objectId    size\n#&gt; 1  file.dwg  urn:adsk.objects:os.object:my-first-autodeskr-bucket/file.dwg  3145728\nIf the upload succeeds, listObjects() will return a data frame containing your file’s objectKey, objectId (a URN), and size. The objectId is used in subsequent chapters when translating the file or loading it in the viewer.",
     "crumbs": [
       "Getting Started",
       "Basic Workflow"
@@ -609,6 +609,17 @@
     ]
   },
   {
+    "objectID": "viewer.html#responding-to-element-selection",
+    "href": "viewer.html#responding-to-element-selection",
+    "title": "6  Viewer",
+    "section": "6.3 Responding to Element Selection",
+    "text": "6.3 Responding to Element Selection\nWhen a user clicks an element in the viewer, viewerUI() writes its dbId to a Shiny input named &lt;id&gt;_selection. Use this to drive the rest of your app reactively — show the element’s properties, highlight a matching row in a table, or fetch related sensor data:\n\nlibrary(shiny)\nlibrary(AutoDeskR)\n\nui &lt;- fluidPage(\n  titlePanel(\"Model Explorer\"),\n  fluidRow(\n    column(7,\n      viewerUI(\"viewer1\", urn = myEncodedUrn, token = myToken,\n               viewerType = \"headless\")\n    ),\n    column(5,\n      h4(\"Selected element\"),\n      verbatimTextOutput(\"element_props\")\n    )\n  )\n)\n\nserver &lt;- function(input, output, session) {\n\n  selected_props &lt;- reactive({\n    req(input$viewer1_selection)          # dbId of the clicked element\n    resp &lt;- getData(\n      guid  = myGuid,\n      urn   = myEncodedUrn,\n      token = myToken\n    )\n    coll &lt;- resp$content$data$collection\n    match &lt;- Filter(function(x) x$objectid == input$viewer1_selection, coll)\n    if (length(match)) match[[1]]$properties else list()\n  })\n\n  output$element_props &lt;- renderPrint({\n    str(selected_props())\n  })\n}\n\nshinyApp(ui, server)\n\n\n\n\n\n\n\nNote\n\n\n\nmyGuid comes from getMetadata() — see Model Derivative. You only need to fetch it once at app startup, not inside the reactive.",
+    "crumbs": [
+      "AutoDesk Platform Services",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Viewer</span>"
+    ]
+  },
+  {
     "objectID": "viewer.html#whats-displayed",
     "href": "viewer.html#whats-displayed",
     "title": "6  Viewer",
@@ -812,6 +823,28 @@
     "title": "9  3D Visualisation",
     "section": "9.4 Depth of Field",
     "text": "9.4 Depth of Field\nAdd a depth-of-field effect to emphasise the model’s 3D structure in the output image, works especially well for tall structures:\n\nrender_depth(focus       = 0.7,\n             focallength = 200,\n             filename    = \"aerial_dof.png\")",
+    "crumbs": [
+      "3D Geometry & Meshes",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3D Visualisation</span>"
+    ]
+  },
+  {
+    "objectID": "mesh-visualisation.html#combining-multiple-meshes",
+    "href": "mesh-visualisation.html#combining-multiple-meshes",
+    "title": "9  3D Visualisation",
+    "section": "9.5 Combining Multiple Meshes",
+    "text": "9.5 Combining Multiple Meshes\nOverlay two meshes in one scene to compare them — useful when you have an original and a repaired or simplified version. Rvcg::vcgMerge() fuses tmesh3d objects into a single mesh; for separate colours, render them individually before merging:\n\nlibrary(Rvcg)\n\nmesh_a &lt;- vcgImport(\"aerial_v1.obj\")   # original\nmesh_b &lt;- vcgImport(\"aerial_v2.obj\")   # repaired\n\nopen3d()\nshade3d(mesh_a, col = \"#4A90D9\", alpha = 0.8)   # blue — original\nshade3d(mesh_b, col = \"#E74C3C\", alpha = 0.6)   # red  — changes\ntitle3d(\"v1 (blue) vs v2 (red)\")\nrglwidget()\n\nTo merge them into one object (e.g., for a metrics pass on the combined geometry):\n\nmesh_combined &lt;- vcgMerge(mesh_a, mesh_b)\ncat(\"Combined vertices:\", ncol(mesh_combined$vb), \"\\n\")",
+    "crumbs": [
+      "3D Geometry & Meshes",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3D Visualisation</span>"
+    ]
+  },
+  {
+    "objectID": "mesh-visualisation.html#exporting-the-scene",
+    "href": "mesh-visualisation.html#exporting-the-scene",
+    "title": "9  3D Visualisation",
+    "section": "9.6 Exporting the Scene",
+    "text": "9.6 Exporting the Scene\nSave the interactive rgl scene as a standalone HTML file — no R session needed to view it:\n\nopen3d()\nshade3d(mesh_vcg, col = \"#4A90D9\")\n\n# Self-contained HTML with embedded WebGL\nwriteWebGL(dir = \"webgl_export\", filename = \"aerial_viewer.html\",\n           width = 900, height = 600)\n\nFor a quick PNG without launching rayshader:\n\nsnapshot3d(\"aerial_snapshot.png\", width = 1200, height = 900)",
     "crumbs": [
       "3D Geometry & Meshes",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>3D Visualisation</span>"
@@ -1351,6 +1384,17 @@
     "title": "16  AutoDesk Tandem Overview",
     "section": "16.5 Looking Up an Element",
     "text": "16.5 Looking Up an Element\nAny objectId from getData() can be looked up in Tandem to find the corresponding physical element and its classification:\n\nelement_resp &lt;- request(\n  paste0(\"https://tandem.autodesk.com/api/v1/twins/\",\n         facilityId, \"/elements/\", 42L)   # objectId 42\n) |&gt;\n  req_auth_bearer_token(myToken) |&gt;\n  req_perform()\n\nelement &lt;- resp_body_json(element_resp)\ncat(\"Name:          \", element$displayName, \"\\n\")\n#&gt; Name:           Level 2 HVAC Unit\ncat(\"Classification:\", element$classification, \"\\n\")\n#&gt; Classification: MEP:HVAC:Air Handling Unit\n\nThe Linking Sensor Streams chapter shows how to pull time-series readings for elements like this one.",
+    "crumbs": [
+      "Digital Twins",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>AutoDesk Tandem Overview</span>"
+    ]
+  },
+  {
+    "objectID": "tandem-overview.html#joining-bim-properties-with-twin-elements",
+    "href": "tandem-overview.html#joining-bim-properties-with-twin-elements",
+    "title": "16  AutoDesk Tandem Overview",
+    "section": "16.6 Joining BIM Properties with Twin Elements",
+    "text": "16.6 Joining BIM Properties with Twin Elements\nThe objectId is the bridge between the two worlds. Here’s how to build a combined data frame that pairs every BIM property (from getData()) with the Tandem classification and display name for the same element:\n\nlibrary(dplyr)\n\n# Pull BIM properties for all objects\nbim_resp &lt;- getData(guid = myGuid, urn = myEncodedUrn, token = myToken)\nbim_df   &lt;- lapply(bim_resp$content$data$collection, function(obj) {\n  data.frame(\n    objectid   = obj$objectid,\n    layer      = obj$properties[[\"Layer and Material\"]][[\"Layer\"]],\n    stringsAsFactors = FALSE\n  )\n}) |&gt; do.call(what = rbind)\n\n# Pull Tandem classifications for the same IDs\ntwin_df &lt;- lapply(bim_df$objectid, function(id) {\n  resp &lt;- request(\n    paste0(\"https://tandem.autodesk.com/api/v1/twins/\", facilityId, \"/elements/\", id)\n  ) |&gt;\n    req_auth_bearer_token(myToken) |&gt;\n    req_perform()\n  el &lt;- resp_body_json(resp)\n  data.frame(\n    objectid       = id,\n    display_name   = el$displayName,\n    classification = el$classification,\n    stringsAsFactors = FALSE\n  )\n}) |&gt; do.call(what = rbind)\n\n# Join on objectId\ncombined &lt;- left_join(bim_df, twin_df, by = \"objectid\")\ncombined\n#&gt;   objectid    layer          display_name              classification\n#&gt; 1        2   A-SITE         Site Boundary            Architecture:Site\n#&gt; 2        3   A-BLDG  Main Building Outline        Architecture:Building\n#&gt; 3       42  M-HVAC    Level 2 HVAC Unit    MEP:HVAC:Air Handling Unit\n\n\n\n\n\n\n\nTip\n\n\n\nFor facilities with hundreds of elements, batch the Tandem lookups using lapply() with a small Sys.sleep(0.2) between calls to stay within the rate limit.\n\n\n\n\n\n\nAutodesk, Inc. 2024. AutoDesk Tandem API — Developer Documentation. Https://tandem.autodesk.com/api/v1/.\n\n\nWickham, Hadley. 2024. Httr2: Perform HTTP Requests and Process the Responses. https://httr2.r-lib.org.",
     "crumbs": [
       "Digital Twins",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>AutoDesk Tandem Overview</span>"
@@ -2043,53 +2087,9 @@
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "Adler, Daniel, Duncan Murdoch, et al. 2024.\nRgl: 3D Visualization Using OpenGL. https://dmurdoch.github.io/rgl/.\n\n\nAutodesk, Inc. 2024. AutoDesk Tandem API — Developer\nDocumentation. Https://tandem.autodesk.com/api/v1/.\n\n\nGovan, Paul. 2024. AutoDeskR: An Interface to the AutoDesk Platform\nServices APIs. https://github.com/paulgovan/AutoDeskR.\n\n\nIannone, Richard, Joe Cheng, Barret Schloerke, et al. 2024. Gt:\nEasily Create Presentation-Ready Display Tables. https://gt.rstudio.com.\n\n\nMorgan-Wall, Tyler. 2024. Rayshader: Create Maps and Visualize Data\nin 2D and 3D. https://www.rayshader.com.\n\n\nRoussel, Jean-Romain, David Auty, Nicholas C. Coops, et al. 2020.\n“lidR: An r Package for Analysis of Airborne Laser Scanning (ALS)\nData.” Remote Sensing of Environment 251: 112061. https://doi.org/10.1016/j.rse.2020.112061.\n\n\nRoussel, Jean-Romain, David C. Sterratt, et\nal. 2024. Geometry: Mesh Generation and Surface\nTessellation. https://davidcsterratt.github.io/geometry/.\n\n\nSchlager, Stefan. 2024. Rvcg: Manipulations of Triangular Meshes\nBased on the ’VCGLIB’ API. https://CRAN.R-project.org/package=Rvcg.\n\n\nVanderkam, Dan, JJ Allaire, Jonathan Owen, Daniel Gromer, and Benoit\nThieurmel. 2018. Dygraphs: Interface to ’Dygraphs’ Interactive Time\nSeries Charting Library. https://CRAN.R-project.org/package=dygraphs.\n\n\nWickham, Hadley. 2024. Httr2: Perform HTTP Requests and Process the\nResponses. https://httr2.r-lib.org.",
+    "text": "Adler, Daniel, Duncan Murdoch, et al. 2024.\nRgl: 3D Visualization Using OpenGL. https://dmurdoch.github.io/rgl/.\n\n\nAutodesk, Inc. 2024. AutoDesk Tandem API — Developer\nDocumentation. Https://tandem.autodesk.com/api/v1/.\n\n\nChang, Winston, Joe Cheng, JJ Allaire, et al. 2024. Shiny: Web\nApplication Framework for r. https://shiny.posit.co.\n\n\ndevOpifex. 2024. Mcpr: Model Context\nProtocol for r. https://github.com/devOpifex/mcpr.\n\n\nGovan, Paul. 2024. AutoDeskR: An Interface to the AutoDesk Platform\nServices APIs. https://github.com/paulgovan/AutoDeskR.\n\n\nIannone, Richard, Joe Cheng, Barret Schloerke, et al. 2024. Gt:\nEasily Create Presentation-Ready Display Tables. https://gt.rstudio.com.\n\n\nMorgan-Wall, Tyler. 2024. Rayshader: Create Maps and Visualize Data\nin 2D and 3D. https://www.rayshader.com.\n\n\nOoms, Jeroen. 2014. “The Jsonlite Package: A Practical and\nConsistent Mapping Between JSON Data and r Objects.”\narXiv:1403.2805 [Stat.CO]. https://arxiv.org/abs/1403.2805.\n\n\nRoussel, Jean-Romain, David Auty, Nicholas C. Coops, et al. 2020.\n“lidR: An r Package for Analysis of Airborne Laser Scanning (ALS)\nData.” Remote Sensing of Environment 251: 112061. https://doi.org/10.1016/j.rse.2020.112061.\n\n\nRoussel, Jean-Romain, David C. Sterratt, et\nal. 2024. Geometry: Mesh Generation and Surface\nTessellation. https://davidcsterratt.github.io/geometry/.\n\n\nSchlager, Stefan. 2024. Rvcg: Manipulations of Triangular Meshes\nBased on the ’VCGLIB’ API. https://CRAN.R-project.org/package=Rvcg.\n\n\nVanderkam, Dan, JJ Allaire, Jonathan Owen, Daniel Gromer, and Benoit\nThieurmel. 2018. Dygraphs: Interface to ’Dygraphs’ Interactive Time\nSeries Charting Library. https://CRAN.R-project.org/package=dygraphs.\n\n\nWickham, Hadley. 2016. Ggplot2: Elegant Graphics for Data\nAnalysis. https://ggplot2.tidyverse.org.\n\n\nWickham, Hadley. 2024. Httr2: Perform HTTP Requests and Process the\nResponses. https://httr2.r-lib.org.\n\n\nWickham, Hadley, Romain François, Lionel Henry, Kirill Müller, and Davis\nVaughan. 2024. Dplyr: A Grammar of Data Manipulation. https://dplyr.tidyverse.org.",
     "crumbs": [
       "References"
-    ]
-  },
-  {
-    "objectID": "viewer.html#responding-to-element-selection",
-    "href": "viewer.html#responding-to-element-selection",
-    "title": "6  Viewer",
-    "section": "6.3 Responding to Element Selection",
-    "text": "6.3 Responding to Element Selection\nWhen a user clicks an element in the viewer, viewerUI() writes its dbId to a Shiny input named &lt;id&gt;_selection. Use this to drive the rest of your app reactively — show the element’s properties, highlight a matching row in a table, or fetch related sensor data:\n\nlibrary(shiny)\nlibrary(AutoDeskR)\n\nui &lt;- fluidPage(\n  titlePanel(\"Model Explorer\"),\n  fluidRow(\n    column(7,\n      viewerUI(\"viewer1\", urn = myEncodedUrn, token = myToken,\n               viewerType = \"headless\")\n    ),\n    column(5,\n      h4(\"Selected element\"),\n      verbatimTextOutput(\"element_props\")\n    )\n  )\n)\n\nserver &lt;- function(input, output, session) {\n\n  selected_props &lt;- reactive({\n    req(input$viewer1_selection)          # dbId of the clicked element\n    resp &lt;- getData(\n      guid  = myGuid,\n      urn   = myEncodedUrn,\n      token = myToken\n    )\n    coll &lt;- resp$content$data$collection\n    match &lt;- Filter(function(x) x$objectid == input$viewer1_selection, coll)\n    if (length(match)) match[[1]]$properties else list()\n  })\n\n  output$element_props &lt;- renderPrint({\n    str(selected_props())\n  })\n}\n\nshinyApp(ui, server)\n\n\n\n\n\n\n\nNote\n\n\n\nmyGuid comes from getMetadata() — see Model Derivative. You only need to fetch it once at app startup, not inside the reactive.",
-    "crumbs": [
-      "AutoDesk Platform Services",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Viewer</span>"
-    ]
-  },
-  {
-    "objectID": "mesh-visualisation.html#combining-multiple-meshes",
-    "href": "mesh-visualisation.html#combining-multiple-meshes",
-    "title": "9  3D Visualisation",
-    "section": "9.5 Combining Multiple Meshes",
-    "text": "9.5 Combining Multiple Meshes\nOverlay two meshes in one scene to compare them — useful when you have an original and a repaired or simplified version. Rvcg::vcgMerge() fuses tmesh3d objects into a single mesh; for separate colours, render them individually before merging:\n\nlibrary(Rvcg)\n\nmesh_a &lt;- vcgImport(\"aerial_v1.obj\")   # original\nmesh_b &lt;- vcgImport(\"aerial_v2.obj\")   # repaired\n\nopen3d()\nshade3d(mesh_a, col = \"#4A90D9\", alpha = 0.8)   # blue — original\nshade3d(mesh_b, col = \"#E74C3C\", alpha = 0.6)   # red  — changes\ntitle3d(\"v1 (blue) vs v2 (red)\")\nrglwidget()\n\nTo merge them into one object (e.g., for a metrics pass on the combined geometry):\n\nmesh_combined &lt;- vcgMerge(mesh_a, mesh_b)\ncat(\"Combined vertices:\", ncol(mesh_combined$vb), \"\\n\")",
-    "crumbs": [
-      "3D Geometry & Meshes",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3D Visualisation</span>"
-    ]
-  },
-  {
-    "objectID": "mesh-visualisation.html#exporting-the-scene",
-    "href": "mesh-visualisation.html#exporting-the-scene",
-    "title": "9  3D Visualisation",
-    "section": "9.6 Exporting the Scene",
-    "text": "9.6 Exporting the Scene\nSave the interactive rgl scene as a standalone HTML file — no R session needed to view it:\n\nopen3d()\nshade3d(mesh_vcg, col = \"#4A90D9\")\n\n# Self-contained HTML with embedded WebGL\nwriteWebGL(dir = \"webgl_export\", filename = \"aerial_viewer.html\",\n           width = 900, height = 600)\n\nFor a quick PNG without launching rayshader:\n\nsnapshot3d(\"aerial_snapshot.png\", width = 1200, height = 900)",
-    "crumbs": [
-      "3D Geometry & Meshes",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3D Visualisation</span>"
-    ]
-  },
-  {
-    "objectID": "tandem-overview.html#joining-bim-properties-with-twin-elements",
-    "href": "tandem-overview.html#joining-bim-properties-with-twin-elements",
-    "title": "16  AutoDesk Tandem Overview",
-    "section": "16.6 Joining BIM Properties with Twin Elements",
-    "text": "16.6 Joining BIM Properties with Twin Elements\nThe objectId is the bridge between the two worlds. Here’s how to build a combined data frame that pairs every BIM property (from getData()) with the Tandem classification and display name for the same element:\n\nlibrary(dplyr)\n\n# Pull BIM properties for all objects\nbim_resp &lt;- getData(guid = myGuid, urn = myEncodedUrn, token = myToken)\nbim_df   &lt;- lapply(bim_resp$content$data$collection, function(obj) {\n  data.frame(\n    objectid   = obj$objectid,\n    layer      = obj$properties[[\"Layer and Material\"]][[\"Layer\"]],\n    stringsAsFactors = FALSE\n  )\n}) |&gt; do.call(what = rbind)\n\n# Pull Tandem classifications for the same IDs\ntwin_df &lt;- lapply(bim_df$objectid, function(id) {\n  resp &lt;- request(\n    paste0(\"https://tandem.autodesk.com/api/v1/twins/\", facilityId, \"/elements/\", id)\n  ) |&gt;\n    req_auth_bearer_token(myToken) |&gt;\n    req_perform()\n  el &lt;- resp_body_json(resp)\n  data.frame(\n    objectid       = id,\n    display_name   = el$displayName,\n    classification = el$classification,\n    stringsAsFactors = FALSE\n  )\n}) |&gt; do.call(what = rbind)\n\n# Join on objectId\ncombined &lt;- left_join(bim_df, twin_df, by = \"objectid\")\ncombined\n#&gt;   objectid    layer          display_name              classification\n#&gt; 1        2   A-SITE         Site Boundary            Architecture:Site\n#&gt; 2        3   A-BLDG  Main Building Outline        Architecture:Building\n#&gt; 3       42  M-HVAC    Level 2 HVAC Unit    MEP:HVAC:Air Handling Unit\n\n\n\n\n\n\n\nTip\n\n\n\nFor facilities with hundreds of elements, batch the Tandem lookups using lapply() with a small Sys.sleep(0.2) between calls to stay within the rate limit.\n\n\n\n\n\n\nAutodesk, Inc. 2024. AutoDesk Tandem API — Developer Documentation. Https://tandem.autodesk.com/api/v1/.\n\n\nWickham, Hadley. 2024. Httr2: Perform HTTP Requests and Process the Responses. https://httr2.r-lib.org.",
-    "crumbs": [
-      "Digital Twins",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>AutoDesk Tandem Overview</span>"
     ]
   }
 ]

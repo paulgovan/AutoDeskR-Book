@@ -707,17 +707,17 @@ client_secret=your_client_secret_here</code></pre>
 <section id="step-5-a-complete-round-trip" class="level2">
 <h2 class="anchored" data-anchor-id="step-5-a-complete-round-trip">Step 5: A Complete Round-Trip</h2>
 <p>The diagram below shows the typical flow through the AutoDeskR APIs:</p>
-<div class="cell" data-layout-align="default">
+<div class="cell" data-fig-width="6.5" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
+<pre class="mermaid mermaid-js">flowchart TD
   A([Create APS App]) --&gt; B[getToken]
   B --&gt; C[makeBucket]
   C --&gt; D[uploadFile]
   D --&gt; E{Use case}
-  E --&gt; F[translateObj / translateSvf]
+  E --&gt; F[translateObj /\ntranslateSvf]
   E --&gt; G[makePdf]
   E --&gt; H[createPhotoscene]
   F --&gt; I[viewer3D]
@@ -728,7 +728,7 @@ client_secret=your_client_secret_here</code></pre>
 </div>
 </div>
 <p>Not sure which API to use? The diagram below maps your input file type and goal to the right chapter:</p>
-<div class="cell" data-layout-align="default">
+<div class="cell" data-fig-width="6.5" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>

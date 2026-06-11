@@ -9,6 +9,7 @@ This chapter introduces Tandem concepts and shows how to talk to the Tandem REST
 The relationship between a BIM model and a Tandem twin looks like this:
 
 ```{mermaid}
+%%| fig-width: 6.5
 graph LR
   A[BIM Model\nRVT / DWG file] --> B[Model Derivative API\ngetObjectTree / getData]
   A --> C[Tandem\nDigital Twin]

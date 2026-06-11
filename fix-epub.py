@@ -1,5 +1,23 @@
 #!/usr/bin/env python3
-"""Post-render script: patch bare <figure class> in EPUB XHTML."""
+"""Post-render script: patch malformed figure XHTML in EPUB.
+
+Quarto wraps mermaid diagram <figure> open/close tags each in their own
+<p>...</p>, producing invalid XHTML:
+
+    <p><figure class="figure"></p>   ← figure opens, then </p> mismatches
+    <div><p><img .../></p></div>
+    <p></figure></p>                 ← spurious <p> wrapper
+
+This is invalid XML (EPUB validators and some readers reject it with
+"Opening and ending tag mismatch: figure … and p"). Strip the spurious
+<p> wrappers so the structure becomes:
+
+    <figure class="figure">
+    <div><p><img .../></p></div>
+    </figure>
+
+Also fix any leftover bare <figure class> attributes (older Quarto behavior).
+"""
 import os
 import re
 import zipfile
@@ -16,9 +34,14 @@ with zipfile.ZipFile(EPUB, "r") as zin, \
         data = zin.read(item.filename)
         if item.filename.endswith(".xhtml"):
             text = data.decode("utf-8")
+            # Remove spurious <p>…</p> wrapper around <figure> opening tag
+            text = re.sub(r'<p>(<figure\b[^>]*>)</p>', r'\1', text)
+            # Remove spurious <p>…</p> wrapper around </figure> closing tag
+            text = re.sub(r'<p>(</figure>)</p>', r'\1', text)
+            # Fix any remaining bare class attributes (legacy Quarto output)
             text = re.sub(r"<figure class>", '<figure class="figure">', text)
             data = text.encode("utf-8")
         zout.writestr(item, data)
 
 os.replace(tmp, EPUB)
-print(f'Patched {EPUB}: bare <figure class> -> <figure class="figure">')
+print(f"Patched {EPUB}: fixed malformed <figure> XHTML wrappers")
