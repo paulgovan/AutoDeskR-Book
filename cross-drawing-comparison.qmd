@@ -2,7 +2,7 @@
 title: "Cross-Drawing Comparison"
 ---
 
-Got a drawing set? Multiple revisions? Discipline packages from different consultants? This chapter shows how to compare their layer structures systematically, what layers were added, what was removed, and where the object counts changed most between versions.
+Got a drawing set? Multiple revisions? Discipline packages from different consultants? This chapter shows how to compare their layer structures systematically, what layers were added, what was removed, and where the object counts changed most between versions. Analysis uses `dplyr` [@R-dplyr] and `ggplot2` [@R-ggplot2].
 
 ## Upload Multiple Drawings
 
@@ -85,7 +85,7 @@ for (nm in names(layer_sets)) {
 
 ## Layer Presence Heatmap
 
-A heatmap is the clearest way to show presence/absence across many drawings:
+@fig-layer-heatmap shows presence/absence across all drawings at a glance — blue tiles are present, grey tiles are absent.
 
 ```{r}
 #| echo: false
@@ -100,6 +100,8 @@ heat_df <- data.frame(
 ```
 
 ```{r}
+#| label: fig-layer-heatmap
+#| fig-cap: "Layer presence matrix across drawing revisions. Blue = present, grey = absent."
 ggplot(heat_df, aes(x = drawing, y = layer, fill = present)) +
   geom_tile(colour = "white", linewidth = 0.5) +
   scale_fill_manual(values  = c("FALSE" = "#f0f0f0", "TRUE" = "#367ABF"),
@@ -148,7 +150,7 @@ comparison
 
 ## Change Waterfall Chart
 
-A waterfall chart makes the direction and magnitude of each change immediately readable:
+@fig-layer-waterfall makes the direction and magnitude of each change immediately readable — green bars are additions, red bars are removals.
 
 ```{r}
 #| echo: false
@@ -161,6 +163,8 @@ comparison <- data.frame(
 ```
 
 ```{r}
+#| label: fig-layer-waterfall
+#| fig-cap: "Object count change per layer from v1 to v2. Green = added, red = removed."
 ggplot(comparison,
        aes(x = reorder(layer, change),
            y = change,

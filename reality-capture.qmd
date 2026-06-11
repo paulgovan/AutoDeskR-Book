@@ -51,6 +51,10 @@ resp    <- getToken(
 myToken <- resp$content$access_token
 ```
 
+::: callout-warning
+Tokens expire after 3600 seconds. A `401 Unauthorized` mid-session means the token timed out — re-call `getToken()`. See [Authentication](authentication.qmd#get-an-access-token) for details.
+:::
+
 ## Step 2: Create a Photoscene
 
 A **photoscene** is the container for your images and output. The `format` parameter controls what comes out the other end:

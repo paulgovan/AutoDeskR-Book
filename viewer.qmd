@@ -25,7 +25,14 @@ resp <- getToken(
 )
 myToken      <- resp$content$access_token
 myEncodedUrn <- jsonlite::base64_enc(Sys.getenv("urn"))
+```
 
+::: callout-note
+APS requires URNs to be Base64-encoded before use in any API call. `jsonlite::base64_enc()` handles this. See [Model Derivative](model-derivative.qmd#translate-to-obj) for a full explanation.
+:::
+
+```{r}
+#| eval: false
 # Full viewer — great for exploration
 viewer3D(urn = myEncodedUrn, token = myToken)
 
@@ -102,6 +109,55 @@ ui <- fluidPage(
   )
 )
 ```
+
+## Responding to Element Selection
+
+When a user clicks an element in the viewer, `viewerUI()` writes its `dbId` to a Shiny input named `<id>_selection`. Use this to drive the rest of your app reactively — show the element's properties, highlight a matching row in a table, or fetch related sensor data:
+
+```{r}
+#| eval: false
+library(shiny)
+library(AutoDeskR)
+
+ui <- fluidPage(
+  titlePanel("Model Explorer"),
+  fluidRow(
+    column(7,
+      viewerUI("viewer1", urn = myEncodedUrn, token = myToken,
+               viewerType = "headless")
+    ),
+    column(5,
+      h4("Selected element"),
+      verbatimTextOutput("element_props")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+
+  selected_props <- reactive({
+    req(input$viewer1_selection)          # dbId of the clicked element
+    resp <- getData(
+      guid  = myGuid,
+      urn   = myEncodedUrn,
+      token = myToken
+    )
+    coll <- resp$content$data$collection
+    match <- Filter(function(x) x$objectid == input$viewer1_selection, coll)
+    if (length(match)) match[[1]]$properties else list()
+  })
+
+  output$element_props <- renderPrint({
+    str(selected_props())
+  })
+}
+
+shinyApp(ui, server)
+```
+
+::: callout-note
+`myGuid` comes from `getMetadata()` — see [Model Derivative](model-derivative.qmd#extract-metadata-from-a-file). You only need to fetch it once at app startup, not inside the reactive.
+:::
 
 ## What's Displayed
 

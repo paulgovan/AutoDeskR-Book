@@ -99,6 +99,53 @@ render_depth(focus       = 0.7,
              filename    = "aerial_dof.png")
 ```
 
+## Combining Multiple Meshes
+
+Overlay two meshes in one scene to compare them — useful when you have an original and a repaired or simplified version. `Rvcg::vcgMerge()` fuses `tmesh3d` objects into a single mesh; for separate colours, render them individually before merging:
+
+```{r}
+#| eval: false
+library(Rvcg)
+
+mesh_a <- vcgImport("aerial_v1.obj")   # original
+mesh_b <- vcgImport("aerial_v2.obj")   # repaired
+
+open3d()
+shade3d(mesh_a, col = "#4A90D9", alpha = 0.8)   # blue — original
+shade3d(mesh_b, col = "#E74C3C", alpha = 0.6)   # red  — changes
+title3d("v1 (blue) vs v2 (red)")
+rglwidget()
+```
+
+To merge them into one object (e.g., for a metrics pass on the combined geometry):
+
+```{r}
+#| eval: false
+mesh_combined <- vcgMerge(mesh_a, mesh_b)
+cat("Combined vertices:", ncol(mesh_combined$vb), "\n")
+```
+
+## Exporting the Scene
+
+Save the interactive `rgl` scene as a standalone HTML file — no R session needed to view it:
+
+```{r}
+#| eval: false
+open3d()
+shade3d(mesh_vcg, col = "#4A90D9")
+
+# Self-contained HTML with embedded WebGL
+writeWebGL(dir = "webgl_export", filename = "aerial_viewer.html",
+           width = 900, height = 600)
+```
+
+For a quick PNG without launching rayshader:
+
+```{r}
+#| eval: false
+snapshot3d("aerial_snapshot.png", width = 1200, height = 900)
+```
+
 ## Quick Comparison: rgl vs. rayshader
 
 |               | `rgl`                   | `rayshader`            |

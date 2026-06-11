@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -95,14 +95,14 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-48abc47ddc2cbc14860ddec9e9fdb395.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-29ab83c079eee0e33d5a0de9724cd501.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-48abc47ddc2cbc14860ddec9e9fdb395.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-aa873432a3c62897e6c2091c0d30a948.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -134,7 +134,7 @@ div.csl-indent {
 
 <meta property="og:title" content="10&nbsp; Point Cloud Analysis – R for the Built Environment">
 <meta property="og:description" content="">
-<meta property="og:image" content="point-cloud-analysis_files/figure-html/unnamed-chunk-5-1.png">
+<meta property="og:image" content="point-cloud-analysis_files/figure-html/fig-height-dist-1.png">
 <meta property="og:site_name" content="R for the Built Environment">
 </head>
 
@@ -678,7 +678,7 @@ div.csl-indent {
 </header>
 
 
-<p>The <a href="./reality-capture.html">Reality Capture</a> API can output a point cloud alongside (or instead of) a mesh. Once you’ve converted it to LAS format, <code>lidR</code> <span class="citation" data-cites="R-lidR">(<a href="references.html#ref-R-lidR" role="doc-biblioref">Roussel et al. 2020</a>)</span> takes over, height statistics, density maps, canopy models, voxel volumes. This is the go-to tool for site survey analysis.</p>
+<p>The <a href="./reality-capture.html">Reality Capture</a> API can output a point cloud alongside (or instead of) a mesh. Once you’ve converted it to LAS format, <code>lidR</code> <span class="citation" data-cites="R-lidR">(<a href="references.html#ref-R-lidR" role="doc-biblioref">Roussel et al. 2020</a>)</span> takes over, height statistics, density maps, canopy models, voxel volumes. Visualisations use <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham 2016</a>)</span>. This is the go-to tool for site survey analysis.</p>
 <section id="getting-the-point-cloud" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="getting-the-point-cloud"><span class="header-section-number">10.1</span> Getting the Point Cloud</h2>
 <p>Request <code>rcs</code> format when creating your photoscene:</p>
@@ -746,6 +746,7 @@ Warning
 </section>
 <section id="height-distribution" class="level2" data-number="10.4">
 <h2 data-number="10.4" class="anchored" data-anchor-id="height-distribution"><span class="header-section-number">10.4</span> Height Distribution</h2>
+<p><a href="#fig-height-dist" class="quarto-xref">Figure&nbsp;<span>10.1</span></a> shows the distribution of normalised point heights. The bulk of returns between 0–2 m are ground-level; the secondary peak around 8–12 m corresponds to roof surfaces.</p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'ggplot2' was built under R version 4.4.3</code></pre>
@@ -759,9 +760,14 @@ Warning
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Height (m)"</span>, <span class="at">y =</span> <span class="st">"Point count"</span>) <span class="sc">+</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="point-cloud-analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-height-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-height-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="point-cloud-analysis_files/figure-html/fig-height-dist-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-height-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.1: Height distribution of normalised point cloud returns (above ground level).
+</figcaption>
 </figure>
 </div>
 </div>
@@ -818,6 +824,9 @@ Warning
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-R-lidR" class="csl-entry" role="listitem">
 Roussel, Jean-Romain, David Auty, Nicholas C. Coops, et al. 2020. <span>“lidR: An r Package for Analysis of Airborne Laser Scanning (ALS) Data.”</span> <em>Remote Sensing of Environment</em> 251: 112061. <a href="https://doi.org/10.1016/j.rse.2020.112061">https://doi.org/10.1016/j.rse.2020.112061</a>.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry" role="listitem">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
 </div>
 </div>
 </section>

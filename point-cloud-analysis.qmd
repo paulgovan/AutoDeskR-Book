@@ -2,7 +2,7 @@
 title: "Point Cloud Analysis"
 ---
 
-The [Reality Capture](reality-capture.qmd) API can output a point cloud alongside (or instead of) a mesh. Once you've converted it to LAS format, `lidR` [@R-lidR] takes over, height statistics, density maps, canopy models, voxel volumes. This is the go-to tool for site survey analysis.
+The [Reality Capture](reality-capture.qmd) API can output a point cloud alongside (or instead of) a mesh. Once you've converted it to LAS format, `lidR` [@R-lidR] takes over, height statistics, density maps, canopy models, voxel volumes. Visualisations use `ggplot2` [@R-ggplot2]. This is the go-to tool for site survey analysis.
 
 ## Getting the Point Cloud
 
@@ -67,6 +67,8 @@ quantile(pc_norm$Z, probs = c(0.25, 0.5, 0.75, 0.95))
 
 ## Height Distribution
 
+@fig-height-dist shows the distribution of normalised point heights. The bulk of returns between 0–2 m are ground-level; the secondary peak around 8–12 m corresponds to roof surfaces.
+
 ```{r}
 #| echo: false
 library(ggplot2)
@@ -75,6 +77,8 @@ z_sample <- pmax(c(rnorm(80000, mean = 4.1, sd = 2.9), runif(20000, 0, 12)), 0)
 ```
 
 ```{r}
+#| label: fig-height-dist
+#| fig-cap: "Height distribution of normalised point cloud returns (above ground level)."
 ggplot(data.frame(z = z_sample), aes(x = z)) +
   geom_histogram(binwidth = 0.25, fill = "#367ABF", colour = "white") +
   labs(title = "Point Cloud Height Distribution",

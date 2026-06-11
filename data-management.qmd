@@ -29,6 +29,10 @@ myToken <- resp$content$access_token
 #> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
 ```
 
+::: callout-warning
+Tokens expire after 3600 seconds. A `401 Unauthorized` mid-session means the token timed out — re-call `getToken()`. See [Authentication](authentication.qmd#get-an-access-token) for details.
+:::
+
 Bucket retention policy controls how long your objects stick around:
 
 | Policy         | Files live for               |

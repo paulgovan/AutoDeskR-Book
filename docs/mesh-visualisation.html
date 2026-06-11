@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -95,14 +95,14 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-48abc47ddc2cbc14860ddec9e9fdb395.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-29ab83c079eee0e33d5a0de9724cd501.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-48abc47ddc2cbc14860ddec9e9fdb395.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-aa873432a3c62897e6c2091c0d30a948.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -650,7 +650,9 @@ div.csl-indent {
   <li><a href="#colouring-by-height" id="toc-colouring-by-height" class="nav-link" data-scroll-target="#colouring-by-height"><span class="header-section-number">9.2</span> Colouring by Height</a></li>
   <li><a href="#rendered-images-with-rayshader" id="toc-rendered-images-with-rayshader" class="nav-link" data-scroll-target="#rendered-images-with-rayshader"><span class="header-section-number">9.3</span> Rendered Images with rayshader</a></li>
   <li><a href="#depth-of-field" id="toc-depth-of-field" class="nav-link" data-scroll-target="#depth-of-field"><span class="header-section-number">9.4</span> Depth of Field</a></li>
-  <li><a href="#quick-comparison-rgl-vs.-rayshader" id="toc-quick-comparison-rgl-vs.-rayshader" class="nav-link" data-scroll-target="#quick-comparison-rgl-vs.-rayshader"><span class="header-section-number">9.5</span> Quick Comparison: rgl vs.&nbsp;rayshader</a></li>
+  <li><a href="#combining-multiple-meshes" id="toc-combining-multiple-meshes" class="nav-link" data-scroll-target="#combining-multiple-meshes"><span class="header-section-number">9.5</span> Combining Multiple Meshes</a></li>
+  <li><a href="#exporting-the-scene" id="toc-exporting-the-scene" class="nav-link" data-scroll-target="#exporting-the-scene"><span class="header-section-number">9.6</span> Exporting the Scene</a></li>
+  <li><a href="#quick-comparison-rgl-vs.-rayshader" id="toc-quick-comparison-rgl-vs.-rayshader" class="nav-link" data-scroll-target="#quick-comparison-rgl-vs.-rayshader"><span class="header-section-number">9.7</span> Quick Comparison: rgl vs.&nbsp;rayshader</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/paulgovan/AutoDeskR-Book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -767,8 +769,45 @@ Note
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">filename    =</span> <span class="st">"aerial_dof.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="quick-comparison-rgl-vs.-rayshader" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="quick-comparison-rgl-vs.-rayshader"><span class="header-section-number">9.5</span> Quick Comparison: rgl vs.&nbsp;rayshader</h2>
+<section id="combining-multiple-meshes" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="combining-multiple-meshes"><span class="header-section-number">9.5</span> Combining Multiple Meshes</h2>
+<p>Overlay two meshes in one scene to compare them — useful when you have an original and a repaired or simplified version. <code>Rvcg::vcgMerge()</code> fuses <code>tmesh3d</code> objects into a single mesh; for separate colours, render them individually before merging:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rvcg)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>mesh_a <span class="ot">&lt;-</span> <span class="fu">vcgImport</span>(<span class="st">"aerial_v1.obj"</span>)   <span class="co"># original</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>mesh_b <span class="ot">&lt;-</span> <span class="fu">vcgImport</span>(<span class="st">"aerial_v2.obj"</span>)   <span class="co"># repaired</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">open3d</span>()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">shade3d</span>(mesh_a, <span class="at">col =</span> <span class="st">"#4A90D9"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>)   <span class="co"># blue — original</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">shade3d</span>(mesh_b, <span class="at">col =</span> <span class="st">"#E74C3C"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>)   <span class="co"># red  — changes</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">title3d</span>(<span class="st">"v1 (blue) vs v2 (red)"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rglwidget</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To merge them into one object (e.g., for a metrics pass on the combined geometry):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mesh_combined <span class="ot">&lt;-</span> <span class="fu">vcgMerge</span>(mesh_a, mesh_b)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Combined vertices:"</span>, <span class="fu">ncol</span>(mesh_combined<span class="sc">$</span>vb), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exporting-the-scene" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="exporting-the-scene"><span class="header-section-number">9.6</span> Exporting the Scene</h2>
+<p>Save the interactive <code>rgl</code> scene as a standalone HTML file — no R session needed to view it:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">open3d</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shade3d</span>(mesh_vcg, <span class="at">col =</span> <span class="st">"#4A90D9"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Self-contained HTML with embedded WebGL</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">writeWebGL</span>(<span class="at">dir =</span> <span class="st">"webgl_export"</span>, <span class="at">filename =</span> <span class="st">"aerial_viewer.html"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">width =</span> <span class="dv">900</span>, <span class="at">height =</span> <span class="dv">600</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For a quick PNG without launching rayshader:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snapshot3d</span>(<span class="st">"aerial_snapshot.png"</span>, <span class="at">width =</span> <span class="dv">1200</span>, <span class="at">height =</span> <span class="dv">900</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="quick-comparison-rgl-vs.-rayshader" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="quick-comparison-rgl-vs.-rayshader"><span class="header-section-number">9.7</span> Quick Comparison: rgl vs.&nbsp;rayshader</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">

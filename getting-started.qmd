@@ -78,6 +78,26 @@ flowchart LR
   F --> I[viewer3D]
 ```
 
+Not sure which API to use? The diagram below maps your input file type and goal to the right chapter:
+
+```{mermaid}
+flowchart TD
+  A{What do you\nhave?} --> B[DWG / DXF]
+  A --> C[RVT / IFC / other BIM]
+  A --> D[Photos / drone imagery]
+
+  B --> B1[Layer counts & attributes\nLayer Analysis · Attribute Extraction]
+  B --> B2[Convert to PDF\nDesign Automation]
+  B --> B3[3D mesh for analysis\nModel Derivative → OBJ]
+
+  C --> C1[Embed 3D viewer\nViewer]
+  C --> C2[Extract BIM metadata\nModel Derivative → SVF]
+  C --> C3[Digital twin\nTandem Overview]
+
+  D --> D1[3D mesh\nReality Capture → OBJ]
+  D --> D2[Point cloud\nReality Capture → RCS → Point Cloud Analysis]
+```
+
 The following code demonstrates a complete round-trip: authenticate, create a storage bucket, upload a file, and verify the upload.
 
 ``` r
@@ -124,7 +144,7 @@ If the upload succeeds, `listObjects()` will return a data frame containing your
 With your credentials configured and a file uploaded, you are ready to explore the full API:
 
 | Chapter | What it covers |
-|------------------------------------|------------------------------------|
+|----|----|
 | [Authentication](authentication.qmd) | Token scopes, token refresh, rate-limit handling |
 | [Data Management](data-management.qmd) | Buckets, large-file uploads, pagination |
 | [Model Derivative](model-derivative.qmd) | Translating files to OBJ, STL, SVF; extracting metadata |

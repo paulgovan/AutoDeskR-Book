@@ -17,7 +17,7 @@ flowchart LR
 
 ## Translate to OBJ
 
-First get a token with `data:read` and `data:write` scopes. Note that only certain source formats can produce OBJ output (DWG, IPT, IAM, IPN, F3D, FBX. See the [APS supported formats list](https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/supported-translations/) for the full matrix).
+First get a token with `data:read` and `data:write` scopes. Note that only certain source formats can produce OBJ output (see the warning below) (DWG, IPT, IAM, IPN, F3D, FBX. See the [APS supported formats list](https://aps.autodesk.com/en/docs/model-derivative/v2/developers_guide/supported-translations/) for the full matrix).
 
 ```{r}
 #| eval: !expr nzchar(Sys.getenv("client_id"))
@@ -29,7 +29,11 @@ resp <- getToken(
 myToken <- resp$content$access_token
 ```
 
-APS requires the file's URN to be Base-64 encoded before it'll accept it — `jsonlite::base64_enc()` handles that:
+::: callout-warning
+Tokens expire after 3600 seconds. A `401 Unauthorized` mid-session means the token timed out — re-call `getToken()`. See [Authentication](authentication.qmd#get-an-access-token) for details.
+:::
+
+APS requires the file's URN to be Base-64 encoded before it'll accept it — `jsonlite::base64_enc()` [@R-jsonlite] handles that:
 
 ```{r}
 #| eval: !expr nzchar(Sys.getenv("client_id"))

@@ -27,7 +27,7 @@ The table below maps ten useful MCP tools to their underlying AutoDeskR function
 
 ## Setting Up a Local MCP Server
 
-The [`mcpr`](https://github.com/devOpifex/mcpr) package provides the MCP transport layer for R. Install it from GitHub:
+The [`mcpr`](https://github.com/devOpifex/mcpr) [@R-mcpr] package provides the MCP transport layer for R. Install it from GitHub:
 
 ```{r}
 #| eval: false
@@ -83,7 +83,45 @@ mcp_serve()
 #> Registered tools: get_layer_summary
 ```
 
-Add more tools by repeating the `mcp_tool()` pattern before calling `mcp_serve()`.
+Add more tools by repeating the `mcp_tool()` pattern before calling `mcp_serve()`. Here are two more useful examples:
+
+```{r}
+#| eval: false
+# Tool: translate a file and poll until complete
+mcp_tool(
+  name        = "translate_file",
+  description = "Translate a file URN to OBJ format and poll until complete.",
+  params = list(
+    urn = mcp_param("string", "The raw objectId URN returned by uploadFile()")
+  ),
+  handler = function(urn) {
+    encoded <- jsonlite::base64_enc(urn)
+    translateObj(urn = encoded, token = .token)
+    repeat {
+      resp <- checkFile(urn = encoded, token = .token)
+      if (resp$content$status == "success") break
+      Sys.sleep(5)
+    }
+    list(status = "success", urn = encoded)
+  }
+)
+
+# Tool: return the model hierarchy as a JSON-serialisable list
+mcp_tool(
+  name        = "get_object_tree",
+  description = "Return the layer/object hierarchy for a translated DWG URN.",
+  params = list(
+    urn = mcp_param("string", "The raw objectId URN returned by uploadFile()")
+  ),
+  handler = function(urn) {
+    encoded <- jsonlite::base64_enc(urn)
+    meta    <- getMetadata(urn = encoded, token = .token)
+    guid    <- meta$content$data$metadata[[1]]$guid
+    resp    <- getObjectTree(guid = guid, urn = encoded, token = .token)
+    resp$content$data$objects[[1]]
+  }
+)
+```
 
 ## Connecting to Claude Desktop
 

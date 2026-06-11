@@ -36,6 +36,10 @@ resp <- getToken(
 myToken <- resp$content$access_token
 ```
 
+::: callout-warning
+Tokens expire after 3600 seconds. A `401 Unauthorized` mid-session means the token timed out — re-call `getToken()`. See [Authentication](authentication.qmd#get-an-access-token) for details.
+:::
+
 ```{r}
 #| eval: !expr nzchar(Sys.getenv("client_id"))
 mySource      <- "http://download.autodesk.com/us/samplefiles/acad/visualization_-_aerial.dwg"

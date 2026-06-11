@@ -35,7 +35,14 @@ resp     <- getToken(id     = Sys.getenv("client_id"),
 myToken  <- resp$content$access_token
 
 myEncodedUrn <- jsonlite::base64_enc(Sys.getenv("urn"))
+```
 
+::: callout-note
+APS requires URNs to be Base64-encoded. `jsonlite::base64_enc()` handles this. See [Model Derivative](model-derivative.qmd#translate-to-obj) for the full explanation.
+:::
+
+```{r}
+#| eval: false
 translateObj(urn = myEncodedUrn, token = myToken)
 
 repeat {

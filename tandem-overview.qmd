@@ -113,3 +113,50 @@ cat("Classification:", element$classification, "\n")
 ```
 
 The [Linking Sensor Streams](sensor-streams.qmd) chapter shows how to pull time-series readings for elements like this one.
+
+## Joining BIM Properties with Twin Elements
+
+The `objectId` is the bridge between the two worlds. Here's how to build a combined data frame that pairs every BIM property (from `getData()`) with the Tandem classification and display name for the same element:
+
+```{r}
+#| eval: false
+library(dplyr)
+
+# Pull BIM properties for all objects
+bim_resp <- getData(guid = myGuid, urn = myEncodedUrn, token = myToken)
+bim_df   <- lapply(bim_resp$content$data$collection, function(obj) {
+  data.frame(
+    objectid   = obj$objectid,
+    layer      = obj$properties[["Layer and Material"]][["Layer"]],
+    stringsAsFactors = FALSE
+  )
+}) |> do.call(what = rbind)
+
+# Pull Tandem classifications for the same IDs
+twin_df <- lapply(bim_df$objectid, function(id) {
+  resp <- request(
+    paste0("https://tandem.autodesk.com/api/v1/twins/", facilityId, "/elements/", id)
+  ) |>
+    req_auth_bearer_token(myToken) |>
+    req_perform()
+  el <- resp_body_json(resp)
+  data.frame(
+    objectid       = id,
+    display_name   = el$displayName,
+    classification = el$classification,
+    stringsAsFactors = FALSE
+  )
+}) |> do.call(what = rbind)
+
+# Join on objectId
+combined <- left_join(bim_df, twin_df, by = "objectid")
+combined
+#>   objectid    layer          display_name              classification
+#> 1        2   A-SITE         Site Boundary            Architecture:Site
+#> 2        3   A-BLDG  Main Building Outline        Architecture:Building
+#> 3       42  M-HVAC    Level 2 HVAC Unit    MEP:HVAC:Air Handling Unit
+```
+
+::: callout-tip
+For facilities with hundreds of elements, batch the Tandem lookups using `lapply()` with a small `Sys.sleep(0.2)` between calls to stay within the rate limit.
+:::
