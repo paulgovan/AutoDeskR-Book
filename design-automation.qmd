@@ -11,7 +11,7 @@ This chapter focuses on the most common use case: DWG → PDF.
 :::
 
 ```{mermaid}
-%%| fig-width: 6.5
+%%| fig-width: 4.5
 flowchart LR
   A[DWG file\nat source URL] --> B[makePdf\nsubmit work item]
   B --> C{checkPdf}
@@ -43,8 +43,10 @@ Tokens expire after 3600 seconds. A `401 Unauthorized` mid-session means the tok
 
 ```{r}
 #| eval: !expr nzchar(Sys.getenv("client_id"))
-mySource      <- "http://download.autodesk.com/us/samplefiles/acad/visualization_-_aerial.dwg"
-myDestination <- "https://drive.google.com/folderview?id=0BygncDVHf60mTDZVNDltLThLNmM&usp=sharing"
+mySource      <- "http://download.autodesk.com/us/samplefiles/acad/
+visualization_-_aerial.dwg"
+myDestination <- "https://drive.google.com/folderview?
+id=0BygncDVHf60mTDZVNDltLThLNmM&usp=sharing"
 
 resp         <- makePdf(source = mySource, destination = myDestination, token = myToken)
 myWorkItemId <- resp$content$id

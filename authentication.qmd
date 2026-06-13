@@ -7,7 +7,7 @@ Before AutoDeskR can talk to any APS endpoint, it needs a token, a temporary cre
 APS uses **2-legged OAuth 2.0** (client credentials flow): your app sends its Client ID and Secret, and AutoDesk hands back an access token. No user login involved, perfect for server-side scripts and automated pipelines.
 
 ```{mermaid}
-%%| fig-width: 6.5
+%%| fig-width: 4.5
 sequenceDiagram
   participant R as Your R Script
   participant APS as AutoDesk APS
@@ -48,9 +48,7 @@ One function call does it all:
 resp    <- getToken(id = Sys.getenv("client_id"), secret = Sys.getenv("client_secret"))
 myToken <- resp$content$access_token
 myToken
-#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ.
-#>       eyJjbGllbnRfaWQiOiJBQkNERUYxMjM0NTYiLCJleHAiOjE3NDU0MDA0MDAsInNjb3BlIjpb
-#>       ImRhdGE6cmVhZCJdfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6...Qssw5c"
 ```
 
 The full response also tells you what you're working with:
@@ -59,7 +57,7 @@ The full response also tells you what you're working with:
 #| eval: !expr nzchar(Sys.getenv("client_id"))
 str(resp$content)
 #> List of 3
-#>  $ access_token: chr "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR..."
+#>  $ access_token: chr "eyJhbGciOiJSUzI1Ni...w5c"
 #>  $ token_type  : chr "Bearer"
 #>  $ expires_in  : int 3600
 ```

@@ -339,6 +339,6 @@ hull$vol   # robust volume estimate for open meshes
 
 ## Getting More Help
 
--   **APS community forum:** [community.autodesk.com/t5/autodesk-platform-services](https://community.autodesk.com/t5/autodesk-platform-services/ct-p/217) — AutoDesk staff monitor this actively
+-   **APS community forum:** [APS community on community.autodesk.com](https://community.autodesk.com/t5/autodesk-platform-services/ct-p/217) — AutoDesk staff monitor this actively
 -   **AutoDeskR GitHub issues:** [github.com/paulgovan/AutoDeskR/issues](https://github.com/paulgovan/AutoDeskR/issues) — for package-specific bugs
 -   **APS API status:** [health.autodesk.com](https://health.autodesk.com/) — check for ongoing incidents before spending time debugging

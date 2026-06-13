@@ -67,7 +67,7 @@ devtools::install_github("paulgovan/AutoDeskR")
 The diagram below shows the typical flow through the AutoDeskR APIs:
 
 ```{mermaid}
-%%| fig-width: 6.5
+%%| fig-width: 4.5
 flowchart TD
   A([Create APS App]) --> B[getToken]
   B --> C[makeBucket]
@@ -82,7 +82,7 @@ flowchart TD
 Not sure which API to use? The diagram below maps your input file type and goal to the right chapter:
 
 ```{mermaid}
-%%| fig-width: 6.5
+%%| fig-width: 4.5
 flowchart TD
   A{What do you\nhave?} --> B[DWG / DXF]
   A --> C[RVT / IFC / other BIM]
@@ -112,7 +112,7 @@ secret <- Sys.getenv("client_secret")
 # 1. Get an access token with the scopes needed for data management
 token <- getToken(id, secret, scope = "data:read data:write bucket:create bucket:read")
 token$content$access_token
-#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
+#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6...cifQ..."
 token$content$expires_in
 #> [1] 3600
 
@@ -135,8 +135,8 @@ result$content$size
 # 4. List objects in the bucket to confirm the upload succeeded
 objects <- listObjects(token, bucketKey = bucket$bucketKey)
 print(objects$content$items)
-#>   objectKey                                                         objectId    size
-#> 1  file.dwg  urn:adsk.objects:os.object:my-first-autodeskr-bucket/file.dwg  3145728
+#>   objectKey                       objectId    size
+#> 1  file.dwg  urn:adsk.objects:...:file.dwg  3145728
 ```
 
 If the upload succeeds, `listObjects()` will return a data frame containing your file's `objectKey`, `objectId` (a URN), and size. The `objectId` is used in subsequent chapters when translating the file or loading it in the viewer.
@@ -146,7 +146,7 @@ If the upload succeeds, `listObjects()` will return a data frame containing your
 With your credentials configured and a file uploaded, you are ready to explore the full API:
 
 | Chapter | What it covers |
-|----|----|
+|------------------------------------|------------------------------------|
 | [Authentication](authentication.qmd) | Token scopes, token refresh, rate-limit handling |
 | [Data Management](data-management.qmd) | Buckets, large-file uploads, pagination |
 | [Model Derivative](model-derivative.qmd) | Translating files to OBJ, STL, SVF; extracting metadata |

@@ -1,6 +1,6 @@
 # Preface {.unnumbered}
 
-The built environment generates an enormous amount of data. Architectural drawings, structural models, survey point clouds, energy performance figures, sensor readings from every floor of every building. Most of it sits inside proprietary formats that R has historically had no good way to reach. *R for the Built Environment* changes that.
+AEC projects generate rich, varied data, layer structures, 3D geometry, point clouds, sensor streams, and most of it is locked inside proprietary formats that R cannot easily reach. *R for AEC Data Analysis* is a practical guide to changing that.
 
 This book uses the [AutoDeskR](https://github.com/paulgovan/AutoDeskR) R package [@R-AutoDeskR] and the [AutoDesk Platform Services (APS)](https://aps.autodesk.com) cloud API as the primary bridge to that data, translating design files, extracting geometry, connecting live sensor streams, and embedding interactive 3D models in Shiny dashboards. AutoDesk is the dominant platform in the AEC industry, so it's a practical place to start. But the analytical techniques here, mesh analysis, layer analytics, digital twin patterns, MCP tool exposure, apply to any BIM or CAD data, wherever it comes from.
 
@@ -74,6 +74,6 @@ This book covers a lot of ground, but the APS API catalogue is bigger than any o
 
 **Advanced Design Automation** — `makePdf()` is just the beginning. APS Design Automation also supports Revit, 3ds Max, Inventor, and Fusion, meaning you can run custom scripts against any of those engines from R without installing the software locally. Generalised `submitWorkItem()` and `listEngines()` functions are planned to unlock that.
 
-**Longer-term** — Model Coordination (clash detection and model sets, once the ACC hierarchy is in place), Forma (AutoDesk's AEC industry cloud), and Cost Management (budget and financial data for project dashboards) are all on the radar. And as IFC, Speckle, and other open BIM platforms mature, they belong here too. The guiding rule: if it takes built environment data as its primary input, it belongs in this book.
+**Longer-term** — Model Coordination (clash detection and model sets, once the ACC hierarchy is in place), Forma (AutoDesk's AEC industry cloud), and Cost Management (budget and financial data for project dashboards) are all on the radar. And as IFC, Speckle, and other open BIM platforms mature, they belong here too. The guiding rule: if it takes AEC data as its primary input, it belongs in this book.
 
 Track progress and file requests at [github.com/paulgovan/AutoDeskR](https://github.com/paulgovan/AutoDeskR).

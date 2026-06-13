@@ -4,13 +4,11 @@ project:
   post-render: fix-epub.py
 
 book:
-  title: "R for the Built Environment"
+  title: "R for AEC Data Analysis"
   author: "Paul Govan"
-  date: "4/22/2026"
   cover-image: cover.png
   repo-url: https://github.com/paulgovan/AutoDeskR-Book
   repo-actions: [issue]
-  downloads: [pdf, epub]
   open-graph: true
   sharing: [twitter, facebook, linkedin]
   chapters:
@@ -19,7 +17,7 @@ book:
       chapters:
         - motivation.qmd
         - acknowledgements.qmd
-        - license.qmd
+        - about.qmd
     - part: "Getting Started"
       chapters:
         - getting-started.qmd
@@ -61,6 +59,8 @@ book:
 
 execute:
   freeze: auto
+  warning: false
+  message: false
 
 bibliography: references.bib
 
@@ -72,7 +72,13 @@ format:
   pdf:
     documentclass: scrreprt
     classoption: [oneside]
-    geometry: margin=1in
+    geometry:
+      - paperwidth=6in
+      - paperheight=9in
+      - top=0.75in
+      - bottom=0.75in
+      - inner=0.875in
+      - outer=0.625in
     fontsize: 11pt
     colorlinks: true
     linkcolor: bookblue
@@ -81,16 +87,18 @@ format:
     toc: true
     toc-depth: 2
     number-sections: true
-    fig-width: 6.5
+    fig-width: 4.5
     fig-height: 4.5
     fig-cap-location: bottom
+    fig-format: png
+    fig-dpi: 300
     linestretch: 1.15
     code-overflow: wrap
     fig-pos: "H"
     highlight-style: tango
     include-in-header: latex/preamble.tex
   epub:
-    cover-image: cover.png
+    cover-image: cover.jpg
     toc: true
     toc-depth: 2
     number-sections: false
@@ -100,5 +108,10 @@ format:
     css: epub.css
     filters:
       - filters/epub-fix.lua
+
+lang: en-US
+date: "2026"
+publisher: "Paul Govan"
+description: "A practical guide to analyzing AEC and CAD/BIM data in R with the AutoDeskR package and AutoDesk Platform Services."
 
 editor: visual

@@ -2,9 +2,9 @@
 
 ## The Problem
 
-The built environment is full of data. Layer structure, geometry, material properties, object attributes, energy performance figures, sensor readings linked to physical elements, all of it sits inside proprietary file formats that the rest of the data science world can't easily reach. The tools that can read these files (AutoCAD, Revit, Rhino) are desktop applications built for design, not analysis. They're not going to produce a ggplot2 chart or feed a Shiny dashboard.
+AEC projects generate an enormous amount of data. Layer structure, geometry, material properties, object attributes, energy performance figures, sensor readings linked to physical elements. All of it sits inside proprietary file formats that the rest of the data science world can't easily reach. The tools that can read these files (AutoCAD, Revit, Rhino) are desktop applications built for design, not analysis. They're not going to produce a ggplot2 chart or feed a Shiny dashboard.
 
-The result is an unnecessary gap. Engineers and architects generate rich, spatially-grounded data every day. Data scientists who could turn that data into insight have no good way to access it. Both teams end up frustrated, exporting things to CSV by hand and losing half the structure in the process.
+The result is an unnecessary gap. Engineers and architects generate rich, spatially-grounded data every day. Data scientists who could turn that data into insight have no straightforward way to access it. Both teams end up exporting things to CSV by hand and losing half the structure in the process.
 
 ## The Opportunity
 

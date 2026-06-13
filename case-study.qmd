@@ -29,7 +29,7 @@ resp <- getToken(
   scope  = "data:read data:write bucket:create bucket:read code:all"
 )
 myToken <- resp$content$access_token
-#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
+#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6...cifQ..."
 ```
 
 ------------------------------------------------------------------------
@@ -199,7 +199,7 @@ The finished dashboard shows the AutoDesk WebGL viewer on the left tab and the g
 ## Summary
 
 | Step                   | Function(s)                     | API              |
-|------------------------|---------------------------------|------------------|
+|-----------------------|-------------------------------|------------------|
 | Authenticate           | `getToken()`                    | Authentication   |
 | Create bucket + upload | `makeBucket()`, `uploadFile()`  | Data Management  |
 | Translate to SVF       | `translateSvf()`, `checkFile()` | Model Derivative |

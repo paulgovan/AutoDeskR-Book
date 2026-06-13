@@ -38,7 +38,7 @@ head(custom_df)
 
 ## Block Attributes
 
-Block inserts carry named attributes under `obj$properties$Attributes`:
+Block inserts carry named attributes, found under the `obj$properties$Attributes` element:
 
 ```{r}
 #| eval: false

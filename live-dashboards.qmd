@@ -4,15 +4,7 @@ title: "Live Dashboards"
 
 Here's where everything comes together: the 3D viewer from the [Viewer](viewer.qmd) chapter on the left, live sensor charts from [Linking Sensor Streams](sensor-streams.qmd) on the right, all in one Shiny [@R-shiny] app that refreshes automatically. This is what a digital twin dashboard looks like in R.
 
-```{mermaid}
-%%| fig-width: 6.5
-graph LR
-  A[getToken] --> B[viewer3D\nAutoDesk Viewer]
-  A --> C[Tandem API\nhttr2]
-  C --> D[dygraph\ntime-series chart]
-  B --> E[Shiny Dashboard]
-  D --> E
-```
+![Data flow for the digital twin dashboard: `getToken` authenticates both the AutoDesk Viewer (`viewer3D`) and the Tandem API (via `httr2`), whose `dygraph` time-series charts and 3D view feed a single Shiny dashboard.](images/dashboard-flow.png){width=4.5in fig-alt="Flowchart: getToken feeds viewer3D (AutoDesk Viewer) and the Tandem API (httr2); the Tandem API feeds a dygraph time-series chart; the viewer and chart both feed a Shiny Dashboard."}
 
 ## Required Packages
 

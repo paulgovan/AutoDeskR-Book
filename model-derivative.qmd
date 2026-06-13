@@ -7,7 +7,7 @@ A DWG file sitting in a bucket is just bytes. The Model Derivative API is what t
 The pattern is always the same: submit a job, poll until it finishes, then pull the output.
 
 ```{mermaid}
-%%| fig-width: 6.5
+%%| fig-width: 4.5
 flowchart LR
   A[Upload file\nuploadFile] --> B[Translate\ntranslateObj / translateSvf]
   B --> C{checkFile}
@@ -40,7 +40,7 @@ APS requires the file's URN to be Base-64 encoded before it'll accept it — `js
 #| eval: !expr nzchar(Sys.getenv("client_id"))
 myEncodedUrn <- jsonlite::base64_enc(myUrn)
 myEncodedUrn
-#> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
+#> [1] "dXJuOmFkc2sub2JqZWN0cz...LmR3Zw=="
 ```
 
 Kick off the translation:
@@ -53,7 +53,7 @@ resp$content
 #> [1] "created"
 #>
 #> $urn
-#> [1] "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw=="
+#> [1] "dXJuOmFkc2sub2JqZWN0cz...LmR3Zw=="
 #>
 #> $acceptedJobs$output$formats[[1]]$type
 #> [1] "obj"

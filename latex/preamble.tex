@@ -16,13 +16,21 @@
 
 % Code block line wrapping (fvextra works with Quarto's Verbatim env)
 \usepackage{fvextra}
+% Apply wrapping to ALL fancyvrb environments, not just Highlighting,
+% so long tokens (base64, URNs) in any code/output block break at the margin
+\fvset{breaklines=true, breakanywhere=true}
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{%
   breaklines, breakanywhere, commandchars=\\\{\}}
 
 % Tighter spacing inside callout boxes
 \setlength{\fboxsep}{6pt}
 
-% Reduce table font size to prevent wide columns from overflowing the text width
+% Let TeX break tight prose lines (long inline code, function lists) instead of
+% pushing them into the outer margin as overfull boxes
+\setlength{\emergencystretch}{4em}
+
+% Reduce table font size to prevent wide columns from overflowing the text width.
+% Dense reference tables (function/scope lookups) need scriptsize to fit 6in pages.
 \usepackage{etoolbox}
-\AtBeginEnvironment{longtable}{\small}
-\AtBeginEnvironment{tabular}{\small}
+\AtBeginEnvironment{longtable}{\scriptsize}
+\AtBeginEnvironment{tabular}{\scriptsize}

@@ -7,7 +7,7 @@ Think of the Data Management API as AutoDesk's cloud file system. Before you can
 The storage model is simple: your app owns **buckets**, and buckets hold **objects** (your files).
 
 ```{mermaid}
-%%| fig-width: 6.5
+%%| fig-width: 4.5
 graph LR
   A[Your App] --> B[(Bucket)]
   B --> C[object: aerial.dwg]
@@ -27,7 +27,7 @@ resp <- getToken(
   scope  = "bucket:create bucket:read data:write"
 )
 myToken <- resp$content$access_token
-#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ..."
+#> [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6...cifQ..."
 ```
 
 ::: callout-warning
@@ -62,7 +62,7 @@ resp$content
 #> [1] "mybucket"
 #>
 #> $bucketOwner
-#> [1] "3MVG99OxTyEMCQ3gNp2PjtXbmT8T_MnfCTtpQkuiJNxGtXuoKP7"
+#> [1] "3MVG99OxTyEMCQ3gNp2Pjt...uoKP7"
 #>
 #> $createdDate
 #> [1] 1745356800000
@@ -109,7 +109,7 @@ resp$content
 #> [1] "application/octet-stream"
 #>
 #> $location
-#> [1] "https://developer.api.autodesk.com/oss/v2/buckets/mybucket/objects/aerial.dwg"
+#> [1] ".../buckets/mybucket/objects/aerial.dwg"
 ```
 
 ### Big Files (\> 100 MB)

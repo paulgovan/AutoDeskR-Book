@@ -7,7 +7,7 @@ Every DWG and DXF file organises its geometry into named layers. Unlock those la
 The data flows like this:
 
 ```{mermaid}
-%%| fig-width: 6.5
+%%| fig-width: 4.5
 flowchart LR
   A[aerial.dwg] --> B[translateSvf]
   B --> C[getObjectTree\nlayer hierarchy]

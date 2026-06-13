@@ -1,6 +1,6 @@
 # Acknowledgements {.unnumbered}
 
-*R for the Built Environment* would not exist without the work of many individuals and organisations who generously share their time, code, and knowledge.
+*R for AEC Data Analysis* would not exist without the work of many individuals and organisations who generously share their time, code, and knowledge.
 
 **AutoDesk** designed and maintains the AutoDesk Platform Services (APS) APIs and provides extensive developer documentation, sample code, and a free tier that makes experimentation accessible to individuals and small teams. The quality of their API design made it possible to wrap APS in a concise R interface.
 
@@ -19,29 +19,36 @@ If this book or the AutoDeskR package is useful in your work, please consider ci
 **Citing the book:**
 
 ``` bibtex
-@book{govan2026builtenv,
-  title     = {R for the Built Environment},
-  author    = {Paul Govan},
-  year      = {2026},
-  url       = {https://paulgovan.github.io/AutoDeskR-Book/}
+@Book{,
+  title = {R for AEC Data Analysis},
+  author = {Paul Govan},
+  year = {2026},
+  publisher = {Amazon},
+  edition = {2},
+  url = {https://paulgovan.github.io/AutoDeskR-Book/},
+  isbn = {9798181210233},
 }
 ```
 
-APA: Govan, P. (2026). *R for the Built Environment*. Retrieved from https://paulgovan.github.io/AutoDeskR-Book/
+APA: Govan P (2026). _R for AEC Data Analysis_, 2 edition. Amazon. ISBN 9798181210233,  
+  <https://paulgovan.github.io/AutoDeskR-Book/>.
 
 **Citing the package:**
 
 ``` bibtex
-@manual{R-AutoDeskR,
-  title  = {AutoDeskR: An Interface to the AutoDesk Platform Services API},
+@Manual{,
+  title = {AutoDeskR: An Interface to the AutoDesk Platform},
   author = {Paul Govan},
-  year   = {2024},
-  note   = {R package},
-  url    = {https://github.com/paulgovan/AutoDeskR}
+  year = {2026},
+  note = {R package version 0.5},
+  url = {https://cran.r-project.org/package=AutoDeskR},
+  doi = {10.32614/CRAN.package.AutoDeskR},
 }
 ```
 
-APA: Govan, P. (2024). *AutoDeskR: An Interface to the AutoDesk Platform Services API* \[R package\]. https://github.com/paulgovan/AutoDeskR
+Govan P (2026). _AutoDeskR: An Interface to the AutoDesk Platform_. doi:10.32614/CRAN.package.AutoDeskR
+  <https://doi.org/10.32614/CRAN.package.AutoDeskR>, R package version 0.5,
+  <https://cran.r-project.org/package=AutoDeskR>.
 
 You can also get the package citation directly from R:
 
