@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "R for the Built Environment",
+    "title": "R for AEC Data Analysis",
     "section": "",
-    "text": "Preface\nThe built environment generates an enormous amount of data. Architectural drawings, structural models, survey point clouds, energy performance figures, sensor readings from every floor of every building. Most of it sits inside proprietary formats that R has historically had no good way to reach. R for the Built Environment changes that.\nThis book uses the AutoDeskR R package (Govan 2024) and the AutoDesk Platform Services (APS) cloud API as the primary bridge to that data, translating design files, extracting geometry, connecting live sensor streams, and embedding interactive 3D models in Shiny dashboards. AutoDesk is the dominant platform in the AEC industry, so it’s a practical place to start. But the analytical techniques here, mesh analysis, layer analytics, digital twin patterns, MCP tool exposure, apply to any BIM or CAD data, wherever it comes from.\nWhether you’re a data scientist who just inherited a folder of DWG files, or a BIM manager who wants to automate something that currently takes three software packages and a prayer, this book is for you.",
+    "text": "Preface\nAEC projects generate rich, varied data, layer structures, 3D geometry, point clouds, sensor streams, and most of it is locked inside proprietary formats that R cannot easily reach. R for AEC Data Analysis is a practical guide to changing that.\nThis book uses the AutoDeskR R package (Govan 2024) and the AutoDesk Platform Services (APS) cloud API as the primary bridge to that data, translating design files, extracting geometry, connecting live sensor streams, and embedding interactive 3D models in Shiny dashboards. AutoDesk is the dominant platform in the AEC industry, so it’s a practical place to start. But the analytical techniques here, mesh analysis, layer analytics, digital twin patterns, MCP tool exposure, apply to any BIM or CAD data, wherever it comes from.\nWhether you’re a data scientist who just inherited a folder of DWG files, or a BIM manager who wants to automate something that currently takes three software packages and a prayer, this book is for you.",
     "crumbs": [
       "Preface"
     ]
@@ -12,7 +12,7 @@
   {
     "objectID": "index.html#what-youll-learn",
     "href": "index.html#what-youll-learn",
-    "title": "R for the Built Environment",
+    "title": "R for AEC Data Analysis",
     "section": "What You’ll Learn",
     "text": "What You’ll Learn\nEach chapter covers a different piece of the BIM and CAD analytics ecosystem:\n\nAuthentication — grab an OAuth token in one line and never think about it again\nData Management — upload files to the cloud, wrangle buckets, and pull objects back down\nModel Derivative — translate design files into OBJ, STL, and SVF; extract geometry and metadata\nDesign Automation — run DWG-to-PDF conversion in the cloud, no AutoCAD required\nReality Capture — turn a set of overlapping photos into a 3D mesh\nViewer — embed a live 3D model viewer in a Shiny app with two lines of code\n3D Geometry & Meshes — import, measure, and visualise translated mesh files\nDWG & DXF Analytics — parse layer structure, extract attributes, compare drawing revisions\nDigital Twins — link live sensor data to BIM elements via AutoDesk Tandem\nMCP Server — expose AutoDeskR as an AI agent tool so LLMs can query BIM models directly",
     "crumbs": [
@@ -22,7 +22,7 @@
   {
     "objectID": "index.html#how-this-book-is-structured",
     "href": "index.html#how-this-book-is-structured",
-    "title": "R for the Built Environment",
+    "title": "R for AEC Data Analysis",
     "section": "How This Book is Structured",
     "text": "How This Book is Structured\nThe book is organised into eight parts. You don’t have to read them in order, each chapter is reasonably self-contained, but the parts do build on each other if you want the full picture.\n\n\n\n\n\n\n\n\nPart\nChapters\nWhat you’ll do\n\n\n\n\nFront Matter\nMotivation, Acknowledgements\nUnderstand the why\n\n\nGetting Started\nGetting Started\nInstall the package and make your first API call\n\n\nAutoDesk Platform Services\nAuthentication → Viewer\nThe six main APS APIs, start to finish\n\n\n3D Geometry & Meshes\nReading → Visualisation → Point Clouds → Comparison\nImport, measure, and compare translated mesh files\n\n\nDWG & DXF Analytics\nLayer Analysis → Attributes → Comparison → Reports\nExtract meaning from drawing data\n\n\nDigital Twins\nTandem Overview → Sensor Streams → Live Dashboards\nJoin live sensor readings to BIM elements\n\n\nAI Integration\nMCP Server\nExpose AutoDeskR as a tool for AI agents\n\n\nReference\nCase Study, Function Reference, Troubleshooting\nWorked example, lookup tables, and help",
     "crumbs": [
@@ -32,7 +32,7 @@
   {
     "objectID": "index.html#prerequisites",
     "href": "index.html#prerequisites",
-    "title": "R for the Built Environment",
+    "title": "R for AEC Data Analysis",
     "section": "Prerequisites",
     "text": "Prerequisites\nTo follow along you’ll need:\n\nR (version 4.0 or later) and, optionally, RStudio\nA free AutoDesk account with an APS application registered at aps.autodesk.com. The Getting Started chapter walks you through it step by step\nAn internet connection (all the action happens in AutoDesk’s cloud)\n\nNo prior CAD or BIM experience assumed. If you’re comfortable running an R script, you’re ready.",
     "crumbs": [
@@ -42,7 +42,7 @@
   {
     "objectID": "index.html#installation",
     "href": "index.html#installation",
-    "title": "R for the Built Environment",
+    "title": "R for AEC Data Analysis",
     "section": "Installation",
     "text": "Installation\nInstall the stable release from CRAN:\ninstall.packages(\"AutoDeskR\")\nOr grab the development version from GitHub if you like living on the edge:\ndevtools::install_github(\"paulgovan/AutoDeskR\")",
     "crumbs": [
@@ -52,7 +52,7 @@
   {
     "objectID": "index.html#how-to-use-this-book",
     "href": "index.html#how-to-use-this-book",
-    "title": "R for the Built Environment",
+    "title": "R for AEC Data Analysis",
     "section": "How to Use This Book",
     "text": "How to Use This Book\nNew to APS? Start with Getting Started and work through the chapters in order, each one builds on the previous. Already know the APS basics? Jump straight to whatever chapter covers your use case. The Troubleshooting chapter is always there when something goes sideways.\nAll code examples are copy-paste ready and work with #| eval: false so they won’t execute during book rendering but will run just fine in your R session.",
     "crumbs": [
@@ -62,9 +62,9 @@
   {
     "objectID": "index.html#where-this-is-headed",
     "href": "index.html#where-this-is-headed",
-    "title": "R for the Built Environment",
+    "title": "R for AEC Data Analysis",
     "section": "Where This is Headed",
-    "text": "Where This is Headed\nThis book covers a lot of ground, but the APS API catalogue is bigger than any one book. Here’s what’s on the horizon.\nNear-term package additions — AutoDeskR currently wraps the six core APS APIs. The next wave of functions will cover the richer ACC project hierarchy (Hubs → Projects → Folders → Items → Versions), which is required for working with BIM 360 and ACC projects where files live in managed folder trees rather than flat OSS buckets. Alongside that: Webhooks (so your pipelines can react to events instead of polling), Construction Issues (live project health data in R), and Account Admin (bulk user and project management via script instead of clicking through a web interface a hundred times).\nAdvanced Design Automation — makePdf() is just the beginning. APS Design Automation also supports Revit, 3ds Max, Inventor, and Fusion, meaning you can run custom scripts against any of those engines from R without installing the software locally. Generalised submitWorkItem() and listEngines() functions are planned to unlock that.\nLonger-term — Model Coordination (clash detection and model sets, once the ACC hierarchy is in place), Forma (AutoDesk’s AEC industry cloud), and Cost Management (budget and financial data for project dashboards) are all on the radar. And as IFC, Speckle, and other open BIM platforms mature, they belong here too. The guiding rule: if it takes built environment data as its primary input, it belongs in this book.\nTrack progress and file requests at github.com/paulgovan/AutoDeskR.\n\n\n\n\nGovan, Paul. 2024. AutoDeskR: An Interface to the AutoDesk Platform Services APIs. https://github.com/paulgovan/AutoDeskR.",
+    "text": "Where This is Headed\nThis book covers a lot of ground, but the APS API catalogue is bigger than any one book. Here’s what’s on the horizon.\nNear-term package additions — AutoDeskR currently wraps the six core APS APIs. The next wave of functions will cover the richer ACC project hierarchy (Hubs → Projects → Folders → Items → Versions), which is required for working with BIM 360 and ACC projects where files live in managed folder trees rather than flat OSS buckets. Alongside that: Webhooks (so your pipelines can react to events instead of polling), Construction Issues (live project health data in R), and Account Admin (bulk user and project management via script instead of clicking through a web interface a hundred times).\nAdvanced Design Automation — makePdf() is just the beginning. APS Design Automation also supports Revit, 3ds Max, Inventor, and Fusion, meaning you can run custom scripts against any of those engines from R without installing the software locally. Generalised submitWorkItem() and listEngines() functions are planned to unlock that.\nLonger-term — Model Coordination (clash detection and model sets, once the ACC hierarchy is in place), Forma (AutoDesk’s AEC industry cloud), and Cost Management (budget and financial data for project dashboards) are all on the radar. And as IFC, Speckle, and other open BIM platforms mature, they belong here too. The guiding rule: if it takes AEC data as its primary input, it belongs in this book.\nTrack progress and file requests at github.com/paulgovan/AutoDeskR.\n\n\n\n\nGovan, Paul. 2024. AutoDeskR: An Interface to the AutoDesk Platform Services APIs. https://github.com/paulgovan/AutoDeskR.",
     "crumbs": [
       "Preface"
     ]
@@ -74,7 +74,7 @@
     "href": "motivation.html",
     "title": "Motivation",
     "section": "",
-    "text": "The Problem\nThe built environment is full of data. Layer structure, geometry, material properties, object attributes, energy performance figures, sensor readings linked to physical elements, all of it sits inside proprietary file formats that the rest of the data science world can’t easily reach. The tools that can read these files (AutoCAD, Revit, Rhino) are desktop applications built for design, not analysis. They’re not going to produce a ggplot2 chart or feed a Shiny dashboard.\nThe result is an unnecessary gap. Engineers and architects generate rich, spatially-grounded data every day. Data scientists who could turn that data into insight have no good way to access it. Both teams end up frustrated, exporting things to CSV by hand and losing half the structure in the process.",
+    "text": "The Problem\nAEC projects generate an enormous amount of data. Layer structure, geometry, material properties, object attributes, energy performance figures, sensor readings linked to physical elements. All of it sits inside proprietary file formats that the rest of the data science world can’t easily reach. The tools that can read these files (AutoCAD, Revit, Rhino) are desktop applications built for design, not analysis. They’re not going to produce a ggplot2 chart or feed a Shiny dashboard.\nThe result is an unnecessary gap. Engineers and architects generate rich, spatially-grounded data every day. Data scientists who could turn that data into insight have no straightforward way to access it. Both teams end up exporting things to CSV by hand and losing half the structure in the process.",
     "crumbs": [
       "Front Matter",
       "Motivation"
@@ -140,7 +140,7 @@
     "href": "acknowledgements.html",
     "title": "Acknowledgements",
     "section": "",
-    "text": "How to Cite\nR for the Built Environment would not exist without the work of many individuals and organisations who generously share their time, code, and knowledge.\nAutoDesk designed and maintains the AutoDesk Platform Services (APS) APIs and provides extensive developer documentation, sample code, and a free tier that makes experimentation accessible to individuals and small teams. The quality of their API design made it possible to wrap APS in a concise R interface.\nThe R community — CRAN maintainers, package authors, and the broader community of practitioners who publish tutorials, answer questions, and review code provides the foundation on which AutoDeskR is built. In particular, the httr2 and jsonlite packages handle the HTTP and JSON plumbing that underlies every API call in this package.\nPosit (formerly RStudio) develops and maintains Quarto, the publishing system used to produce this book, as well as the devtools, usethis, and roxygen2 packages that are central to R package development.\nContributors to AutoDeskR who have filed issues, suggested improvements, and submitted pull requests on GitHub have shaped the package into what it is today. Their feedback has been invaluable.\nFinally, thank you to everyone who has read earlier drafts of this material and offered corrections and suggestions.\nIf this book or the AutoDeskR package is useful in your work, please consider citing it.\nCiting the book:\nAPA: Govan, P. (2026). R for the Built Environment. Retrieved from https://paulgovan.github.io/AutoDeskR-Book/\nCiting the package:\nAPA: Govan, P. (2024). AutoDeskR: An Interface to the AutoDesk Platform Services API [R package]. https://github.com/paulgovan/AutoDeskR\nYou can also get the package citation directly from R:",
+    "text": "How to Cite\nR for AEC Data Analysis would not exist without the work of many individuals and organisations who generously share their time, code, and knowledge.\nAutoDesk designed and maintains the AutoDesk Platform Services (APS) APIs and provides extensive developer documentation, sample code, and a free tier that makes experimentation accessible to individuals and small teams. The quality of their API design made it possible to wrap APS in a concise R interface.\nThe R community — CRAN maintainers, package authors, and the broader community of practitioners who publish tutorials, answer questions, and review code provides the foundation on which AutoDeskR is built. In particular, the httr2 and jsonlite packages handle the HTTP and JSON plumbing that underlies every API call in this package.\nPosit (formerly RStudio) develops and maintains Quarto, the publishing system used to produce this book, as well as the devtools, usethis, and roxygen2 packages that are central to R package development.\nContributors to AutoDeskR who have filed issues, suggested improvements, and submitted pull requests on GitHub have shaped the package into what it is today. Their feedback has been invaluable.\nFinally, thank you to everyone who has read earlier drafts of this material and offered corrections and suggestions.\nIf this book or the AutoDeskR package is useful in your work, please consider citing it.\nCiting the book:\nAPA: Govan P (2026). R for AEC Data Analysis, 2 edition. Amazon. ISBN 9798181210233,\nhttps://paulgovan.github.io/AutoDeskR-Book/.\nCiting the package:\nGovan P (2026). AutoDeskR: An Interface to the AutoDesk Platform. doi:10.32614/CRAN.package.AutoDeskR https://doi.org/10.32614/CRAN.package.AutoDeskR, R package version 0.5, https://cran.r-project.org/package=AutoDeskR.\nYou can also get the package citation directly from R:",
     "crumbs": [
       "Front Matter",
       "Acknowledgements"
@@ -151,54 +151,21 @@
     "href": "acknowledgements.html#how-to-cite",
     "title": "Acknowledgements",
     "section": "",
-    "text": "@book{govan2026builtenv,\n  title     = {R for the Built Environment},\n  author    = {Paul Govan},\n  year      = {2026},\n  url       = {https://paulgovan.github.io/AutoDeskR-Book/}\n}\n\n\n@manual{R-AutoDeskR,\n  title  = {AutoDeskR: An Interface to the AutoDesk Platform Services API},\n  author = {Paul Govan},\n  year   = {2024},\n  note   = {R package},\n  url    = {https://github.com/paulgovan/AutoDeskR}\n}\n\n\ncitation(\"AutoDeskR\")",
+    "text": "@Book{,\n  title = {R for AEC Data Analysis},\n  author = {Paul Govan},\n  year = {2026},\n  publisher = {Amazon},\n  edition = {2},\n  url = {https://paulgovan.github.io/AutoDeskR-Book/},\n  isbn = {9798181210233},\n}\n\n\n@Manual{,\n  title = {AutoDeskR: An Interface to the AutoDesk Platform},\n  author = {Paul Govan},\n  year = {2026},\n  note = {R package version 0.5},\n  url = {https://cran.r-project.org/package=AutoDeskR},\n  doi = {10.32614/CRAN.package.AutoDeskR},\n}\n\n\ncitation(\"AutoDeskR\")",
     "crumbs": [
       "Front Matter",
       "Acknowledgements"
     ]
   },
   {
-    "objectID": "license.html",
-    "href": "license.html",
-    "title": "License",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About the Author",
     "section": "",
-    "text": "Book Content\nThe text, code examples, and figures in R and the AutoDesk Platform are licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).\nYou are free to:\nUnder the following terms:\nFull license text: https://creativecommons.org/licenses/by/4.0/",
+    "text": "Paul Govan is a Senior Engineer at GE Aerospace with a Ph.D. in Civil Engineering from Texas A&M University. He is the developer of several open-source R packages including AutoDeskR, BayesianNetwork, eAnalytics, and ReliaGrowR, and is a licensed Professional Engineer. More at paulgovan.com.",
     "crumbs": [
       "Front Matter",
-      "License"
-    ]
-  },
-  {
-    "objectID": "license.html#book-content",
-    "href": "license.html#book-content",
-    "title": "License",
-    "section": "",
-    "text": "Share — copy and redistribute the material in any medium or format\nAdapt — remix, transform, and build upon the material for any purpose, even commercially\n\n\n\nAttribution — You must give appropriate credit to the original author (Paul Govan), provide a link to the license, and indicate if changes were made.",
-    "crumbs": [
-      "Front Matter",
-      "License"
-    ]
-  },
-  {
-    "objectID": "license.html#autodeskr-package",
-    "href": "license.html#autodeskr-package",
-    "title": "License",
-    "section": "AutoDeskR Package",
-    "text": "AutoDeskR Package\nThe AutoDeskR R package is distributed under the MIT License.\nMIT License\n\nCopyright (c) Paul Govan\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
-    "crumbs": [
-      "Front Matter",
-      "License"
-    ]
-  },
-  {
-    "objectID": "license.html#autodesk-platform-services",
-    "href": "license.html#autodesk-platform-services",
-    "title": "License",
-    "section": "AutoDesk Platform Services",
-    "text": "AutoDesk Platform Services\nUse of the AutoDesk Platform Services (APS) APIs is subject to AutoDesk’s own Terms of Service and Developer Terms. This book is an independent work and is not affiliated with or endorsed by AutoDesk, Inc.",
-    "crumbs": [
-      "Front Matter",
-      "License"
+      "About the Author"
     ]
   },
   {
@@ -272,7 +239,7 @@
     "href": "getting-started.html#step-5-a-complete-round-trip",
     "title": "Basic Workflow",
     "section": "Step 5: A Complete Round-Trip",
-    "text": "Step 5: A Complete Round-Trip\nThe diagram below shows the typical flow through the AutoDeskR APIs:\n\n\n\n\n\nflowchart TD\n  A([Create APS App]) --&gt; B[getToken]\n  B --&gt; C[makeBucket]\n  C --&gt; D[uploadFile]\n  D --&gt; E{Use case}\n  E --&gt; F[translateObj /\\ntranslateSvf]\n  E --&gt; G[makePdf]\n  E --&gt; H[createPhotoscene]\n  F --&gt; I[viewer3D]\n\n\n\n\n\n\nNot sure which API to use? The diagram below maps your input file type and goal to the right chapter:\n\n\n\n\n\nflowchart TD\n  A{What do you\\nhave?} --&gt; B[DWG / DXF]\n  A --&gt; C[RVT / IFC / other BIM]\n  A --&gt; D[Photos / drone imagery]\n\n  B --&gt; B1[Layer counts & attributes\\nLayer Analysis · Attribute Extraction]\n  B --&gt; B2[Convert to PDF\\nDesign Automation]\n  B --&gt; B3[3D mesh for analysis\\nModel Derivative → OBJ]\n\n  C --&gt; C1[Embed 3D viewer\\nViewer]\n  C --&gt; C2[Extract BIM metadata\\nModel Derivative → SVF]\n  C --&gt; C3[Digital twin\\nTandem Overview]\n\n  D --&gt; D1[3D mesh\\nReality Capture → OBJ]\n  D --&gt; D2[Point cloud\\nReality Capture → RCS → Point Cloud Analysis]\n\n\n\n\n\n\nThe following code demonstrates a complete round-trip: authenticate, create a storage bucket, upload a file, and verify the upload.\nlibrary(AutoDeskR)\n\n# Read credentials from environment\nid     &lt;- Sys.getenv(\"client_id\")\nsecret &lt;- Sys.getenv(\"client_secret\")\n\n# 1. Get an access token with the scopes needed for data management\ntoken &lt;- getToken(id, secret, scope = \"data:read data:write bucket:create bucket:read\")\ntoken$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"\ntoken$content$expires_in\n#&gt; [1] 3600\n\n# 2. Create a persistent storage bucket (bucket names must be globally unique)\nbucket &lt;- makeBucket(token, bucketKey = \"my-first-autodeskr-bucket\", policyKey = \"persistent\")\nbucket$content$bucketKey\n#&gt; [1] \"my-first-autodeskr-bucket\"\nbucket$content$policyKey\n#&gt; [1] \"persistent\"\n\n# 3. Upload a local file (≤100 MB)\nresult &lt;- uploadFile(token,\n                     localPath = \"path/to/your/file.dwg\",\n                     bucketKey = bucket$bucketKey)\nresult$content$objectKey\n#&gt; [1] \"file.dwg\"\nresult$content$size\n#&gt; [1] 3145728\n\n# 4. List objects in the bucket to confirm the upload succeeded\nobjects &lt;- listObjects(token, bucketKey = bucket$bucketKey)\nprint(objects$content$items)\n#&gt;   objectKey                                                         objectId    size\n#&gt; 1  file.dwg  urn:adsk.objects:os.object:my-first-autodeskr-bucket/file.dwg  3145728\nIf the upload succeeds, listObjects() will return a data frame containing your file’s objectKey, objectId (a URN), and size. The objectId is used in subsequent chapters when translating the file or loading it in the viewer.",
+    "text": "Step 5: A Complete Round-Trip\nThe diagram below shows the typical flow through the AutoDeskR APIs:\n\n\n\n\n\nflowchart TD\n  A([Create APS App]) --&gt; B[getToken]\n  B --&gt; C[makeBucket]\n  C --&gt; D[uploadFile]\n  D --&gt; E{Use case}\n  E --&gt; F[translateObj /\\ntranslateSvf]\n  E --&gt; G[makePdf]\n  E --&gt; H[createPhotoscene]\n  F --&gt; I[viewer3D]\n\n\n\n\n\n\nNot sure which API to use? The diagram below maps your input file type and goal to the right chapter:\n\n\n\n\n\nflowchart TD\n  A{What do you\\nhave?} --&gt; B[DWG / DXF]\n  A --&gt; C[RVT / IFC / other BIM]\n  A --&gt; D[Photos / drone imagery]\n\n  B --&gt; B1[Layer counts & attributes\\nLayer Analysis · Attribute Extraction]\n  B --&gt; B2[Convert to PDF\\nDesign Automation]\n  B --&gt; B3[3D mesh for analysis\\nModel Derivative → OBJ]\n\n  C --&gt; C1[Embed 3D viewer\\nViewer]\n  C --&gt; C2[Extract BIM metadata\\nModel Derivative → SVF]\n  C --&gt; C3[Digital twin\\nTandem Overview]\n\n  D --&gt; D1[3D mesh\\nReality Capture → OBJ]\n  D --&gt; D2[Point cloud\\nReality Capture → RCS → Point Cloud Analysis]\n\n\n\n\n\n\nThe following code demonstrates a complete round-trip: authenticate, create a storage bucket, upload a file, and verify the upload.\nlibrary(AutoDeskR)\n\n# Read credentials from environment\nid     &lt;- Sys.getenv(\"client_id\")\nsecret &lt;- Sys.getenv(\"client_secret\")\n\n# 1. Get an access token with the scopes needed for data management\ntoken &lt;- getToken(id, secret, scope = \"data:read data:write bucket:create bucket:read\")\ntoken$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6...cifQ...\"\ntoken$content$expires_in\n#&gt; [1] 3600\n\n# 2. Create a persistent storage bucket (bucket names must be globally unique)\nbucket &lt;- makeBucket(token, bucketKey = \"my-first-autodeskr-bucket\", policyKey = \"persistent\")\nbucket$content$bucketKey\n#&gt; [1] \"my-first-autodeskr-bucket\"\nbucket$content$policyKey\n#&gt; [1] \"persistent\"\n\n# 3. Upload a local file (≤100 MB)\nresult &lt;- uploadFile(token,\n                     localPath = \"path/to/your/file.dwg\",\n                     bucketKey = bucket$bucketKey)\nresult$content$objectKey\n#&gt; [1] \"file.dwg\"\nresult$content$size\n#&gt; [1] 3145728\n\n# 4. List objects in the bucket to confirm the upload succeeded\nobjects &lt;- listObjects(token, bucketKey = bucket$bucketKey)\nprint(objects$content$items)\n#&gt;   objectKey                       objectId    size\n#&gt; 1  file.dwg  urn:adsk.objects:...:file.dwg  3145728\nIf the upload succeeds, listObjects() will return a data frame containing your file’s objectKey, objectId (a URN), and size. The objectId is used in subsequent chapters when translating the file or loading it in the viewer.",
     "crumbs": [
       "Getting Started",
       "Basic Workflow"
@@ -316,7 +283,7 @@
     "href": "authentication.html#get-an-access-token",
     "title": "1  Authentication",
     "section": "1.2 Get an Access Token",
-    "text": "1.2 Get an Access Token\nOne function call does it all:\n\nresp    &lt;- getToken(id = Sys.getenv(\"client_id\"), secret = Sys.getenv(\"client_secret\"))\nmyToken &lt;- resp$content$access_token\nmyToken\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ.\n#&gt;       eyJjbGllbnRfaWQiOiJBQkNERUYxMjM0NTYiLCJleHAiOjE3NDU0MDA0MDAsInNjb3BlIjpb\n#&gt;       ImRhdGE6cmVhZCJdfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"\n\nThe full response also tells you what you’re working with:\n\nstr(resp$content)\n#&gt; List of 3\n#&gt;  $ access_token: chr \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR...\"\n#&gt;  $ token_type  : chr \"Bearer\"\n#&gt;  $ expires_in  : int 3600\n\n\n\n\n\n\n\nWarning\n\n\n\nTokens expire after 1 hour. A 401 Unauthorized mid-session almost always means your token timed out — just call getToken() again.\n\nresp$status_code\n#&gt; [1] 401\nresp$content$errorCode\n#&gt; [1] \"AUTH-001\"\nresp$content$developerMessage\n#&gt; [1] \"The provided access token has expired.\"",
+    "text": "1.2 Get an Access Token\nOne function call does it all:\n\nresp    &lt;- getToken(id = Sys.getenv(\"client_id\"), secret = Sys.getenv(\"client_secret\"))\nmyToken &lt;- resp$content$access_token\nmyToken\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6...Qssw5c\"\n\nThe full response also tells you what you’re working with:\n\nstr(resp$content)\n#&gt; List of 3\n#&gt;  $ access_token: chr \"eyJhbGciOiJSUzI1Ni...w5c\"\n#&gt;  $ token_type  : chr \"Bearer\"\n#&gt;  $ expires_in  : int 3600\n\n\n\n\n\n\n\nWarning\n\n\n\nTokens expire after 1 hour. A 401 Unauthorized mid-session almost always means your token timed out — just call getToken() again.\n\nresp$status_code\n#&gt; [1] 401\nresp$content$errorCode\n#&gt; [1] \"AUTH-001\"\nresp$content$developerMessage\n#&gt; [1] \"The provided access token has expired.\"",
     "crumbs": [
       "AutoDesk Platform Services",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Authentication</span>"
@@ -349,7 +316,7 @@
     "href": "data-management.html",
     "title": "2  Data Management",
     "section": "",
-    "text": "2.1 Create a Bucket\nThink of the Data Management API as AutoDesk’s cloud file system. Before you can translate a file, embed it in a viewer, or run Design Automation on it, the file needs to live up in APS storage. This chapter covers everything from creating a bucket to deleting one.\nThe storage model is simple: your app owns buckets, and buckets hold objects (your files).\nGet a token first - bucket creation needs bucket:create and bucket:read scopes at minimum:\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"bucket:create bucket:read data:write\"\n)\nmyToken &lt;- resp$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"\nBucket retention policy controls how long your objects stick around:\nresp &lt;- makeBucket(token = myToken, bucket = \"mybucket\", policy = \"persistent\")\nresp$content\n#&gt; $bucketKey\n#&gt; [1] \"mybucket\"\n#&gt;\n#&gt; $bucketOwner\n#&gt; [1] \"3MVG99OxTyEMCQ3gNp2PjtXbmT8T_MnfCTtpQkuiJNxGtXuoKP7\"\n#&gt;\n#&gt; $createdDate\n#&gt; [1] 1745356800000\n#&gt;\n#&gt; $policyKey\n#&gt; [1] \"persistent\"\nCheck on a bucket anytime with checkBucket():\nresp &lt;- checkBucket(token = myToken, bucket = \"mybucket\")\nresp$content$policyKey\n#&gt; [1] \"persistent\"",
+    "text": "2.1 Create a Bucket\nThink of the Data Management API as AutoDesk’s cloud file system. Before you can translate a file, embed it in a viewer, or run Design Automation on it, the file needs to live up in APS storage. This chapter covers everything from creating a bucket to deleting one.\nThe storage model is simple: your app owns buckets, and buckets hold objects (your files).\nGet a token first - bucket creation needs bucket:create and bucket:read scopes at minimum:\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"bucket:create bucket:read data:write\"\n)\nmyToken &lt;- resp$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6...cifQ...\"\nBucket retention policy controls how long your objects stick around:\nresp &lt;- makeBucket(token = myToken, bucket = \"mybucket\", policy = \"persistent\")\nresp$content\n#&gt; $bucketKey\n#&gt; [1] \"mybucket\"\n#&gt;\n#&gt; $bucketOwner\n#&gt; [1] \"3MVG99OxTyEMCQ3gNp2Pjt...uoKP7\"\n#&gt;\n#&gt; $createdDate\n#&gt; [1] 1745356800000\n#&gt;\n#&gt; $policyKey\n#&gt; [1] \"persistent\"\nCheck on a bucket anytime with checkBucket():\nresp &lt;- checkBucket(token = myToken, bucket = \"mybucket\")\nresp$content$policyKey\n#&gt; [1] \"persistent\"",
     "crumbs": [
       "AutoDesk Platform Services",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Management</span>"
@@ -371,7 +338,7 @@
     "href": "data-management.html#upload-a-file",
     "title": "2  Data Management",
     "section": "2.2 Upload a File",
-    "text": "2.2 Upload a File\nuploadFile() handles files up to 100 MB. It returns the object’s objectId, a URN that every other API will ask for, so save it somewhere handy:\n\nresp  &lt;- uploadFile(\n  file   = system.file(\"samples/aerial.dwg\", package = \"AutoDeskR\"),\n  token  = myToken,\n  bucket = \"mybucket\"\n)\nmyUrn &lt;- resp$content$objectId\nresp$content\n#&gt; $bucketKey\n#&gt; [1] \"mybucket\"\n#&gt;\n#&gt; $objectId\n#&gt; [1] \"urn:adsk.objects:os.object:mybucket/aerial.dwg\"\n#&gt;\n#&gt; $objectKey\n#&gt; [1] \"aerial.dwg\"\n#&gt;\n#&gt; $size\n#&gt; [1] 3145728\n#&gt;\n#&gt; $contentType\n#&gt; [1] \"application/octet-stream\"\n#&gt;\n#&gt; $location\n#&gt; [1] \"https://developer.api.autodesk.com/oss/v2/buckets/mybucket/objects/aerial.dwg\"\n\n\n2.2.1 Big Files (&gt; 100 MB)\nFor anything over 100 MB, use uploadFileSigned(). It routes the transfer through signed S3 URLs to sidestep timeout limits:\n\nresp  &lt;- uploadFileSigned(\n  file   = \"path/to/large_model.rvt\",\n  token  = myToken,\n  bucket = \"mybucket\"\n)\nmyUrn &lt;- resp$content$objectId\nresp$content$size\n#&gt; [1] 524288000",
+    "text": "2.2 Upload a File\nuploadFile() handles files up to 100 MB. It returns the object’s objectId, a URN that every other API will ask for, so save it somewhere handy:\n\nresp  &lt;- uploadFile(\n  file   = system.file(\"samples/aerial.dwg\", package = \"AutoDeskR\"),\n  token  = myToken,\n  bucket = \"mybucket\"\n)\nmyUrn &lt;- resp$content$objectId\nresp$content\n#&gt; $bucketKey\n#&gt; [1] \"mybucket\"\n#&gt;\n#&gt; $objectId\n#&gt; [1] \"urn:adsk.objects:os.object:mybucket/aerial.dwg\"\n#&gt;\n#&gt; $objectKey\n#&gt; [1] \"aerial.dwg\"\n#&gt;\n#&gt; $size\n#&gt; [1] 3145728\n#&gt;\n#&gt; $contentType\n#&gt; [1] \"application/octet-stream\"\n#&gt;\n#&gt; $location\n#&gt; [1] \".../buckets/mybucket/objects/aerial.dwg\"\n\n\n2.2.1 Big Files (&gt; 100 MB)\nFor anything over 100 MB, use uploadFileSigned(). It routes the transfer through signed S3 URLs to sidestep timeout limits:\n\nresp  &lt;- uploadFileSigned(\n  file   = \"path/to/large_model.rvt\",\n  token  = myToken,\n  bucket = \"mybucket\"\n)\nmyUrn &lt;- resp$content$objectId\nresp$content$size\n#&gt; [1] 524288000",
     "crumbs": [
       "AutoDesk Platform Services",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Management</span>"
@@ -404,7 +371,7 @@
     "href": "model-derivative.html",
     "title": "3  Model Derivative",
     "section": "",
-    "text": "3.1 Translate to OBJ\nA DWG file sitting in a bucket is just bytes. The Model Derivative API is what turns those bytes into something useful, OBJ and STL meshes you can analyse in R, SVF viewables you can embed in a browser, or structured metadata you can query with dplyr. This chapter covers the full translation workflow.\nThe pattern is always the same: submit a job, poll until it finishes, then pull the output.\nFirst get a token with data:read and data:write scopes. Note that only certain source formats can produce OBJ output (see the warning below) (DWG, IPT, IAM, IPN, F3D, FBX. See the APS supported formats list for the full matrix).\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"data:read data:write\"\n)\nmyToken &lt;- resp$content$access_token\nAPS requires the file’s URN to be Base-64 encoded before it’ll accept it — jsonlite::base64_enc() (Ooms 2014) handles that:\nmyEncodedUrn &lt;- jsonlite::base64_enc(myUrn)\nmyEncodedUrn\n#&gt; [1] \"dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw==\"\nKick off the translation:\nresp &lt;- translateObj(urn = myEncodedUrn, token = myToken)\nresp$content\n#&gt; $result\n#&gt; [1] \"created\"\n#&gt;\n#&gt; $urn\n#&gt; [1] \"dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bXlidWNrZXQvYWVyaWFsLmR3Zw==\"\n#&gt;\n#&gt; $acceptedJobs$output$formats[[1]]$type\n#&gt; [1] \"obj\"\nPoll checkFile() until status hits \"success\". The job can take anywhere from a few seconds to a few minutes depending on file complexity:\nresp &lt;- checkFile(urn = myEncodedUrn, token = myToken)\nresp$content\n#&gt; $status\n#&gt; [1] \"success\"\n#&gt;\n#&gt; $progress\n#&gt; [1] \"complete\"\n#&gt;\n#&gt; $region\n#&gt; [1] \"US\"\nRetrieve the output URN, then download:\nresp &lt;- getOutputUrn(urn = myUrn, token = myToken)\nmyOutputUrn        &lt;- resp$content$derivatives[[1]]$children[[1]]$urn\nmyEncodedOutputUrn &lt;- jsonlite::base64_enc(myOutputUrn)\n\nresp &lt;- downloadFile(\n  urn        = myEncodedUrn,\n  output_urn = myEncodedOutputUrn,\n  token      = myToken,\n  destfile   = \"aerial.obj\"\n)\nresp$status_code\n#&gt; [1] 200",
+    "text": "3.1 Translate to OBJ\nA DWG file sitting in a bucket is just bytes. The Model Derivative API is what turns those bytes into something useful, OBJ and STL meshes you can analyse in R, SVF viewables you can embed in a browser, or structured metadata you can query with dplyr. This chapter covers the full translation workflow.\nThe pattern is always the same: submit a job, poll until it finishes, then pull the output.\nFirst get a token with data:read and data:write scopes. Note that only certain source formats can produce OBJ output (see the warning below) (DWG, IPT, IAM, IPN, F3D, FBX. See the APS supported formats list for the full matrix).\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"data:read data:write\"\n)\nmyToken &lt;- resp$content$access_token\nAPS requires the file’s URN to be Base-64 encoded before it’ll accept it — jsonlite::base64_enc() (Ooms 2014) handles that:\nmyEncodedUrn &lt;- jsonlite::base64_enc(myUrn)\nmyEncodedUrn\n#&gt; [1] \"dXJuOmFkc2sub2JqZWN0cz...LmR3Zw==\"\nKick off the translation:\nresp &lt;- translateObj(urn = myEncodedUrn, token = myToken)\nresp$content\n#&gt; $result\n#&gt; [1] \"created\"\n#&gt;\n#&gt; $urn\n#&gt; [1] \"dXJuOmFkc2sub2JqZWN0cz...LmR3Zw==\"\n#&gt;\n#&gt; $acceptedJobs$output$formats[[1]]$type\n#&gt; [1] \"obj\"\nPoll checkFile() until status hits \"success\". The job can take anywhere from a few seconds to a few minutes depending on file complexity:\nresp &lt;- checkFile(urn = myEncodedUrn, token = myToken)\nresp$content\n#&gt; $status\n#&gt; [1] \"success\"\n#&gt;\n#&gt; $progress\n#&gt; [1] \"complete\"\n#&gt;\n#&gt; $region\n#&gt; [1] \"US\"\nRetrieve the output URN, then download:\nresp &lt;- getOutputUrn(urn = myUrn, token = myToken)\nmyOutputUrn        &lt;- resp$content$derivatives[[1]]$children[[1]]$urn\nmyEncodedOutputUrn &lt;- jsonlite::base64_enc(myOutputUrn)\n\nresp &lt;- downloadFile(\n  urn        = myEncodedUrn,\n  output_urn = myEncodedOutputUrn,\n  token      = myToken,\n  destfile   = \"aerial.obj\"\n)\nresp$status_code\n#&gt; [1] 200",
     "crumbs": [
       "AutoDesk Platform Services",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Model Derivative</span>"
@@ -448,7 +415,7 @@
     "href": "design-automation.html",
     "title": "4  Design Automation",
     "section": "",
-    "text": "4.1 Convert a DWG to PDF\nNeed to convert a DWG to PDF without spinning up an AutoCAD licence? Design Automation is AutoDesk’s answer to cloud-based CAD scripting. You submit a work item, AutoDesk runs it on their infrastructure, and the output lands in a destination URL you specify.\nThis chapter focuses on the most common use case: DWG → PDF.\nmakePdf() submits the conversion job. The token needs the code:all scope. This is specific to Design Automation and different from the data scopes used elsewhere.\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"code:all\"\n)\nmyToken &lt;- resp$content$access_token\nmySource      &lt;- \"http://download.autodesk.com/us/samplefiles/acad/visualization_-_aerial.dwg\"\nmyDestination &lt;- \"https://drive.google.com/folderview?id=0BygncDVHf60mTDZVNDltLThLNmM&usp=sharing\"\n\nresp         &lt;- makePdf(source = mySource, destination = myDestination, token = myToken)\nmyWorkItemId &lt;- resp$content$id\nresp$content\n#&gt; $id\n#&gt; [1] \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"\n#&gt;\n#&gt; $status\n#&gt; [1] \"pending\"\n#&gt;\n#&gt; $stats$timeQueued\n#&gt; [1] \"2026-04-23T10:15:30.412Z\"",
+    "text": "4.1 Convert a DWG to PDF\nNeed to convert a DWG to PDF without spinning up an AutoCAD licence? Design Automation is AutoDesk’s answer to cloud-based CAD scripting. You submit a work item, AutoDesk runs it on their infrastructure, and the output lands in a destination URL you specify.\nThis chapter focuses on the most common use case: DWG → PDF.\nmakePdf() submits the conversion job. The token needs the code:all scope. This is specific to Design Automation and different from the data scopes used elsewhere.\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"code:all\"\n)\nmyToken &lt;- resp$content$access_token\nmySource      &lt;- \"http://download.autodesk.com/us/samplefiles/acad/\nvisualization_-_aerial.dwg\"\nmyDestination &lt;- \"https://drive.google.com/folderview?\nid=0BygncDVHf60mTDZVNDltLThLNmM&usp=sharing\"\n\nresp         &lt;- makePdf(source = mySource, destination = myDestination, token = myToken)\nmyWorkItemId &lt;- resp$content$id\nresp$content\n#&gt; $id\n#&gt; [1] \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"\n#&gt;\n#&gt; $status\n#&gt; [1] \"pending\"\n#&gt;\n#&gt; $stats$timeQueued\n#&gt; [1] \"2026-04-23T10:15:30.412Z\"",
     "crumbs": [
       "AutoDesk Platform Services",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Design Automation</span>"
@@ -767,7 +734,7 @@
     "href": "mesh-metrics.html#visualising-the-metrics",
     "title": "8  Mesh Metrics",
     "section": "8.7 Visualising the Metrics",
-    "text": "8.7 Visualising the Metrics\nA quick bar chart makes the bounding box dimensions easy to compare at a glance:\n\n\nWarning: package 'ggplot2' was built under R version 4.4.3\n\n\n\nggplot(bbox_df, aes(x = dimension, y = value, fill = dimension)) +\n  geom_col(show.legend = FALSE) +\n  geom_text(aes(label = round(value, 1)), vjust = -0.4, size = 3.5) +\n  scale_fill_manual(values = c(\"#367ABF\", \"#4CAF50\", \"#F4A261\")) +\n  labs(title = \"Bounding Box Dimensions\",\n       subtitle = \"aerial.dwg — translated mesh\",\n       x = NULL, y = \"Drawing units\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\nThese metrics can be passed to a gt table for a polished handover report. See Automated Drawing Reports for the formatting details.\n\n\n\n\nRoussel, Jean-Romain, David C. Sterratt, et al. 2024. Geometry: Mesh Generation and Surface Tessellation. https://davidcsterratt.github.io/geometry/.\n\n\nSchlager, Stefan. 2024. Rvcg: Manipulations of Triangular Meshes Based on the ’VCGLIB’ API. https://CRAN.R-project.org/package=Rvcg.",
+    "text": "8.7 Visualising the Metrics\nA quick bar chart makes the bounding box dimensions easy to compare at a glance:\n\nggplot(bbox_df, aes(x = dimension, y = value, fill = dimension)) +\n  geom_col(show.legend = FALSE) +\n  geom_text(aes(label = round(value, 1)), vjust = -0.4, size = 3.5) +\n  scale_fill_manual(values = c(\"#367ABF\", \"#4CAF50\", \"#F4A261\")) +\n  labs(title = \"Bounding Box Dimensions\",\n       subtitle = \"aerial.dwg — translated mesh\",\n       x = NULL, y = \"Drawing units\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\nThese metrics can be passed to a gt table for a polished handover report. See Automated Drawing Reports for the formatting details.\n\n\n\n\nRoussel, Jean-Romain, David C. Sterratt, et al. 2024. Geometry: Mesh Generation and Surface Tessellation. https://davidcsterratt.github.io/geometry/.\n\n\nSchlager, Stefan. 2024. Rvcg: Manipulations of Triangular Meshes Based on the ’VCGLIB’ API. https://CRAN.R-project.org/package=Rvcg.",
     "crumbs": [
       "3D Geometry & Meshes",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Mesh Metrics</span>"
@@ -910,7 +877,7 @@
     "href": "point-cloud-analysis.html#height-distribution",
     "title": "10  Point Cloud Analysis",
     "section": "10.4 Height Distribution",
-    "text": "10.4 Height Distribution\nFigure 10.1 shows the distribution of normalised point heights. The bulk of returns between 0–2 m are ground-level; the secondary peak around 8–12 m corresponds to roof surfaces.\n\n\nWarning: package 'ggplot2' was built under R version 4.4.3\n\n\n\nggplot(data.frame(z = z_sample), aes(x = z)) +\n  geom_histogram(binwidth = 0.25, fill = \"#367ABF\", colour = \"white\") +\n  labs(title = \"Point Cloud Height Distribution\",\n       subtitle = \"Normalised above ground level\",\n       x = \"Height (m)\", y = \"Point count\") +\n  theme_minimal()\n\n\n\n\n\n\n\nFigure 10.1: Height distribution of normalised point cloud returns (above ground level).",
+    "text": "10.4 Height Distribution\nFigure 10.1 shows the distribution of normalised point heights. The bulk of returns between 0–2 m are ground-level; the secondary peak around 8–12 m corresponds to roof surfaces.\n\nggplot(data.frame(z = z_sample), aes(x = z)) +\n  geom_histogram(binwidth = 0.25, fill = \"#367ABF\", colour = \"white\") +\n  labs(title = \"Point Cloud Height Distribution\",\n       subtitle = \"Normalised above ground level\",\n       x = \"Height (m)\", y = \"Point count\") +\n  theme_minimal()\n\n\n\n\n\n\n\nFigure 10.1: Height distribution of normalised point cloud returns (above ground level).",
     "crumbs": [
       "3D Geometry & Meshes",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Point Cloud Analysis</span>"
@@ -1020,7 +987,7 @@
     "href": "mesh-comparison.html#deviation-histogram",
     "title": "11  Mesh Comparison",
     "section": "11.6 Deviation Histogram",
-    "text": "11.6 Deviation Histogram\nA histogram puts the distribution in context and makes it easy to spot whether deviations are concentrated in one area or spread uniformly across the model:\n\n\nWarning: package 'ggplot2' was built under R version 4.4.3\n\n\n\nggplot(data.frame(deviation_mm = d * 1000), aes(x = deviation_mm)) +\n  geom_histogram(binwidth = 5, fill = \"#367ABF\", colour = \"white\") +\n  geom_vline(xintercept = 50, linetype = \"dashed\", colour = \"#d6604d\", linewidth = 0.8) +\n  annotate(\"text\", x = 55, y = Inf, label = \"50 mm tolerance\",\n           hjust = 0, vjust = 1.5, colour = \"#d6604d\", size = 3.5) +\n  coord_cartesian(xlim = c(0, 400)) +\n  labs(title = \"As-Designed vs. As-Built Deviation\",\n       subtitle = \"Per-vertex surface distance\",\n       x = \"Deviation (mm)\",\n       y = \"Vertex count\") +\n  theme_minimal()",
+    "text": "11.6 Deviation Histogram\nA histogram puts the distribution in context and makes it easy to spot whether deviations are concentrated in one area or spread uniformly across the model:\n\nggplot(data.frame(deviation_mm = d * 1000), aes(x = deviation_mm)) +\n  geom_histogram(binwidth = 5, fill = \"#367ABF\", colour = \"white\") +\n  geom_vline(xintercept = 50, linetype = \"dashed\", colour = \"#d6604d\", linewidth = 0.8) +\n  annotate(\"text\", x = 55, y = Inf, label = \"50 mm tolerance\",\n           hjust = 0, vjust = 1.5, colour = \"#d6604d\", size = 3.5) +\n  coord_cartesian(xlim = c(0, 400)) +\n  labs(title = \"As-Designed vs. As-Built Deviation\",\n       subtitle = \"Per-vertex surface distance\",\n       x = \"Deviation (mm)\",\n       y = \"Vertex count\") +\n  theme_minimal()",
     "crumbs": [
       "3D Geometry & Meshes",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Mesh Comparison</span>"
@@ -1108,7 +1075,7 @@
     "href": "layer-analysis.html#area-by-layer-bar-chart",
     "title": "12  Layer Structure Analysis",
     "section": "12.7 Area by Layer — Bar Chart",
-    "text": "12.7 Area by Layer — Bar Chart\n\n\nWarning: package 'ggplot2' was built under R version 4.4.3\n\n\n\nggplot(layer_summary,\n       aes(x = reorder(layer, total_area), y = total_area / 1000)) +\n  geom_col(fill = \"#367ABF\") +\n  geom_text(aes(label = round(total_area / 1000, 1)),\n            hjust = -0.1, size = 3.2) +\n  coord_flip() +\n  labs(title = \"Total Bounding-Box Area by Layer\",\n       subtitle = \"aerial.dwg\",\n       x = NULL, y = \"Area (thousands of drawing units²)\") +\n  theme_minimal()",
+    "text": "12.7 Area by Layer — Bar Chart\n\nggplot(layer_summary,\n       aes(x = reorder(layer, total_area), y = total_area / 1000)) +\n  geom_col(fill = \"#367ABF\") +\n  geom_text(aes(label = round(total_area / 1000, 1)),\n            hjust = -0.1, size = 3.2) +\n  coord_flip() +\n  labs(title = \"Total Bounding-Box Area by Layer\",\n       subtitle = \"aerial.dwg\",\n       x = NULL, y = \"Area (thousands of drawing units²)\") +\n  theme_minimal()",
     "crumbs": [
       "DWG & DXF Analytics",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Layer Structure Analysis</span>"
@@ -1141,7 +1108,7 @@
     "href": "attribute-extraction.html#block-attributes",
     "title": "13  Attribute Extraction",
     "section": "13.2 Block Attributes",
-    "text": "13.2 Block Attributes\nBlock inserts carry named attributes under obj$properties$Attributes:\n\nblock_df &lt;- lapply(collection, function(obj) {\n  if (is.null(obj$properties$Attributes)) return(NULL)\n  attrs &lt;- obj$properties$Attributes\n  data.frame(objectid   = obj$objectid,\n             block_name = obj$name,\n             attr_name  = names(attrs),\n             attr_value = unlist(attrs),\n             stringsAsFactors = FALSE)\n}) |&gt; do.call(what = rbind)\n\nhead(block_df)\n#&gt;   objectid  block_name    attr_name  attr_value\n#&gt; 1       88 TITLE-BLOCK   SHEET_NO      A-001\n#&gt; 2       88 TITLE-BLOCK   REVISION      Rev 3\n#&gt; 3       89  COLUMN-TAG   MARK          C1\n#&gt; 4       89  COLUMN-TAG   GRID          A/1",
+    "text": "13.2 Block Attributes\nBlock inserts carry named attributes, found under the obj$properties$Attributes element:\n\nblock_df &lt;- lapply(collection, function(obj) {\n  if (is.null(obj$properties$Attributes)) return(NULL)\n  attrs &lt;- obj$properties$Attributes\n  data.frame(objectid   = obj$objectid,\n             block_name = obj$name,\n             attr_name  = names(attrs),\n             attr_value = unlist(attrs),\n             stringsAsFactors = FALSE)\n}) |&gt; do.call(what = rbind)\n\nhead(block_df)\n#&gt;   objectid  block_name    attr_name  attr_value\n#&gt; 1       88 TITLE-BLOCK   SHEET_NO      A-001\n#&gt; 2       88 TITLE-BLOCK   REVISION      Rev 3\n#&gt; 3       89  COLUMN-TAG   MARK          C1\n#&gt; 4       89  COLUMN-TAG   GRID          A/1",
     "crumbs": [
       "DWG & DXF Analytics",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Attribute Extraction</span>"
@@ -1185,7 +1152,7 @@
     "href": "attribute-extraction.html#visualising-custom-attributes",
     "title": "13  Attribute Extraction",
     "section": "13.6 Visualising Custom Attributes",
-    "text": "13.6 Visualising Custom Attributes\nA stacked bar chart of floor area by zone and construction type:\n\n\nWarning: package 'ggplot2' was built under R version 4.4.3\n\n\n\nggplot(zone_summary,\n       aes(x = Zone, y = total_floor_area, fill = Construction.Type)) +\n  geom_col(position = \"stack\") +\n  geom_text(aes(label = paste0(round(total_floor_area, 0), \" m²\")),\n            position = position_stack(vjust = 0.5),\n            colour = \"white\", size = 3.5) +\n  scale_fill_manual(values = c(\"#367ABF\", \"#4CAF50\", \"#F4A261\")) +\n  labs(title = \"Floor Area by Zone and Construction Type\",\n       subtitle = \"Extracted from block attributes — aerial.dwg\",\n       x = NULL, y = \"Floor area (m²)\", fill = \"Construction type\") +\n  theme_minimal()",
+    "text": "13.6 Visualising Custom Attributes\nA stacked bar chart of floor area by zone and construction type:\n\nggplot(zone_summary,\n       aes(x = Zone, y = total_floor_area, fill = Construction.Type)) +\n  geom_col(position = \"stack\") +\n  geom_text(aes(label = paste0(round(total_floor_area, 0), \" m²\")),\n            position = position_stack(vjust = 0.5),\n            colour = \"white\", size = 3.5) +\n  scale_fill_manual(values = c(\"#367ABF\", \"#4CAF50\", \"#F4A261\")) +\n  labs(title = \"Floor Area by Zone and Construction Type\",\n       subtitle = \"Extracted from block attributes — aerial.dwg\",\n       x = NULL, y = \"Floor area (m²)\", fill = \"Construction type\") +\n  theme_minimal()",
     "crumbs": [
       "DWG & DXF Analytics",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Attribute Extraction</span>"
@@ -1251,7 +1218,7 @@
     "href": "cross-drawing-comparison.html#layer-presence-heatmap",
     "title": "14  Cross-Drawing Comparison",
     "section": "14.5 Layer Presence Heatmap",
-    "text": "14.5 Layer Presence Heatmap\nFigure 14.1 shows presence/absence across all drawings at a glance — blue tiles are present, grey tiles are absent.\n\n\nWarning: package 'ggplot2' was built under R version 4.4.3\n\n\n\nggplot(heat_df, aes(x = drawing, y = layer, fill = present)) +\n  geom_tile(colour = \"white\", linewidth = 0.5) +\n  scale_fill_manual(values  = c(\"FALSE\" = \"#f0f0f0\", \"TRUE\" = \"#367ABF\"),\n                    labels  = c(\"FALSE\" = \"Absent\", \"TRUE\" = \"Present\")) +\n  labs(title = \"Layer Presence Across Drawings\",\n       x = NULL, y = NULL, fill = NULL) +\n  theme_minimal() +\n  theme(axis.text.x = element_text(angle = 30, hjust = 1),\n        legend.position = \"bottom\")\n\n\n\n\n\n\n\nFigure 14.1: Layer presence matrix across drawing revisions. Blue = present, grey = absent.",
+    "text": "14.5 Layer Presence Heatmap\nFigure 14.1 shows presence/absence across all drawings at a glance — blue tiles are present, grey tiles are absent.\n\nggplot(heat_df, aes(x = drawing, y = layer, fill = present)) +\n  geom_tile(colour = \"white\", linewidth = 0.5) +\n  scale_fill_manual(values  = c(\"FALSE\" = \"#f0f0f0\", \"TRUE\" = \"#367ABF\"),\n                    labels  = c(\"FALSE\" = \"Absent\", \"TRUE\" = \"Present\")) +\n  labs(title = \"Layer Presence Across Drawings\",\n       x = NULL, y = NULL, fill = NULL) +\n  theme_minimal() +\n  theme(axis.text.x = element_text(angle = 30, hjust = 1),\n        legend.position = \"bottom\")\n\n\n\n\n\n\n\nFigure 14.1: Layer presence matrix across drawing revisions. Blue = present, grey = absent.",
     "crumbs": [
       "DWG & DXF Analytics",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>Cross-Drawing Comparison</span>"
@@ -1427,7 +1394,7 @@
     "href": "sensor-streams.html#plotting-readings",
     "title": "17  Linking Sensor Streams",
     "section": "17.3 Plotting Readings",
-    "text": "17.3 Plotting Readings\n\n\nWarning: package 'ggplot2' was built under R version 4.4.3\n\n\n\nggplot(readings_df, aes(x = timestamp, y = value)) +\n  geom_line(colour = \"#367ABF\", linewidth = 0.8) +\n  geom_ribbon(aes(ymin = value - 0.5, ymax = value + 0.5),\n              fill = \"#367ABF\", alpha = 0.15) +\n  labs(title    = \"HVAC Temperature — Level 2\",\n       subtitle = \"Last 24 hours\",\n       x = NULL, y = \"Temperature (°C)\") +\n  theme_minimal()",
+    "text": "17.3 Plotting Readings\n\nggplot(readings_df, aes(x = timestamp, y = value)) +\n  geom_line(colour = \"#367ABF\", linewidth = 0.8) +\n  geom_ribbon(aes(ymin = value - 0.5, ymax = value + 0.5),\n              fill = \"#367ABF\", alpha = 0.15) +\n  labs(title    = \"HVAC Temperature — Level 2\",\n       subtitle = \"Last 24 hours\",\n       x = NULL, y = \"Temperature (°C)\") +\n  theme_minimal()",
     "crumbs": [
       "Digital Twins",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Linking Sensor Streams</span>"
@@ -1603,7 +1570,7 @@
     "href": "case-study.html",
     "title": "20  Case Study: DWG to Shiny Dashboard",
     "section": "",
-    "text": "20.1 Step 1: Authenticate with Combined Scopes\nThis chapter ties every API together in a single narrative. Starting from a raw DWG file on disk, we will authenticate, upload, translate, extract metadata, visualise layer data with ggplot2, and embed the live 3D model in a Shiny dashboard — all from R.\nThe DWG file used throughout is aerial.dwg, the sample file bundled with AutoDeskR:\nEvery API used in this case study requires a different scope. Request them all upfront in a single token:\nlibrary(AutoDeskR)\nlibrary(ggplot2)\nlibrary(shiny)\n\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"data:read data:write bucket:create bucket:read code:all\"\n)\nmyToken &lt;- resp$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c1BKNVVpOWNaVjlIR2FhX1pIeDhEd3VYSHcifQ...\"",
+    "text": "20.1 Step 1: Authenticate with Combined Scopes\nThis chapter ties every API together in a single narrative. Starting from a raw DWG file on disk, we will authenticate, upload, translate, extract metadata, visualise layer data with ggplot2, and embed the live 3D model in a Shiny dashboard — all from R.\nThe DWG file used throughout is aerial.dwg, the sample file bundled with AutoDeskR:\nEvery API used in this case study requires a different scope. Request them all upfront in a single token:\nlibrary(AutoDeskR)\nlibrary(ggplot2)\nlibrary(shiny)\n\nresp &lt;- getToken(\n  id     = Sys.getenv(\"client_id\"),\n  secret = Sys.getenv(\"client_secret\"),\n  scope  = \"data:read data:write bucket:create bucket:read code:all\"\n)\nmyToken &lt;- resp$content$access_token\n#&gt; [1] \"eyJhbGciOiJSUzI1NiIsImtpZCI6...cifQ...\"",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>Case Study: DWG to Shiny Dashboard</span>"
@@ -1647,7 +1614,7 @@
     "href": "case-study.html#step-5-visualise-with-ggplot2",
     "title": "20  Case Study: DWG to Shiny Dashboard",
     "section": "20.5 Step 5: Visualise with ggplot2",
-    "text": "20.5 Step 5: Visualise with ggplot2\n\n\nWarning: package 'ggplot2' was built under R version 4.4.3\n\n\n\nggplot(layer_totals, aes(x = reorder(layer, area), y = area / 1000)) +\n  geom_col(fill = \"#6aaa2a\") +\n  coord_flip() +\n  labs(\n    title    = \"Bounding-Box Area by DWG Layer\",\n    subtitle = \"aerial.dwg — AutoDeskR sample file\",\n    x        = \"Layer\",\n    y        = expression(\"Area (×10\"^3 * \" drawing units²)\")\n  ) +\n  theme_minimal(base_size = 13)",
+    "text": "20.5 Step 5: Visualise with ggplot2\n\nggplot(layer_totals, aes(x = reorder(layer, area), y = area / 1000)) +\n  geom_col(fill = \"#6aaa2a\") +\n  coord_flip() +\n  labs(\n    title    = \"Bounding-Box Area by DWG Layer\",\n    subtitle = \"aerial.dwg — AutoDeskR sample file\",\n    x        = \"Layer\",\n    y        = expression(\"Area (×10\"^3 * \" drawing units²)\")\n  ) +\n  theme_minimal(base_size = 13)",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>Case Study: DWG to Shiny Dashboard</span>"
@@ -1691,7 +1658,7 @@
     "href": "reference.html#authentication",
     "title": "21  Function Reference",
     "section": "",
-    "text": "Function\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\ngetToken(id, secret, scope)\n—\nid, secret, scope (space-separated string)\n$content$access_token, $content$expires_in",
+    "text": "Function\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\ngetToken\n—\nid, secret, scope (space-separated string)\n$content$access_token, $content$expires_in",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1702,7 +1669,7 @@
     "href": "reference.html#data-management",
     "title": "21  Function Reference",
     "section": "21.2 Data Management",
-    "text": "21.2 Data Management\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\nmakeBucket(token, bucket, policy)\nbucket:create\nbucket (globally unique key), policy (\"transient\" / \"temporary\" / \"persistent\")\n$content$bucketKey, $content$policyKey\n\n\ncheckBucket(token, bucket)\nbucket:read\nbucket\n$content$bucketKey, $content$policyKey\n\n\ndeleteBucket(token, bucket)\nbucket:delete\nbucket (must be empty)\n$status_code 200\n\n\nuploadFile(file, token, bucket)\ndata:write\nfile (local path, ≤ 100 MB), bucket\n$content$objectId (URN), $content$size\n\n\nuploadFileSigned(file, token, bucket)\ndata:write\nfile (local path, &gt; 100 MB), bucket\n$content$objectId (URN)\n\n\nlistBuckets(token, limit, startAt, region)\nbucket:read\nlimit (default 10), startAt (pagination key), region (\"US\" / \"EMEA\")\n$content$items data frame\n\n\nlistObjects(token, bucket, limit)\ndata:read\nbucket, limit\n$content$items data frame\n\n\ndeleteObject(token, bucket, object)\ndata:write\nbucket, object (filename)\n$status_code 200\n\n\ndownloadFile(urn, output_urn, token, destfile)\ndata:read\nurn (encoded source), output_urn (encoded output), destfile\n$status_code 200",
+    "text": "21.2 Data Management\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\nmakeBucket\nbucket:create\nbucket (globally unique key), policy (\"transient\" / \"temporary\" / \"persistent\")\n$content$bucketKey, $content$policyKey\n\n\ncheckBucket\nbucket:read\nbucket\n$content$bucketKey, $content$policyKey\n\n\ndeleteBucket\nbucket:delete\nbucket (must be empty)\n$status_code 200\n\n\nuploadFile\ndata:write\nfile (local path, ≤ 100 MB), bucket\n$content$objectId (URN), $content$size\n\n\nuploadFileSigned\ndata:write\nfile (local path, &gt; 100 MB), bucket\n$content$objectId (URN)\n\n\nlistBuckets\nbucket:read\nlimit (default 10), startAt (pagination key), region (\"US\" / \"EMEA\")\n$content$items data frame\n\n\nlistObjects\ndata:read\nbucket, limit\n$content$items data frame\n\n\ndeleteObject\ndata:write\nbucket, object (filename)\n$status_code 200\n\n\ndownloadFile\ndata:read\nurn (encoded source), output_urn (encoded output), destfile\n$status_code 200",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1713,7 +1680,7 @@
     "href": "reference.html#model-derivative",
     "title": "21  Function Reference",
     "section": "21.3 Model Derivative",
-    "text": "21.3 Model Derivative\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\ntranslateObj(urn, token)\ndata:read data:write\nurn (Base-64 encoded)\n$content$result (\"created\"), $content$urn\n\n\ntranslateStl(urn, token)\ndata:read data:write\nurn (Base-64 encoded)\n$content$result, $content$urn\n\n\ntranslateSvf(urn, token)\ndata:read data:write\nurn (Base-64 encoded)\n$content$result, $content$urn\n\n\ncheckFile(urn, token)\ndata:read\nurn (Base-64 encoded)\n$content$status (\"pending\" / \"inprogress\" / \"success\"), $content$progress\n\n\ngetOutputUrn(urn, token)\ndata:read\nurn (raw, not encoded)\n$content$derivatives[[1]]$children[[1]]$urn\n\n\ngetMetadata(urn, token)\ndata:read\nurn (Base-64 encoded)\n$content$data$metadata[[1]]$guid, $content$data$metadata[[1]]$name\n\n\ngetObjectTree(guid, urn, token)\ndata:read\nguid, urn (Base-64 encoded)\n$content$data$objects (nested list)\n\n\ngetData(guid, urn, token)\ndata:read\nguid, urn (Base-64 encoded)\n$content$data$collection (list of objects with properties)",
+    "text": "21.3 Model Derivative\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\ntranslateObj\ndata:read data:write\nurn (Base-64 encoded)\n$content$result (\"created\"), $content$urn\n\n\ntranslateStl\ndata:read data:write\nurn (Base-64 encoded)\n$content$result, $content$urn\n\n\ntranslateSvf\ndata:read data:write\nurn (Base-64 encoded)\n$content$result, $content$urn\n\n\ncheckFile\ndata:read\nurn (Base-64 encoded)\n$content$status (\"pending\" / \"inprogress\" / \"success\"), $content$progress\n\n\ngetOutputUrn\ndata:read\nurn (raw, not encoded)\n$content$derivatives [[1]]$children[[1]]$urn\n\n\ngetMetadata\ndata:read\nurn (Base-64 encoded)\n$content$data$metadata [[1]]$guid, [[1]]$name\n\n\ngetObjectTree\ndata:read\nguid, urn (Base-64 encoded)\n$content$data$objects (nested list)\n\n\ngetData\ndata:read\nguid, urn (Base-64 encoded)\n$content$data$collection (list of objects with properties)",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1724,7 +1691,7 @@
     "href": "reference.html#design-automation",
     "title": "21  Function Reference",
     "section": "21.4 Design Automation",
-    "text": "21.4 Design Automation\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\nmakePdf(source, destination, token)\ncode:all\nsource (public URL to DWG), destination (public URL for output)\n$content$id (WorkItem ID), $content$status\n\n\ncheckPdf(id, token)\ncode:all\nid (WorkItem ID from makePdf())\n$content$status (\"pending\" / \"inprogress\" / \"success\"), $content$stats",
+    "text": "21.4 Design Automation\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\nmakePdf\ncode:all\nsource (public URL to DWG), destination (public URL for output)\n$content$id (WorkItem ID), $content$status\n\n\ncheckPdf\ncode:all\nid (WorkItem ID from makePdf())\n$content$status (\"pending\" / \"inprogress\" / \"success\"), $content$stats",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1735,7 +1702,7 @@
     "href": "reference.html#reality-capture",
     "title": "21  Function Reference",
     "section": "21.5 Reality Capture",
-    "text": "21.5 Reality Capture\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\ncreatePhotoscene(name, format, token)\ndata:read data:write\nname (scene label), format (\"rcm\" / \"rcs\" / \"obj\" / \"ortho\" / \"report\")\n$content$photoscene$photosceneid\n\n\nuploadImages(photoscene_id, files, token)\ndata:read data:write\nphotoscene_id, files (character vector of local JPEG/PNG paths)\n$content$Files$file (list of uploaded file records)\n\n\nprocessPhotoscene(photoscene_id, token)\ndata:read data:write\nphotoscene_id\n$content$photoscene$progress (\"0\" on submission)\n\n\ncheckPhotoscene(photoscene_id, token)\ndata:read data:write\nphotoscene_id\n$content$photoscene$progress (string \"0\"–\"100\"), $content$photoscene$progressmsg\n\n\nwaitForPhotoscene(photoscene_id, token, interval, timeout, verbose)\ndata:read data:write\ninterval (seconds between polls, default 30), timeout (max wait in seconds, default 1800)\nFinal checkPhotoscene response when progress == \"100\"",
+    "text": "21.5 Reality Capture\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\ncreatePhotoscene\ndata:read data:write\nname (scene label), format (\"rcm\" / \"rcs\" / \"obj\" / \"ortho\" / \"report\")\n$content$photoscene $photosceneid\n\n\nuploadImages\ndata:read data:write\nphotoscene_id, files (character vector of local JPEG/PNG paths)\n$content$Files$file (list of uploaded file records)\n\n\nprocessPhotoscene\ndata:read data:write\nphotoscene_id\n$content$photoscene $progress (\"0\" on submission)\n\n\ncheckPhotoscene\ndata:read data:write\nphotoscene_id\n$content$photoscene $progress (\"0\"–\"100\"), $progressmsg\n\n\nwaitForPhotoscene\ndata:read data:write\ninterval (seconds between polls, default 30), timeout (max wait in seconds, default 1800)\nFinal checkPhotoscene response when progress == \"100\"",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1746,7 +1713,7 @@
     "href": "reference.html#viewer",
     "title": "21  Function Reference",
     "section": "21.6 Viewer",
-    "text": "21.6 Viewer\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\nviewer3D(urn, token, viewerType)\ndata:read\nurn (Base-64 encoded), viewerType (\"header\" / \"headless\" / \"vr\")\nOpens viewer in browser / Shiny\n\n\nviewerUI(id, urn, token, viewerType)\ndata:read\nid (Shiny module ID), urn, token, viewerType\nShiny UI element for use in fluidPage()",
+    "text": "21.6 Viewer\n\n\n\n\n\n\n\n\n\nFunction\nRequired Scopes\nKey Parameters\nReturns\n\n\n\n\nviewer3D\ndata:read\nurn (Base-64 encoded), viewerType (\"header\" / \"headless\" / \"vr\")\nOpens viewer in browser / Shiny\n\n\nviewerUI\ndata:read\nid (Shiny module ID), urn, token, viewerType\nShiny UI element for use in fluidPage()",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1779,7 +1746,7 @@
     "href": "reference.html#httr2",
     "title": "21  Function Reference",
     "section": "22.1 httr2",
-    "text": "22.1 httr2\nUsed for direct Tandem REST API calls in the Digital Twins chapters, and as the underlying HTTP engine for AutoDeskR.\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nrequest(url)\nCreate a new HTTP request\nTandem Overview, Sensor Streams\n\n\nreq_auth_bearer_token(req, token)\nAdd a Bearer token header\nTandem Overview\n\n\nreq_url_query(req, ...)\nAppend query parameters\nSensor Streams\n\n\nreq_perform(req)\nExecute the request\nTandem Overview\n\n\nreq_verbose()\nEnable request/response tracing\nTroubleshooting\n\n\nresp_body_json(resp)\nParse response body as JSON\nSensor Streams",
+    "text": "22.1 httr2\nUsed for direct Tandem REST API calls in the Digital Twins chapters, and as the underlying HTTP engine for AutoDeskR.\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nrequest(url)\nCreate a new HTTP request\nTandem Overview, Sensor Streams\n\n\nreq_auth_bearer_token(req, token)\nAdd a Bearer token header\nTandem Overview\n\n\nreq_url_query(req, ...)\nAppend query parameters\nSensor Streams\n\n\nreq_perform(req)\nExecute the request\nTandem Overview\n\n\nreq_verbose()\nEnable request/response tracing\nTroubleshooting\n\n\nresp_body_json(resp)\nParse response body as JSON\nSensor Streams",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1790,7 +1757,7 @@
     "href": "reference.html#jsonlite",
     "title": "21  Function Reference",
     "section": "22.2 jsonlite",
-    "text": "22.2 jsonlite\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nbase64_enc(x)\nBase-64 encode a string (required for APS URNs)\nModel Derivative, Case Study\n\n\nfromJSON(txt)\nParse a JSON string into an R list\nGeneral",
+    "text": "22.2 jsonlite\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nbase64_enc(x)\nBase-64 encode a string (required for APS URNs)\nModel Derivative, Case Study\n\n\nfromJSON(txt)\nParse a JSON string into an R list\nGeneral",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1801,7 +1768,7 @@
     "href": "reference.html#rvcg",
     "title": "21  Function Reference",
     "section": "22.3 Rvcg",
-    "text": "22.3 Rvcg\nMesh processing — surface area, volume, smoothing, and surface distance. (Schlager 2024)\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nvcgImport(file)\nImport OBJ, STL, or PLY mesh as tmesh3d\nReading Meshes\n\n\nvcgArea(mesh)\nCompute total surface area\nMesh Metrics\n\n\nvcgVolume(mesh)\nCompute volume (watertight meshes only)\nMesh Metrics\n\n\nvcgSmooth(mesh, iteration, lambda)\nLaplacian smoothing\nMesh Comparison\n\n\nvcgDist(mesh1, mesh2)\nPer-vertex surface distance\nMesh Comparison",
+    "text": "22.3 Rvcg\nMesh processing — surface area, volume, smoothing, and surface distance. (Schlager 2024)\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nvcgImport(file)\nImport OBJ, STL, or PLY mesh as tmesh3d\nReading Meshes\n\n\nvcgArea(mesh)\nCompute total surface area\nMesh Metrics\n\n\nvcgVolume(mesh)\nCompute volume (watertight meshes only)\nMesh Metrics\n\n\nvcgSmooth(mesh, iteration, lambda)\nLaplacian smoothing\nMesh Comparison\n\n\nvcgDist(mesh1, mesh2)\nPer-vertex surface distance\nMesh Comparison",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1812,7 +1779,7 @@
     "href": "reference.html#rgl",
     "title": "21  Function Reference",
     "section": "22.4 rgl",
-    "text": "22.4 rgl\nInteractive 3D visualisation. (Adler et al. 2024)\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nopen3d()\nOpen a new 3D graphics device\nMesh Visualisation\n\n\nshade3d(mesh, col)\nRender a mesh with per-vertex colours\nMesh Visualisation, Mesh Comparison\n\n\nrglwidget()\nEmbed interactive 3D widget in HTML\nMesh Visualisation\n\n\nreadOBJ(file)\nAlternative OBJ reader\nTroubleshooting\n\n\noptions(rgl.useNULL = TRUE)\nSuppress OpenGL window (headless/server use)\nTroubleshooting",
+    "text": "22.4 rgl\nInteractive 3D visualisation. (Adler et al. 2024)\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nopen3d()\nOpen a new 3D graphics device\nMesh Visualisation\n\n\nshade3d(mesh, col)\nRender a mesh with per-vertex colours\nMesh Visualisation, Mesh Comparison\n\n\nrglwidget()\nEmbed interactive 3D widget in HTML\nMesh Visualisation\n\n\nreadOBJ(file)\nAlternative OBJ reader\nTroubleshooting\n\n\noptions(rgl.useNULL = TRUE)\nSuppress OpenGL window (headless/server use)\nTroubleshooting",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1823,7 +1790,7 @@
     "href": "reference.html#geometry",
     "title": "21  Function Reference",
     "section": "22.5 geometry",
-    "text": "22.5 geometry\nComputational geometry for open (non-watertight) meshes. (Roussel et al. 2024)\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nconvhulln(pts, options)\nConvex hull with area and volume (options = \"FA\")\nMesh Metrics",
+    "text": "22.5 geometry\nComputational geometry for open (non-watertight) meshes. (Roussel et al. 2024)\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nconvhulln(pts, options)\nConvex hull with area and volume (options = \"FA\")\nMesh Metrics",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1834,7 +1801,7 @@
     "href": "reference.html#rayshader",
     "title": "21  Function Reference",
     "section": "22.6 rayshader",
-    "text": "22.6 rayshader\nHigh-quality 3D rendered images. (Morgan-Wall 2024)\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nrender_snapshot(filename)\nSave a ray-traced render to file\nMesh Visualisation",
+    "text": "22.6 rayshader\nHigh-quality 3D rendered images. (Morgan-Wall 2024)\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nrender_snapshot(filename)\nSave a ray-traced render to file\nMesh Visualisation",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1845,7 +1812,7 @@
     "href": "reference.html#lidr",
     "title": "21  Function Reference",
     "section": "22.7 lidR",
-    "text": "22.7 lidR\nPoint cloud analysis from LAS/LAZ files. (Roussel et al. 2020)\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nreadLAS(file)\nRead a LAS or LAZ point cloud\nPoint Cloud Analysis\n\n\nnormalize_height(pc, algorithm)\nNormalise Z to ground level\nPoint Cloud Analysis\n\n\nrasterize_canopy(pc, res, algorithm)\nMaximum-Z raster (canopy/roof height model)\nPoint Cloud Analysis\n\n\ngrid_density(pc, res)\nPoint density raster\nPoint Cloud Analysis\n\n\nvoxelize_points(pc, res)\nVoxelise point cloud for volume estimation\nPoint Cloud Analysis\n\n\nnpoints(pc)\nTotal point count\nPoint Cloud Analysis\n\n\narea(pc)\nSurvey footprint area\nPoint Cloud Analysis",
+    "text": "22.7 lidR\nPoint cloud analysis from LAS/LAZ files. (Roussel et al. 2020)\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nreadLAS(file)\nRead a LAS or LAZ point cloud\nPoint Cloud Analysis\n\n\nnormalize_height(pc, algorithm)\nNormalise Z to ground level\nPoint Cloud Analysis\n\n\nrasterize_canopy(pc, res, algorithm)\nMaximum-Z raster (canopy/roof height model)\nPoint Cloud Analysis\n\n\ngrid_density(pc, res)\nPoint density raster\nPoint Cloud Analysis\n\n\nvoxelize_points(pc, res)\nVoxelise point cloud for volume estimation\nPoint Cloud Analysis\n\n\nnpoints(pc)\nTotal point count\nPoint Cloud Analysis\n\n\narea(pc)\nSurvey footprint area\nPoint Cloud Analysis",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1856,7 +1823,7 @@
     "href": "reference.html#dplyr",
     "title": "21  Function Reference",
     "section": "22.8 dplyr",
-    "text": "22.8 dplyr\nData manipulation — filtering, grouping, joining. Used throughout the DWG Analytics and Digital Twins chapters.\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\ngroup_by(...)\nGroup rows for summarisation\nLayer Analysis\n\n\nsummarise(...)\nAggregate within groups\nLayer Analysis\n\n\nfilter(...)\nKeep rows matching a condition\nAttribute Extraction\n\n\nselect(...)\nChoose columns\nSensor Streams\n\n\nmutate(...)\nAdd or transform columns\nAttribute Extraction\n\n\ninner_join(x, y, by)\nJoin keeping rows in both tables\nSensor Streams\n\n\nleft_join(x, y, by)\nJoin keeping all rows from left table\nSensor Streams",
+    "text": "22.8 dplyr\nData manipulation — filtering, grouping, joining. Used throughout the DWG Analytics and Digital Twins chapters.\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\ngroup_by(...)\nGroup rows for summarisation\nLayer Analysis\n\n\nsummarise(...)\nAggregate within groups\nLayer Analysis\n\n\nfilter(...)\nKeep rows matching a condition\nAttribute Extraction\n\n\nselect(...)\nChoose columns\nSensor Streams\n\n\nmutate(...)\nAdd or transform columns\nAttribute Extraction\n\n\ninner_join(x, y, by)\nJoin keeping rows in both tables\nSensor Streams\n\n\nleft_join(x, y, by)\nJoin keeping all rows from left table\nSensor Streams",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1867,7 +1834,7 @@
     "href": "reference.html#tidyr",
     "title": "21  Function Reference",
     "section": "22.9 tidyr",
-    "text": "22.9 tidyr\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\npivot_wider(data, names_from, values_from)\nReshape long data to wide format\nAttribute Extraction",
+    "text": "22.9 tidyr\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\npivot_wider(data, names_from, values_from)\nReshape long data to wide format\nAttribute Extraction",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1878,7 +1845,7 @@
     "href": "reference.html#ggplot2",
     "title": "21  Function Reference",
     "section": "22.10 ggplot2",
-    "text": "22.10 ggplot2\nData visualisation. Used in DWG Analytics, Digital Twins, and the Case Study.\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nggplot(data, aes(...))\nInitialise a plot\nMultiple\n\n\ngeom_col()\nBar chart (pre-counted values)\nLayer Analysis\n\n\ngeom_line()\nLine chart\nSensor Streams\n\n\ngeom_histogram()\nHistogram\nPoint Cloud Analysis, Mesh Comparison\n\n\ngeom_ribbon()\nShaded confidence band\nSensor Streams\n\n\ngeom_tile()\nHeatmap tiles\nCross-Drawing Comparison\n\n\nfacet_wrap(~ var)\nSmall multiples\nSensor Streams\n\n\ncoord_flip()\nSwap x and y axes\nLayer Analysis\n\n\ntheme_minimal()\nClean theme\nMultiple",
+    "text": "22.10 ggplot2\nData visualisation. Used in DWG Analytics, Digital Twins, and the Case Study.\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nggplot(data, aes(...))\nInitialise a plot\nMultiple\n\n\ngeom_col()\nBar chart (pre-counted values)\nLayer Analysis\n\n\ngeom_line()\nLine chart\nSensor Streams\n\n\ngeom_histogram()\nHistogram\nPoint Cloud Analysis, Mesh Comparison\n\n\ngeom_ribbon()\nShaded confidence band\nSensor Streams\n\n\ngeom_tile()\nHeatmap tiles\nCross-Drawing Comparison\n\n\nfacet_wrap(~ var)\nSmall multiples\nSensor Streams\n\n\ncoord_flip()\nSwap x and y axes\nLayer Analysis\n\n\ntheme_minimal()\nClean theme\nMultiple",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1889,7 +1856,7 @@
     "href": "reference.html#gt",
     "title": "21  Function Reference",
     "section": "22.11 gt",
-    "text": "22.11 gt\nPublication-quality tables for automated reports.(Iannone et al. 2024)\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\ngt(data)\nCreate a gt table from a data frame\nDrawing Reports\n\n\ntab_header(title, subtitle)\nAdd a title and subtitle\nDrawing Reports\n\n\nfmt_number(columns, decimals)\nFormat numeric columns\nDrawing Reports\n\n\ncols_label(...)\nRename column headers\nDrawing Reports\n\n\ntab_source_note(note)\nAdd a footnote\nDrawing Reports",
+    "text": "22.11 gt\nPublication-quality tables for automated reports.(Iannone et al. 2024)\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\ngt(data)\nCreate a gt table from a data frame\nDrawing Reports\n\n\ntab_header(title, subtitle)\nAdd a title and subtitle\nDrawing Reports\n\n\nfmt_number(columns, decimals)\nFormat numeric columns\nDrawing Reports\n\n\ncols_label(...)\nRename column headers\nDrawing Reports\n\n\ntab_source_note(note)\nAdd a footnote\nDrawing Reports",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1900,7 +1867,7 @@
     "href": "reference.html#shiny",
     "title": "21  Function Reference",
     "section": "22.12 shiny",
-    "text": "22.12 shiny\nInteractive web applications and dashboards.\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nfluidPage(...)\nStandard responsive page layout\nViewer, Live Dashboards\n\n\ntabsetPanel(...) / tabPanel(...)\nTabbed layout\nCase Study\n\n\nrenderPlot({})\nReactive ggplot2 output\nCase Study\n\n\nplotOutput(id)\nPlaceholder for a plot\nCase Study\n\n\nreactiveTimer(ms)\nTrigger reactive updates on a schedule\nLive Dashboards\n\n\nshinyApp(ui, server)\nLaunch the app\nCase Study\n\n\ndeployApp()\nDeploy to shinyapps.io\nLive Dashboards",
+    "text": "22.12 shiny\nInteractive web applications and dashboards.\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nfluidPage(...)\nStandard responsive page layout\nViewer, Live Dashboards\n\n\ntabsetPanel(...) / tabPanel(...)\nTabbed layout\nCase Study\n\n\nrenderPlot({})\nReactive ggplot2 output\nCase Study\n\n\nplotOutput(id)\nPlaceholder for a plot\nCase Study\n\n\nreactiveTimer(ms)\nTrigger reactive updates on a schedule\nLive Dashboards\n\n\nshinyApp(ui, server)\nLaunch the app\nCase Study\n\n\ndeployApp()\nDeploy to shinyapps.io\nLive Dashboards",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1911,7 +1878,7 @@
     "href": "reference.html#dygraphs",
     "title": "21  Function Reference",
     "section": "22.13 dygraphs",
-    "text": "22.13 dygraphs\nInteractive time-series plots for Shiny dashboards. (Vanderkam et al. 2018)\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\ndygraph(data, main)\nCreate an interactive time-series chart\nLive Dashboards\n\n\ndyOptions(...)\nCustomise colours, fill, axes\nLive Dashboards\n\n\ndygraphOutput(id)\nShiny UI placeholder\nLive Dashboards\n\n\nrenderDygraph({})\nShiny server renderer\nLive Dashboards",
+    "text": "22.13 dygraphs\nInteractive time-series plots for Shiny dashboards. (Vanderkam et al. 2018)\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\ndygraph(data, main)\nCreate an interactive time-series chart\nLive Dashboards\n\n\ndyOptions(...)\nCustomise colours, fill, axes\nLive Dashboards\n\n\ndygraphOutput(id)\nShiny UI placeholder\nLive Dashboards\n\n\nrenderDygraph({})\nShiny server renderer\nLive Dashboards",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1922,7 +1889,7 @@
     "href": "reference.html#xts",
     "title": "21  Function Reference",
     "section": "22.14 xts",
-    "text": "22.14 xts\nTime-series objects required by dygraphs.\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nxts(data, order.by)\nCreate an extensible time-series object\nLive Dashboards",
+    "text": "22.14 xts\nTime-series objects required by dygraphs.\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nxts(data, order.by)\nCreate an extensible time-series object\nLive Dashboards",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -1933,7 +1900,7 @@
     "href": "reference.html#quarto",
     "title": "21  Function Reference",
     "section": "22.15 quarto",
-    "text": "22.15 quarto\nProgrammatic report rendering.\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nquarto_render(input, execute_params)\nRender a .qmd file with injected parameters\nDrawing Reports\n\n\n\n\n\n\n\nAdler, Daniel, Duncan Murdoch, et al. 2024. Rgl: 3D Visualization Using OpenGL. https://dmurdoch.github.io/rgl/.\n\n\nIannone, Richard, Joe Cheng, Barret Schloerke, et al. 2024. Gt: Easily Create Presentation-Ready Display Tables. https://gt.rstudio.com.\n\n\nMorgan-Wall, Tyler. 2024. Rayshader: Create Maps and Visualize Data in 2D and 3D. https://www.rayshader.com.\n\n\nRoussel, Jean-Romain, David Auty, Nicholas C. Coops, et al. 2020. “lidR: An r Package for Analysis of Airborne Laser Scanning (ALS) Data.” Remote Sensing of Environment 251: 112061. https://doi.org/10.1016/j.rse.2020.112061.\n\n\nRoussel, Jean-Romain, David C. Sterratt, et al. 2024. Geometry: Mesh Generation and Surface Tessellation. https://davidcsterratt.github.io/geometry/.\n\n\nSchlager, Stefan. 2024. Rvcg: Manipulations of Triangular Meshes Based on the ’VCGLIB’ API. https://CRAN.R-project.org/package=Rvcg.\n\n\nVanderkam, Dan, JJ Allaire, Jonathan Owen, Daniel Gromer, and Benoit Thieurmel. 2018. Dygraphs: Interface to ’Dygraphs’ Interactive Time Series Charting Library. https://CRAN.R-project.org/package=dygraphs.",
+    "text": "22.15 quarto\nProgrammatic report rendering.\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nquarto_render(input, execute_params)\nRender a .qmd file with injected parameters\nDrawing Reports\n\n\n\n\n\n\n\nAdler, Daniel, Duncan Murdoch, et al. 2024. Rgl: 3D Visualization Using OpenGL. https://dmurdoch.github.io/rgl/.\n\n\nIannone, Richard, Joe Cheng, Barret Schloerke, et al. 2024. Gt: Easily Create Presentation-Ready Display Tables. https://gt.rstudio.com.\n\n\nMorgan-Wall, Tyler. 2024. Rayshader: Create Maps and Visualize Data in 2D and 3D. https://www.rayshader.com.\n\n\nRoussel, Jean-Romain, David Auty, Nicholas C. Coops, et al. 2020. “lidR: An r Package for Analysis of Airborne Laser Scanning (ALS) Data.” Remote Sensing of Environment 251: 112061. https://doi.org/10.1016/j.rse.2020.112061.\n\n\nRoussel, Jean-Romain, David C. Sterratt, et al. 2024. Geometry: Mesh Generation and Surface Tessellation. https://davidcsterratt.github.io/geometry/.\n\n\nSchlager, Stefan. 2024. Rvcg: Manipulations of Triangular Meshes Based on the ’VCGLIB’ API. https://CRAN.R-project.org/package=Rvcg.\n\n\nVanderkam, Dan, JJ Allaire, Jonathan Owen, Daniel Gromer, and Benoit Thieurmel. 2018. Dygraphs: Interface to ’Dygraphs’ Interactive Time Series Charting Library. https://CRAN.R-project.org/package=dygraphs.",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Function Reference</span>"
@@ -2076,7 +2043,7 @@
     "href": "troubleshooting.html#getting-more-help",
     "title": "22  Troubleshooting",
     "section": "22.12 Getting More Help",
-    "text": "22.12 Getting More Help\n\nAPS community forum: community.autodesk.com/t5/autodesk-platform-services — AutoDesk staff monitor this actively\nAutoDeskR GitHub issues: github.com/paulgovan/AutoDeskR/issues — for package-specific bugs\nAPS API status: health.autodesk.com — check for ongoing incidents before spending time debugging",
+    "text": "22.12 Getting More Help\n\nAPS community forum: APS community on community.autodesk.com — AutoDesk staff monitor this actively\nAutoDeskR GitHub issues: github.com/paulgovan/AutoDeskR/issues — for package-specific bugs\nAPS API status: health.autodesk.com — check for ongoing incidents before spending time debugging",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Troubleshooting</span>"

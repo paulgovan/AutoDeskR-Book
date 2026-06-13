@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-01-01">
+<meta name="description" content="A practical guide to analyzing AEC and CAD/BIM data in R with the AutoDeskR package and AutoDesk Platform Services.">
 
-<title>21&nbsp; Function Reference – R for the Built Environment</title>
+<title>21&nbsp; Function Reference – R for AEC Data Analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -132,9 +134,9 @@ div.csl-indent {
 }</script>
 
 
-<meta property="og:title" content="21&nbsp; Function Reference – R for the Built Environment">
-<meta property="og:description" content="">
-<meta property="og:site_name" content="R for the Built Environment">
+<meta property="og:title" content="21&nbsp; Function Reference – R for AEC Data Analysis">
+<meta property="og:description" content="A practical guide to analyzing AEC and CAD/BIM data in R with the AutoDeskR package and AutoDesk Platform Services.">
+<meta property="og:site_name" content="R for AEC Data Analysis">
 </head>
 
 <body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -323,29 +325,12 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">R for the Built Environment</a> 
+      <a href="./">R for AEC Data Analysis</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/paulgovan/AutoDeskR-Book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
-          <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="./R-for-the-Built-Environment.pdf">
-              <i class="bi bi-file-pdf pe-1"></i>
-            Download PDF
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="./R-for-the-Built-Environment.epub">
-              <i class="bi bi-journal pe-1"></i>
-            Download ePub
-            </a>
-          </li>
-      </ul>
-    </div>
-    <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
-      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-twitter pe-1"></i>
@@ -406,8 +391,8 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./license.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">License</span></a>
+  <a href="./about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the Author</span></a>
   </div>
 </li>
       </ul>
@@ -690,6 +675,12 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 1, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -704,10 +695,10 @@ div.csl-indent {
 <h2 data-number="21.1" class="anchored" data-anchor-id="authentication"><span class="header-section-number">21.1</span> Authentication</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 16%">
-<col style="width: 38%">
 <col style="width: 24%">
+<col style="width: 13%">
+<col style="width: 28%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -719,7 +710,7 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>getToken(id, secret, scope)</code></td>
+<td style="text-align: left;"><code>getToken</code></td>
 <td style="text-align: left;">—</td>
 <td style="text-align: left;"><code>id</code>, <code>secret</code>, <code>scope</code> (space-separated string)</td>
 <td style="text-align: left;"><code>$content$access_token</code>, <code>$content$expires_in</code></td>
@@ -732,10 +723,10 @@ div.csl-indent {
 <h2 data-number="21.2" class="anchored" data-anchor-id="data-management"><span class="header-section-number">21.2</span> Data Management</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 16%">
-<col style="width: 38%">
 <col style="width: 24%">
+<col style="width: 13%">
+<col style="width: 28%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -747,55 +738,55 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>makeBucket(token, bucket, policy)</code></td>
+<td style="text-align: left;"><code>makeBucket</code></td>
 <td style="text-align: left;"><code>bucket:create</code></td>
 <td style="text-align: left;"><code>bucket</code> (globally unique key), <code>policy</code> (<code>"transient"</code> / <code>"temporary"</code> / <code>"persistent"</code>)</td>
 <td style="text-align: left;"><code>$content$bucketKey</code>, <code>$content$policyKey</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>checkBucket(token, bucket)</code></td>
+<td style="text-align: left;"><code>checkBucket</code></td>
 <td style="text-align: left;"><code>bucket:read</code></td>
 <td style="text-align: left;"><code>bucket</code></td>
 <td style="text-align: left;"><code>$content$bucketKey</code>, <code>$content$policyKey</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>deleteBucket(token, bucket)</code></td>
+<td style="text-align: left;"><code>deleteBucket</code></td>
 <td style="text-align: left;"><code>bucket:delete</code></td>
 <td style="text-align: left;"><code>bucket</code> (must be empty)</td>
 <td style="text-align: left;"><code>$status_code</code> 200</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>uploadFile(file, token, bucket)</code></td>
+<td style="text-align: left;"><code>uploadFile</code></td>
 <td style="text-align: left;"><code>data:write</code></td>
 <td style="text-align: left;"><code>file</code> (local path, ≤ 100 MB), <code>bucket</code></td>
 <td style="text-align: left;"><code>$content$objectId</code> (URN), <code>$content$size</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>uploadFileSigned(file, token, bucket)</code></td>
+<td style="text-align: left;"><code>uploadFileSigned</code></td>
 <td style="text-align: left;"><code>data:write</code></td>
 <td style="text-align: left;"><code>file</code> (local path, &gt; 100 MB), <code>bucket</code></td>
 <td style="text-align: left;"><code>$content$objectId</code> (URN)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>listBuckets(token, limit, startAt, region)</code></td>
+<td style="text-align: left;"><code>listBuckets</code></td>
 <td style="text-align: left;"><code>bucket:read</code></td>
 <td style="text-align: left;"><code>limit</code> (default 10), <code>startAt</code> (pagination key), <code>region</code> (<code>"US"</code> / <code>"EMEA"</code>)</td>
 <td style="text-align: left;"><code>$content$items</code> data frame</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>listObjects(token, bucket, limit)</code></td>
+<td style="text-align: left;"><code>listObjects</code></td>
 <td style="text-align: left;"><code>data:read</code></td>
 <td style="text-align: left;"><code>bucket</code>, <code>limit</code></td>
 <td style="text-align: left;"><code>$content$items</code> data frame</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>deleteObject(token, bucket, object)</code></td>
+<td style="text-align: left;"><code>deleteObject</code></td>
 <td style="text-align: left;"><code>data:write</code></td>
 <td style="text-align: left;"><code>bucket</code>, <code>object</code> (filename)</td>
 <td style="text-align: left;"><code>$status_code</code> 200</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>downloadFile(urn, output_urn, token, destfile)</code></td>
+<td style="text-align: left;"><code>downloadFile</code></td>
 <td style="text-align: left;"><code>data:read</code></td>
 <td style="text-align: left;"><code>urn</code> (encoded source), <code>output_urn</code> (encoded output), <code>destfile</code></td>
 <td style="text-align: left;"><code>$status_code</code> 200</td>
@@ -808,10 +799,10 @@ div.csl-indent {
 <h2 data-number="21.3" class="anchored" data-anchor-id="model-derivative"><span class="header-section-number">21.3</span> Model Derivative</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 16%">
-<col style="width: 38%">
 <col style="width: 24%">
+<col style="width: 13%">
+<col style="width: 28%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -823,49 +814,49 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>translateObj(urn, token)</code></td>
+<td style="text-align: left;"><code>translateObj</code></td>
 <td style="text-align: left;"><code>data:read data:write</code></td>
 <td style="text-align: left;"><code>urn</code> (Base-64 encoded)</td>
 <td style="text-align: left;"><code>$content$result</code> (<code>"created"</code>), <code>$content$urn</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>translateStl(urn, token)</code></td>
+<td style="text-align: left;"><code>translateStl</code></td>
 <td style="text-align: left;"><code>data:read data:write</code></td>
 <td style="text-align: left;"><code>urn</code> (Base-64 encoded)</td>
 <td style="text-align: left;"><code>$content$result</code>, <code>$content$urn</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>translateSvf(urn, token)</code></td>
+<td style="text-align: left;"><code>translateSvf</code></td>
 <td style="text-align: left;"><code>data:read data:write</code></td>
 <td style="text-align: left;"><code>urn</code> (Base-64 encoded)</td>
 <td style="text-align: left;"><code>$content$result</code>, <code>$content$urn</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>checkFile(urn, token)</code></td>
+<td style="text-align: left;"><code>checkFile</code></td>
 <td style="text-align: left;"><code>data:read</code></td>
 <td style="text-align: left;"><code>urn</code> (Base-64 encoded)</td>
 <td style="text-align: left;"><code>$content$status</code> (<code>"pending"</code> / <code>"inprogress"</code> / <code>"success"</code>), <code>$content$progress</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>getOutputUrn(urn, token)</code></td>
+<td style="text-align: left;"><code>getOutputUrn</code></td>
 <td style="text-align: left;"><code>data:read</code></td>
 <td style="text-align: left;"><code>urn</code> (raw, not encoded)</td>
-<td style="text-align: left;"><code>$content$derivatives[[1]]$children[[1]]$urn</code></td>
+<td style="text-align: left;"><code>$content$derivatives</code> <code>[[1]]$children[[1]]$urn</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>getMetadata(urn, token)</code></td>
+<td style="text-align: left;"><code>getMetadata</code></td>
 <td style="text-align: left;"><code>data:read</code></td>
 <td style="text-align: left;"><code>urn</code> (Base-64 encoded)</td>
-<td style="text-align: left;"><code>$content$data$metadata[[1]]$guid</code>, <code>$content$data$metadata[[1]]$name</code></td>
+<td style="text-align: left;"><code>$content$data$metadata</code> <code>[[1]]$guid</code>, <code>[[1]]$name</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>getObjectTree(guid, urn, token)</code></td>
+<td style="text-align: left;"><code>getObjectTree</code></td>
 <td style="text-align: left;"><code>data:read</code></td>
 <td style="text-align: left;"><code>guid</code>, <code>urn</code> (Base-64 encoded)</td>
 <td style="text-align: left;"><code>$content$data$objects</code> (nested list)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>getData(guid, urn, token)</code></td>
+<td style="text-align: left;"><code>getData</code></td>
 <td style="text-align: left;"><code>data:read</code></td>
 <td style="text-align: left;"><code>guid</code>, <code>urn</code> (Base-64 encoded)</td>
 <td style="text-align: left;"><code>$content$data$collection</code> (list of objects with properties)</td>
@@ -878,10 +869,10 @@ div.csl-indent {
 <h2 data-number="21.4" class="anchored" data-anchor-id="design-automation"><span class="header-section-number">21.4</span> Design Automation</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 16%">
-<col style="width: 38%">
 <col style="width: 24%">
+<col style="width: 13%">
+<col style="width: 28%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -893,13 +884,13 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>makePdf(source, destination, token)</code></td>
+<td style="text-align: left;"><code>makePdf</code></td>
 <td style="text-align: left;"><code>code:all</code></td>
 <td style="text-align: left;"><code>source</code> (public URL to DWG), <code>destination</code> (public URL for output)</td>
 <td style="text-align: left;"><code>$content$id</code> (WorkItem ID), <code>$content$status</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>checkPdf(id, token)</code></td>
+<td style="text-align: left;"><code>checkPdf</code></td>
 <td style="text-align: left;"><code>code:all</code></td>
 <td style="text-align: left;"><code>id</code> (WorkItem ID from <code>makePdf()</code>)</td>
 <td style="text-align: left;"><code>$content$status</code> (<code>"pending"</code> / <code>"inprogress"</code> / <code>"success"</code>), <code>$content$stats</code></td>
@@ -912,10 +903,10 @@ div.csl-indent {
 <h2 data-number="21.5" class="anchored" data-anchor-id="reality-capture"><span class="header-section-number">21.5</span> Reality Capture</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 16%">
-<col style="width: 38%">
 <col style="width: 24%">
+<col style="width: 13%">
+<col style="width: 28%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -927,31 +918,31 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>createPhotoscene(name, format, token)</code></td>
+<td style="text-align: left;"><code>createPhotoscene</code></td>
 <td style="text-align: left;"><code>data:read data:write</code></td>
 <td style="text-align: left;"><code>name</code> (scene label), <code>format</code> (<code>"rcm"</code> / <code>"rcs"</code> / <code>"obj"</code> / <code>"ortho"</code> / <code>"report"</code>)</td>
-<td style="text-align: left;"><code>$content$photoscene$photosceneid</code></td>
+<td style="text-align: left;"><code>$content$photoscene</code> <code>$photosceneid</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>uploadImages(photoscene_id, files, token)</code></td>
+<td style="text-align: left;"><code>uploadImages</code></td>
 <td style="text-align: left;"><code>data:read data:write</code></td>
 <td style="text-align: left;"><code>photoscene_id</code>, <code>files</code> (character vector of local JPEG/PNG paths)</td>
 <td style="text-align: left;"><code>$content$Files$file</code> (list of uploaded file records)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>processPhotoscene(photoscene_id, token)</code></td>
+<td style="text-align: left;"><code>processPhotoscene</code></td>
 <td style="text-align: left;"><code>data:read data:write</code></td>
 <td style="text-align: left;"><code>photoscene_id</code></td>
-<td style="text-align: left;"><code>$content$photoscene$progress</code> (<code>"0"</code> on submission)</td>
+<td style="text-align: left;"><code>$content$photoscene</code> <code>$progress</code> (<code>"0"</code> on submission)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>checkPhotoscene(photoscene_id, token)</code></td>
+<td style="text-align: left;"><code>checkPhotoscene</code></td>
 <td style="text-align: left;"><code>data:read data:write</code></td>
 <td style="text-align: left;"><code>photoscene_id</code></td>
-<td style="text-align: left;"><code>$content$photoscene$progress</code> (string <code>"0"</code>–<code>"100"</code>), <code>$content$photoscene$progressmsg</code></td>
+<td style="text-align: left;"><code>$content$photoscene</code> <code>$progress</code> (<code>"0"</code>–<code>"100"</code>), <code>$progressmsg</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>waitForPhotoscene(photoscene_id, token, interval, timeout, verbose)</code></td>
+<td style="text-align: left;"><code>waitForPhotoscene</code></td>
 <td style="text-align: left;"><code>data:read data:write</code></td>
 <td style="text-align: left;"><code>interval</code> (seconds between polls, default 30), <code>timeout</code> (max wait in seconds, default 1800)</td>
 <td style="text-align: left;">Final <code>checkPhotoscene</code> response when <code>progress == "100"</code></td>
@@ -964,10 +955,10 @@ div.csl-indent {
 <h2 data-number="21.6" class="anchored" data-anchor-id="viewer"><span class="header-section-number">21.6</span> Viewer</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 16%">
-<col style="width: 38%">
 <col style="width: 24%">
+<col style="width: 13%">
+<col style="width: 28%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -979,13 +970,13 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>viewer3D(urn, token, viewerType)</code></td>
+<td style="text-align: left;"><code>viewer3D</code></td>
 <td style="text-align: left;"><code>data:read</code></td>
 <td style="text-align: left;"><code>urn</code> (Base-64 encoded), <code>viewerType</code> (<code>"header"</code> / <code>"headless"</code> / <code>"vr"</code>)</td>
 <td style="text-align: left;">Opens viewer in browser / Shiny</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>viewerUI(id, urn, token, viewerType)</code></td>
+<td style="text-align: left;"><code>viewerUI</code></td>
 <td style="text-align: left;"><code>data:read</code></td>
 <td style="text-align: left;"><code>id</code> (Shiny module ID), <code>urn</code>, <code>token</code>, <code>viewerType</code></td>
 <td style="text-align: left;">Shiny UI element for use in <code>fluidPage()</code></td>
@@ -998,8 +989,8 @@ div.csl-indent {
 <h2 data-number="21.7" class="anchored" data-anchor-id="scope-quick-reference"><span class="header-section-number">21.7</span> Scope Quick Reference</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 74%">
+<col style="width: 26%">
+<col style="width: 73%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1066,11 +1057,6 @@ div.csl-indent {
 <h2 data-number="22.1" class="anchored" data-anchor-id="httr2"><span class="header-section-number">22.1</span> httr2</h2>
 <p>Used for direct Tandem REST API calls in the Digital Twins chapters, and as the underlying HTTP engine for AutoDeskR.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1116,11 +1102,6 @@ div.csl-indent {
 <section id="jsonlite" class="level2" data-number="22.2">
 <h2 data-number="22.2" class="anchored" data-anchor-id="jsonlite"><span class="header-section-number">22.2</span> jsonlite</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1147,11 +1128,6 @@ div.csl-indent {
 <h2 data-number="22.3" class="anchored" data-anchor-id="rvcg"><span class="header-section-number">22.3</span> Rvcg</h2>
 <p>Mesh processing — surface area, volume, smoothing, and surface distance. <span class="citation" data-cites="R-Rvcg">(<a href="references.html#ref-R-Rvcg" role="doc-biblioref">Schlager 2024</a>)</span></p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1193,11 +1169,6 @@ div.csl-indent {
 <h2 data-number="22.4" class="anchored" data-anchor-id="rgl"><span class="header-section-number">22.4</span> rgl</h2>
 <p>Interactive 3D visualisation. <span class="citation" data-cites="R-rgl">(<a href="references.html#ref-R-rgl" role="doc-biblioref"><span class="nocase">Adler et al.</span> 2024</a>)</span></p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1239,11 +1210,6 @@ div.csl-indent {
 <h2 data-number="22.5" class="anchored" data-anchor-id="geometry"><span class="header-section-number">22.5</span> geometry</h2>
 <p>Computational geometry for open (non-watertight) meshes. <span class="citation" data-cites="R-geometry">(<a href="references.html#ref-R-geometry" role="doc-biblioref"><span class="nocase">Roussel et al.</span> 2024</a>)</span></p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1265,11 +1231,6 @@ div.csl-indent {
 <h2 data-number="22.6" class="anchored" data-anchor-id="rayshader"><span class="header-section-number">22.6</span> rayshader</h2>
 <p>High-quality 3D rendered images. <span class="citation" data-cites="R-rayshader">(<a href="references.html#ref-R-rayshader" role="doc-biblioref">Morgan-Wall 2024</a>)</span></p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1291,11 +1252,6 @@ div.csl-indent {
 <h2 data-number="22.7" class="anchored" data-anchor-id="lidr"><span class="header-section-number">22.7</span> lidR</h2>
 <p>Point cloud analysis from LAS/LAZ files. <span class="citation" data-cites="R-lidR">(<a href="references.html#ref-R-lidR" role="doc-biblioref">Roussel et al. 2020</a>)</span></p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1347,11 +1303,6 @@ div.csl-indent {
 <h2 data-number="22.8" class="anchored" data-anchor-id="dplyr"><span class="header-section-number">22.8</span> dplyr</h2>
 <p>Data manipulation — filtering, grouping, joining. Used throughout the DWG Analytics and Digital Twins chapters.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1402,11 +1353,6 @@ div.csl-indent {
 <section id="tidyr" class="level2" data-number="22.9">
 <h2 data-number="22.9" class="anchored" data-anchor-id="tidyr"><span class="header-section-number">22.9</span> tidyr</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1428,11 +1374,6 @@ div.csl-indent {
 <h2 data-number="22.10" class="anchored" data-anchor-id="ggplot2"><span class="header-section-number">22.10</span> ggplot2</h2>
 <p>Data visualisation. Used in DWG Analytics, Digital Twins, and the Case Study.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1494,11 +1435,6 @@ div.csl-indent {
 <h2 data-number="22.11" class="anchored" data-anchor-id="gt"><span class="header-section-number">22.11</span> gt</h2>
 <p>Publication-quality tables for automated reports.<span class="citation" data-cites="R-gt">(<a href="references.html#ref-R-gt" role="doc-biblioref">Iannone et al. 2024</a>)</span></p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1540,11 +1476,6 @@ div.csl-indent {
 <h2 data-number="22.12" class="anchored" data-anchor-id="shiny"><span class="header-section-number">22.12</span> shiny</h2>
 <p>Interactive web applications and dashboards.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1596,11 +1527,6 @@ div.csl-indent {
 <h2 data-number="22.13" class="anchored" data-anchor-id="dygraphs"><span class="header-section-number">22.13</span> dygraphs</h2>
 <p>Interactive time-series plots for Shiny dashboards. <span class="citation" data-cites="R-dygraphs">(<a href="references.html#ref-R-dygraphs" role="doc-biblioref">Vanderkam et al. 2018</a>)</span></p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1637,11 +1563,6 @@ div.csl-indent {
 <h2 data-number="22.14" class="anchored" data-anchor-id="xts"><span class="header-section-number">22.14</span> xts</h2>
 <p>Time-series objects required by <code>dygraphs</code>.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
@@ -1663,11 +1584,6 @@ div.csl-indent {
 <h2 data-number="22.15" class="anchored" data-anchor-id="quarto"><span class="header-section-number">22.15</span> quarto</h2>
 <p>Programmatic report rendering.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 55%">
-<col style="width: 20%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Function</th>
