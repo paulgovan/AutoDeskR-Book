@@ -116,6 +116,13 @@ ggplot(data.frame(deviation_mm = d * 1000), aes(x = deviation_mm)) +
   theme_minimal()
 ```
 
+::: callout-note
+**Representative result.** The deviation figures in this section are drawn from
+synthetic per-vertex distances so they render without a pair of translated meshes.
+Running `vcgDist()` on your own as-designed and as-built models feeds the same
+plotting code with real values.
+:::
+
 ## Cumulative Distribution
 
 A CDF plot tells you what fraction of the model is within any given tolerance, handy for pass/fail reporting:

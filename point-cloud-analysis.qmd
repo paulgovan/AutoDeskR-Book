@@ -87,6 +87,12 @@ ggplot(data.frame(z = z_sample), aes(x = z)) +
   theme_minimal()
 ```
 
+::: callout-note
+**Representative result.** This histogram is built from synthetic returns so it
+renders without a LAS file. The same `ggplot2` code produces the equivalent chart
+from your own normalised point cloud.
+:::
+
 ## Canopy Height Model
 
 Rasterise the maximum Z per cell to produce a canopy height model, great for visualising roof heights or vegetation structure across the site:
@@ -120,21 +126,38 @@ cat("Estimated volume:", round(volume_m3, 1), "m³\n")
 
 ## Summary Table
 
+Pull the headline metrics together into a single table for the survey report:
+
 ```{r}
 #| eval: false
-library(ggplot2)
-
 metrics <- data.frame(
-  metric = c("Total points", "Survey area (m²)", "Mean density (pts/m²)",
+  Metric = c("Total points", "Survey area (m²)", "Mean density (pts/m²)",
              "Mean height (m)", "95th-pct height (m)", "Voxel volume (m³)"),
-  value  = c(npoints(pc), area(pc), mean(density[], na.rm = TRUE),
+  Value  = c(npoints(pc), area(pc), mean(density[], na.rm = TRUE),
              mean(pc_norm$Z), quantile(pc_norm$Z, 0.95), volume_m3)
 )
 
-ggplot(metrics, aes(x = reorder(metric, value), y = value)) +
-  geom_col(fill = "#367ABF") +
-  coord_flip() +
-  labs(title = "Point Cloud Summary Metrics",
-       x = NULL, y = "Value") +
-  theme_minimal()
+knitr::kable(metrics, align = c("l", "r"))
 ```
+
+@tbl-pc-summary shows the result for the example site survey used throughout this chapter.
+
+```{r}
+#| label: tbl-pc-summary
+#| tbl-cap: "Point cloud summary metrics for the example site survey."
+#| echo: false
+knitr::kable(
+  data.frame(
+    Metric = c("Total points", "Survey area (m²)", "Mean density (pts/m²)",
+               "Mean height (m)", "95th-pct height (m)", "Voxel volume (m³)"),
+    Value  = c("3,620,000", "4,064.9", "891.3", "4.12", "11.83", "1,483.2")
+  ),
+  align = c("l", "r")
+)
+```
+
+::: callout-note
+**Representative result.** The values above are illustrative, generated to show
+the shape of the output. Running the code on your own LAS file produces the same
+table populated with your survey's metrics.
+:::

@@ -6,6 +6,13 @@ Numbers are useful; actually *seeing* the mesh is better. This chapter covers tw
 
 Both work on `mesh_vcg` from [Reading OBJ and STL Meshes](mesh-reading.qmd).
 
+::: callout-note
+**Representative result.** The `rgl` and `rayshader` snippets in this chapter need
+a translated mesh and an OpenGL device, so they aren't executed during book
+rendering. Run them in your own R session to get the interactive WebGL widget or
+the rendered PNG described alongside each example.
+:::
+
 ## Interactive 3D with rgl
 
 `shade3d()` opens an OpenGL window where you can rotate and zoom with the mouse. Takes one line:

@@ -21,10 +21,17 @@ sequenceDiagram
 
 Your Client ID and Secret are like a username and password for your app. Keep them out of your source files and version control. The cleanest approach in R is to stash them in `~/.Renviron`:
 
-```         
+```
 client_id = "YOUR_CLIENT_ID"
 client_secret = "YOUR_CLIENT_SECRET"
 ```
+
+::: callout-important
+**Replace before running:** swap `YOUR_CLIENT_ID` and `YOUR_CLIENT_SECRET` for the
+Client ID and Secret of your own APS app (create one at
+[aps.autodesk.com](https://aps.autodesk.com)). Every example in this book reads
+these two values from `~/.Renviron`.
+:::
 
 ::: callout-note
 Store only long-lived credentials — `client_id` and `client_secret` — in `.Renviron`. Tokens expire after 3600 seconds and must be obtained fresh at the start of each session via `getToken()`. Never store a token in a static file.

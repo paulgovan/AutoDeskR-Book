@@ -8,7 +8,7 @@ The data flows like this:
 
 ```{mermaid}
 %%| fig-width: 4.5
-flowchart LR
+flowchart TB
   A[aerial.dwg] --> B[translateSvf]
   B --> C[getObjectTree\nlayer hierarchy]
   C --> D[getData\nbounding boxes + properties]

@@ -12,7 +12,7 @@ This chapter focuses on the most common use case: DWG → PDF.
 
 ```{mermaid}
 %%| fig-width: 4.5
-flowchart LR
+flowchart TB
   A[DWG file\nat source URL] --> B[makePdf\nsubmit work item]
   B --> C{checkPdf}
   C -- pending / inprogress --> C

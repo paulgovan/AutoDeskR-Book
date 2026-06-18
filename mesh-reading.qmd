@@ -8,7 +8,7 @@ Once you've translated a CAD file through the [Model Derivative](model-derivativ
 
 ```{mermaid}
 %%| fig-width: 4.5
-flowchart LR
+flowchart TB
   A[CAD file\nin OSS bucket] --> B[translateObj / translateStl\nModel Derivative]
   B --> C[downloadFile\narial.obj]
   C --> D[vcgImport\ntmesh3d object]

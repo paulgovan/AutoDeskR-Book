@@ -8,7 +8,7 @@ The storage model is simple: your app owns **buckets**, and buckets hold **objec
 
 ```{mermaid}
 %%| fig-width: 4.5
-graph LR
+graph TD
   A[Your App] --> B[(Bucket)]
   B --> C[object: aerial.dwg]
   B --> D[object: office_plan.rvt]

@@ -79,6 +79,12 @@ stream_choices <- setNames(
 )
 ```
 
+::: callout-important
+**Replace before running:** `facilityId` (`"urn:adsk.dtdm:facility.abc123def456"`)
+with your own Tandem facility URN, and set `client_id`, `client_secret`, and `urn`
+in `~/.Renviron`.
+:::
+
 ## UI Layout
 
 Viewer on the left, controls and chart on the right:
@@ -147,6 +153,13 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
+
+::: callout-note
+**Representative result.** Running this app opens a digital twin dashboard, the
+AutoDesk Viewer on the left, a live `dygraph` time-series chart and stats table on
+the right, refreshing every 60 seconds. The data-flow diagram above shows how the
+pieces connect; the live app needs your own APS credentials and a Tandem facility.
+:::
 
 ::: callout-warning
 The Shiny server fetches Tandem data from R, not from the user's browser, so CORS restrictions don't apply. The server process does need outbound HTTPS access to `tandem.autodesk.com`, so check this if you're deploying on a restricted corporate network.

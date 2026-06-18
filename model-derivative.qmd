@@ -8,7 +8,7 @@ The pattern is always the same: submit a job, poll until it finishes, then pull 
 
 ```{mermaid}
 %%| fig-width: 4.5
-flowchart LR
+flowchart TB
   A[Upload file\nuploadFile] --> B[Translate\ntranslateObj / translateSvf]
   B --> C{checkFile}
   C -- pending / inprogress --> C

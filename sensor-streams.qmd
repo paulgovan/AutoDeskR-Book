@@ -45,6 +45,12 @@ streams_df
 #> 4  strm:energy-main   Main Energy          201   kWh       8412.5
 ```
 
+::: callout-important
+**Replace before running:** `facilityId` (`"urn:adsk.dtdm:facility.abc123def456"`)
+with your own Tandem facility URN, and set `client_id`/`client_secret` in
+`~/.Renviron`. The stream IDs above are illustrative.
+:::
+
 ## Fetching Time-Series Readings
 
 Request a time window using ISO 8601 timestamps as query parameters:
@@ -105,6 +111,12 @@ ggplot(readings_df, aes(x = timestamp, y = value)) +
        x = NULL, y = "Temperature (°C)") +
   theme_minimal()
 ```
+
+::: callout-note
+**Representative result.** This chart and the multi-stream overview below are
+drawn from synthetic readings so they render without a live Tandem connection. The
+same plotting code produces the same charts from your facility's real streams.
+:::
 
 ## Joining Sensor Data to Model Metadata
 
@@ -167,8 +179,9 @@ all_readings <- data.frame(
                    600 + cumsum(rnorm(96, 0, 5)),
                    pmax(10 + cumsum(rnorm(96, 0, 1)), 0),
                    8000 + seq(0, 400, length.out = 96)),
-  display_name = rep(c("HVAC Temp L2","CO\u2082 Office 3","Lobby Occupancy","Main Energy"), each = 96),
-  unit         = rep(c("\u00b0C","ppm","pers","kWh"), each = 96)
+  display_name = rep(c("HVAC Temp L2", "CO\u2082 Office 3",
+                       "Lobby Occupancy", "Main Energy"), each = 96),
+  unit         = rep(c("\u00b0C", "ppm", "pers", "kWh"), each = 96)
 )
 ```
 

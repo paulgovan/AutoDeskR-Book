@@ -27,6 +27,12 @@ myToken      <- resp$content$access_token
 myEncodedUrn <- jsonlite::base64_enc(Sys.getenv("urn"))
 ```
 
+::: callout-important
+**Replace before running:** set `client_id`, `client_secret`, and `urn` in your
+`~/.Renviron` (the `urn` being the SVF-translated model's raw URN). The viewer
+loads nothing until these point at your own APS app and model.
+:::
+
 ::: callout-note
 APS requires URNs to be Base64-encoded before use in any API call. `jsonlite::base64_enc()` handles this. See [Model Derivative](model-derivative.qmd#translate-to-obj) for a full explanation.
 :::

@@ -10,6 +10,8 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 |:-----------------------|:------------|:---------------------------|:--------------------------------|
 | `getToken` | — | `id`, `secret`, `scope` (space-separated string) | `$content$access_token`, `$content$expires_in` |
 
+: {tbl-colwidths="[20,16,36,28]"}
+
 ------------------------------------------------------------------------
 
 ## Data Management
@@ -26,6 +28,8 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 | `deleteObject` | `data:write` | `bucket`, `object` (filename) | `$status_code` 200 |
 | `downloadFile` | `data:read` | `urn` (encoded source), `output_urn` (encoded output), `destfile` | `$status_code` 200 |
 
+: {tbl-colwidths="[20,16,36,28]"}
+
 ------------------------------------------------------------------------
 
 ## Model Derivative
@@ -41,6 +45,8 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 | `getObjectTree` | `data:read` | `guid`, `urn` (Base-64 encoded) | `$content$data$objects` (nested list) |
 | `getData` | `data:read` | `guid`, `urn` (Base-64 encoded) | `$content$data$collection` (list of objects with properties) |
 
+: {tbl-colwidths="[20,16,36,28]"}
+
 ------------------------------------------------------------------------
 
 ## Design Automation
@@ -49,6 +55,8 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 |:-----------------------|:------------|:---------------------------|:--------------------------------|
 | `makePdf` | `code:all` | `source` (public URL to DWG), `destination` (public URL for output) | `$content$id` (WorkItem ID), `$content$status` |
 | `checkPdf` | `code:all` | `id` (WorkItem ID from `makePdf()`) | `$content$status` (`"pending"` / `"inprogress"` / `"success"`), `$content$stats` |
+
+: {tbl-colwidths="[20,16,36,28]"}
 
 ------------------------------------------------------------------------
 
@@ -62,6 +70,8 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 | `checkPhotoscene` | `data:read data:write` | `photoscene_id` | `$content$photoscene` `$progress` (`"0"`–`"100"`), `$progressmsg` |
 | `waitForPhotoscene` | `data:read data:write` | `interval` (seconds between polls, default 30), `timeout` (max wait in seconds, default 1800) | Final `checkPhotoscene` response when `progress == "100"` |
 
+: {tbl-colwidths="[20,16,36,28]"}
+
 ------------------------------------------------------------------------
 
 ## Viewer
@@ -70,6 +80,8 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 |:-----------------------|:------------|:---------------------------|:--------------------------------|
 | `viewer3D` | `data:read` | `urn` (Base-64 encoded), `viewerType` (`"header"` / `"headless"` / `"vr"`) | Opens viewer in browser / Shiny |
 | `viewerUI` | `data:read` | `id` (Shiny module ID), `urn`, `token`, `viewerType` | Shiny UI element for use in `fluidPage()` |
+
+: {tbl-colwidths="[20,16,36,28]"}
 
 ------------------------------------------------------------------------
 
@@ -83,6 +95,8 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 | `bucket:read` | Data Management (`checkBucket`, `listBuckets`) |
 | `bucket:delete` | Data Management (`deleteBucket`) |
 | `code:all` | Design Automation |
+
+: {tbl-colwidths="[22,78]"}
 
 ## Common Patterns
 
@@ -131,6 +145,8 @@ Used for direct Tandem REST API calls in the Digital Twins chapters, and as the 
 | `req_verbose()` | Enable request/response tracing | [Troubleshooting](troubleshooting.qmd) |
 | `resp_body_json(resp)` | Parse response body as JSON | [Sensor Streams](sensor-streams.qmd) |
 
+: {tbl-colwidths="[30,44,26]"}
+
 ------------------------------------------------------------------------
 
 ## jsonlite
@@ -139,6 +155,8 @@ Used for direct Tandem REST API calls in the Digital Twins chapters, and as the 
 |:---------------|:----------------------------------------|:---------------|
 | `base64_enc(x)` | Base-64 encode a string (required for APS URNs) | [Model Derivative](model-derivative.qmd), [Case Study](case-study.qmd) |
 | `fromJSON(txt)` | Parse a JSON string into an R list | General |
+
+: {tbl-colwidths="[30,44,26]"}
 
 ------------------------------------------------------------------------
 
@@ -154,6 +172,8 @@ Mesh processing — surface area, volume, smoothing, and surface distance. [@R-R
 | `vcgSmooth(mesh, iteration, lambda)` | Laplacian smoothing | [Mesh Comparison](mesh-comparison.qmd) |
 | `vcgDist(mesh1, mesh2)` | Per-vertex surface distance | [Mesh Comparison](mesh-comparison.qmd) |
 
+: {tbl-colwidths="[30,44,26]"}
+
 ------------------------------------------------------------------------
 
 ## rgl
@@ -168,6 +188,8 @@ Interactive 3D visualisation. [@R-rgl]
 | `readOBJ(file)` | Alternative OBJ reader | [Troubleshooting](troubleshooting.qmd) |
 | `options(rgl.useNULL = TRUE)` | Suppress OpenGL window (headless/server use) | [Troubleshooting](troubleshooting.qmd) |
 
+: {tbl-colwidths="[30,44,26]"}
+
 ------------------------------------------------------------------------
 
 ## geometry
@@ -178,6 +200,8 @@ Computational geometry for open (non-watertight) meshes. [@R-geometry]
 |:---------------|:----------------------------------------|:---------------|
 | `convhulln(pts, options)` | Convex hull with area and volume (`options = "FA"`) | [Mesh Metrics](mesh-metrics.qmd) |
 
+: {tbl-colwidths="[30,44,26]"}
+
 ------------------------------------------------------------------------
 
 ## rayshader
@@ -187,6 +211,8 @@ High-quality 3D rendered images. [@R-rayshader]
 | Function | Description | Chapter |
 |:---------------|:----------------------------------------|:---------------|
 | `render_snapshot(filename)` | Save a ray-traced render to file | [Mesh Visualisation](mesh-visualisation.qmd) |
+
+: {tbl-colwidths="[30,44,26]"}
 
 ------------------------------------------------------------------------
 
@@ -204,6 +230,8 @@ Point cloud analysis from LAS/LAZ files. [@R-lidR]
 | `npoints(pc)` | Total point count | [Point Cloud Analysis](point-cloud-analysis.qmd) |
 | `area(pc)` | Survey footprint area | [Point Cloud Analysis](point-cloud-analysis.qmd) |
 
+: {tbl-colwidths="[30,44,26]"}
+
 ------------------------------------------------------------------------
 
 ## dplyr
@@ -220,6 +248,8 @@ Data manipulation — filtering, grouping, joining. Used throughout the DWG Anal
 | `inner_join(x, y, by)` | Join keeping rows in both tables | [Sensor Streams](sensor-streams.qmd) |
 | `left_join(x, y, by)` | Join keeping all rows from left table | [Sensor Streams](sensor-streams.qmd) |
 
+: {tbl-colwidths="[30,44,26]"}
+
 ------------------------------------------------------------------------
 
 ## tidyr
@@ -227,6 +257,8 @@ Data manipulation — filtering, grouping, joining. Used throughout the DWG Anal
 | Function | Description | Chapter |
 |:---------------|:----------------------------------------|:---------------|
 | `pivot_wider(data, names_from, values_from)` | Reshape long data to wide format | [Attribute Extraction](attribute-extraction.qmd) |
+
+: {tbl-colwidths="[30,44,26]"}
 
 ------------------------------------------------------------------------
 
@@ -246,6 +278,8 @@ Data visualisation. Used in DWG Analytics, Digital Twins, and the Case Study.
 | `coord_flip()` | Swap x and y axes | [Layer Analysis](layer-analysis.qmd) |
 | `theme_minimal()` | Clean theme | Multiple |
 
+: {tbl-colwidths="[30,44,26]"}
+
 ------------------------------------------------------------------------
 
 ## gt
@@ -259,6 +293,8 @@ Publication-quality tables for automated reports.[@R-gt]
 | `fmt_number(columns, decimals)` | Format numeric columns | [Drawing Reports](drawing-reports.qmd) |
 | `cols_label(...)` | Rename column headers | [Drawing Reports](drawing-reports.qmd) |
 | `tab_source_note(note)` | Add a footnote | [Drawing Reports](drawing-reports.qmd) |
+
+: {tbl-colwidths="[30,44,26]"}
 
 ------------------------------------------------------------------------
 
@@ -276,6 +312,8 @@ Interactive web applications and dashboards.
 | `shinyApp(ui, server)` | Launch the app | [Case Study](case-study.qmd) |
 | `deployApp()` | Deploy to shinyapps.io | [Live Dashboards](live-dashboards.qmd) |
 
+: {tbl-colwidths="[30,44,26]"}
+
 ------------------------------------------------------------------------
 
 ## dygraphs
@@ -289,6 +327,8 @@ Interactive time-series plots for Shiny dashboards. [@R-dygraphs]
 | `dygraphOutput(id)` | Shiny UI placeholder | [Live Dashboards](live-dashboards.qmd) |
 | `renderDygraph({})` | Shiny server renderer | [Live Dashboards](live-dashboards.qmd) |
 
+: {tbl-colwidths="[30,44,26]"}
+
 ------------------------------------------------------------------------
 
 ## xts
@@ -299,6 +339,8 @@ Time-series objects required by `dygraphs`.
 |:---------------|:----------------------------------------|:---------------|
 | `xts(data, order.by)` | Create an extensible time-series object | [Live Dashboards](live-dashboards.qmd) |
 
+: {tbl-colwidths="[30,44,26]"}
+
 ------------------------------------------------------------------------
 
 ## quarto
@@ -308,3 +350,5 @@ Programmatic report rendering.
 | Function | Description | Chapter |
 |:---------------|:----------------------------------------|:---------------|
 | `quarto_render(input, execute_params)` | Render a `.qmd` file with injected parameters | [Drawing Reports](drawing-reports.qmd) |
+
+: {tbl-colwidths="[30,44,26]"}

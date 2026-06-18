@@ -34,7 +34,7 @@ usethis::edit_r_environ()
 
 Add the following lines, replacing the placeholder values:
 
-```         
+```
 client_id=your_client_id_here
 client_secret=your_client_secret_here
 ```

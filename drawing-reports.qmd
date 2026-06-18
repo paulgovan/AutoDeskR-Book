@@ -49,6 +49,12 @@ params:
 ---
 ```
 
+::: callout-important
+**Replace before running:** `YOUR_URN_HERE` with the Base64-encoded URN of your
+translated drawing (and `drawing_name` with its filename). These default values
+are placeholders.
+:::
+
 Access the parameters inside the document:
 
 ```{r}

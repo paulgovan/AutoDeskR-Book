@@ -15,7 +15,7 @@ The full workflow goes like this:
 
 ```{mermaid}
 %%| fig-width: 4.5
-flowchart LR
+flowchart TB
   A[Photos] --> B[createPhotoscene]
   B --> C[uploadImages]
   C --> D[processPhotoscene]

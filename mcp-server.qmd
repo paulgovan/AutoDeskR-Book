@@ -27,21 +27,24 @@ The table below maps ten useful MCP tools to their underlying AutoDeskR function
 
 ## Setting Up a Local MCP Server
 
-The [`mcpr`](https://github.com/devOpifex/mcpr) [@R-mcpr] package provides the MCP transport layer for R. Install it from GitHub:
+The [`mcptools`](https://posit-dev.github.io/mcptools/) [@R-mcptools] package turns R functions into MCP tools. Install it from CRAN:
 
 ```{r}
 #| eval: false
-devtools::install_github("devOpifex/mcpr")
+install.packages("mcptools")
+# development version: pak::pak("posit-dev/mcptools")
 ```
 
-A minimal server registers tools and starts listening. Here's a working example for the `get_layer_summary` tool:
+`mcptools` builds on [`ellmer`](https://ellmer.tidyverse.org/): each tool is an `ellmer::tool()` that wraps one or more AutoDeskR calls. Collect the tools in a single `.R` file that **returns a list** of them — `mcptools::mcp_server()` sources that file when the client starts the server. Because the file runs in a fresh R session, namespace everything (`ellmer::tool()`, not `tool()`).
+
+Here's a working tools file with the `get_layer_summary` tool:
 
 ```{r}
 #| eval: false
-library(mcpr)
+# autodeskr-mcp-tools.R
 library(AutoDeskR)
 
-# Authenticate once at startup using environment variables
+# Authenticate once when the server starts, using environment variables
 .token <- local({
   resp <- getToken(
     id     = Sys.getenv("client_id"),
@@ -51,14 +54,8 @@ library(AutoDeskR)
   resp$content$access_token
 })
 
-# Register the tool
-mcp_tool(
-  name        = "get_layer_summary",
-  description = "Return object count and total area by layer for a translated DWG URN.",
-  params = list(
-    urn = mcp_param("string", "The raw objectId URN returned by uploadFile()")
-  ),
-  handler = function(urn) {
+get_layer_summary <- ellmer::tool(
+  function(urn) {
     encoded <- jsonlite::base64_enc(urn)
 
     # Retrieve the viewable GUID before fetching properties
@@ -71,30 +68,22 @@ mcp_tool(
     layer_counts <- table(sapply(objects, `[[`, "name"))
     data.frame(layer = names(layer_counts),
                n_objects = as.integer(layer_counts))
-  }
+  },
+  name        = "get_layer_summary",
+  description = "Return object count and total area by layer for a translated DWG URN.",
+  arguments   = list(
+    urn = ellmer::type_string("The raw objectId URN returned by uploadFile().")
+  )
 )
-
-# Start the server (stdio transport for Claude Desktop)
-mcp_serve()
 ```
 
-```         
-#> MCP server listening on stdio
-#> Registered tools: get_layer_summary
-```
-
-Add more tools by repeating the `mcp_tool()` pattern before calling `mcp_serve()`. Here are two more useful examples:
+Add more tools by defining more `ellmer::tool()` objects, then return them all in a list at the end of the file. Here are two more useful examples:
 
 ```{r}
 #| eval: false
 # Tool: translate a file and poll until complete
-mcp_tool(
-  name        = "translate_file",
-  description = "Translate a file URN to OBJ format and poll until complete.",
-  params = list(
-    urn = mcp_param("string", "The raw objectId URN returned by uploadFile()")
-  ),
-  handler = function(urn) {
+translate_file <- ellmer::tool(
+  function(urn) {
     encoded <- jsonlite::base64_enc(urn)
     translateObj(urn = encoded, token = .token)
     repeat {
@@ -103,36 +92,61 @@ mcp_tool(
       Sys.sleep(5)
     }
     list(status = "success", urn = encoded)
-  }
+  },
+  name        = "translate_file",
+  description = "Translate a file URN to OBJ format and poll until complete.",
+  arguments   = list(
+    urn = ellmer::type_string("The raw objectId URN returned by uploadFile().")
+  )
 )
 
 # Tool: return the model hierarchy as a JSON-serialisable list
-mcp_tool(
-  name        = "get_object_tree",
-  description = "Return the layer/object hierarchy for a translated DWG URN.",
-  params = list(
-    urn = mcp_param("string", "The raw objectId URN returned by uploadFile()")
-  ),
-  handler = function(urn) {
+get_object_tree <- ellmer::tool(
+  function(urn) {
     encoded <- jsonlite::base64_enc(urn)
     meta    <- getMetadata(urn = encoded, token = .token)
     guid    <- meta$content$data$metadata[[1]]$guid
     resp    <- getObjectTree(guid = guid, urn = encoded, token = .token)
     resp$content$data$objects[[1]]
-  }
+  },
+  name        = "get_object_tree",
+  description = "Return the layer/object hierarchy for a translated DWG URN.",
+  arguments   = list(
+    urn = ellmer::type_string("The raw objectId URN returned by uploadFile().")
+  )
 )
+
+# The file must end by returning a list of every tool to expose
+list(get_layer_summary, translate_file, get_object_tree)
+```
+
+The client launches the server with `Rscript`, pointing `mcp_server()` at this tools file (see the next section). To try it interactively first, call it directly — it blocks, waiting for a client to connect:
+
+```{r}
+#| eval: false
+mcptools::mcp_server(tools = "autodeskr-mcp-tools.R")
 ```
 
 ## Connecting to Claude Desktop
 
-Claude Desktop reads its MCP server list from a JSON config file. On macOS, open or create `~/Library/Application Support/Claude/claude_desktop_config.json` and add an entry for the AutoDeskR server:
+Claude Desktop reads its MCP server list from a JSON config file. On any platform, the easiest way to open it is **Settings → Developer → Edit Config**, which reveals `claude_desktop_config.json`. To edit it directly instead, the file lives at:
+
+| Platform | Config file path |
+|:---------|:-----------------------------------------------------------------|
+| macOS    | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| Windows  | `%APPDATA%\Claude\claude_desktop_config.json`                     |
+| Linux    | `~/.config/Claude/claude_desktop_config.json`                    |
+
+: {tbl-colwidths="[20,80]"}
+
+Add an entry for the AutoDeskR server. The command is `Rscript`, and the arguments tell `mcptools` to start a server with your tools file:
 
 ``` json
 {
   "mcpServers": {
     "autodeskr": {
       "command": "Rscript",
-      "args": ["/path/to/autodeskr-mcp-server.R"],
+      "args": ["-e", "mcptools::mcp_server(tools = '/path/to/autodeskr-mcp-tools.R')"],
       "env": {
         "client_id": "your_aps_client_id",
         "client_secret": "your_aps_client_secret"
@@ -141,6 +155,15 @@ Claude Desktop reads its MCP server list from a JSON config file. On macOS, open
   }
 }
 ```
+
+::: callout-important
+**Replace before running:**
+
+-   `/path/to/autodeskr-mcp-tools.R` — the absolute path to your tools file.
+-   `your_aps_client_id` / `your_aps_client_secret` — your APS app credentials.
+
+On Windows you may also need to give the full path to `Rscript.exe` as the `command`.
+:::
 
 Restart Claude Desktop. The AutoDeskR tools will appear in the tool palette and Claude will call them automatically when relevant.
 

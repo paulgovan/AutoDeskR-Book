@@ -10,23 +10,23 @@ Whether you're a data scientist who just inherited a folder of DWG files, or a B
 
 Each chapter covers a different piece of the BIM and CAD analytics ecosystem:
 
--   **Authentication** — grab an OAuth token in one line and never think about it again
--   **Data Management** — upload files to the cloud, wrangle buckets, and pull objects back down
--   **Model Derivative** — translate design files into OBJ, STL, and SVF; extract geometry and metadata
--   **Design Automation** — run DWG-to-PDF conversion in the cloud, no AutoCAD required
--   **Reality Capture** — turn a set of overlapping photos into a 3D mesh
--   **Viewer** — embed a live 3D model viewer in a Shiny app with two lines of code
--   **3D Geometry & Meshes** — import, measure, and visualise translated mesh files
--   **DWG & DXF Analytics** — parse layer structure, extract attributes, compare drawing revisions
--   **Digital Twins** — link live sensor data to BIM elements via AutoDesk Tandem
--   **MCP Server** — expose AutoDeskR as an AI agent tool so LLMs can query BIM models directly
+- **Authentication** — grab an OAuth token in one line and never think about it again
+- **Data Management** — upload files to the cloud, wrangle buckets, and pull objects back down
+- **Model Derivative** — translate design files into OBJ, STL, and SVF; extract geometry and metadata
+- **Design Automation** — run DWG-to-PDF conversion in the cloud, no AutoCAD required
+- **Reality Capture** — turn a set of overlapping photos into a 3D mesh
+- **Viewer** — embed a live 3D model viewer in a Shiny app with two lines of code
+- **3D Geometry & Meshes** — import, measure, and visualise translated mesh files
+- **DWG & DXF Analytics** — parse layer structure, extract attributes, compare drawing revisions
+- **Digital Twins** — link live sensor data to BIM elements via AutoDesk Tandem
+- **MCP Server** — expose AutoDeskR as an AI agent tool so LLMs can query BIM models directly
 
 ## How This Book is Structured
 
 The book is organised into eight parts. You don't have to read them in order, each chapter is reasonably self-contained, but the parts do build on each other if you want the full picture.
 
 | Part | Chapters | What you'll do |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Front Matter** | Motivation, Acknowledgements | Understand the why |
 | **Getting Started** | Getting Started | Install the package and make your first API call |
 | **AutoDesk Platform Services** | Authentication → Viewer | The six main APS APIs, start to finish |
@@ -40,9 +40,9 @@ The book is organised into eight parts. You don't have to read them in order, ea
 
 To follow along you'll need:
 
--   **R** (version 4.0 or later) and, optionally, RStudio
--   A free **AutoDesk account** with an APS application registered at [aps.autodesk.com](https://aps.autodesk.com). The [Getting Started](getting-started.qmd) chapter walks you through it step by step
--   An internet connection (all the action happens in AutoDesk's cloud)
+- **R** (version 4.0 or later) and, optionally, RStudio
+- A free **AutoDesk account** with an APS application registered at [aps.autodesk.com](https://aps.autodesk.com). The [Getting Started](getting-started.qmd) chapter walks you through it step by step
+- An internet connection (all the action happens in AutoDesk's cloud)
 
 No prior CAD or BIM experience assumed. If you're comfortable running an R script, you're ready.
 
@@ -65,6 +65,17 @@ devtools::install_github("paulgovan/AutoDeskR")
 New to APS? Start with [Getting Started](getting-started.qmd) and work through the chapters in order, each one builds on the previous. Already know the APS basics? Jump straight to whatever chapter covers your use case. The [Troubleshooting](troubleshooting.qmd) chapter is always there when something goes sideways.
 
 All code examples are copy-paste ready and work with `#| eval: false` so they won't execute during book rendering but will run just fine in your R session.
+
+::: callout-note
+**About the outputs in this book.** Most examples call live AutoDesk Platform
+Services, which need your own credentials, uploaded files, and (for Digital Twins)
+a Tandem subscription, so they can't run during book rendering. Where it helps to
+see the shape of a result, the book shows a **representative output** generated
+without the live API: tables, charts, and 3D views built from illustrative data.
+These are flagged in place with a *Representative result* note. Anything you must
+swap in to run the code yourself, bucket names, client IDs, file URNs, is called
+out with a *Replace before running* note.
+:::
 
 ## Where This is Headed
 
