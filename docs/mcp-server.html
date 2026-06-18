@@ -6,11 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Paul Govan">
 <meta name="dcterms.date" content="2025-12-31">
 <meta name="description" content="A practical guide to analyzing AEC and CAD/BIM data in R with the AutoDeskR package and AutoDesk Platform Services.">
 
-<title>R for AEC Data Analysis</title>
+<title>19&nbsp; MCP Server – R for AEC Data Analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -90,7 +89,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./motivation.html" rel="next">
+<link href="./case-study.html" rel="next">
+<link href="./live-dashboards.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -134,9 +134,8 @@ div.csl-indent {
 }</script>
 
 
-<meta property="og:title" content="R for AEC Data Analysis">
+<meta property="og:title" content="19&nbsp; MCP Server – R for AEC Data Analysis">
 <meta property="og:description" content="A practical guide to analyzing AEC and CAD/BIM data in R with the AutoDeskR package and AutoDesk Platform Services.">
-<meta property="og:image" content="cover.png">
 <meta property="og:site_name" content="R for AEC Data Analysis">
 </head>
 
@@ -311,7 +310,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcp-server.html">AI Integration</a></li><li class="breadcrumb-item"><a href="./mcp-server.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">MCP Server</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -365,7 +364,7 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -578,7 +577,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./mcp-server.html" class="sidebar-item-text sidebar-link">
+  <a href="./mcp-server.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">MCP Server</span></span></a>
   </div>
 </li>
@@ -629,15 +628,11 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul class="collapse">
-  <li><a href="#what-youll-learn" id="toc-what-youll-learn" class="nav-link" data-scroll-target="#what-youll-learn">What You’ll Learn</a></li>
-  <li><a href="#how-this-book-is-structured" id="toc-how-this-book-is-structured" class="nav-link" data-scroll-target="#how-this-book-is-structured">How This Book is Structured</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#how-to-use-this-book" id="toc-how-to-use-this-book" class="nav-link" data-scroll-target="#how-to-use-this-book">How to Use This Book</a></li>
-  <li><a href="#where-this-is-headed" id="toc-where-this-is-headed" class="nav-link" data-scroll-target="#where-this-is-headed">Where This is Headed</a></li>
-  </ul></li>
+  <li><a href="#proposed-tools" id="toc-proposed-tools" class="nav-link active" data-scroll-target="#proposed-tools"><span class="header-section-number">19.1</span> Proposed Tools</a></li>
+  <li><a href="#setting-up-a-local-mcp-server" id="toc-setting-up-a-local-mcp-server" class="nav-link" data-scroll-target="#setting-up-a-local-mcp-server"><span class="header-section-number">19.2</span> Setting Up a Local MCP Server</a></li>
+  <li><a href="#connecting-to-claude-desktop" id="toc-connecting-to-claude-desktop" class="nav-link" data-scroll-target="#connecting-to-claude-desktop"><span class="header-section-number">19.3</span> Connecting to Claude Desktop</a></li>
+  <li><a href="#example-agent-conversations" id="toc-example-agent-conversations" class="nav-link" data-scroll-target="#example-agent-conversations"><span class="header-section-number">19.4</span> Example Agent Conversations</a></li>
+  <li><a href="#security-considerations" id="toc-security-considerations" class="nav-link" data-scroll-target="#security-considerations"><span class="header-section-number">19.5</span> Security Considerations</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/paulgovan/AutoDeskR-Book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -645,26 +640,15 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcp-server.html">AI Integration</a></li><li class="breadcrumb-item"><a href="./mcp-server.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">MCP Server</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">R for AEC Data Analysis</h1>
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">MCP Server</span></h1>
 </div>
 
-<div>
-  <div class="description">
-    A practical guide to analyzing AEC and CAD/BIM data in R with the AutoDeskR package and AutoDesk Platform Services.
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Paul Govan </p>
-          </div>
-  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
@@ -681,31 +665,12 @@ div.csl-indent {
 </header>
 
 
-
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1><p><img src="cover.png" title="R for AEC Data Analysis" class="quarto-cover-image nolightbox img-fluid"></p>
-<p>AEC projects generate rich, varied data, layer structures, 3D geometry, point clouds, sensor streams, and most of it is locked inside proprietary formats that R cannot easily reach. <em>R for AEC Data Analysis</em> is a practical guide to changing that.</p>
-<p>This book uses the <a href="https://github.com/paulgovan/AutoDeskR">AutoDeskR</a> R package <span class="citation" data-cites="R-AutoDeskR">(<a href="#ref-R-AutoDeskR" role="doc-biblioref">Govan 2024</a>)</span> and the <a href="https://aps.autodesk.com">AutoDesk Platform Services (APS)</a> cloud API as the primary bridge to that data, translating design files, extracting geometry, connecting live sensor streams, and embedding interactive 3D models in Shiny dashboards. AutoDesk is the dominant platform in the AEC industry, so it’s a practical place to start. But the analytical techniques here, mesh analysis, layer analytics, digital twin patterns, MCP tool exposure, apply to any BIM or CAD data, wherever it comes from.</p>
-<p>Whether you’re a data scientist who just inherited a folder of DWG files, or a BIM manager who wants to automate something that currently takes three software packages and a prayer, this book is for you.</p>
-<section id="what-youll-learn" class="level2">
-<h2 class="anchored" data-anchor-id="what-youll-learn">What You’ll Learn</h2>
-<p>Each chapter covers a different piece of the BIM and CAD analytics ecosystem:</p>
-<ul>
-<li><strong>Authentication</strong> — grab an OAuth token in one line and never think about it again</li>
-<li><strong>Data Management</strong> — upload files to the cloud, wrangle buckets, and pull objects back down</li>
-<li><strong>Model Derivative</strong> — translate design files into OBJ, STL, and SVF; extract geometry and metadata</li>
-<li><strong>Design Automation</strong> — run DWG-to-PDF conversion in the cloud, no AutoCAD required</li>
-<li><strong>Reality Capture</strong> — turn a set of overlapping photos into a 3D mesh</li>
-<li><strong>Viewer</strong> — embed a live 3D model viewer in a Shiny app with two lines of code</li>
-<li><strong>3D Geometry &amp; Meshes</strong> — import, measure, and visualise translated mesh files</li>
-<li><strong>DWG &amp; DXF Analytics</strong> — parse layer structure, extract attributes, compare drawing revisions</li>
-<li><strong>Digital Twins</strong> — link live sensor data to BIM elements via AutoDesk Tandem</li>
-<li><strong>MCP Server</strong> — expose AutoDeskR as an AI agent tool so LLMs can query BIM models directly</li>
-</ul>
-</section>
-<section id="how-this-book-is-structured" class="level2">
-<h2 class="anchored" data-anchor-id="how-this-book-is-structured">How This Book is Structured</h2>
-<p>The book is organised into eight parts. You don’t have to read them in order, each chapter is reasonably self-contained, but the parts do build on each other if you want the full picture.</p>
+<p>AI assistants are increasingly useful not just for answering questions but for <em>doing things</em>, calling APIs, reading files, running analyses. The Model Context Protocol (MCP) is the open standard that makes that possible. It defines how an AI assistant discovers and calls external tools during a conversation, in the same way a web browser discovers and calls REST APIs.</p>
+<p>AutoDeskR functions are exactly the kind of tools an AI agent would want to call. “Summarise the layers in this DWG.” “Translate this file and give me the bounding box.” “Fetch the last 24 hours of HVAC sensor readings.” Each of those is a handful of AutoDeskR function calls, and with an MCP server in front of them, an AI assistant can make those calls itself, without you writing a single line of R.</p>
+<p>This chapter shows how to expose AutoDeskR as an MCP server so that Claude Desktop, VS Code Copilot, or any other MCP-compatible client can query BIM models directly.</p>
+<section id="proposed-tools" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="proposed-tools"><span class="header-section-number">19.1</span> Proposed Tools</h2>
+<p>The table below maps ten useful MCP tools to their underlying AutoDeskR functions. Each tool is a thin wrapper. It handles authentication, calls the relevant function(s), and returns a structured JSON result.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -714,105 +679,255 @@ div.csl-indent {
 </colgroup>
 <thead>
 <tr class="header">
-<th>Part</th>
-<th>Chapters</th>
-<th>What you’ll do</th>
+<th>MCP Tool</th>
+<th>Wraps</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Front Matter</strong></td>
-<td>Motivation, Acknowledgements</td>
-<td>Understand the why</td>
+<td><code>get_token</code></td>
+<td><code>getToken()</code></td>
+<td>Authenticate and return a bearer token</td>
 </tr>
 <tr class="even">
-<td><strong>Getting Started</strong></td>
-<td>Getting Started</td>
-<td>Install the package and make your first API call</td>
+<td><code>upload_file</code></td>
+<td><code>makeBucket()</code> + <code>uploadFile()</code></td>
+<td>Create a bucket and upload a local file</td>
 </tr>
 <tr class="odd">
-<td><strong>AutoDesk Platform Services</strong></td>
-<td>Authentication → Viewer</td>
-<td>The six main APS APIs, start to finish</td>
+<td><code>translate_file</code></td>
+<td><code>translateObj()</code> / <code>translateSvf()</code> + <code>checkFile()</code></td>
+<td>Translate a file and poll until complete</td>
 </tr>
 <tr class="even">
-<td><strong>3D Geometry &amp; Meshes</strong></td>
-<td>Reading → Visualisation → Point Clouds → Comparison</td>
-<td>Import, measure, and compare translated mesh files</td>
+<td><code>get_layer_summary</code></td>
+<td><code>translateSvf()</code> + <code>getData()</code></td>
+<td>Layer-level object count and area for a DWG</td>
 </tr>
 <tr class="odd">
-<td><strong>DWG &amp; DXF Analytics</strong></td>
-<td>Layer Analysis → Attributes → Comparison → Reports</td>
-<td>Extract meaning from drawing data</td>
+<td><code>get_object_tree</code></td>
+<td><code>getObjectTree()</code></td>
+<td>Model hierarchy as a JSON tree</td>
 </tr>
 <tr class="even">
-<td><strong>Digital Twins</strong></td>
-<td>Tandem Overview → Sensor Streams → Live Dashboards</td>
-<td>Join live sensor readings to BIM elements</td>
+<td><code>get_metadata</code></td>
+<td><code>getMetadata()</code></td>
+<td>List available metadata GUIDs for a translated model</td>
 </tr>
 <tr class="odd">
-<td><strong>AI Integration</strong></td>
-<td>MCP Server</td>
-<td>Expose AutoDeskR as a tool for AI agents</td>
+<td><code>download_mesh</code></td>
+<td><code>getOutputUrn()</code> + <code>downloadFile()</code></td>
+<td>Download the translated OBJ/STL to a local path</td>
 </tr>
 <tr class="even">
-<td><strong>Reference</strong></td>
-<td>Case Study, Function Reference, Troubleshooting</td>
-<td>Worked example, lookup tables, and help</td>
+<td><code>make_pdf</code></td>
+<td><code>makePdf()</code> + <code>checkPdf()</code></td>
+<td>Convert a DWG to PDF via Design Automation</td>
+</tr>
+<tr class="odd">
+<td><code>get_sensor_streams</code></td>
+<td>Tandem REST API</td>
+<td>List sensor streams for a Tandem facility</td>
+</tr>
+<tr class="even">
+<td><code>get_stream_readings</code></td>
+<td>Tandem REST API</td>
+<td>Fetch time-series readings for a stream</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<p>To follow along you’ll need:</p>
-<ul>
-<li><strong>R</strong> (version 4.0 or later) and, optionally, RStudio</li>
-<li>A free <strong>AutoDesk account</strong> with an APS application registered at <a href="https://aps.autodesk.com">aps.autodesk.com</a>. The <a href="./getting-started.html">Getting Started</a> chapter walks you through it step by step</li>
-<li>An internet connection (all the action happens in AutoDesk’s cloud)</li>
-</ul>
-<p>No prior CAD or BIM experience assumed. If you’re comfortable running an R script, you’re ready.</p>
+<section id="setting-up-a-local-mcp-server" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="setting-up-a-local-mcp-server"><span class="header-section-number">19.2</span> Setting Up a Local MCP Server</h2>
+<p>The <a href="https://posit-dev.github.io/mcptools/"><code>mcptools</code></a> <span class="citation" data-cites="R-mcptools">(<a href="references.html#ref-R-mcptools" role="doc-biblioref">Posit Software, PBC 2025</a>)</span> package turns R functions into MCP tools. Install it from CRAN:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"mcptools"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># development version: pak::pak("posit-dev/mcptools")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>mcptools</code> builds on <a href="https://ellmer.tidyverse.org/"><code>ellmer</code></a>: each tool is an <code>ellmer::tool()</code> that wraps one or more AutoDeskR calls. Collect the tools in a single <code>.R</code> file that <strong>returns a list</strong> of them — <code>mcptools::mcp_server()</code> sources that file when the client starts the server. Because the file runs in a fresh R session, namespace everything (<code>ellmer::tool()</code>, not <code>tool()</code>).</p>
+<p>Here’s a working tools file with the <code>get_layer_summary</code> tool:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># autodeskr-mcp-tools.R</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AutoDeskR)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Authenticate once when the server starts, using environment variables</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>.token <span class="ot">&lt;-</span> <span class="fu">local</span>({</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  resp <span class="ot">&lt;-</span> <span class="fu">getToken</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">id     =</span> <span class="fu">Sys.getenv</span>(<span class="st">"client_id"</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">secret =</span> <span class="fu">Sys.getenv</span>(<span class="st">"client_secret"</span>),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">scope  =</span> <span class="st">"data:read data:write bucket:create"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  resp<span class="sc">$</span>content<span class="sc">$</span>access_token</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>get_layer_summary <span class="ot">&lt;-</span> ellmer<span class="sc">::</span><span class="fu">tool</span>(</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(urn) {</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    encoded <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">base64_enc</span>(urn)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the viewable GUID before fetching properties</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    meta    <span class="ot">&lt;-</span> <span class="fu">getMetadata</span>(<span class="at">urn =</span> encoded, <span class="at">token =</span> .token)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    guid    <span class="ot">&lt;-</span> meta<span class="sc">$</span>content<span class="sc">$</span>data<span class="sc">$</span>metadata[[<span class="dv">1</span>]]<span class="sc">$</span>guid</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    resp    <span class="ot">&lt;-</span> <span class="fu">getData</span>(<span class="at">guid =</span> guid, <span class="at">urn =</span> encoded, <span class="at">token =</span> .token)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    objects <span class="ot">&lt;-</span> resp<span class="sc">$</span>content<span class="sc">$</span>data<span class="sc">$</span>collection</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    layer_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">sapply</span>(objects, <span class="st">`</span><span class="at">[[</span><span class="st">`</span>, <span class="st">"name"</span>))</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">layer =</span> <span class="fu">names</span>(layer_counts),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>               <span class="at">n_objects =</span> <span class="fu">as.integer</span>(layer_counts))</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">name        =</span> <span class="st">"get_layer_summary"</span>,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">description =</span> <span class="st">"Return object count and total area by layer for a translated DWG URN."</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">arguments   =</span> <span class="fu">list</span>(</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">urn =</span> ellmer<span class="sc">::</span><span class="fu">type_string</span>(<span class="st">"The raw objectId URN returned by uploadFile()."</span>)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Add more tools by defining more <code>ellmer::tool()</code> objects, then return them all in a list at the end of the file. Here are two more useful examples:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tool: translate a file and poll until complete</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>translate_file <span class="ot">&lt;-</span> ellmer<span class="sc">::</span><span class="fu">tool</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(urn) {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    encoded <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">base64_enc</span>(urn)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translateObj</span>(<span class="at">urn =</span> encoded, <span class="at">token =</span> .token)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">repeat</span> {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      resp <span class="ot">&lt;-</span> <span class="fu">checkFile</span>(<span class="at">urn =</span> encoded, <span class="at">token =</span> .token)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (resp<span class="sc">$</span>content<span class="sc">$</span>status <span class="sc">==</span> <span class="st">"success"</span>) <span class="cf">break</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">Sys.sleep</span>(<span class="dv">5</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">status =</span> <span class="st">"success"</span>, <span class="at">urn =</span> encoded)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">name        =</span> <span class="st">"translate_file"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">description =</span> <span class="st">"Translate a file URN to OBJ format and poll until complete."</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">arguments   =</span> <span class="fu">list</span>(</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">urn =</span> ellmer<span class="sc">::</span><span class="fu">type_string</span>(<span class="st">"The raw objectId URN returned by uploadFile()."</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Tool: return the model hierarchy as a JSON-serialisable list</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>get_object_tree <span class="ot">&lt;-</span> ellmer<span class="sc">::</span><span class="fu">tool</span>(</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(urn) {</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    encoded <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">base64_enc</span>(urn)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    meta    <span class="ot">&lt;-</span> <span class="fu">getMetadata</span>(<span class="at">urn =</span> encoded, <span class="at">token =</span> .token)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    guid    <span class="ot">&lt;-</span> meta<span class="sc">$</span>content<span class="sc">$</span>data<span class="sc">$</span>metadata[[<span class="dv">1</span>]]<span class="sc">$</span>guid</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    resp    <span class="ot">&lt;-</span> <span class="fu">getObjectTree</span>(<span class="at">guid =</span> guid, <span class="at">urn =</span> encoded, <span class="at">token =</span> .token)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    resp<span class="sc">$</span>content<span class="sc">$</span>data<span class="sc">$</span>objects[[<span class="dv">1</span>]]</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">name        =</span> <span class="st">"get_object_tree"</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">description =</span> <span class="st">"Return the layer/object hierarchy for a translated DWG URN."</span>,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">arguments   =</span> <span class="fu">list</span>(</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">urn =</span> ellmer<span class="sc">::</span><span class="fu">type_string</span>(<span class="st">"The raw objectId URN returned by uploadFile()."</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># The file must end by returning a list of every tool to expose</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(get_layer_summary, translate_file, get_object_tree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The client launches the server with <code>Rscript</code>, pointing <code>mcp_server()</code> at this tools file (see the next section). To try it interactively first, call it directly — it blocks, waiting for a client to connect:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mcptools<span class="sc">::</span><span class="fu">mcp_server</span>(<span class="at">tools =</span> <span class="st">"autodeskr-mcp-tools.R"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
-<section id="installation" class="level2">
-<h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p>Install the stable release from CRAN:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"AutoDeskR"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or grab the development version from GitHub if you like living on the edge:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"paulgovan/AutoDeskR"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="how-to-use-this-book" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use-this-book">How to Use This Book</h2>
-<p>New to APS? Start with <a href="./getting-started.html">Getting Started</a> and work through the chapters in order, each one builds on the previous. Already know the APS basics? Jump straight to whatever chapter covers your use case. The <a href="./troubleshooting.html">Troubleshooting</a> chapter is always there when something goes sideways.</p>
-<p>All code examples are copy-paste ready and work with <code>#| eval: false</code> so they won’t execute during book rendering but will run just fine in your R session.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<section id="connecting-to-claude-desktop" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="connecting-to-claude-desktop"><span class="header-section-number">19.3</span> Connecting to Claude Desktop</h2>
+<p>Claude Desktop reads its MCP server list from a JSON config file. On any platform, the easiest way to open it is <strong>Settings → Developer → Edit Config</strong>, which reveals <code>claude_desktop_config.json</code>. To edit it directly instead, the file lives at:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Platform</th>
+<th style="text-align: left;">Config file path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">macOS</td>
+<td style="text-align: left;"><code>~/Library/Application Support/Claude/claude_desktop_config.json</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Windows</td>
+<td style="text-align: left;"><code>%APPDATA%\Claude\claude_desktop_config.json</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Linux</td>
+<td style="text-align: left;"><code>~/.config/Claude/claude_desktop_config.json</code></td>
+</tr>
+</tbody>
+</table>
+<p>Add an entry for the AutoDeskR server. The command is <code>Rscript</code>, and the arguments tell <code>mcptools</code> to start a server with your tools file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"mcpServers"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"autodeskr"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"Rscript"</span><span class="fu">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"args"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"-e"</span><span class="ot">,</span> <span class="st">"mcptools::mcp_server(tools = '/path/to/autodeskr-mcp-tools.R')"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"env"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"client_id"</span><span class="fu">:</span> <span class="st">"your_aps_client_id"</span><span class="fu">,</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"client_secret"</span><span class="fu">:</span> <span class="st">"your_aps_client_secret"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>About the outputs in this book.</strong> Most examples call live AutoDesk Platform Services, which need your own credentials, uploaded files, and (for Digital Twins) a Tandem subscription, so they can’t run during book rendering. Where it helps to see the shape of a result, the book shows a <strong>representative output</strong> generated without the live API: tables, charts, and 3D views built from illustrative data. These are flagged in place with a <em>Representative result</em> note. Anything you must swap in to run the code yourself, bucket names, client IDs, file URNs, is called out with a <em>Replace before running</em> note.</p>
+<p><strong>Replace before running:</strong></p>
+<ul>
+<li><code>/path/to/autodeskr-mcp-tools.R</code> — the absolute path to your tools file.</li>
+<li><code>your_aps_client_id</code> / <code>your_aps_client_secret</code> — your APS app credentials.</li>
+</ul>
+<p>On Windows you may also need to give the full path to <code>Rscript.exe</code> as the <code>command</code>.</p>
 </div>
 </div>
+<p>Restart Claude Desktop. The AutoDeskR tools will appear in the tool palette and Claude will call them automatically when relevant.</p>
 </section>
-<section id="where-this-is-headed" class="level2">
-<h2 class="anchored" data-anchor-id="where-this-is-headed">Where This is Headed</h2>
-<p>This book covers a lot of ground, but the APS API catalogue is bigger than any one book. Here’s what’s on the horizon.</p>
-<p><strong>Near-term package additions</strong> — AutoDeskR currently wraps the six core APS APIs. The next wave of functions will cover the richer ACC project hierarchy (Hubs → Projects → Folders → Items → Versions), which is required for working with BIM 360 and ACC projects where files live in managed folder trees rather than flat OSS buckets. Alongside that: Webhooks (so your pipelines can react to events instead of polling), Construction Issues (live project health data in R), and Account Admin (bulk user and project management via script instead of clicking through a web interface a hundred times).</p>
-<p><strong>Advanced Design Automation</strong> — <code>makePdf()</code> is just the beginning. APS Design Automation also supports Revit, 3ds Max, Inventor, and Fusion, meaning you can run custom scripts against any of those engines from R without installing the software locally. Generalised <code>submitWorkItem()</code> and <code>listEngines()</code> functions are planned to unlock that.</p>
-<p><strong>Longer-term</strong> — Model Coordination (clash detection and model sets, once the ACC hierarchy is in place), Forma (AutoDesk’s AEC industry cloud), and Cost Management (budget and financial data for project dashboards) are all on the radar. And as IFC, Speckle, and other open BIM platforms mature, they belong here too. The guiding rule: if it takes AEC data as its primary input, it belongs in this book.</p>
-<p>Track progress and file requests at <a href="https://github.com/paulgovan/AutoDeskR">github.com/paulgovan/AutoDeskR</a>.</p>
+<section id="example-agent-conversations" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="example-agent-conversations"><span class="header-section-number">19.4</span> Example Agent Conversations</h2>
+<p>Once connected, you can have conversations like:</p>
+<blockquote class="blockquote">
+<p><strong>You:</strong> I’ve uploaded <code>aerial.dwg</code> to bucket <code>acmecorp-dev</code>. The objectId is <code>urn:adsk.objects:os.object:acmecorp-dev/aerial.dwg</code>. Summarise the layers.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Claude:</strong> <em>(calls <code>get_layer_summary</code>)</em> The drawing has 8 layers. The largest by object count is <code>A-DIMS</code> with 62 objects, followed by <code>A-TEXT</code> with 47. The largest by area is <code>A-SITE</code> at 156,823 square units.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>You:</strong> Compare the layer sets in <code>floor_plan_v1.dwg</code> and <code>floor_plan_v2.dwg</code>.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Claude:</strong> <em>(calls <code>get_layer_summary</code> twice, compares results)</em> Version 2 adds <code>A-FURN</code> (34 objects) and <code>A-FURN-NEW</code> (12 objects). <code>A-TEMP-SITE</code> was present in v1 but has been removed.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>You:</strong> Fetch the last 24 hours of temperature readings from the HVAC sensor on level 2.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Claude:</strong> <em>(calls <code>get_stream_readings</code>)</em> The stream <code>strm:temp-hvac-l2</code> shows a mean of 22.1 °C over the last 24 hours, ranging from 21.4 °C to 23.0 °C. Peak temperature was at 14:30 UTC.</p>
+</blockquote>
+</section>
+<section id="security-considerations" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="security-considerations"><span class="header-section-number">19.5</span> Security Considerations</h2>
+<p>A few things to keep in mind before deploying:</p>
+<ul>
+<li><strong>Credentials:</strong> Pass <code>client_id</code> and <code>client_secret</code> via environment variables (as shown in the config above), never hardcoded in the script. The server reads them at startup via <code>Sys.getenv()</code>.</li>
+<li><strong>Token expiry:</strong> APS tokens expire after 3600 seconds. For long-running servers, refresh the token periodically. Add a <code>Sys.time()</code> check in the handler and re-call <code>getToken()</code> if more than 50 minutes have elapsed.</li>
+<li><strong>Rate limits:</strong> APS enforces per-app rate limits. If the agent calls tools rapidly (e.g.&nbsp;in a loop over many files), add <code>Sys.sleep(0.5)</code> between calls. HTTP 429 responses should trigger a backoff, not a crash.</li>
+<li><strong>Scope:</strong> Request only the scopes the server actually needs. A read-only analysis server only needs <code>data:read</code>; it doesn’t need <code>data:write</code> or <code>bucket:create</code>.</li>
+</ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-R-AutoDeskR" class="csl-entry" role="listitem">
-Govan, Paul. 2024. <em>AutoDeskR: An Interface to the AutoDesk Platform Services APIs</em>. <a href="https://github.com/paulgovan/AutoDeskR">https://github.com/paulgovan/AutoDeskR</a>.
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-R-mcptools" class="csl-entry" role="listitem">
+Posit Software, PBC. 2025. <em>Mcptools: Model Context Protocol Tools for r</em>. <a href="https://github.com/posit-dev/mcptools">https://github.com/posit-dev/mcptools</a>.
 </div>
 </div>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1231,10 +1346,13 @@ Govan, Paul. 2024. <em>AutoDeskR: An Interface to the AutoDesk Platform Services
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./live-dashboards.html" class="pagination-link" aria-label="Live Dashboards">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Live Dashboards</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./motivation.html" class="pagination-link" aria-label="Motivation">
-        <span class="nav-page-text">Motivation</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./case-study.html" class="pagination-link" aria-label="Case Study: DWG to Shiny Dashboard">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

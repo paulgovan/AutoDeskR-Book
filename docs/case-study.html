@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2025-12-31">
 <meta name="description" content="A practical guide to analyzing AEC and CAD/BIM data in R with the AutoDeskR package and AutoDesk Platform Services.">
 
-<title>Motivation – R for AEC Data Analysis</title>
+<title>20&nbsp; Case Study: DWG to Shiny Dashboard – R for AEC Data Analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -60,26 +60,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -89,8 +70,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./acknowledgements.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./reference.html" rel="next">
+<link href="./mcp-server.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -134,8 +115,9 @@ div.csl-indent {
 }</script>
 
 
-<meta property="og:title" content="Motivation – R for AEC Data Analysis">
+<meta property="og:title" content="20&nbsp; Case Study: DWG to Shiny Dashboard – R for AEC Data Analysis">
 <meta property="og:description" content="A practical guide to analyzing AEC and CAD/BIM data in R with the AutoDeskR package and AutoDesk Platform Services.">
+<meta property="og:image" content="case-study_files/figure-html/unnamed-chunk-7-1.png">
 <meta property="og:site_name" content="R for AEC Data Analysis">
 </head>
 
@@ -310,7 +292,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./motivation.html">Front Matter</a></li><li class="breadcrumb-item"><a href="./motivation.html">Motivation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./case-study.html">Reference</a></li><li class="breadcrumb-item"><a href="./case-study.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -379,7 +361,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./motivation.html" class="sidebar-item-text sidebar-link active">
+  <a href="./motivation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Motivation</span></a>
   </div>
 </li>
@@ -594,7 +576,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./case-study.html" class="sidebar-item-text sidebar-link">
+  <a href="./case-study.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></span></a>
   </div>
 </li>
@@ -628,11 +610,13 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The Problem</a></li>
-  <li><a href="#the-opportunity" id="toc-the-opportunity" class="nav-link" data-scroll-target="#the-opportunity">The Opportunity</a></li>
-  <li><a href="#the-solution" id="toc-the-solution" class="nav-link" data-scroll-target="#the-solution">The Solution</a></li>
-  <li><a href="#why-r" id="toc-why-r" class="nav-link" data-scroll-target="#why-r">Why R?</a></li>
-  <li><a href="#who-this-book-is-for" id="toc-who-this-book-is-for" class="nav-link" data-scroll-target="#who-this-book-is-for">Who This Book Is For</a></li>
+  <li><a href="#step-1-authenticate-with-combined-scopes" id="toc-step-1-authenticate-with-combined-scopes" class="nav-link active" data-scroll-target="#step-1-authenticate-with-combined-scopes"><span class="header-section-number">20.1</span> Step 1: Authenticate with Combined Scopes</a></li>
+  <li><a href="#step-2-create-a-bucket-and-upload-the-dwg" id="toc-step-2-create-a-bucket-and-upload-the-dwg" class="nav-link" data-scroll-target="#step-2-create-a-bucket-and-upload-the-dwg"><span class="header-section-number">20.2</span> Step 2: Create a Bucket and Upload the DWG</a></li>
+  <li><a href="#step-3-translate-to-svf" id="toc-step-3-translate-to-svf" class="nav-link" data-scroll-target="#step-3-translate-to-svf"><span class="header-section-number">20.3</span> Step 3: Translate to SVF</a></li>
+  <li><a href="#step-4-extract-layer-metadata" id="toc-step-4-extract-layer-metadata" class="nav-link" data-scroll-target="#step-4-extract-layer-metadata"><span class="header-section-number">20.4</span> Step 4: Extract Layer Metadata</a></li>
+  <li><a href="#step-5-visualise-with-ggplot2" id="toc-step-5-visualise-with-ggplot2" class="nav-link" data-scroll-target="#step-5-visualise-with-ggplot2"><span class="header-section-number">20.5</span> Step 5: Visualise with ggplot2</a></li>
+  <li><a href="#step-6-build-the-shiny-dashboard" id="toc-step-6-build-the-shiny-dashboard" class="nav-link" data-scroll-target="#step-6-build-the-shiny-dashboard"><span class="header-section-number">20.6</span> Step 6: Build the Shiny Dashboard</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">20.7</span> Summary</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/paulgovan/AutoDeskR-Book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -640,9 +624,9 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./motivation.html">Front Matter</a></li><li class="breadcrumb-item"><a href="./motivation.html">Motivation</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./case-study.html">Reference</a></li><li class="breadcrumb-item"><a href="./case-study.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Motivation</h1>
+<h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Case Study: DWG to Shiny Dashboard</span></h1>
 </div>
 
 
@@ -665,48 +649,227 @@ div.csl-indent {
 </header>
 
 
-<section id="the-problem" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem">The Problem</h2>
-<p>AEC projects generate an enormous amount of data. Layer structure, geometry, material properties, object attributes, energy performance figures, sensor readings linked to physical elements. All of it sits inside proprietary file formats that the rest of the data science world can’t easily reach. The tools that can read these files (AutoCAD, Revit, Rhino) are desktop applications built for design, not analysis. They’re not going to produce a ggplot2 chart or feed a Shiny dashboard.</p>
-<p>The result is an unnecessary gap. Engineers and architects generate rich, spatially-grounded data every day. Data scientists who could turn that data into insight have no straightforward way to access it. Both teams end up exporting things to CSV by hand and losing half the structure in the process.</p>
+<p>This chapter ties every API together in a single narrative. Starting from a raw DWG file on disk, we will authenticate, upload, translate, extract metadata, visualise layer data with ggplot2, and embed the live 3D model in a Shiny dashboard — all from R.</p>
+<p>The DWG file used throughout is <code>aerial.dwg</code>, the sample file bundled with AutoDeskR:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dwg_path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"samples/aerial.dwg"</span>, <span class="at">package =</span> <span class="st">"AutoDeskR"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<section id="step-1-authenticate-with-combined-scopes" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="step-1-authenticate-with-combined-scopes"><span class="header-section-number">20.1</span> Step 1: Authenticate with Combined Scopes</h2>
+<p>Every API used in this case study requires a different scope. Request them all upfront in a single token:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AutoDeskR)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> <span class="fu">getToken</span>(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">id     =</span> <span class="fu">Sys.getenv</span>(<span class="st">"client_id"</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">secret =</span> <span class="fu">Sys.getenv</span>(<span class="st">"client_secret"</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">scope  =</span> <span class="st">"data:read data:write bucket:create bucket:read code:all"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>myToken <span class="ot">&lt;-</span> resp<span class="sc">$</span>content<span class="sc">$</span>access_token</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "eyJhbGciOiJSUzI1NiIsImtpZCI6...cifQ..."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
 </section>
-<section id="the-opportunity" class="level2">
-<h2 class="anchored" data-anchor-id="the-opportunity">The Opportunity</h2>
-<p>R has quietly become the lingua franca for quantitative work in architecture, engineering, and construction (AEC). Structural engineers use it to crunch sensor data. Sustainability consultants model energy performance in it. BIM managers audit model quality across large portfolios with it. And Shiny brings all of that to non-technical stakeholders through interactive dashboards.</p>
-<p>What’s been missing is a clean bridge between R’s data science ecosystem and the 3D model data locked inside CAD files. A DWG file isn’t just a drawing, it’s geometry, layer structure, material properties, and embedded attributes that are genuinely interesting to analyse. An as-built point cloud from a drone survey can be compared against a design mesh to quantify construction deviations. A BIM model wired to live sensor data becomes a digital twin that a Shiny app can query in real time.</p>
+<section id="step-2-create-a-bucket-and-upload-the-dwg" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="step-2-create-a-bucket-and-upload-the-dwg"><span class="header-section-number">20.2</span> Step 2: Create a Bucket and Upload the DWG</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a persistent bucket</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">makeBucket</span>(<span class="at">token =</span> myToken, <span class="at">bucket =</span> <span class="st">"case-study-bucket"</span>, <span class="at">policy =</span> <span class="st">"persistent"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>bucket<span class="sc">$</span>content<span class="sc">$</span>bucketKey</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "case-study-bucket"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Upload the DWG</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>upload <span class="ot">&lt;-</span> <span class="fu">uploadFile</span>(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">file   =</span> dwg_path,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">token  =</span> myToken,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">bucket =</span> <span class="st">"case-study-bucket"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>myUrn <span class="ot">&lt;-</span> upload<span class="sc">$</span>content<span class="sc">$</span>objectId</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>upload<span class="sc">$</span>content<span class="sc">$</span>objectKey</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "aerial.dwg"</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>upload<span class="sc">$</span>content<span class="sc">$</span>size</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3145728</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
 </section>
-<section id="the-solution" class="level2">
-<h2 class="anchored" data-anchor-id="the-solution">The Solution</h2>
-<p>This book builds that bridge using the AutoDesk Platform Services (APS) cloud API as its primary engine. AutoDesk is the dominant platform in the AEC industry, and APS can translate design files between dozens of formats, extract rich geometry and metadata from BIM models, automate DWG processing at scale, and render 3D models interactively in a browser, all without a local AutoCAD or Revit installation.</p>
-<p>The catch is that APS speaks REST. Every operation means authenticated HTTP requests, base64-encoded URNs, polling asynchronous job queues, and parsing deeply nested JSON. AutoDeskR <span class="citation" data-cites="R-AutoDeskR">(<a href="#ref-R-AutoDeskR" role="doc-biblioref">Govan 2024</a>)</span> wraps all of that in idiomatic R functions. Authentication, encoding, polling — handled. A workflow that would otherwise mean dozens of raw HTTP calls comes down to a handful of lines:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AutoDeskR)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>token  <span class="ot">&lt;-</span> <span class="fu">getToken</span>(<span class="at">id =</span> id, <span class="at">secret =</span> secret, <span class="at">scope =</span> <span class="st">"data:read data:write bucket:create"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">makeBucket</span>(<span class="at">token =</span> token, <span class="at">bucket =</span> <span class="st">"my-project-bucket"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>upload <span class="ot">&lt;-</span> <span class="fu">uploadFile</span>(<span class="at">file =</span> <span class="st">"model.dwg"</span>, <span class="at">token =</span> token, <span class="at">bucket =</span> bucket<span class="sc">$</span>bucketKey)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>job    <span class="ot">&lt;-</span> <span class="fu">translateFile</span>(<span class="at">urn =</span> upload<span class="sc">$</span>objectId, <span class="at">token =</span> token, <span class="at">type =</span> <span class="st">"svf"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The goal isn’t to paper over APS entirely. Understanding what’s happening under the hood makes you more effective. AutoDeskR just removes the boilerplate so you can spend your time on the analysis, not the plumbing.</p>
+<section id="step-3-translate-to-svf" class="level2" data-number="20.3">
+<h2 data-number="20.3" class="anchored" data-anchor-id="step-3-translate-to-svf"><span class="header-section-number">20.3</span> Step 3: Translate to SVF</h2>
+<p>SVF is the format required by the Viewer and for metadata extraction. Encode the URN, submit the job, and wait for it to finish:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>myEncodedUrn <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">base64_enc</span>(myUrn)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Submit translation</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">translateSvf</span>(<span class="at">urn =</span> myEncodedUrn, <span class="at">token =</span> myToken)<span class="sc">$</span>content<span class="sc">$</span>result</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "created"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Poll until done</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  status <span class="ot">&lt;-</span> <span class="fu">checkFile</span>(<span class="at">urn =</span> myEncodedUrn, <span class="at">token =</span> myToken)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Status:"</span>, status<span class="sc">$</span>content<span class="sc">$</span>status, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (status<span class="sc">$</span>content<span class="sc">$</span>status <span class="sc">==</span> <span class="st">"success"</span>) <span class="cf">break</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">10</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Status: pending</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Status: inprogress</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Status: inprogress</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Status: success</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
 </section>
-<section id="why-r" class="level2">
-<h2 class="anchored" data-anchor-id="why-r">Why R?</h2>
-<p>Fair question. Most AEC professionals use Python, .NET, or whatever scripting language AutoCAD yells at you in. So why drag R into this?</p>
-<p><strong>Because the audience isn’t architects, it’s analysts.</strong> The real use case here is the data scientist who gets handed a folder of DWG files and told to “make a dashboard out of this.” That person lives in R. They know dplyr, they know ggplot2, they know Shiny. AutoDeskR gives them a bridge to the CAD world without forcing them to learn a whole new stack.</p>
-<p><strong>Because the Python SDK is for building applications.</strong> It’s great if you’re writing production software. But if you want to pull geometry data, run some summary statistics, and produce a polished report with a table and a plot, R’s ecosystem (ggplot2, gt, Quarto) is still unmatched. The wrapper isn’t competing with the Python SDK; it’s serving a different job.</p>
-<p><strong>Because thin wrappers encode real expertise.</strong> Yes, a sophisticated user could call the APS REST API directly with <code>httr2</code>. But do they know that the object URN needs to be Base64-encoded before passing it to the Model Derivative API? That tokens expire after exactly 3600 seconds? That bucket names are globally unique across <em>all</em> APS applications? AutoDeskR quietly handles all of that so you can focus on the analysis, not the plumbing.</p>
-<p><strong>Because API drift is a fact of life, not a dealbreaker.</strong> AutoDesk updates its APIs. So do Google, AWS, and everyone else. Staying close to the API surface means fewer moving parts to break, and direct <code>httr2</code> calls would have exactly the same maintenance problem with more boilerplate.</p>
-<p><strong>Because the free tier is for experimenting, and that’s the whole point.</strong> Once you’ve prototyped something worth running in production, you’re almost certainly inside an organisation that’s already paying for AutoDesk products, and API access comes with the subscription.</p>
+<section id="step-4-extract-layer-metadata" class="level2" data-number="20.4">
+<h2 data-number="20.4" class="anchored" data-anchor-id="step-4-extract-layer-metadata"><span class="header-section-number">20.4</span> Step 4: Extract Layer Metadata</h2>
+<p>Retrieve the GUID, then pull the full object property set to get per-layer geometry data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the viewable GUID</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>meta   <span class="ot">&lt;-</span> <span class="fu">getMetadata</span>(<span class="at">urn =</span> myEncodedUrn, <span class="at">token =</span> myToken)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>myGuid <span class="ot">&lt;-</span> meta<span class="sc">$</span>content<span class="sc">$</span>data<span class="sc">$</span>metadata[[<span class="dv">1</span>]]<span class="sc">$</span>guid</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>myGuid</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "a7b3c9d2-4e1f-4a8b-b6c2-9d3e7f5a1b4c"</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve all object properties</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>props <span class="ot">&lt;-</span> <span class="fu">getData</span>(<span class="at">guid =</span> myGuid, <span class="at">urn =</span> myEncodedUrn, <span class="at">token =</span> myToken)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract layer name and bounding-box area for each object</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>layer_data <span class="ot">&lt;-</span> <span class="fu">lapply</span>(props<span class="sc">$</span>content<span class="sc">$</span>data<span class="sc">$</span>collection, <span class="cf">function</span>(obj) {</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  layer <span class="ot">&lt;-</span> obj<span class="sc">$</span>properties[[<span class="st">"Layer and Material"</span>]][[<span class="st">"Layer"</span>]]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  xmin  <span class="ot">&lt;-</span> obj<span class="sc">$</span>properties<span class="sc">$</span>Geometry[[<span class="st">"Bounding Box Min X"</span>]]</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  xmax  <span class="ot">&lt;-</span> obj<span class="sc">$</span>properties<span class="sc">$</span>Geometry[[<span class="st">"Bounding Box Max X"</span>]]</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  ymin  <span class="ot">&lt;-</span> obj<span class="sc">$</span>properties<span class="sc">$</span>Geometry[[<span class="st">"Bounding Box Min Y"</span>]]</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  ymax  <span class="ot">&lt;-</span> obj<span class="sc">$</span>properties<span class="sc">$</span>Geometry[[<span class="st">"Bounding Box Max Y"</span>]]</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(layer) <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">is.null</span>(xmin)) {</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">layer =</span> layer,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">area  =</span> (xmax <span class="sc">-</span> xmin) <span class="sc">*</span> (ymax <span class="sc">-</span> ymin)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>layers_df <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">Filter</span>(<span class="fu">Negate</span>(is.null), layer_data))</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(layers_df)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     layer        area</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  A-SITE  196842.73</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  A-BLDG   42301.18</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  A-ROAD   28473.09</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  A-PARK   15621.44</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  A-UTIL    8904.72</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  A-ANNO    3215.01</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
 </section>
-<section id="who-this-book-is-for" class="level2">
-<h2 class="anchored" data-anchor-id="who-this-book-is-for">Who This Book Is For</h2>
-<p>This book is for R users who work with or alongside CAD and BIM data and want to automate, analyse, or visualise it without leaving the R environment. The techniques here, mesh analysis, layer analytics, digital twin patterns, point cloud processing, apply to BIM and CAD data broadly, not just data that came from AutoDesk software. AutoDesk is where we start because that’s where most of the industry’s data currently lives, but the analytical mindset carries over wherever the files come from.</p>
-<p>No prior experience with APS, AutoDesk, or the AEC industry is assumed. If you can install an R package and run a script, you have everything you need.</p>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-R-AutoDeskR" class="csl-entry" role="listitem">
-Govan, Paul. 2024. <em>AutoDeskR: An Interface to the AutoDesk Platform Services APIs</em>. <a href="https://github.com/paulgovan/AutoDeskR">https://github.com/paulgovan/AutoDeskR</a>.
+<section id="step-5-visualise-with-ggplot2" class="level2" data-number="20.5">
+<h2 data-number="20.5" class="anchored" data-anchor-id="step-5-visualise-with-ggplot2"><span class="header-section-number">20.5</span> Step 5: Visualise with ggplot2</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(layer_totals, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(layer, area), <span class="at">y =</span> area <span class="sc">/</span> <span class="dv">1000</span>)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#6aaa2a"</span>) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">"Bounding-Box Area by DWG Layer"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"aerial.dwg — AutoDeskR sample file"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x        =</span> <span class="st">"Layer"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y        =</span> <span class="fu">expression</span>(<span class="st">"Area (×10"</span><span class="sc">^</span><span class="dv">3</span> <span class="sc">*</span> <span class="st">" drawing units²)"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="case-study_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
+</div>
+<hr>
+</section>
+<section id="step-6-build-the-shiny-dashboard" class="level2" data-number="20.6">
+<h2 data-number="20.6" class="anchored" data-anchor-id="step-6-build-the-shiny-dashboard"><span class="header-section-number">20.6</span> Step 6: Build the Shiny Dashboard</h2>
+<p>Combine the ggplot2 chart and the embedded 3D viewer in a two-tab Shiny app:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> shiny<span class="sc">::</span><span class="fu">fluidPage</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  shiny<span class="sc">::</span><span class="fu">titlePanel</span>(<span class="st">"Aerial Site — AutoDeskR Case Study"</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  shiny<span class="sc">::</span><span class="fu">tabsetPanel</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    shiny<span class="sc">::</span><span class="fu">tabPanel</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">"3D Model"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">viewerUI</span>(<span class="st">"model"</span>, <span class="at">urn =</span> myEncodedUrn, <span class="at">token =</span> myToken)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    shiny<span class="sc">::</span><span class="fu">tabPanel</span>(</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Layer Analysis"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      shiny<span class="sc">::</span><span class="fu">plotOutput</span>(<span class="st">"layer_chart"</span>, <span class="at">height =</span> <span class="st">"500px"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>layer_chart <span class="ot">&lt;-</span> shiny<span class="sc">::</span><span class="fu">renderPlot</span>({</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(layer_totals, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(layer, area), <span class="at">y =</span> area <span class="sc">/</span> <span class="dv">1000</span>)) <span class="sc">+</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#6aaa2a"</span>) <span class="sc">+</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Bounding-Box Area by DWG Layer"</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Layer"</span>,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="fu">expression</span>(<span class="st">"Area (×10"</span><span class="sc">^</span><span class="dv">3</span> <span class="sc">*</span> <span class="st">" units²)"</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>shiny<span class="sc">::</span><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The finished dashboard shows the AutoDesk WebGL viewer on the left tab and the ggplot2 analysis on the right, both driven by data extracted live from the same DWG file through the APS APIs.</p>
+<hr>
+</section>
+<section id="summary" class="level2" data-number="20.7">
+<h2 data-number="20.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">20.7</span> Summary</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 43%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Function(s)</th>
+<th>API</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Authenticate</td>
+<td><code>getToken()</code></td>
+<td>Authentication</td>
+</tr>
+<tr class="even">
+<td>Create bucket + upload</td>
+<td><code>makeBucket()</code>, <code>uploadFile()</code></td>
+<td>Data Management</td>
+</tr>
+<tr class="odd">
+<td>Translate to SVF</td>
+<td><code>translateSvf()</code>, <code>checkFile()</code></td>
+<td>Model Derivative</td>
+</tr>
+<tr class="even">
+<td>Extract properties</td>
+<td><code>getMetadata()</code>, <code>getData()</code></td>
+<td>Model Derivative</td>
+</tr>
+<tr class="odd">
+<td>Visualise</td>
+<td><code>ggplot2</code></td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Embed viewer</td>
+<td><code>viewerUI()</code></td>
+<td>Viewer</td>
+</tr>
+</tbody>
+</table>
+<p>The full source for this case study is available at <a href="https://github.com/paulgovan/AutoDeskR">github.com/paulgovan/AutoDeskR</a> in the <code>inst/examples/</code> directory.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1125,13 +1288,13 @@ Govan, Paul. 2024. <em>AutoDeskR: An Interface to the AutoDesk Platform Services
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./mcp-server.html" class="pagination-link" aria-label="MCP Server">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">MCP Server</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./acknowledgements.html" class="pagination-link" aria-label="Acknowledgements">
-        <span class="nav-page-text">Acknowledgements</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./reference.html" class="pagination-link" aria-label="Function Reference">
+        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Function Reference</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
