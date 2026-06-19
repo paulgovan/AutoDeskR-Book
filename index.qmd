@@ -6,6 +6,12 @@ This book uses the [AutoDeskR](https://github.com/paulgovan/AutoDeskR) R package
 
 Whether you're a data scientist who just inherited a folder of DWG files, or a BIM manager who wants to automate something that currently takes three software packages and a prayer, this book is for you.
 
+## License & Availability
+
+This book is available online for free at [paulgovan.github.io/AutoDeskR-Book](https://paulgovan.github.io/AutoDeskR-Book) and is released under a [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license — you are free to share and adapt the material as long as you give appropriate credit.
+
+A print edition is available on [Amazon](https://a.co/d/0g3apZTy) if you prefer a hard copy.
+
 ## What You'll Learn
 
 Each chapter covers a different piece of the BIM and CAD analytics ecosystem:
