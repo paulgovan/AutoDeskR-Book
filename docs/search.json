@@ -10,6 +10,16 @@
     ]
   },
   {
+    "objectID": "index.html#license-availability",
+    "href": "index.html#license-availability",
+    "title": "R for AEC Data Analysis",
+    "section": "License & Availability",
+    "text": "License & Availability\nThis book is available online for free at paulgovan.github.io/AutoDeskR-Book and is released under a Creative Commons Attribution 4.0 International (CC BY 4.0) license — you are free to share and adapt the material as long as you give appropriate credit.\nA print edition is available on Amazon if you prefer a hard copy.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
     "objectID": "index.html#what-youll-learn",
     "href": "index.html#what-youll-learn",
     "title": "R for AEC Data Analysis",
