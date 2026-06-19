@@ -13,10 +13,10 @@ This chapter focuses on the most common use case: DWG → PDF.
 ```{mermaid}
 %%| fig-width: 3.6
 flowchart TB
-  A[DWG file\nat source URL] --> B[makePdf\nsubmit work item]
+  A[DWG file<br>at source URL] --> B[makePdf<br>submit work item]
   B --> C{checkPdf}
   C -- pending / inprogress --> C
-  C -- success --> D[PDF file\nat destination URL]
+  C -- success --> D[PDF file<br>at destination URL]
 ```
 
 ## Convert a DWG to PDF

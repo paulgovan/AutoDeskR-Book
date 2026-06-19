@@ -11,11 +11,11 @@ The relationship between a BIM model and a Tandem twin looks like this:
 ```{mermaid}
 %%| fig-width: 3.6
 graph TD
-  A[BIM Model\nRVT / DWG file] --> B[Model Derivative API\ngetObjectTree / getData]
-  A --> C[Tandem\nDigital Twin]
-  C --> D[Sensor Streams\ntemperature / CO₂ / energy]
+  A[BIM Model<br>RVT / DWG file] --> B[Model Derivative API<br>getObjectTree / getData]
+  A --> C[Tandem<br>Digital Twin]
+  C --> D[Sensor Streams<br>temperature / CO₂ / energy]
   B -- objectId --> C
-  D -- time-series data --> E[R Analysis\nhttr2 + dplyr]
+  D -- time-series data --> E[R Analysis<br>httr2 + dplyr]
   B -- metadata --> E
 ```
 

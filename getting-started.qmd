@@ -73,7 +73,7 @@ flowchart TD
   B --> C[makeBucket]
   C --> D[uploadFile]
   D --> E{Use case}
-  E --> F[translateObj /\ntranslateSvf]
+  E --> F[translateObj /<br>translateSvf]
   E --> G[makePdf]
   E --> H[createPhotoscene]
   F --> I[viewer3D]
@@ -84,20 +84,20 @@ Not sure which API to use? The diagram below maps your input file type and goal 
 ```{mermaid}
 %%| fig-width: 4.5
 flowchart TD
-  A{What do you\nhave?} --> B[DWG / DXF]
+  A{What do you<br>have?} --> B[DWG / DXF]
   A --> C[RVT / IFC / other BIM]
   A --> D[Photos / drone imagery]
 
-  B --> B1[Layer counts & attributes\nLayer Analysis · Attribute Extraction]
-  B --> B2[Convert to PDF\nDesign Automation]
-  B --> B3[3D mesh for analysis\nModel Derivative → OBJ]
+  B --> B1[Layer counts & attributes<br>Layer Analysis · Attribute Extraction]
+  B --> B2[Convert to PDF<br>Design Automation]
+  B --> B3[3D mesh for analysis<br>Model Derivative → OBJ]
 
-  C --> C1[Embed 3D viewer\nViewer]
-  C --> C2[Extract BIM metadata\nModel Derivative → SVF]
-  C --> C3[Digital twin\nTandem Overview]
+  C --> C1[Embed 3D viewer<br>Viewer]
+  C --> C2[Extract BIM metadata<br>Model Derivative → SVF]
+  C --> C3[Digital twin<br>Tandem Overview]
 
-  D --> D1[3D mesh\nReality Capture → OBJ]
-  D --> D2[Point cloud\nReality Capture → RCS → Point Cloud Analysis]
+  D --> D1[3D mesh<br>Reality Capture → OBJ]
+  D --> D2[Point cloud<br>Reality Capture → RCS → Point Cloud Analysis]
 ```
 
 The following code demonstrates a complete round-trip: authenticate, create a storage bucket, upload a file, and verify the upload.

@@ -14,14 +14,14 @@ Common uses:
 The full workflow goes like this:
 
 ```{mermaid}
-%%| fig-width: 3.6
+%%| fig-width: 2.9
 flowchart TB
   A[Photos] --> B[createPhotoscene]
   B --> C[uploadImages]
   C --> D[processPhotoscene]
-  D --> E{waitForPhotoscene\nor checkPhotoscene}
+  D --> E{waitForPhotoscene<br>or checkPhotoscene}
   E -- progress < 100 --> E
-  E -- progress = 100 --> F[Download\nmesh / point cloud]
+  E -- progress = 100 --> F[Download<br>mesh / point cloud]
 ```
 
 ## Before You Start

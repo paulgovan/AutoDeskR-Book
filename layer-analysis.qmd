@@ -7,13 +7,13 @@ Every DWG and DXF file organises its geometry into named layers. Unlock those la
 The data flows like this:
 
 ```{mermaid}
-%%| fig-width: 3.6
+%%| fig-width: 2.7
 flowchart TB
   A[aerial.dwg] --> B[translateSvf]
-  B --> C[getObjectTree\nlayer hierarchy]
-  C --> D[getData\nbounding boxes + properties]
-  D --> E[dplyr\ngroup_by layer]
-  E --> F[ggplot2\nbar chart]
+  B --> C[getObjectTree<br>layer hierarchy]
+  C --> D[getData<br>bounding boxes + properties]
+  D --> E[dplyr<br>group_by layer]
+  E --> F[ggplot2<br>bar chart]
 ```
 
 ## Prerequisites

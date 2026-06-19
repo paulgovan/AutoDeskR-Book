@@ -9,11 +9,11 @@ The pattern is always the same: submit a job, poll until it finishes, then pull 
 ```{mermaid}
 %%| fig-width: 3.6
 flowchart TB
-  A[Upload file\nuploadFile] --> B[Translate\ntranslateObj / translateSvf]
+  A[Upload file<br>uploadFile] --> B[Translate<br>translateObj / translateSvf]
   B --> C{checkFile}
   C -- pending / inprogress --> C
-  C -- success --> D[Get output URN\ngetOutputUrn]
-  D --> E[Download\ndownloadFile]
+  C -- success --> D[Get output URN<br>getOutputUrn]
+  D --> E[Download<br>downloadFile]
 ```
 
 ## Translate to OBJ
