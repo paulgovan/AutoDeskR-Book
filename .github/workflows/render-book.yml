@@ -65,6 +65,9 @@ jobs:
           packages: |
             knitr
             rmarkdown
+            ggplot2
+            dplyr
+            tidyr
 
       - uses: quarto-dev/quarto-actions/setup@v2
         if: steps.check_freeze.outputs.exists == 'true'
@@ -113,6 +116,9 @@ jobs:
             AutoDeskR
             knitr
             rmarkdown
+            ggplot2
+            dplyr
+            tidyr
 
       - uses: quarto-dev/quarto-actions/setup@v2
 
