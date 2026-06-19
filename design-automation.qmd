@@ -11,7 +11,7 @@ This chapter focuses on the most common use case: DWG → PDF.
 :::
 
 ```{mermaid}
-%%| fig-width: 4.5
+%%| fig-width: 3.6
 flowchart TB
   A[DWG file\nat source URL] --> B[makePdf\nsubmit work item]
   B --> C{checkPdf}

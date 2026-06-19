@@ -7,7 +7,7 @@ A DWG file sitting in a bucket is just bytes. The Model Derivative API is what t
 The pattern is always the same: submit a job, poll until it finishes, then pull the output.
 
 ```{mermaid}
-%%| fig-width: 4.5
+%%| fig-width: 3.6
 flowchart TB
   A[Upload file\nuploadFile] --> B[Translate\ntranslateObj / translateSvf]
   B --> C{checkFile}

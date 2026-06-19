@@ -14,7 +14,7 @@ Common uses:
 The full workflow goes like this:
 
 ```{mermaid}
-%%| fig-width: 4.5
+%%| fig-width: 3.6
 flowchart TB
   A[Photos] --> B[createPhotoscene]
   B --> C[uploadImages]
@@ -29,11 +29,11 @@ flowchart TB
 ::: callout-tip
 **Good photos make good meshes.** A few guidelines that will save you a lot of frustration:
 
--   At least **20 images** per scene — 50–200 is typical for a small structure
--   **60–80 % overlap** between adjacent shots; every surface should appear in at least 3 photos
--   Consistent, diffuse lighting — harsh shadows and mirror-like reflections confuse the algorithm
--   Move the camera *around* the subject, don't just zoom in from one spot
--   GPS/EXIF tags are optional but improve georeferencing accuracy
+- At least **20 images** per scene — 50–200 is typical for a small structure
+- **60–80 % overlap** between adjacent shots; every surface should appear in at least 3 photos
+- Consistent, diffuse lighting — harsh shadows and mirror-like reflections confuse the algorithm
+- Move the camera *around* the subject, don't just zoom in from one spot
+- GPS/EXIF tags are optional but improve georeferencing accuracy
 :::
 
 ## Step 1: Authenticate
@@ -61,7 +61,7 @@ Tokens expire after 3600 seconds. A `401 Unauthorized` mid-session means the tok
 A **photoscene** is the container for your images and output. The `format` parameter controls what comes out the other end:
 
 | Format | Output |
-|------------------------------------|------------------------------------|
+|----|----|
 | `"rcm"` | AutoDesk ReCap project (default) |
 | `"rcs"` | ReCap point cloud — feeds into [Point Cloud Analysis](point-cloud-analysis.qmd) |
 | `"obj"` | Wavefront OBJ mesh — feeds into [Reading OBJ and STL Meshes](mesh-reading.qmd) |

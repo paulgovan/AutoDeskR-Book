@@ -9,7 +9,7 @@ This chapter introduces Tandem concepts and shows how to talk to the Tandem REST
 The relationship between a BIM model and a Tandem twin looks like this:
 
 ```{mermaid}
-%%| fig-width: 4.5
+%%| fig-width: 3.6
 graph TD
   A[BIM Model\nRVT / DWG file] --> B[Model Derivative API\ngetObjectTree / getData]
   A --> C[Tandem\nDigital Twin]
@@ -32,6 +32,8 @@ Tandem requires an active **AutoDesk Tandem subscription** in addition to an APS
 | Primary use | Design & construction | Operations & maintenance |
 | APS API | Model Derivative | Tandem REST |
 | R entry point | `getObjectTree()`, `getData()` | `httr2::request()` |
+
+: {tbl-colwidths="[28,36,36]"}
 
 ## Authentication
 

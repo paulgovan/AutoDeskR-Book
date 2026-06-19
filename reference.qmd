@@ -10,7 +10,7 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 |:-----------------------|:------------|:---------------------------|:--------------------------------|
 | `getToken` | — | `id`, `secret`, `scope` (space-separated string) | `$content$access_token`, `$content$expires_in` |
 
-: {tbl-colwidths="[20,16,36,28]"}
+: {tbl-colwidths="[20,16,28,36]"}
 
 ------------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 | `deleteObject` | `data:write` | `bucket`, `object` (filename) | `$status_code` 200 |
 | `downloadFile` | `data:read` | `urn` (encoded source), `output_urn` (encoded output), `destfile` | `$status_code` 200 |
 
-: {tbl-colwidths="[20,16,36,28]"}
+: {tbl-colwidths="[20,16,28,36]"}
 
 ------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 | `getObjectTree` | `data:read` | `guid`, `urn` (Base-64 encoded) | `$content$data$objects` (nested list) |
 | `getData` | `data:read` | `guid`, `urn` (Base-64 encoded) | `$content$data$collection` (list of objects with properties) |
 
-: {tbl-colwidths="[20,16,36,28]"}
+: {tbl-colwidths="[20,16,28,36]"}
 
 ------------------------------------------------------------------------
 
@@ -56,7 +56,7 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 | `makePdf` | `code:all` | `source` (public URL to DWG), `destination` (public URL for output) | `$content$id` (WorkItem ID), `$content$status` |
 | `checkPdf` | `code:all` | `id` (WorkItem ID from `makePdf()`) | `$content$status` (`"pending"` / `"inprogress"` / `"success"`), `$content$stats` |
 
-: {tbl-colwidths="[20,16,36,28]"}
+: {tbl-colwidths="[20,16,28,36]"}
 
 ------------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 | `checkPhotoscene` | `data:read data:write` | `photoscene_id` | `$content$photoscene` `$progress` (`"0"`–`"100"`), `$progressmsg` |
 | `waitForPhotoscene` | `data:read data:write` | `interval` (seconds between polls, default 30), `timeout` (max wait in seconds, default 1800) | Final `checkPhotoscene` response when `progress == "100"` |
 
-: {tbl-colwidths="[20,16,36,28]"}
+: {tbl-colwidths="[20,16,28,36]"}
 
 ------------------------------------------------------------------------
 
@@ -81,7 +81,7 @@ Quick-lookup table for every exported AutoDeskR function. Click the **Chapter** 
 | `viewer3D` | `data:read` | `urn` (Base-64 encoded), `viewerType` (`"header"` / `"headless"` / `"vr"`) | Opens viewer in browser / Shiny |
 | `viewerUI` | `data:read` | `id` (Shiny module ID), `urn`, `token`, `viewerType` | Shiny UI element for use in `fluidPage()` |
 
-: {tbl-colwidths="[20,16,36,28]"}
+: {tbl-colwidths="[20,16,28,36]"}
 
 ------------------------------------------------------------------------
 

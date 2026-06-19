@@ -207,4 +207,6 @@ The finished dashboard shows the AutoDesk WebGL viewer on the left tab and the g
 | Visualise              | `ggplot2`                       | —                |
 | Embed viewer           | `viewerUI()`                    | Viewer           |
 
+: {tbl-colwidths="[34,40,26]"}
+
 The full source for this case study is available at [github.com/paulgovan/AutoDeskR](https://github.com/paulgovan/AutoDeskR) in the `inst/examples/` directory.

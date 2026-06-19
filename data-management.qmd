@@ -7,7 +7,7 @@ Think of the Data Management API as AutoDesk's cloud file system. Before you can
 The storage model is simple: your app owns **buckets**, and buckets hold **objects** (your files).
 
 ```{mermaid}
-%%| fig-width: 4.5
+%%| fig-width: 3.6
 graph TD
   A[Your App] --> B[(Bucket)]
   B --> C[object: aerial.dwg]

@@ -7,7 +7,7 @@ Once you've translated a CAD file through the [Model Derivative](model-derivativ
 `rgl` [@R-rgl] and `Rvcg` [@R-Rvcg] both read OBJ and STL files. `rgl` is great for interactive viewing; `Rvcg` is the one to reach for when you want to compute things. It returns a `tmesh3d` object that plays nicely with the whole `Rvcg` family of analysis functions.
 
 ```{mermaid}
-%%| fig-width: 4.5
+%%| fig-width: 3.6
 flowchart TB
   A[CAD file\nin OSS bucket] --> B[translateObj / translateStl\nModel Derivative]
   B --> C[downloadFile\narial.obj]

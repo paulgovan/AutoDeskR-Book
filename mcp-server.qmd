@@ -25,6 +25,8 @@ The table below maps ten useful MCP tools to their underlying AutoDeskR function
 | `get_sensor_streams` | Tandem REST API | List sensor streams for a Tandem facility |
 | `get_stream_readings` | Tandem REST API | Fetch time-series readings for a stream |
 
+: {tbl-colwidths="[22,33,45]"}
+
 ## Setting Up a Local MCP Server
 
 The [`mcptools`](https://posit-dev.github.io/mcptools/) [@R-mcptools] package turns R functions into MCP tools. Install it from CRAN:
