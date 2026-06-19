@@ -110,7 +110,7 @@ format:
       - filters/epub-fix.lua
 
 lang: en-US
-date: "2026"
+date: "2026-06-18"
 publisher: "Paul Govan"
 description: "A practical guide to analyzing AEC and CAD/BIM data in R with the AutoDeskR package and AutoDesk Platform Services."
 
