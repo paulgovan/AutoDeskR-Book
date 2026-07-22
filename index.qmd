@@ -32,7 +32,7 @@ Each chapter covers a different piece of the BIM and CAD analytics ecosystem:
 The book is organised into eight parts. You don't have to read them in order, each chapter is reasonably self-contained, but the parts do build on each other if you want the full picture.
 
 | Part | Chapters | What you'll do |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | **Front Matter** | Motivation, Acknowledgements | Understand the why |
 | **Getting Started** | Getting Started | Install the package and make your first API call |
 | **AutoDesk Platform Services** | Authentication → Viewer | The six main APS APIs, start to finish |
@@ -73,14 +73,7 @@ New to APS? Start with [Getting Started](getting-started.qmd) and work through t
 All code examples are copy-paste ready and work with `#| eval: false` so they won't execute during book rendering but will run just fine in your R session.
 
 ::: callout-note
-**About the outputs in this book.** Most examples call live AutoDesk Platform
-Services, which need your own credentials, uploaded files, and (for Digital Twins)
-a Tandem subscription, so they can't run during book rendering. Where it helps to
-see the shape of a result, the book shows a **representative output** generated
-without the live API: tables, charts, and 3D views built from illustrative data.
-These are flagged in place with a *Representative result* note. Anything you must
-swap in to run the code yourself, bucket names, client IDs, file URNs, is called
-out with a *Replace before running* note.
+**About the outputs in this book.** Most examples call live AutoDesk Platform Services, which need your own credentials, uploaded files, and (for Digital Twins) a Tandem subscription, so they can't run during book rendering. Where it helps to see the shape of a result, the book shows a **representative output** generated without the live API: tables, charts, and 3D views built from illustrative data. These are flagged in place with a *Representative result* note. Anything you must swap in to run the code yourself, bucket names, client IDs, file URNs, is called out with a *Replace before running* note.
 :::
 
 ## Where This is Headed
