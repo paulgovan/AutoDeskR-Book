@@ -83,7 +83,8 @@ Not sure which API to use? The diagram below maps your input file type and goal 
 
 ```{mermaid}
 %%| fig-width: 4.5
-flowchart TD
+%%| fig-height: 7
+flowchart LR
   A{What do you<br>have?} --> B[DWG / DXF]
   A --> C[RVT / IFC / other BIM]
   A --> D[Photos / drone imagery]

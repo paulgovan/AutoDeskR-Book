@@ -190,10 +190,12 @@ ggplot(all_readings, aes(x = timestamp, y = value, colour = display_name)) +
   geom_line(linewidth = 0.7) +
   facet_wrap(~ paste0(display_name, " (", unit, ")"),
              scales = "free_y", ncol = 2) +
+  scale_x_datetime(date_breaks = "6 hours", date_labels = "%H:%M") +
   labs(title = "All Sensor Streams — Last 24 Hours",
        x = NULL, y = NULL) +
   theme_minimal() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 The `all_readings` data frame feeds directly into the interactive Shiny dashboard in [Live Dashboards](live-dashboards.qmd).
